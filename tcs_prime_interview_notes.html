@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCS Interview Prep — Complete Notes</title>
+<style>
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: #16161f;
+    --bg-card-hover: #1a1a25;
+    --bg-code: #1e1e2a;
+    --bg-qa: #13131d;
+    --border-main: #2a2a3a;
+    --border-light: #222233;
+    --border-accent: #3a3a5a;
+    --text-primary: #e8e8f0;
+    --text-secondary: #a0a0b8;
+    --text-tertiary: #707088;
+    --accent-blue: #5b8def;
+    --accent-green: #4ecdc4;
+    --accent-amber: #f0b866;
+    --accent-red: #ef6b6b;
+    --accent-purple: #a78bfa;
+    --accent-cyan: #22d3ee;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+.header {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: linear-gradient(135deg, rgba(91,141,239,0.08), rgba(78,205,196,0.06));
+    border: 1px solid var(--border-main);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+}
+.header h1 {
+    font-size: 1.8em;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.4rem;
+}
+.header p { color: var(--text-tertiary); font-size: 0.95em; }
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.tab {
+    padding: 7px 16px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    font-family: var(--font-sans);
+}
+.tab:hover {
+    background: rgba(91,141,239,0.1);
+    border-color: var(--border-accent);
+    color: var(--text-primary);
+}
+.tab.active {
+    background: rgba(91,141,239,0.15);
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border-light);
+}
+.section-title:first-child { margin-top: 0; }
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease;
+}
+.card:hover { border-color: var(--border-accent); }
+.card h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; }
+.card p, .card li { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+.card ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+.card ul li { margin-bottom: 0.3rem; }
+
+.explain {
+    background: rgba(91,141,239,0.06);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+.explain strong { color: var(--accent-blue); }
+
+.tip-box {
+    background: rgba(78,205,196,0.06);
+    border-left: 3px solid var(--accent-green);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+.tip-box strong { color: var(--accent-green); }
+
+.warn-box {
+    background: rgba(240,184,102,0.06);
+    border-left: 3px solid var(--accent-amber);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+.warn-box strong { color: var(--accent-amber); }
+
+.badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: var(--radius-sm);
+    margin-right: 4px;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+.b-blue { background: rgba(91,141,239,0.15); color: var(--accent-blue); }
+.b-green { background: rgba(78,205,196,0.15); color: var(--accent-green); }
+.b-amber { background: rgba(240,184,102,0.15); color: var(--accent-amber); }
+.b-red { background: rgba(239,107,107,0.15); color: var(--accent-red); }
+.b-purple { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
+
+pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    font-size: 12.5px;
+    font-family: var(--font-mono);
+    overflow-x: auto;
+    margin: 0.6rem 0;
+    color: var(--text-primary);
+    line-height: 1.7;
+}
+code {
+    background: rgba(91,141,239,0.1);
+    color: var(--accent-blue);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+.qa {
+    border-left: 2px solid var(--accent-purple);
+    padding: 0.6rem 0.85rem;
+    margin-bottom: 0.75rem;
+    background: var(--bg-qa);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.qa .q { font-size: 13px; font-weight: 600; color: var(--accent-purple); margin-bottom: 0.35rem; }
+.qa .a { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+.tbl { width: 100%; font-size: 13px; border-collapse: collapse; }
+.tbl th {
+    text-align: left; padding: 8px 10px; font-weight: 600;
+    color: var(--text-tertiary); border-bottom: 1px solid var(--border-main);
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.tbl td {
+    padding: 8px 10px; color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-light); vertical-align: top;
+}
+.tbl tr:hover td { background: rgba(255,255,255,0.02); }
+
+@media(max-width:600px) {
+    .grid2 { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.4em; }
+    .wrap { padding: 1rem 0.5rem; }
+    .tabs { gap: 4px; padding: 0.5rem; }
+    .tab { padding: 5px 10px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+    <h1>🎯 TCS Interview — Complete Preparation Notes</h1>
+    <p>Prime | Digital | Ninja — All topics with code, explanations & expected Q&A</p>
+</div>
+
+<div class="tabs" id="tabs">
+    <button class="tab active" onclick="show('python')">🐍 Python</button>
+    <button class="tab" onclick="show('coding')">💻 Coding</button>
+    <button class="tab" onclick="show('dsa')">📦 DSA</button>
+    <button class="tab" onclick="show('dbms')">🗄️ DBMS & SQL</button>
+    <button class="tab" onclick="show('os')">⚙️ OS</button>
+    <button class="tab" onclick="show('cn')">🌐 Networks</button>
+    <button class="tab" onclick="show('oop')">🧱 OOP</button>
+    <button class="tab" onclick="show('java')">☕ Java</button>
+    <button class="tab" onclick="show('js')">🟨 JavaScript</button>
+    <button class="tab" onclick="show('mern')">🔗 MERN</button>
+    <button class="tab" onclick="show('aiml')">🤖 AI/ML</button>
+    <button class="tab" onclick="show('cloud')">☁️ Cloud & SE</button>
+    <button class="tab" onclick="show('projects')">📁 Projects</button>
+    <button class="tab" onclick="show('hr')">🤝 HR & Tips</button>
+</div>
+
+<!-- ============================================ -->
+<!--                  PYTHON                       -->
+<!-- ============================================ -->
+<div id="python" class="section active">
+    <div class="section-title">Python Fundamentals</div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>Variables & Data Types</h3>
+            <pre>x = 10        # int
+name = "Sai"  # str
+pi = 3.14     # float
+flag = True   # bool
+lst = [1,2,3] # list
+d = {"a":1}   # dict
+t = (1,2,3)   # tuple
+s = {1,2,3}   # set</pre>
+            <div class="explain"><strong>Key point:</strong> Python is <strong>dynamically typed</strong> — you don't declare types. Python figures it out at runtime.</div>
+        </div>
+        <div class="card">
+            <h3>Constants & Naming</h3>
+            <p>Python has no <code>const</code> keyword — use UPPER_CASE by convention:</p>
+            <pre>MAX_SIZE = 100     # constant by convention
+PI = 3.14159
+x = 10             # regular variable</pre>
+            <div class="tip-box"><strong>Interview tip:</strong> "Python doesn't have a const keyword. We use ALL_CAPS naming convention to indicate a value shouldn't be changed."</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>List vs Tuple vs Set vs Dict <span class="badge b-red">Very Frequent</span></h3>
+        <table class="tbl">
+            <tr><th>Type</th><th>Ordered</th><th>Mutable</th><th>Duplicates</th><th>Syntax</th></tr>
+            <tr><td>List</td><td>✅ Yes</td><td>✅ Yes</td><td>✅ Allowed</td><td><code>[1, 2, 3]</code></td></tr>
+            <tr><td>Tuple</td><td>✅ Yes</td><td>❌ No</td><td>✅ Allowed</td><td><code>(1, 2, 3)</code></td></tr>
+            <tr><td>Set</td><td>❌ No</td><td>✅ Yes</td><td>❌ No dups</td><td><code>{1, 2, 3}</code></td></tr>
+            <tr><td>Dict</td><td>✅ Yes*</td><td>✅ Yes</td><td>Keys unique</td><td><code>{"a": 1}</code></td></tr>
+        </table>
+        <pre># List operations
+lst = [1, 2, 3]
+lst.append(4)       # [1,2,3,4]
+lst.pop()           # removes last → [1,2,3]
+lst.insert(0, 10)   # [10,1,2,3]
+lst.remove(2)       # removes first occurrence of 2
+lst.sort()          # in-place sort
+lst.reverse()       # in-place reverse
+
+# Tuple — immutable
+t = (1, 2, 3)
+# t[0] = 10  ← ERROR!
+
+# Set — no duplicates, O(1) lookup
+s = {1, 2, 2, 3}   # {1, 2, 3}
+s.add(4); s.discard(2)
+
+# Dict — key-value, O(1) access
+d = {"name": "Sai", "age": 22}
+d["email"] = "sai@mail.com"
+print(d.get("name"))</pre>
+        <div class="explain"><strong>When to use what?</strong><br>
+            • <strong>List</strong> — ordered, modifiable collection<br>
+            • <strong>Tuple</strong> — fixed data (coordinates, DB rows)<br>
+            • <strong>Set</strong> — unique values, fast membership check<br>
+            • <strong>Dict</strong> — key-value mapping, frequency count
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Loops</h3>
+        <pre>for i in range(5):          # 0,1,2,3,4
+    print(i)
+
+i = 0
+while i < 5:
+    i += 1
+
+for i in range(10):
+    if i == 7: break        # stop loop
+    if i % 2 == 0: continue # skip even
+    print(i)                # 1,3,5
+
+# Enumerate — get index + value
+for idx, val in enumerate(["a","b","c"]):
+    print(idx, val)</pre>
+        <div class="explain"><strong>Complexity:</strong> Single loop = O(n). Nested loop = O(n²). Use <code>break</code> to exit early.</div>
+    </div>
+
+    <div class="card">
+        <h3>Functions</h3>
+        <pre>def add(a, b):
+    return a + b
+
+def greet(name="Sai"):    # default arg
+    print(f"Hello, {name}")
+
+# *args — variable positional arguments (tuple)
+def total(*args):
+    return sum(args)
+total(1, 2, 3)   # 6
+
+# **kwargs — keyword arguments (dict)
+def info(**kwargs):
+    for k, v in kwargs.items():
+        print(f"{k}: {v}")
+
+# Lambda — anonymous one-liner
+square = lambda x: x ** 2
+add = lambda a, b: a + b</pre>
+    </div>
+
+    <div class="card">
+        <h3>String Operations</h3>
+        <pre>s = "Hello World"
+s.lower()           # "hello world"
+s.upper()           # "HELLO WORLD"
+s.strip()           # remove whitespace
+s.split(" ")        # ["Hello", "World"]
+s.replace("World", "TCS")
+s.find("World")     # 6 (or -1)
+s.count("l")        # 3
+s[::-1]             # "dlroW olleH" (reverse)
+" ".join(["a","b"]) # "a b"
+len(s)              # 11</pre>
+    </div>
+
+    <div class="card">
+        <h3>Exception Handling</h3>
+        <pre>try:
+    x = int(input("Enter number: "))
+    result = 10 / x
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+except ValueError:
+    print("Invalid input!")
+except Exception as e:
+    print(f"Error: {e}")
+finally:
+    print("Always runs — cleanup here")</pre>
+        <div class="explain">
+            • <code>try</code> — code that might fail<br>
+            • <code>except</code> — handles specific errors<br>
+            • <code>finally</code> — always executes (cleanup: closing files, DB)<br>
+            • Put specific exceptions before general <code>Exception</code>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Recursion</h3>
+        <pre>def factorial(n):
+    if n == 0: return 1        # base case
+    return n * factorial(n-1)
+
+def fib(n):
+    if n <= 1: return n        # base case
+    return fib(n-1) + fib(n-2)</pre>
+        <div class="explain"><strong>Always define a base condition.</strong> Without it → infinite recursion → stack overflow. Recursion uses call stack — O(n) space.</div>
+    </div>
+
+    <div class="card">
+        <h3>Iterator & Generator</h3>
+        <pre># Iterator
+arr = [1, 2, 3]
+it = iter(arr)
+print(next(it))  # 1
+
+# Generator — uses yield (lazy evaluation)
+def countdown(n):
+    while n > 0:
+        yield n       # pauses, remembers state
+        n -= 1
+
+for num in countdown(5):
+    print(num)    # 5, 4, 3, 2, 1
+
+# Generator expression (memory efficient)
+squares = (x**2 for x in range(1000000))</pre>
+        <div class="explain"><strong>Why generators?</strong> They don't store all values in memory — produce one at a time. Perfect for large datasets. A list of 1M items uses 1M memory. A generator uses almost none.</div>
+    </div>
+
+    <div class="card">
+        <h3>List Comprehension & Map/Filter</h3>
+        <pre>squares = [x**2 for x in range(10)]
+evens = [x for x in range(20) if x % 2 == 0]
+
+doubled = list(map(lambda x: x*2, [1,2,3]))    # [2,4,6]
+evens = list(filter(lambda x: x%2==0, [1,2,3,4])) # [2,4]
+
+names = ["Sai", "Ravi"]
+scores = [90, 85]
+combined = list(zip(names, scores))  # [("Sai",90),("Ravi",85)]</pre>
+    </div>
+
+    <div class="card">
+        <h3>File Handling</h3>
+        <pre>with open("data.txt", "r") as f:
+    content = f.read()         # entire file
+    # lines = f.readlines()    # list of lines
+
+with open("output.txt", "w") as f:
+    f.write("Hello TCS\n")
+
+with open("log.txt", "a") as f:  # append
+    f.write("New entry\n")</pre>
+        <div class="tip-box"><strong>Always use <code>with</code></strong> — auto-closes file even if error occurs.</div>
+    </div>
+
+    <div class="section-title">Expected Q&A — Python</div>
+    <div class="qa"><div class="q">Q: Difference between list, tuple, set, dict?</div><div class="a">List: ordered, mutable, duplicates. Tuple: ordered, immutable. Set: unordered, no duplicates, O(1) lookup. Dict: key-value pairs, O(1) access by key.</div></div>
+    <div class="qa"><div class="q">Q: Iterator vs Generator?</div><div class="a">Iterator uses __iter__ and __next__. Generator uses yield — simpler, lazy evaluation, memory efficient. Every generator is an iterator, but not vice versa.</div></div>
+    <div class="qa"><div class="q">Q: What is <code>is</code> vs <code>==</code>?</div><div class="a"><code>==</code> checks value equality. <code>is</code> checks if same object in memory. <code>[1,2] == [1,2]</code> → True, <code>[1,2] is [1,2]</code> → False.</div></div>
+    <div class="qa"><div class="q">Q: Python libraries you know?</div><div class="a">NumPy (numerical), Pandas (data), Matplotlib (plots), Scikit-learn (ML), Flask/Django (web), Requests (HTTP), collections (deque, Counter).</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--              CODING QUESTIONS                 -->
+<!-- ============================================ -->
+<div id="coding" class="section">
+    <div class="section-title">Most Asked Coding Programs</div>
+
+    <div class="card">
+        <h3>Fibonacci Series <span class="badge b-red">Very Frequent</span></h3>
+        <p>Each number is sum of two preceding: 0, 1, 1, 2, 3, 5, 8, 13...</p>
+        <pre># Iterative — O(n) time, O(1) space ✅ Best
+def fibonacci(n):
+    a, b = 0, 1
+    for i in range(n):
+        print(a, end=" ")
+        a, b = b, a + b
+fibonacci(10)  # 0 1 1 2 3 5 8 13 21 34
+
+# Recursive — O(2^n) time ❌ Slow
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1) + fib(n-2)
+
+# Memoized — O(n) time ✅ Optimized recursive
+from functools import lru_cache
+@lru_cache(maxsize=None)
+def fib_memo(n):
+    if n <= 1: return n
+    return fib_memo(n-1) + fib_memo(n-2)</pre>
+        <div class="explain"><strong>Always mention both approaches.</strong> Iterative is best for performance. Recursive is elegant but exponential. Memoization caches results to avoid recomputation.</div>
+    </div>
+
+    <div class="card">
+        <h3>Factorial <span class="badge b-red">Very Frequent</span></h3>
+        <p>n! = n × (n-1) × ... × 1. Example: 5! = 120</p>
+        <pre># Iterative
+def factorial_iter(n):
+    result = 1
+    for i in range(1, n+1):
+        result *= i
+    return result
+
+# Recursive
+def factorial(n):
+    if n == 0 or n == 1: return 1   # base case
+    return n * factorial(n-1)
+
+print(factorial(5))  # 120</pre>
+        <div class="explain"><strong>Trace:</strong> factorial(4) → 4×factorial(3) → 4×3×factorial(2) → 4×3×2×factorial(1) → 4×3×2×1 = 24</div>
+    </div>
+
+    <div class="card">
+        <h3>Prime Number Check <span class="badge b-red">Very Frequent</span></h3>
+        <pre># Optimized — O(√n)
+import math
+def is_prime(n):
+    if n < 2: return False
+    if n == 2: return True
+    if n % 2 == 0: return False
+    for i in range(3, int(math.sqrt(n)) + 1, 2):
+        if n % i == 0: return False
+    return True
+
+print(is_prime(17))  # True
+print(is_prime(15))  # False</pre>
+        <div class="explain"><strong>Why √n?</strong> If n has a factor &gt; √n, the other factor must be &lt; √n. For n=100, check up to 10 instead of 99.</div>
+    </div>
+
+    <div class="card">
+        <h3>Reverse a String <span class="badge b-red">Very Frequent</span></h3>
+        <pre># Slicing (Pythonic)
+s = "Hello"
+print(s[::-1])        # "olleH"
+
+# Loop
+def reverse_str(s):
+    result = ""
+    for ch in s:
+        result = ch + result
+    return result
+
+# Two pointer (for list)
+def reverse_list(arr):
+    l, r = 0, len(arr)-1
+    while l < r:
+        arr[l], arr[r] = arr[r], arr[l]
+        l += 1; r -= 1</pre>
+    </div>
+
+    <div class="card">
+        <h3>Reverse a Number</h3>
+        <pre>def reverse_number(n):
+    rev = 0
+    while n > 0:
+        rev = rev * 10 + n % 10
+        n //= 10
+    return rev
+print(reverse_number(1234))  # 4321</pre>
+        <div class="explain"><strong>Trace (n=1234):</strong> rev=4,n=123 → rev=43,n=12 → rev=432,n=1 → rev=4321,n=0</div>
+    </div>
+
+    <div class="card">
+        <h3>Palindrome Check</h3>
+        <pre># String
+s = "madam"
+print(s == s[::-1])   # True
+
+# Number
+def is_palindrome(n):
+    return str(n) == str(n)[::-1]
+print(is_palindrome(121))  # True</pre>
+    </div>
+
+    <div class="card">
+        <h3>Armstrong Number</h3>
+        <p>153 = 1³ + 5³ + 3³ = 1 + 125 + 27 = 153 ✅</p>
+        <pre>def is_armstrong(n):
+    digits = str(n)
+    power = len(digits)
+    total = sum(int(d) ** power for d in digits)
+    return total == n
+print(is_armstrong(153))  # True</pre>
+    </div>
+
+    <div class="card">
+        <h3>Strong Number</h3>
+        <p>145 = 1! + 4! + 5! = 1 + 24 + 120 = 145 ✅</p>
+        <pre>import math
+def is_strong(n):
+    return sum(math.factorial(int(d)) for d in str(n)) == n
+print(is_strong(145))  # True</pre>
+    </div>
+
+    <div class="card">
+        <h3>Character Count in String <span class="badge b-red">Very Frequent</span></h3>
+        <p><code>"aaabbaccc"</code> → a:4, b:2, c:3</p>
+        <pre># Using dictionary
+def char_count(s):
+    freq = {}
+    for ch in s:
+        freq[ch] = freq.get(ch, 0) + 1
+    return freq
+print(char_count("aaabbaccc"))  # {'a':4,'b':2,'c':3}
+
+# Using Counter
+from collections import Counter
+print(Counter("aaabbaccc"))</pre>
+        <div class="explain"><strong>Time:</strong> O(n) — single pass. <strong>Space:</strong> O(k) — k unique characters (max 26 for lowercase).</div>
+    </div>
+
+    <div class="card">
+        <h3>Delete Duplicates from String <span class="badge b-amber">Asked</span></h3>
+        <pre>def remove_dups(s):
+    seen = set()
+    result = []
+    for ch in s:
+        if ch not in seen:
+            seen.add(ch)
+            result.append(ch)
+    return "".join(result)
+print(remove_dups("aabbccdd"))    # "abcd"
+
+# One-liner (preserves order)
+print("".join(dict.fromkeys("programming")))  # "progamin"</pre>
+    </div>
+
+    <div class="card">
+        <h3>Reverse Words Inside Sentence <span class="badge b-amber">Asked</span></h3>
+        <p><code>"my name is kovidh"</code> → <code>"ym eman si hdivok"</code></p>
+        <pre>def reverse_each_word(sentence):
+    return " ".join(word[::-1] for word in sentence.split())
+print(reverse_each_word("my name is kovidh"))
+# "ym eman si hdivok"</pre>
+        <div class="explain">Split → reverse each word → join back with space.</div>
+    </div>
+
+    <div class="card">
+        <h3>Triangular Pattern <span class="badge b-amber">Asked</span></h3>
+        <pre># Star pattern         # Number pattern
+# *                    # 1
+# **                   # 12
+# ***                  # 123
+# ****                 # 1234
+
+def star_triangle(n):
+    for i in range(1, n+1):
+        print("*" * i)
+
+def num_triangle(n):
+    for i in range(1, n+1):
+        for j in range(1, i+1):
+            print(j, end="")
+        print()
+
+star_triangle(4)
+num_triangle(4)</pre>
+    </div>
+
+    <div class="card">
+        <h3>Matrix Operations <span class="badge b-amber">Asked</span></h3>
+        <pre># Matrix Addition — O(r×c)
+def add_matrix(a, b, r, c):
+    result = [[0]*c for _ in range(r)]
+    for i in range(r):
+        for j in range(c):
+            result[i][j] = a[i][j] + b[i][j]
+    return result
+
+# Matrix Transpose — O(r×c)
+def transpose(a, r, c):
+    result = [[0]*r for _ in range(c)]
+    for i in range(r):
+        for j in range(c):
+            result[j][i] = a[i][j]
+    return result
+
+# Matrix Multiplication — O(n³)
+def multiply(a, b, r1, c1, r2, c2):
+    if c1 != r2:
+        return "Cannot multiply! c1 must equal r2"
+    result = [[0]*c2 for _ in range(r1)]
+    for i in range(r1):
+        for j in range(c2):
+            for k in range(c1):
+                result[i][j] += a[i][k] * b[k][j]
+    return result
+
+# Example
+a = [[1,2,3],[4,5,6]]       # 2×3
+b = [[7,8],[9,10],[11,12]]   # 3×2
+print(multiply(a, b, 2, 3, 3, 2))
+# [[58,64],[139,154]]        # 2×2 result</pre>
+        <div class="explain">
+            <strong>Multiplication rules:</strong> A(r1×c1) × B(r2×c2) → Result(r1×c2).<br>
+            <strong>Condition:</strong> c1 must equal r2.<br>
+            <strong>Time:</strong> O(n³) for square matrices. <strong>Space:</strong> O(r1×c2).
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Batsman Strike Rate (Recursion Example)</h3>
+        <pre># Strike Rate = (Runs / Balls) × 100
+def strike_rate(runs, balls):
+    if balls == 0: return 0
+    return (runs / balls) * 100
+
+# Sum runs using recursion
+def total_runs(scores, index=0):
+    if index == len(scores): return 0    # base case
+    return scores[index] + total_runs(scores, index + 1)
+
+scores = [45, 30, 67, 12, 89]
+print(f"Total: {total_runs(scores)}")              # 243
+print(f"Strike Rate: {strike_rate(243, 180):.2f}")  # 135.00</pre>
+    </div>
+
+    <div class="section-title">Complexity Quick Reference</div>
+    <div class="card">
+        <table class="tbl">
+            <tr><th>Program</th><th>Time</th><th>Space</th></tr>
+            <tr><td>Fibonacci (iterative)</td><td>O(n)</td><td>O(1)</td></tr>
+            <tr><td>Fibonacci (recursive)</td><td>O(2ⁿ)</td><td>O(n)</td></tr>
+            <tr><td>Factorial</td><td>O(n)</td><td>O(1) / O(n) recursive</td></tr>
+            <tr><td>Prime check (√n)</td><td>O(√n)</td><td>O(1)</td></tr>
+            <tr><td>String reverse</td><td>O(n)</td><td>O(n)</td></tr>
+            <tr><td>Character count</td><td>O(n)</td><td>O(k)</td></tr>
+            <tr><td>Matrix multiply</td><td>O(n³)</td><td>O(n²)</td></tr>
+            <tr><td>Binary search</td><td>O(log n)</td><td>O(1)</td></tr>
+            <tr><td>Bubble sort</td><td>O(n²)</td><td>O(1)</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!--                    DSA                        -->
+<!-- ============================================ -->
+<div id="dsa" class="section">
+    <div class="section-title">Data Structures & Algorithms</div>
+
+    <div class="card">
+        <h3>Arrays / Lists</h3>
+        <pre>arr = [5, 3, 2, 8, 1]
+arr.append(9)         # add to end O(1)
+arr.pop()             # remove last O(1)
+arr.pop(0)            # remove first O(n)
+arr.insert(2, 99)     # insert at index O(n)
+arr.sort()            # O(n log n)
+print(max(arr), min(arr), sum(arr))</pre>
+        <div class="explain"><strong>Array vs Linked List:</strong> Array → O(1) index access, O(n) insert/delete. Linked List → O(n) access, O(1) insert/delete at head.</div>
+    </div>
+
+    <div class="card">
+        <h3>Linked List <span class="badge b-red">Asked to code</span></h3>
+        <pre>class Node:
+    def __init__(self, val):
+        self.data = val
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, val):
+        new = Node(val)
+        if not self.head:
+            self.head = new; return
+        curr = self.head
+        while curr.next:
+            curr = curr.next
+        curr.next = new
+
+    def display(self):
+        curr = self.head
+        while curr:
+            print(curr.data, end=" → ")
+            curr = curr.next
+        print("None")
+
+# Reverse Linked List — O(n) time, O(1) space
+def reverse_ll(head):
+    prev = None; curr = head
+    while curr:
+        nxt = curr.next     # save next
+        curr.next = prev    # reverse pointer
+        prev = curr         # advance prev
+        curr = nxt          # advance curr
+    return prev             # new head</pre>
+        <div class="explain">
+            <strong>Types:</strong> Singly (→ one direction), Doubly (← → both), Circular (last → first)
+        </div>
+        <div class="tip-box"><strong>Reverse trace (1→2→3):</strong><br>
+            prev=None, curr=1 → 1→None, prev=1, curr=2<br>
+            prev=1, curr=2 → 2→1→None, prev=2, curr=3<br>
+            prev=2, curr=3 → 3→2→1→None ✅
+        </div>
+    </div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>Stack (LIFO) <span class="badge b-amber">Asked</span></h3>
+            <pre>stack = []
+stack.append(10)  # push
+stack.append(20)
+stack.pop()       # 20 (last in first out)
+stack[-1]         # peek top
+
+# Parentheses check
+def is_valid(s):
+    st = []
+    pairs = {')':'(','}':'{',']':'['}
+    for c in s:
+        if c in '({[': st.append(c)
+        elif c in ')}]':
+            if not st or st[-1]!=pairs[c]:
+                return False
+            st.pop()
+    return len(st)==0</pre>
+            <p>Real-world: Undo, browser back, function call stack</p>
+        </div>
+        <div class="card">
+            <h3>Queue (FIFO) <span class="badge b-amber">Asked</span></h3>
+            <pre>from collections import deque
+q = deque()
+q.append(10)     # enqueue
+q.append(20)
+q.popleft()      # 10 (first in first out)</pre>
+            <p>Real-world: Printer queue, CPU scheduling, BFS</p>
+            <div class="explain">Use <code>deque</code> — <code>list.pop(0)</code> is O(n), <code>deque.popleft()</code> is O(1).</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>HashMap / Dictionary</h3>
+        <pre>freq = {}
+for num in [1,2,2,3,3,3]:
+    freq[num] = freq.get(num,0)+1
+print(freq)  # {1:1, 2:2, 3:3}
+
+# First non-repeating character
+def first_unique(s):
+    freq = {}
+    for ch in s: freq[ch] = freq.get(ch,0)+1
+    for ch in s:
+        if freq[ch] == 1: return ch
+    return None</pre>
+        <div class="explain">O(1) average lookup. Best for frequency count, caching, duplicate detection.</div>
+    </div>
+
+    <div class="card">
+        <h3>Sorting Algorithms</h3>
+        <pre># Bubble Sort — O(n²) time, O(1) space
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j],arr[j+1] = arr[j+1],arr[j]
+                swapped = True
+        if not swapped: break
+    return arr
+
+# Selection Sort — O(n²)
+def selection_sort(arr):
+    for i in range(len(arr)):
+        mi = i
+        for j in range(i+1, len(arr)):
+            if arr[j] < arr[mi]: mi = j
+        arr[i], arr[mi] = arr[mi], arr[i]
+    return arr</pre>
+        <table class="tbl" style="margin-top:.5rem">
+            <tr><th>Algorithm</th><th>Best</th><th>Avg</th><th>Worst</th><th>Space</th></tr>
+            <tr><td>Bubble</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+            <tr><td>Selection</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+            <tr><td>Python sort()</td><td>O(n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Binary Search — O(log n) <span class="badge b-amber">Important</span></h3>
+        <pre>def binary_search(arr, key):
+    lo, hi = 0, len(arr)-1
+    while lo <= hi:
+        mid = (lo+hi)//2
+        if arr[mid] == key: return mid
+        elif arr[mid] < key: lo = mid+1
+        else: hi = mid-1
+    return -1
+
+arr = [2, 5, 8, 12, 16, 23, 38]
+print(binary_search(arr, 23))  # 5</pre>
+        <div class="explain"><strong>Why O(log n)?</strong> Each step halves the search space. 1M elements → only 20 comparisons!</div>
+    </div>
+
+    <div class="card">
+        <h3>Big-O Cheatsheet</h3>
+        <table class="tbl">
+            <tr><th>Complexity</th><th>Name</th><th>Example</th><th>n=1000</th></tr>
+            <tr><td>O(1)</td><td>Constant</td><td>Dict lookup</td><td>1</td></tr>
+            <tr><td>O(log n)</td><td>Logarithmic</td><td>Binary search</td><td>~10</td></tr>
+            <tr><td>O(n)</td><td>Linear</td><td>Single loop</td><td>1,000</td></tr>
+            <tr><td>O(n log n)</td><td>Linearithmic</td><td>Merge sort</td><td>~10,000</td></tr>
+            <tr><td>O(n²)</td><td>Quadratic</td><td>Nested loops</td><td>1,000,000</td></tr>
+            <tr><td>O(2ⁿ)</td><td>Exponential</td><td>Recursive fib</td><td>Huge!</td></tr>
+        </table>
+    </div>
+
+    <div class="section-title">Expected Q&A — DSA</div>
+    <div class="qa"><div class="q">Q: Why binary search over linear?</div><div class="a">O(log n) vs O(n). Requires sorted array. Each step halves search space. For 1M elements: 20 vs 1,000,000 comparisons.</div></div>
+    <div class="qa"><div class="q">Q: Stack vs Queue real-world?</div><div class="a">Stack (LIFO): Undo, browser back, call stack, parentheses matching. Queue (FIFO): Printer queue, customer line, CPU scheduling, BFS.</div></div>
+    <div class="qa"><div class="q">Q: Why use HashMap?</div><div class="a">O(1) average for lookup, insert, delete. Best for frequency count, caching, two-sum, duplicate detection.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                 DBMS & SQL                    -->
+<!-- ============================================ -->
+<div id="dbms" class="section">
+    <div class="section-title">DBMS Concepts</div>
+
+    <div class="card">
+        <h3>What is DBMS?</h3>
+        <p><strong>Database Management System</strong> — software to store, retrieve, and manage data efficiently. Provides interface between user and database.</p>
+        <div class="explain"><strong>Types:</strong> Relational (MySQL, PostgreSQL) — tables with relationships. NoSQL (MongoDB) — flexible schema, JSON documents, horizontal scaling.</div>
+    </div>
+
+    <div class="card">
+        <h3>Keys in DBMS</h3>
+        <table class="tbl">
+            <tr><th>Key</th><th>Meaning</th><th>Example</th></tr>
+            <tr><td>Primary Key</td><td>Uniquely identifies row. NOT NULL + UNIQUE</td><td>student_id</td></tr>
+            <tr><td>Foreign Key</td><td>References PK of another table</td><td>dept_id → Departments</td></tr>
+            <tr><td>Candidate Key</td><td>Any column(s) eligible as PK</td><td>email, phone</td></tr>
+            <tr><td>Composite Key</td><td>PK from 2+ columns</td><td>(student_id, course_id)</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Constraints <span class="badge b-amber">Asked</span></h3>
+        <pre>CREATE TABLE Students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    age INT CHECK (age >= 18),
+    dept_id INT DEFAULT 1,
+    FOREIGN KEY (dept_id) REFERENCES Departments(id)
+);</pre>
+    </div>
+
+    <div class="card">
+        <h3>Normalization</h3>
+        <table class="tbl">
+            <tr><th>Form</th><th>Rule</th><th>Solves</th></tr>
+            <tr><td>1NF</td><td>Atomic values — no multi-valued cells</td><td>Repeating groups</td></tr>
+            <tr><td>2NF</td><td>1NF + no partial dependency</td><td>Partial dependencies</td></tr>
+            <tr><td>3NF</td><td>2NF + no transitive dependency</td><td>Transitive dependencies</td></tr>
+        </table>
+        <div class="explain"><strong>Example:</strong> {student_id, name, dept_id, dept_name} → dept_name depends on dept_id not student_id (transitive). Fix: move dept_name to Departments table → 3NF.</div>
+    </div>
+
+    <div class="card">
+        <h3>ACID Properties</h3>
+        <table class="tbl">
+            <tr><th>Property</th><th>Meaning</th><th>Example</th></tr>
+            <tr><td><strong>A</strong>tomicity</td><td>All or nothing</td><td>Money transfer: both debit+credit or neither</td></tr>
+            <tr><td><strong>C</strong>onsistency</td><td>DB stays valid</td><td>Balance can't go negative</td></tr>
+            <tr><td><strong>I</strong>solation</td><td>Concurrent txns don't interfere</td><td>Two bookings for last seat</td></tr>
+            <tr><td><strong>D</strong>urability</td><td>Committed = permanent</td><td>Data survives power failure</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Joins</h3>
+        <pre>-- INNER JOIN: only matching rows
+SELECT s.Name, m.Score
+FROM Students s INNER JOIN Marks m ON s.ID = m.ID;
+
+-- LEFT JOIN: all left + matching right (NULL if no match)
+SELECT s.Name, m.Score
+FROM Students s LEFT JOIN Marks m ON s.ID = m.ID;
+
+-- RIGHT JOIN: all right + matching left
+-- FULL OUTER JOIN: all from both (NULL where no match)</pre>
+    </div>
+
+    <div class="section-title">Important SQL Queries</div>
+
+    <div class="card">
+        <h3>Aggregate Functions <span class="badge b-red">Very Frequent</span></h3>
+        <pre>SELECT COUNT(*), SUM(salary), AVG(salary),
+       MAX(salary), MIN(salary)
+FROM Employee;
+
+-- GROUP BY
+SELECT department, COUNT(*), AVG(salary)
+FROM Employee GROUP BY department;
+
+-- HAVING — filter groups (WHERE = before, HAVING = after)
+SELECT department, AVG(salary) AS avg_sal
+FROM Employee GROUP BY department
+HAVING AVG(salary) > 50000;</pre>
+        <div class="explain"><strong>WHERE vs HAVING:</strong> WHERE filters rows before grouping. HAVING filters groups after aggregation. Cannot use aggregate functions in WHERE.</div>
+    </div>
+
+    <div class="card">
+        <h3>2nd Highest Salary <span class="badge b-red">Classic</span></h3>
+        <pre>-- Method 1: LIMIT OFFSET
+SELECT DISTINCT salary FROM Employee
+ORDER BY salary DESC LIMIT 1 OFFSET 1;
+
+-- Method 2: Subquery
+SELECT MAX(salary) FROM Employee
+WHERE salary &lt; (SELECT MAX(salary) FROM Employee);
+
+-- Method 3: DENSE_RANK (best — works for Nth)
+SELECT salary FROM (
+    SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+    FROM Employee
+) t WHERE rnk = 2;</pre>
+        <div class="explain"><strong>RANK vs DENSE_RANK vs ROW_NUMBER:</strong><br>
+            • RANK: skips on ties → 1, 2, 2, <strong>4</strong><br>
+            • DENSE_RANK: no gaps → 1, 2, 2, <strong>3</strong><br>
+            • ROW_NUMBER: unique always → 1, 2, 3, 4<br>
+            Use DENSE_RANK for "Nth highest" questions.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Other Important Queries <span class="badge b-amber">Asked</span></h3>
+        <pre>-- Find last inserted row
+SELECT * FROM Employee ORDER BY id DESC LIMIT 1;
+-- Or: SELECT LAST_INSERT_ID();
+
+-- Add column to existing table
+ALTER TABLE Employee ADD COLUMN phone VARCHAR(15);
+
+-- Delete duplicates (keep one)
+DELETE e1 FROM Employee e1
+INNER JOIN Employee e2
+WHERE e1.id > e2.id AND e1.email = e2.email;
+
+-- Count employees per dept with names
+SELECT d.name, COUNT(e.id) AS emp_count
+FROM Departments d
+LEFT JOIN Employee e ON d.id = e.dept_id
+GROUP BY d.name;</pre>
+    </div>
+
+    <div class="section-title">MongoDB vs MySQL <span class="badge b-amber">Asked</span></div>
+    <div class="card">
+        <table class="tbl">
+            <tr><th></th><th>MySQL (SQL)</th><th>MongoDB (NoSQL)</th></tr>
+            <tr><td>Type</td><td>Relational</td><td>Document-based</td></tr>
+            <tr><td>Schema</td><td>Fixed (tables, rows)</td><td>Flexible (JSON documents)</td></tr>
+            <tr><td>Scaling</td><td>Vertical</td><td>Horizontal</td></tr>
+            <tr><td>Query</td><td>SQL language</td><td>JavaScript-like</td></tr>
+            <tr><td>Best for</td><td>Structured, ACID needed</td><td>Dynamic, large-scale</td></tr>
+        </table>
+        <pre>// MongoDB example
+db.students.insertOne({name:"Sai", age:22, dept:"CSE"})
+db.students.find({dept: "CSE"})
+db.students.updateOne({name:"Sai"}, {$set:{age:23}})
+db.students.deleteOne({name:"Sai"})</pre>
+    </div>
+
+    <div class="section-title">Expected Q&A — DBMS</div>
+    <div class="qa"><div class="q">Q: RANK vs DENSE_RANK?</div><div class="a">RANK skips numbers on ties (1,2,2,4). DENSE_RANK has no gaps (1,2,2,3). Use DENSE_RANK for Nth highest salary.</div></div>
+    <div class="qa"><div class="q">Q: What is a transaction?</div><div class="a">Group of operations that execute together. COMMIT saves, ROLLBACK undoes. Follows ACID properties.</div></div>
+    <div class="qa"><div class="q">Q: SQL vs NoSQL?</div><div class="a">SQL: relational, fixed schema, tables, ACID. NoSQL: flexible schema, JSON docs, horizontal scaling. SQL for banking. NoSQL for social media.</div></div>
+    <div class="qa"><div class="q">Q: What is GROUP BY?</div><div class="a">Groups rows with same values in a column. Used with aggregate functions (COUNT, SUM, AVG). Example: count employees per department.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                    OS                         -->
+<!-- ============================================ -->
+<div id="os" class="section">
+    <div class="section-title">Operating System</div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>Process vs Thread</h3>
+            <table class="tbl">
+                <tr><th></th><th>Process</th><th>Thread</th></tr>
+                <tr><td>Memory</td><td>Separate</td><td>Shared</td></tr>
+                <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+                <tr><td>Crash</td><td>Isolated</td><td>May affect all</td></tr>
+                <tr><td>Creation</td><td>Heavyweight</td><td>Lightweight</td></tr>
+            </table>
+            <div class="explain">Process = house. Thread = rooms inside house. Threads share same memory space but have own stack.</div>
+        </div>
+        <div class="card">
+            <h3>CPU Scheduling</h3>
+            <p><span class="badge b-blue">FCFS</span> First Come First Served — simple, linear. Problem: convoy effect.</p>
+            <p style="margin-top:.5rem"><span class="badge b-green">Round Robin</span> Fixed time quantum per process. Fair, no starvation.</p>
+            <p style="margin-top:.5rem"><span class="badge b-amber">SJF</span> Shortest Job First — optimal avg wait time. Problem: starvation of long jobs.</p>
+            <p style="margin-top:.5rem"><span class="badge b-purple">Priority</span> Higher priority runs first. Problem: starvation. Solution: aging.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Deadlock — 4 Conditions (All must hold)</h3>
+        <table class="tbl">
+            <tr><th>Condition</th><th>Meaning</th><th>Real Example</th></tr>
+            <tr><td>Mutual Exclusion</td><td>Only one process uses resource</td><td>Only one can use printer</td></tr>
+            <tr><td>Hold and Wait</td><td>Holding one, waiting for another</td><td>Holding pen, waiting for paper</td></tr>
+            <tr><td>No Preemption</td><td>Can't forcefully take resource</td><td>Can't snatch pen from someone</td></tr>
+            <tr><td>Circular Wait</td><td>P1→P2→P3→P1 chain</td><td>Everyone waiting for next person</td></tr>
+        </table>
+        <div class="tip-box"><strong>Remove ANY one condition → deadlock cannot occur.</strong> Most common: prevent circular wait by ordering resources.</div>
+    </div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>Virtual Memory</h3>
+            <p>Uses disk as extension of RAM. Gives illusion of more memory. Uses <strong>paging</strong> — memory split into pages (logical) and frames (physical).</p>
+            <div class="explain"><strong>Page fault:</strong> Required data not in RAM → fetch from disk. Too many page faults = thrashing (performance drops).</div>
+        </div>
+        <div class="card">
+            <h3>Hypervisor</h3>
+            <p>Allows multiple OS on one physical machine.</p>
+            <p><span class="badge b-blue">Type 1</span> Bare metal — directly on hardware. Fast. Used in servers (VMware ESXi).</p>
+            <p><span class="badge b-amber">Type 2</span> Runs on OS — VirtualBox, VMware Workstation. Slower.</p>
+        </div>
+    </div>
+
+    <div class="section-title">Expected Q&A — OS</div>
+    <div class="qa"><div class="q">Q: What is context switching?</div><div class="a">CPU saves state of current process and loads state of next process. Has overhead (time cost). Happens during multitasking.</div></div>
+    <div class="qa"><div class="q">Q: What is virtual memory?</div><div class="a">Uses disk as extra RAM. Creates illusion of more memory than physically available. OS manages mapping between virtual and physical addresses using page table.</div></div>
+    <div class="qa"><div class="q">Q: What is thrashing?</div><div class="a">When system spends more time handling page faults than actual processing. Happens when too many processes compete for limited RAM.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--              COMPUTER NETWORKS                -->
+<!-- ============================================ -->
+<div id="cn" class="section">
+    <div class="section-title">Computer Networks</div>
+
+    <div class="card">
+        <h3>OSI Model — 7 Layers <span class="badge b-red">Frequently Asked</span></h3>
+        <table class="tbl">
+            <tr><th>#</th><th>Layer</th><th>Function</th><th>Protocol/Device</th></tr>
+            <tr><td>7</td><td>Application</td><td>User interaction (browser, apps)</td><td>HTTP, FTP, SMTP, DNS</td></tr>
+            <tr><td>6</td><td>Presentation</td><td>Encryption, compression, format</td><td>SSL/TLS, JPEG, ASCII</td></tr>
+            <tr><td>5</td><td>Session</td><td>Manage connections/sessions</td><td>NetBIOS, RPC</td></tr>
+            <tr><td>4</td><td>Transport</td><td>End-to-end delivery, reliability</td><td>TCP, UDP</td></tr>
+            <tr><td>3</td><td>Network</td><td>Routing, IP addressing</td><td>IP, Router</td></tr>
+            <tr><td>2</td><td>Data Link</td><td>MAC address, error detection</td><td>Ethernet, Switch</td></tr>
+            <tr><td>1</td><td>Physical</td><td>Bits via cables/WiFi</td><td>Hub, Cables</td></tr>
+        </table>
+        <div class="tip-box"><strong>Mnemonic (top-down):</strong> <strong>A</strong>ll <strong>P</strong>eople <strong>S</strong>eem <strong>T</strong>o <strong>N</strong>eed <strong>D</strong>ata <strong>P</strong>rocessing</div>
+    </div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>TCP vs UDP <span class="badge b-amber">Asked</span></h3>
+            <table class="tbl">
+                <tr><th></th><th>TCP</th><th>UDP</th></tr>
+                <tr><td>Type</td><td>Connection-oriented</td><td>Connectionless</td></tr>
+                <tr><td>Reliability</td><td>High (ACK)</td><td>Low (no ACK)</td></tr>
+                <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+                <tr><td>Order</td><td>Guaranteed</td><td>Not guaranteed</td></tr>
+                <tr><td>Use</td><td>File transfer, banking</td><td>Video, gaming, DNS</td></tr>
+            </table>
+        </div>
+        <div class="card">
+            <h3>HTTP vs HTTPS <span class="badge b-amber">Asked</span></h3>
+            <p>HTTP: plain text, not secure. HTTPS: uses SSL/TLS encryption.</p>
+            <p style="margin-top:.5rem">HTTPS ensures: <strong>Confidentiality</strong> (data hidden), <strong>Integrity</strong> (not modified), <strong>Authentication</strong> (server verified).</p>
+            <div class="explain"><strong>Port numbers:</strong> HTTP = 80, HTTPS = 443, FTP = 21, SSH = 22, SMTP = 25, DNS = 53</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>TCP 3-Way Handshake</h3>
+        <pre>Client          Server
+  |  ── SYN ──►  |   "I want to connect"
+  |  ◄─ SYN-ACK ─|   "Ready, I confirm"
+  |  ── ACK ──►  |   "Connection established"</pre>
+        <p>After this, data transfer begins. Ensures both sides are ready and sequence numbers are synced.</p>
+    </div>
+
+    <div class="card">
+        <h3>Key CN Concepts</h3>
+        <table class="tbl">
+            <tr><th>Concept</th><th>Meaning</th></tr>
+            <tr><td>IP Address</td><td>Unique identifier for a device on a network. IPv4 (32-bit, 4 octets) e.g., 192.168.1.1. IPv6 (128-bit) for more addresses.</td></tr>
+            <tr><td>DNS</td><td>Converts domain name → IP address (like phone contacts)</td></tr>
+            <tr><td>DHCP</td><td>Auto-assigns IP to devices on network (DORA: Discover, Offer, Request, Acknowledge)</td></tr>
+            <tr><td>NAT</td><td>Maps private IPs to one public IP</td></tr>
+            <tr><td>ARP</td><td>Converts IP → MAC address in local network</td></tr>
+            <tr><td>Socket</td><td>IP address + Port number = endpoint for communication</td></tr>
+            <tr><td>Routing</td><td>Process of selecting path for data packets across networks. Routers use routing tables.</td></tr>
+            <tr><td>Port</td><td>Identifies specific application/service on a device</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Encryption Algorithms <span class="badge b-amber">Asked: explain one</span></h3>
+        <table class="tbl">
+            <tr><th>Type</th><th>Algorithm</th><th>How it works</th></tr>
+            <tr><td>Symmetric</td><td>AES</td><td>Same key for encrypt & decrypt. Fast. Used for bulk data.</td></tr>
+            <tr><td>Asymmetric</td><td>RSA</td><td>Public key encrypts, private key decrypts. Slower. Used for key exchange, digital signatures.</td></tr>
+            <tr><td>Hashing</td><td>SHA-256</td><td>One-way. Cannot decrypt. Used for password storage, integrity check.</td></tr>
+        </table>
+        <div class="explain"><strong>AES (Advanced Encryption Standard):</strong> Symmetric block cipher. Uses 128/192/256-bit keys. Splits data into 128-bit blocks. Each block goes through multiple rounds of substitution, shifting, mixing, and key addition. Same key used to encrypt and decrypt. Very fast — used in HTTPS, WiFi (WPA2), file encryption.</div>
+    </div>
+
+    <div class="section-title">Expected Q&A — Networks</div>
+    <div class="qa"><div class="q">Q: Why is HTTPS secure?</div><div class="a">HTTPS uses SSL/TLS encryption. Does a handshake to exchange secret keys. Ensures confidentiality (data encrypted), integrity (not tampered), authentication (server certificate verified).</div></div>
+    <div class="qa"><div class="q">Q: What is a socket?</div><div class="a">A socket is IP address + port number. It's the endpoint for communication between two applications. Example: 192.168.1.1:8080</div></div>
+    <div class="qa"><div class="q">Q: What is routing?</div><div class="a">Process of selecting the best path for data packets to travel from source to destination across networks. Routers maintain routing tables to make forwarding decisions.</div></div>
+    <div class="qa"><div class="q">Q: What is an IP address?</div><div class="a">A unique numerical identifier assigned to every device on a network. IPv4 = 32-bit (e.g., 192.168.1.1), IPv6 = 128-bit (for more addresses). Used by Network layer (Layer 3) for routing.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                    OOP                        -->
+<!-- ============================================ -->
+<div id="oop" class="section">
+    <div class="section-title">Object-Oriented Programming</div>
+
+    <div class="card">
+        <h3>4 Pillars of OOP <span class="badge b-red">Very Frequent</span></h3>
+        <div class="grid2">
+            <div>
+                <p><span class="badge b-blue">Encapsulation</span></p>
+                <p>Wrap data + methods together. Hide internal data using private variables. Access only via methods (getters/setters).</p>
+                <pre>class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance  # private
+
+    def deposit(self, amount):
+        self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+acc = BankAccount(1000)
+acc.deposit(500)
+print(acc.get_balance())  # 1500
+# acc.__balance  ← ERROR! Private</pre>
+                <div class="explain"><strong>Real-world:</strong> Bank account — you can't directly change balance. You must use deposit/withdraw methods that have validation.</div>
+            </div>
+            <div>
+                <p><span class="badge b-green">Inheritance</span></p>
+                <p>Child class reuses parent class properties and methods. Promotes code reuse.</p>
+                <pre>class Animal:
+    def __init__(self, name):
+        self.name = name
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return f"{self.name} says Woof!"
+
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} says Meow!"
+
+d = Dog("Buddy")
+print(d.speak())  # Buddy says Woof!</pre>
+                <div class="explain"><strong>Real-world:</strong> Vehicle → Car, Bike. Animal → Dog, Cat. Employee → Manager, Developer.</div>
+            </div>
+        </div>
+        <div class="grid2" style="margin-top:.75rem">
+            <div>
+                <p><span class="badge b-amber">Polymorphism</span></p>
+                <p>Same method name, different behavior depending on the object. "Many forms."</p>
+                <pre># Runtime polymorphism (method overriding)
+animals = [Dog("Buddy"), Cat("Kitty")]
+for animal in animals:
+    print(animal.speak())
+# Buddy says Woof!
+# Kitty says Meow!
+
+# Same method speak() — different output
+# based on actual object type</pre>
+                <div class="explain"><strong>Real-world:</strong> "Draw" method — Circle draws circle, Square draws square. Same interface, different implementation.</div>
+            </div>
+            <div>
+                <p><span class="badge b-red">Abstraction</span></p>
+                <p>Hide complex implementation, show only essentials. Use abstract classes — can't instantiate directly.</p>
+                <pre>from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass    # no implementation
+
+class Circle(Shape):
+    def __init__(self, r):
+        self.r = r
+    def area(self):
+        return 3.14 * self.r ** 2
+
+# s = Shape()  ← ERROR! Can't instantiate
+c = Circle(5)
+print(c.area())  # 78.5</pre>
+                <div class="explain"><strong>Real-world:</strong> Car steering wheel — you turn it (interface) without knowing the internal gear mechanism (implementation).</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Method Overloading vs Method Overriding <span class="badge b-red">Very Frequent</span></h3>
+        <table class="tbl">
+            <tr><th></th><th>Overloading</th><th>Overriding</th></tr>
+            <tr><td>What</td><td>Same method name, different parameters</td><td>Child redefines parent method</td></tr>
+            <tr><td>When</td><td>Compile time (static)</td><td>Runtime (dynamic)</td></tr>
+            <tr><td>Where</td><td>Same class</td><td>Parent-child classes</td></tr>
+            <tr><td>Python</td><td>Not natively supported (use *args or default args)</td><td>Fully supported</td></tr>
+        </table>
+        <pre># Method Overriding example (Python)
+class Parent:
+    def greet(self):
+        print("Hello from Parent")
+
+class Child(Parent):
+    def greet(self):           # overrides parent method
+        print("Hello from Child")
+
+c = Child()
+c.greet()    # "Hello from Child" — child version runs
+
+# Method Overloading workaround in Python
+class Calculator:
+    def add(self, a, b=0, c=0):    # default args simulate overloading
+        return a + b + c
+
+calc = Calculator()
+print(calc.add(5))        # 5
+print(calc.add(5, 3))     # 8
+print(calc.add(5, 3, 2))  # 10</pre>
+        <div class="warn-box"><strong>Java vs Python:</strong> Java supports true method overloading (same name, different parameter types/count). Python doesn't — use default arguments or *args instead. Both support overriding.</div>
+    </div>
+
+    <div class="card">
+        <h3>Inheritance Types</h3>
+        <table class="tbl">
+            <tr><th>Type</th><th>Structure</th><th>Example</th></tr>
+            <tr><td>Single</td><td>A → B</td><td>Animal → Dog</td></tr>
+            <tr><td>Multiple</td><td>A, B → C</td><td>Father, Mother → Child</td></tr>
+            <tr><td>Multilevel</td><td>A → B → C</td><td>Animal → Dog → Puppy</td></tr>
+            <tr><td>Hierarchical</td><td>A → B, A → C</td><td>Animal → Dog, Animal → Cat</td></tr>
+        </table>
+        <pre># Multiple inheritance
+class Father:
+    def skill(self): return "Driving"
+
+class Mother:
+    def skill(self): return "Cooking"
+
+class Child(Father, Mother):
+    pass
+
+c = Child()
+print(c.skill())  # "Driving" — follows MRO (Method Resolution Order)</pre>
+    </div>
+
+    <div class="card">
+        <h3>Other Important OOP Concepts</h3>
+        <table class="tbl">
+            <tr><th>Concept</th><th>Meaning</th></tr>
+            <tr><td>Constructor <code>__init__</code></td><td>Auto-runs when object created. Initializes variables.</td></tr>
+            <tr><td><code>self</code> keyword</td><td>Refers to current instance of the class.</td></tr>
+            <tr><td><code>super()</code></td><td>Calls parent class method from child. Used in __init__ to initialize parent.</td></tr>
+            <tr><td>Access modifiers</td><td>public (<code>name</code>), protected (<code>_name</code>), private (<code>__name</code>)</td></tr>
+            <tr><td>Diamond Problem</td><td>Ambiguity in multiple inheritance when two parents have same method. Python solves via MRO (C3 linearization).</td></tr>
+        </table>
+        <div class="explain"><strong>Diamond Problem:</strong> If class D inherits from B and C, and both B and C inherit from A — which version of A's method does D use? Python's MRO resolves this: D → B → C → A (left to right, depth-first). Use <code>ClassName.__mro__</code> to check.</div>
+    </div>
+
+    <div class="card">
+        <h3>Procedural vs OOP <span class="badge b-amber">Asked</span></h3>
+        <table class="tbl">
+            <tr><th></th><th>Procedural</th><th>OOP</th></tr>
+            <tr><td>Approach</td><td>Step-by-step functions</td><td>Objects with data + behavior</td></tr>
+            <tr><td>Data</td><td>Separate from functions</td><td>Bundled inside objects</td></tr>
+            <tr><td>Reusability</td><td>Limited</td><td>High (inheritance)</td></tr>
+            <tr><td>Security</td><td>Low (data exposed)</td><td>High (encapsulation)</td></tr>
+            <tr><td>Example</td><td>C</td><td>Java, Python, C++</td></tr>
+        </table>
+    </div>
+
+    <div class="section-title">Expected Q&A — OOP</div>
+    <div class="qa"><div class="q">Q: Difference between abstraction and encapsulation?</div><div class="a">Abstraction hides complexity (what to do — abstract class defines interface). Encapsulation hides data (protect internal state — private variables, access via methods). Car driving = abstraction. Bank account = encapsulation.</div></div>
+    <div class="qa"><div class="q">Q: What is method overriding?</div><div class="a">Child class redefines a method from parent class with same name and parameters. Called runtime/dynamic polymorphism. The actual method called depends on object type at runtime, not reference type.</div></div>
+    <div class="qa"><div class="q">Q: What is the Diamond Problem?</div><div class="a">In multiple inheritance, if two parent classes inherit from the same grandparent, ambiguity arises about which path to follow. Python resolves it using MRO (Method Resolution Order) — C3 linearization algorithm.</div></div>
+    <div class="qa"><div class="q">Q: What is <code>.equals()</code> vs <code>==</code>?</div><div class="a">In Java: <code>==</code> compares references (memory address). <code>.equals()</code> compares actual content/value. For strings: always use <code>.equals()</code>. In Python: <code>==</code> compares values, <code>is</code> compares references.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                    JAVA                       -->
+<!-- ============================================ -->
+<div id="java" class="section">
+    <div class="section-title">Java Specific Concepts</div>
+
+    <div class="card">
+        <h3>Java Streams <span class="badge b-amber">Asked</span></h3>
+        <p>Streams allow functional-style operations on collections. Introduced in Java 8.</p>
+        <pre>import java.util.*;
+import java.util.stream.*;
+
+List&lt;Integer&gt; nums = Arrays.asList(1,2,3,4,5,6,7,8);
+
+// Filter even numbers
+List&lt;Integer&gt; evens = nums.stream()
+    .filter(n -> n % 2 == 0)
+    .collect(Collectors.toList());
+// [2, 4, 6, 8]
+
+// Map — transform each element
+List&lt;Integer&gt; doubled = nums.stream()
+    .map(n -> n * 2)
+    .collect(Collectors.toList());
+
+// Reduce — combine all elements
+int sum = nums.stream()
+    .reduce(0, Integer::sum);  // 36
+
+// Chaining
+int result = nums.stream()
+    .filter(n -> n > 3)
+    .map(n -> n * 2)
+    .reduce(0, Integer::sum);  // (4+5+6+7+8)*2 = 60</pre>
+        <div class="explain"><strong>Key operations:</strong> <code>filter()</code> — select elements, <code>map()</code> — transform elements, <code>reduce()</code> — combine into single value, <code>collect()</code> — convert back to collection. Streams are lazy — intermediate operations don't execute until terminal operation is called.</div>
+    </div>
+
+    <div class="card">
+        <h3>Exception Handling in Java <span class="badge b-amber">Asked</span></h3>
+        <pre>try {
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero: " + e.getMessage());
+} catch (Exception e) {
+    System.out.println("General error: " + e);
+} finally {
+    System.out.println("Always executes");
+}
+
+// Checked vs Unchecked
+// Checked: must handle at compile time (IOException, SQLException)
+// Unchecked: runtime (NullPointerException, ArrayIndexOutOfBounds)
+
+// Throws — declares exception
+public void readFile() throws IOException {
+    // code that may throw IOException
+}
+
+// Custom exception
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String msg) {
+        super(msg);
+    }
+}</pre>
+        <div class="explain">
+            <strong>Checked vs Unchecked:</strong><br>
+            • <strong>Checked:</strong> Compiler forces you to handle (try-catch or throws). E.g., IOException, SQLException<br>
+            • <strong>Unchecked:</strong> Runtime exceptions. Not forced to handle. E.g., NullPointerException, ArrayIndexOutOfBoundsException
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Array vs ArrayList <span class="badge b-red">Asked</span></h3>
+        <table class="tbl">
+            <tr><th></th><th>Array</th><th>ArrayList</th></tr>
+            <tr><td>Size</td><td>Fixed at creation</td><td>Dynamic (grows/shrinks)</td></tr>
+            <tr><td>Type</td><td>Primitives + Objects</td><td>Objects only (uses wrappers)</td></tr>
+            <tr><td>Syntax</td><td><code>int[] arr = new int[5];</code></td><td><code>ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();</code></td></tr>
+            <tr><td>Methods</td><td>No built-in methods</td><td>add(), remove(), size(), get()</td></tr>
+            <tr><td>Performance</td><td>Faster (no overhead)</td><td>Slightly slower (boxing)</td></tr>
+        </table>
+        <pre>// Array declaration
+int[] arr = new int[5];
+int[] arr2 = {1, 2, 3, 4, 5};
+System.out.println(arr2[0]);     // 1
+System.out.println(arr2.length); // 5
+
+// ArrayList declaration
+import java.util.ArrayList;
+ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+list.add(10);
+list.add(20);
+list.get(0);       // 10
+list.size();       // 2
+list.remove(0);    // removes first element</pre>
+    </div>
+
+    <div class="card">
+        <h3>final vs static vs const <span class="badge b-amber">Asked</span></h3>
+        <table class="tbl">
+            <tr><th>Keyword</th><th>Meaning</th><th>Example</th></tr>
+            <tr><td><code>final</code></td><td>Value cannot be changed after assignment. Variable = constant. Method = can't override. Class = can't inherit.</td><td><code>final int MAX = 100;</code></td></tr>
+            <tr><td><code>static</code></td><td>Belongs to class, not instance. Shared across all objects. No need to create object to access.</td><td><code>static int count = 0;</code></td></tr>
+            <tr><td><code>const</code></td><td>Reserved keyword in Java but NOT used. Use <code>final</code> instead.</td><td>N/A</td></tr>
+        </table>
+        <pre>class Example {
+    static int count = 0;         // shared across all objects
+    final int MAX = 100;          // constant per object
+    static final int GLOBAL = 50; // class-level constant
+
+    static void showCount() {     // can call without object
+        System.out.println(count);
+    }
+}
+
+// Access without object
+Example.showCount();
+System.out.println(Example.GLOBAL);</pre>
+        <div class="explain"><strong>final vs static:</strong> <code>final</code> = value can't change (constant). <code>static</code> = belongs to class, shared. <code>static final</code> = class-level constant (like PI).</div>
+    </div>
+
+    <div class="card">
+        <h3>JDBC — Java Database Connectivity <span class="badge b-amber">Asked</span></h3>
+        <p>JDBC is an API to connect Java applications with databases.</p>
+        <pre>import java.sql.*;
+
+// 5 Steps of JDBC:
+// 1. Load driver
+Class.forName("com.mysql.cj.jdbc.Driver");
+
+// 2. Establish connection
+Connection con = DriverManager.getConnection(
+    "jdbc:mysql://localhost:3306/mydb", "root", "password");
+
+// 3. Create statement
+Statement stmt = con.createStatement();
+
+// 4. Execute query
+ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+while(rs.next()) {
+    System.out.println(rs.getString("name"));
+}
+
+// 5. Close connection
+con.close();</pre>
+        <div class="explain"><strong>5 steps:</strong> Load Driver → Create Connection → Create Statement → Execute Query → Close Connection. Use PreparedStatement for parameterized queries (prevents SQL injection).</div>
+    </div>
+
+    <div class="card">
+        <h3>Method Overriding Code in Java <span class="badge b-red">Asked to write</span></h3>
+        <pre>class Animal {
+    void speak() {
+        System.out.println("Animal speaks");
+    }
+}
+
+class Dog extends Animal {
+    @Override                        // annotation (good practice)
+    void speak() {
+        System.out.println("Dog barks");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    void speak() {
+        System.out.println("Cat meows");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a1 = new Dog();      // parent reference, child object
+        Animal a2 = new Cat();
+        a1.speak();  // "Dog barks"  — runtime polymorphism
+        a2.speak();  // "Cat meows"
+    }
+}</pre>
+    </div>
+
+    <div class="card">
+        <h3>.equals() vs == <span class="badge b-amber">Asked</span></h3>
+        <pre>String s1 = new String("Hello");
+String s2 = new String("Hello");
+
+System.out.println(s1 == s2);       // false — different objects in memory
+System.out.println(s1.equals(s2));  // true  — same content
+
+// With string pool (literals)
+String s3 = "Hello";
+String s4 = "Hello";
+System.out.println(s3 == s4);       // true — same object in string pool
+System.out.println(s3.equals(s4));  // true</pre>
+        <div class="explain"><strong>Rule:</strong> Always use <code>.equals()</code> for content comparison. <code>==</code> compares memory addresses. String literals share the same pool object, but <code>new String()</code> creates separate objects.</div>
+    </div>
+
+    <div class="section-title">Expected Q&A — Java</div>
+    <div class="qa"><div class="q">Q: What are Java Streams?</div><div class="a">Streams provide functional-style operations on collections (filter, map, reduce). Introduced in Java 8. They are lazy — intermediate operations don't execute until a terminal operation (collect, forEach) is called.</div></div>
+    <div class="qa"><div class="q">Q: Checked vs Unchecked exceptions?</div><div class="a">Checked: compiler forces handling (IOException, SQLException). Unchecked: runtime exceptions (NullPointerException, ArrayIndexOutOfBounds). Checked = predictable failures. Unchecked = programming bugs.</div></div>
+    <div class="qa"><div class="q">Q: What is the Diamond Problem in Java?</div><div class="a">Java doesn't allow multiple class inheritance to avoid ambiguity. But supports multiple interface implementation. If two interfaces have same default method, the implementing class must override it to resolve conflict.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                 JAVASCRIPT                    -->
+<!-- ============================================ -->
+<div id="js" class="section">
+    <div class="section-title">JavaScript</div>
+
+    <div class="card">
+        <h3>var / let / const</h3>
+        <table class="tbl">
+            <tr><th></th><th>var</th><th>let</th><th>const</th></tr>
+            <tr><td>Scope</td><td>Function</td><td>Block</td><td>Block</td></tr>
+            <tr><td>Reassign</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+            <tr><td>Redeclare</td><td>Yes</td><td>No</td><td>No</td></tr>
+            <tr><td>Hoisting</td><td>Yes (undefined)</td><td>Yes (TDZ)</td><td>Yes (TDZ)</td></tr>
+        </table>
+        <div class="tip-box"><strong>Always prefer <code>const</code> by default.</strong> Use <code>let</code> only if you need to reassign. Never use <code>var</code> in modern JS.</div>
+    </div>
+
+    <div class="card">
+        <h3>Closures, Callbacks, Event Loop</h3>
+        <pre>// Closure — inner fn remembers outer variable
+function counter() {
+    let c = 0;
+    return function() { c++; return c; };
+}
+let inc = counter();
+console.log(inc()); // 1
+console.log(inc()); // 2
+
+// Event loop output:
+console.log("A");
+setTimeout(() => console.log("B"), 0);
+Promise.resolve().then(() => console.log("C"));
+console.log("D");
+// Output: A D C B
+// Call stack → Microtask (Promise) → Macrotask (setTimeout)</pre>
+        <div class="explain"><strong>Event Loop priority:</strong> Call stack (sync code) → Microtask queue (Promises, .then) → Macrotask queue (setTimeout, setInterval). Microtasks ALWAYS run before macrotasks.</div>
+    </div>
+
+    <div class="card">
+        <h3>Promises & Async/Await</h3>
+        <pre>// Promise
+fetch("https://api.com/users")
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+
+// Async/Await (cleaner syntax)
+async function getData() {
+    try {
+        let res = await fetch("https://api.com/users");
+        let data = await res.json();
+        console.log(data);
+    } catch(e) {
+        console.log(e);
+    }
+}</pre>
+        <div class="explain"><strong>Async/await</strong> is syntactic sugar over Promises. Makes async code look synchronous. Error handling with try/catch instead of .catch().</div>
+    </div>
+
+    <div class="card">
+        <h3>Array Methods</h3>
+        <pre>const arr = [1, 2, 3, 4, 5];
+arr.map(x => x * 2);           // [2,4,6,8,10] — transform
+arr.filter(x => x > 2);        // [3,4,5] — select
+arr.reduce((acc, x) => acc + x, 0);  // 15 — combine
+arr.find(x => x > 3);          // 4 — first match
+arr.some(x => x > 4);          // true — any match?
+arr.every(x => x > 0);         // true — all match?
+arr.forEach(x => console.log(x));    // iterate (no return)</pre>
+    </div>
+
+    <div class="section-title">Expected Q&A — JavaScript</div>
+    <div class="qa"><div class="q">Q: What is a closure?</div><div class="a">A closure is a function that retains access to variables from its outer scope even after the outer function has finished executing. Used for data hiding, maintaining state, and creating private variables.</div></div>
+    <div class="qa"><div class="q">Q: Event loop execution order?</div><div class="a">Call stack runs sync code first. Then microtask queue (Promises) runs ALL pending microtasks. Then ONE macrotask (setTimeout) runs. Repeat. Microtasks always have higher priority.</div></div>
+    <div class="qa"><div class="q">Q: Promise vs Async/Await?</div><div class="a">Both handle async operations. Async/await is built on Promises but provides cleaner, readable syntax — looks synchronous. Error handling: try/catch vs .catch(). Async/await is preferred in modern code.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                    MERN                       -->
+<!-- ============================================ -->
+<div id="mern" class="section">
+    <div class="section-title">MERN Stack</div>
+
+    <div class="card">
+        <h3>What is MERN?</h3>
+        <table class="tbl">
+            <tr><th>Letter</th><th>Technology</th><th>Role</th></tr>
+            <tr><td><strong>M</strong></td><td>MongoDB</td><td>Database (NoSQL, JSON documents)</td></tr>
+            <tr><td><strong>E</strong></td><td>Express.js</td><td>Backend framework (Node.js)</td></tr>
+            <tr><td><strong>R</strong></td><td>React.js</td><td>Frontend library (UI components)</td></tr>
+            <tr><td><strong>N</strong></td><td>Node.js</td><td>Runtime (JavaScript on server)</td></tr>
+        </table>
+        <div class="explain"><strong>Why MERN?</strong> Full JavaScript stack — same language frontend + backend. MongoDB is flexible for dynamic data. React's component model makes UI manageable. Node is non-blocking, good for concurrent connections.</div>
+    </div>
+
+    <div class="card">
+        <h3>Node.js & Express — REST API</h3>
+        <pre>const express = require("express");
+const app = express();
+app.use(express.json());  // middleware to parse JSON body
+
+// GET — retrieve data
+app.get("/users", (req, res) => {
+    res.json({ users: [] });
+});
+
+// POST — create data
+app.post("/user", (req, res) => {
+    const { name, email } = req.body;
+    // save to DB...
+    res.status(201).json({ msg: "User created" });
+});
+
+// Route with params and query
+app.get("/user/:id", (req, res) => {
+    console.log(req.params.id);    // URL param — /user/5
+    console.log(req.query.role);   // Query string — ?role=admin
+    res.json({ id: req.params.id });
+});
+
+// PUT — update, DELETE — remove
+app.put("/user/:id", (req, res) => { /* update */ });
+app.delete("/user/:id", (req, res) => { /* delete */ });
+
+app.listen(3000, () => console.log("Server on port 3000"));</pre>
+        <div class="explain"><strong>REST API:</strong> Representational State Transfer. Uses HTTP methods (GET, POST, PUT, DELETE) to perform CRUD operations. Stateless — each request contains all info needed. Uses JSON for data exchange.</div>
+    </div>
+
+    <div class="card">
+        <h3>What is Postman? <span class="badge b-amber">Asked</span></h3>
+        <p>Postman is a tool to <strong>test APIs</strong> without writing frontend code. You can send HTTP requests (GET, POST, PUT, DELETE) to your backend endpoints, set headers, send JSON body, and see responses. Used for API development, testing, and documentation.</p>
+    </div>
+
+    <div class="card">
+        <h3>Middleware</h3>
+        <pre>// Auth middleware — runs before route handler
+function auth(req, res, next) {
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json({ msg: "No token" });
+    try {
+        const decoded = jwt.verify(token, "secret");
+        req.user = decoded;
+        next();  // pass to next handler
+    } catch(e) {
+        res.status(403).json({ msg: "Invalid token" });
+    }
+}
+
+// Apply middleware to specific route
+app.get("/profile", auth, (req, res) => {
+    res.json({ user: req.user });
+});
+
+// Apply to all routes
+app.use(auth);</pre>
+        <div class="explain"><strong>Middleware</strong> = reusable processing layer between request and response. Runs in order. <code>next()</code> passes control to next middleware/handler. Used for: authentication, logging, error handling, CORS, body parsing.</div>
+    </div>
+
+    <div class="card">
+        <h3>MongoDB & Mongoose</h3>
+        <pre>const mongoose = require("mongoose");
+
+// Define schema
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, unique: true },
+    password: String,
+    createdAt: { type: Date, default: Date.now }
+});
+
+// Pre-save hook (hash password before saving)
+userSchema.pre("save", async function(next) {
+    if (!this.isModified("password")) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+// Create model
+const User = mongoose.model("User", userSchema);
+
+// CRUD operations
+const user = await User.create({ name: "Sai", email: "sai@mail.com" });
+const users = await User.find({ name: "Sai" });
+await User.updateOne({ _id: id }, { name: "Updated" });
+await User.deleteOne({ _id: id });</pre>
+    </div>
+
+    <div class="card">
+        <h3>JWT Authentication</h3>
+        <pre>const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+// Register — hash password
+const hashedPassword = await bcrypt.hash("plaintext", 10);
+
+// Login — compare & generate token
+const match = await bcrypt.compare(inputPassword, storedHash);
+if (match) {
+    const token = jwt.sign(
+        { id: user._id, role: "admin" },
+        "secret_key",
+        { expiresIn: "1h" }
+    );
+    res.json({ token });
+}
+
+// Verify token (in middleware)
+const decoded = jwt.verify(token, "secret_key");</pre>
+        <div class="explain"><strong>How bcrypt.compare works:</strong> Extracts salt from stored hash → re-hashes input with same salt → compares result. This is why same password hashes differently each time (different salt) but compare still works.</div>
+    </div>
+
+    <div class="card">
+        <h3>React Hooks</h3>
+        <pre>import { useState, useEffect } from "react";
+
+function App() {
+    // useState — store and update data
+    const [count, setCount] = useState(0);
+    const [data, setData] = useState([]);
+
+    // useEffect — side effects after render
+    useEffect(() => {
+        // Runs once on mount (empty dependency array)
+        fetch("/api/data")
+            .then(r => r.json())
+            .then(d => setData(d));
+    }, []);
+
+    // useEffect with dependency
+    useEffect(() => {
+        console.log("Count changed:", count);
+    }, [count]);  // runs when count changes
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;Count: {count}&lt;/p&gt;
+            &lt;button onClick={() => setCount(count + 1)}&gt;+1&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</pre>
+        <table class="tbl" style="margin-top:.5rem">
+            <tr><th>Hook</th><th>Purpose</th><th>When it runs</th></tr>
+            <tr><td>useState</td><td>Store component state</td><td>When setState called → re-render</td></tr>
+            <tr><td>useEffect</td><td>Side effects (API calls, DOM)</td><td>After render. Depends on dependency array.</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Making MERN Project Responsive <span class="badge b-amber">Asked</span></h3>
+        <pre>/* CSS Media Queries */
+.container { width: 80%; margin: auto; }
+
+@media (max-width: 768px) {
+    .container { width: 95%; }
+    .sidebar { display: none; }
+    .nav { flex-direction: column; }
+}
+
+/* Flexbox for responsive layouts */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.card {
+    flex: 1 1 300px;  /* grow, shrink, min-width */
+}</pre>
+        <div class="explain"><strong>Approaches:</strong> CSS Media queries, Flexbox/Grid layouts, CSS frameworks (Bootstrap, Tailwind), viewport units (vw, vh, rem). In React, can also use responsive component libraries like Material UI.</div>
+    </div>
+
+    <div class="section-title">Expected Q&A — MERN</div>
+    <div class="qa"><div class="q">Q: What is middleware in Express?</div><div class="a">Functions that run between request and response. Used for auth, logging, error handling, body parsing. Has access to req, res, next(). Write once, apply to many routes.</div></div>
+    <div class="qa"><div class="q">Q: What is REST API?</div><div class="a">Architectural style for APIs. Uses HTTP methods: GET (read), POST (create), PUT (update), DELETE (remove). Stateless, uses JSON. Each URL represents a resource.</div></div>
+    <div class="qa"><div class="q">Q: What is Socket.IO?</div><div class="a">Library for real-time bidirectional communication using WebSockets. Unlike HTTP (request-response), it keeps persistent connection — server can push data instantly without client polling. Used for chat, live tracking, notifications.</div></div>
+    <div class="qa"><div class="q">Q: How does bcrypt compare work?</div><div class="a">bcrypt extracts the salt stored inside the hashed password, re-hashes the input using that same salt, then compares. Same password hashes differently each time (random salt) but compare always works because salt is embedded in hash.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                   AI / ML                     -->
+<!-- ============================================ -->
+<div id="aiml" class="section">
+    <div class="section-title">Artificial Intelligence & Machine Learning</div>
+
+    <div class="card">
+        <h3>What is AI? <span class="badge b-amber">Asked</span></h3>
+        <p><strong>Artificial Intelligence</strong> is the simulation of human intelligence by machines. It enables computers to learn, reason, solve problems, and make decisions.</p>
+        <div class="explain"><strong>AI vs ML:</strong> AI is the broad concept of machines being "smart." ML is a subset of AI where machines learn from data without being explicitly programmed. DL is a subset of ML using neural networks.</div>
+    </div>
+
+    <div class="card">
+        <h3>Types of Machine Learning <span class="badge b-red">Frequent</span></h3>
+        <table class="tbl">
+            <tr><th>Type</th><th>Data</th><th>Goal</th><th>Real Example</th></tr>
+            <tr><td>Supervised</td><td>Labeled (input→output pairs)</td><td>Predict output for new input</td><td>Spam detection, price prediction</td></tr>
+            <tr><td>Unsupervised</td><td>Unlabeled</td><td>Find hidden patterns/groups</td><td>Customer segmentation, anomaly detection</td></tr>
+            <tr><td>Semi-Supervised</td><td>Some labeled + lots unlabeled</td><td>Leverage both</td><td>Medical image classification (few labeled scans)</td></tr>
+            <tr><td>Reinforcement</td><td>Reward/penalty feedback</td><td>Maximize reward through actions</td><td>Game playing AI, self-driving cars, robotics</td></tr>
+        </table>
+    </div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>Supervised Algorithms</h3>
+            <ul>
+                <li><strong>Linear Regression</strong> — predict continuous value (price, salary)</li>
+                <li><strong>Logistic Regression</strong> — binary classification (spam/not, yes/no)</li>
+                <li><strong>Decision Tree</strong> — tree of if-else conditions</li>
+                <li><strong>Random Forest</strong> — ensemble of many decision trees (reduces overfitting)</li>
+                <li><strong>SVM</strong> — finds best boundary between classes</li>
+                <li><strong>KNN</strong> — classifies based on K nearest neighbors</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Unsupervised Algorithms</h3>
+            <ul>
+                <li><strong>K-Means</strong> — partition data into K clusters</li>
+                <li><strong>DBSCAN</strong> — density-based clustering (finds irregular shapes)</li>
+                <li><strong>PCA</strong> — dimensionality reduction (reduce features)</li>
+                <li><strong>Hierarchical Clustering</strong> — tree-like cluster structure</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Linear vs Logistic Regression <span class="badge b-amber">Asked</span></h3>
+        <table class="tbl">
+            <tr><th></th><th>Linear Regression</th><th>Logistic Regression</th></tr>
+            <tr><td>Output</td><td>Continuous number</td><td>Probability (0 to 1)</td></tr>
+            <tr><td>Use</td><td>Price/salary prediction</td><td>Spam/sentiment classification</td></tr>
+            <tr><td>Function</td><td>y = mx + b (straight line)</td><td>Sigmoid: σ(z) = 1/(1+e⁻ᶻ)</td></tr>
+            <tr><td>Type</td><td>Regression</td><td>Classification</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Key ML Concepts <span class="badge b-red">Important</span></h3>
+        <table class="tbl">
+            <tr><th>Concept</th><th>Meaning</th></tr>
+            <tr><td>Overfitting</td><td>Model memorizes training data, performs poorly on new data. Too complex.</td></tr>
+            <tr><td>Underfitting</td><td>Model too simple, can't capture patterns. High error on both train & test.</td></tr>
+            <tr><td>Bias-Variance Tradeoff</td><td>High bias = underfitting. High variance = overfitting. Goal: balance both.</td></tr>
+            <tr><td>Bag of Words</td><td>Text → vector of word frequencies. Simple but loses word order.</td></tr>
+            <tr><td>TF-IDF</td><td>Improved BoW. TF = word frequency in doc. IDF = how rare across all docs. Important words get higher score.</td></tr>
+            <tr><td>Random Forest</td><td>Ensemble of decision trees. Each tree votes. Reduces overfitting vs single tree.</td></tr>
+            <tr><td>Gradient Boosting</td><td>Builds trees sequentially. Each new tree fixes errors of previous. Very accurate (XGBoost, LightGBM).</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Techniques to Avoid Overfitting</h3>
+        <ul>
+            <li><strong>More training data</strong> — reduces memorization</li>
+            <li><strong>Cross-validation</strong> — K-fold validation to test generalization</li>
+            <li><strong>Regularization</strong> — adds penalty for large weights</li>
+            <li><strong>L1 (Lasso)</strong> — can make some weights zero (feature selection)</li>
+            <li><strong>L2 (Ridge)</strong> — shrinks all weights (no zeros)</li>
+            <li><strong>Elastic Net</strong> — combination of L1 + L2</li>
+            <li><strong>Dropout</strong> — randomly disable neurons during training (DL)</li>
+            <li><strong>Early stopping</strong> — stop training when validation error starts increasing</li>
+            <li><strong>Pruning</strong> — reduce decision tree complexity</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Loss Functions</h3>
+        <table class="tbl">
+            <tr><th>Function</th><th>Used For</th><th>Formula Idea</th></tr>
+            <tr><td>MSE (Mean Squared Error)</td><td>Regression</td><td>Average of (predicted - actual)²</td></tr>
+            <tr><td>Cross-Entropy</td><td>Classification</td><td>Measures difference between predicted probability and actual label</td></tr>
+            <tr><td>MAE (Mean Absolute Error)</td><td>Regression</td><td>Average of |predicted - actual|</td></tr>
+        </table>
+    </div>
+
+    <div class="section-title">Deep Learning</div>
+
+    <div class="card">
+        <h3>Neural Network Basics</h3>
+        <table class="tbl">
+            <tr><th>Concept</th><th>Meaning</th></tr>
+            <tr><td>Perceptron</td><td>Single neuron. Takes inputs, applies weights, passes through activation function. Building block of neural networks.</td></tr>
+            <tr><td>Neural Network</td><td>Input layer → Hidden layer(s) → Output layer. Each connection has a weight. Training adjusts weights to minimize loss.</td></tr>
+            <tr><td>Activation Function</td><td>Introduces non-linearity. Without it, network = just linear regression. Common: ReLU, Sigmoid, Tanh, Softmax.</td></tr>
+            <tr><td>Backpropagation</td><td>Algorithm to calculate gradients. Error flows backward from output to input. Weights updated using gradient descent.</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Activation Functions</h3>
+        <table class="tbl">
+            <tr><th>Function</th><th>Range</th><th>Used In</th><th>Key Point</th></tr>
+            <tr><td>ReLU</td><td>[0, ∞)</td><td>Hidden layers</td><td>Most popular. f(x) = max(0, x). Fast.</td></tr>
+            <tr><td>Sigmoid</td><td>(0, 1)</td><td>Binary output</td><td>Squashes to probability. Vanishing gradient issue.</td></tr>
+            <tr><td>Tanh</td><td>(-1, 1)</td><td>Hidden layers</td><td>Zero-centered. Better than sigmoid for hidden.</td></tr>
+            <tr><td>Softmax</td><td>(0, 1) sum=1</td><td>Multi-class output</td><td>Converts scores to probabilities for each class.</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Optimizers in Deep Learning</h3>
+        <table class="tbl">
+            <tr><th>Optimizer</th><th>Key Idea</th></tr>
+            <tr><td>SGD</td><td>Updates weights using gradient of loss. Simple but slow.</td></tr>
+            <tr><td>Adam</td><td>Adaptive learning rate. Combines momentum + RMSprop. Most popular default choice.</td></tr>
+            <tr><td>RMSprop</td><td>Adapts learning rate per parameter. Good for RNNs.</td></tr>
+        </table>
+    </div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>CNN (Convolutional Neural Network)</h3>
+            <p>Specialized for <strong>image data</strong>. Uses convolutional filters to detect features (edges, shapes, textures).</p>
+            <p style="margin-top:.5rem"><strong>Architecture:</strong> Input → Conv layers (feature extraction) → Pooling (downsampling) → Flatten → Dense layers → Output</p>
+            <div class="explain">Used for: image classification, object detection, face recognition.</div>
+        </div>
+        <div class="card">
+            <h3>RNN (Recurrent Neural Network)</h3>
+            <p>Specialized for <strong>sequential data</strong>. Has memory — output depends on current input + previous state.</p>
+            <p style="margin-top:.5rem"><strong>Variants:</strong> LSTM (Long Short-Term Memory), GRU (Gated Recurrent Unit) — solve vanishing gradient problem.</p>
+            <div class="explain">Used for: text generation, translation, speech recognition, time series. <strong>Recurrent</strong> = loops back. <strong>Recursive</strong> = tree structure (different concept).</div>
+        </div>
+    </div>
+
+    <div class="section-title">Advanced — Transformers & LLMs</div>
+
+    <div class="card">
+        <h3>Transformers Architecture</h3>
+        <p>Introduced in "Attention Is All You Need" (2017). Replaced RNNs for NLP tasks. Uses <strong>self-attention mechanism</strong> to process all tokens in parallel (not sequentially like RNN).</p>
+        <table class="tbl">
+            <tr><th>Component</th><th>Purpose</th></tr>
+            <tr><td>Self-Attention</td><td>Each word looks at all other words to understand context. "Bank" means different things in "river bank" vs "bank account."</td></tr>
+            <tr><td>Encoder</td><td>Processes input sequence. Used in BERT.</td></tr>
+            <tr><td>Decoder</td><td>Generates output sequence. Used in GPT.</td></tr>
+            <tr><td>Positional Encoding</td><td>Adds position info since Transformer has no inherent order (unlike RNN).</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>LLMs & RAG</h3>
+        <table class="tbl">
+            <tr><th>Concept</th><th>Meaning</th></tr>
+            <tr><td>LLM</td><td>Large Language Model. Trained on massive text data. Understands and generates human language. Examples: GPT-4, LLaMA, Gemini.</td></tr>
+            <tr><td>Attention</td><td>Mechanism that lets model focus on relevant parts of input. Key innovation in Transformers. Computes relevance score between every pair of tokens.</td></tr>
+            <tr><td>RAG</td><td>Retrieval-Augmented Generation. Instead of relying only on trained knowledge, retrieves relevant documents from external database, then generates answer. Reduces hallucination. Better for up-to-date info.</td></tr>
+        </table>
+        <div class="explain"><strong>RAG Pipeline:</strong> User query → Retrieve relevant documents from vector DB → Feed documents + query to LLM → Generate accurate answer grounded in real data.</div>
+    </div>
+
+    <div class="card">
+        <h3>Agents in AI <span class="badge b-amber">Asked</span></h3>
+        <table class="tbl">
+            <tr><th></th><th>AI Agents</th><th>Agentic AI</th></tr>
+            <tr><td>Definition</td><td>Software entities that perceive environment and take actions to achieve goals</td><td>AI systems that can autonomously plan, decide, and execute multi-step tasks</td></tr>
+            <tr><td>Autonomy</td><td>Follow predefined rules</td><td>Self-directed, can use tools, make decisions</td></tr>
+            <tr><td>Example</td><td>Thermostat, simple chatbot</td><td>AutoGPT, AI that can browse web + write code + deploy</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>AI Replacing Jobs — Interview Answer <span class="badge b-amber">Asked: justify</span></h3>
+        <div class="explain"><strong>Balanced answer:</strong> "AI will transform jobs, not completely replace them. Repetitive tasks will be automated, but AI creates new roles — AI trainers, prompt engineers, AI ethicists. The key is to adapt and upskill. AI is a tool that augments human capability. People who learn to work WITH AI will be more valuable, not less."</div>
+    </div>
+
+    <div class="card">
+        <h3>Sentiment Analysis Pipeline (Code)</h3>
+        <pre>from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+
+texts = ["Great product", "Terrible quality", "Love it", "Very bad"]
+labels = [1, 0, 1, 0]  # 1=positive, 0=negative
+
+# Step 1: Convert text to numbers (TF-IDF)
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(texts)
+
+# Step 2: Train model
+model = LogisticRegression()
+model.fit(X, labels)
+
+# Step 3: Predict
+new_text = vectorizer.transform(["This is amazing"])
+print(model.predict(new_text))  # [1] = positive</pre>
+        <div class="explain"><strong>NLP Pipeline:</strong> Collect data → Clean text (lowercase, remove punctuation) → Tokenize → Remove stop words → Feature extraction (TF-IDF/BoW) → Train model → Predict</div>
+    </div>
+
+    <div class="section-title">Expected Q&A — AI/ML</div>
+    <div class="qa"><div class="q">Q: What is logistic regression?</div><div class="a">Supervised classification algorithm. Uses sigmoid function to predict probability (0 to 1). If probability > 0.5 → class 1, else class 0. Used for binary classification: spam detection, sentiment analysis.</div></div>
+    <div class="qa"><div class="q">Q: What is TF-IDF?</div><div class="a">Term Frequency-Inverse Document Frequency. Converts text to numbers. TF = how often word appears in a document. IDF = how rare it is across all documents. Common words (the, is) get low score. Important/unique words get high score.</div></div>
+    <div class="qa"><div class="q">Q: What is overfitting? How to prevent?</div><div class="a">Model memorizes training data, fails on new data. Prevention: more data, regularization (L1/L2), cross-validation, dropout, early stopping, pruning, simpler model.</div></div>
+    <div class="qa"><div class="q">Q: What is Random Forest?</div><div class="a">Ensemble of many decision trees. Each tree trained on random subset of data. Final prediction = majority vote (classification) or average (regression). Reduces overfitting compared to single decision tree.</div></div>
+    <div class="qa"><div class="q">Q: CNN vs RNN?</div><div class="a">CNN: for spatial data (images). Uses convolutional filters. RNN: for sequential data (text, time series). Has memory/state. CNN processes all at once. RNN processes step by step.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--               CLOUD & SE                      -->
+<!-- ============================================ -->
+<div id="cloud" class="section">
+    <div class="section-title">Software Engineering</div>
+
+    <div class="card">
+        <h3>SDLC Phases</h3>
+        <table class="tbl">
+            <tr><th>Phase</th><th>What happens</th></tr>
+            <tr><td>1. Requirements</td><td>Understand what client needs</td></tr>
+            <tr><td>2. Design</td><td>Plan architecture, DB schema, UI wireframes</td></tr>
+            <tr><td>3. Development</td><td>Actual coding</td></tr>
+            <tr><td>4. Testing</td><td>Find and fix bugs (unit, integration, system)</td></tr>
+            <tr><td>5. Deployment</td><td>Deliver to users / go live</td></tr>
+            <tr><td>6. Maintenance</td><td>Bug fixes, updates, new features</td></tr>
+        </table>
+    </div>
+
+    <div class="grid2">
+        <div class="card">
+            <h3>Agile vs Waterfall</h3>
+            <table class="tbl">
+                <tr><th></th><th>Waterfall</th><th>Agile</th></tr>
+                <tr><td>Approach</td><td>Linear, sequential</td><td>Iterative, incremental</td></tr>
+                <tr><td>Flexibility</td><td>Low (hard to change)</td><td>High (embrace change)</td></tr>
+                <tr><td>Delivery</td><td>End of project only</td><td>Continuous (every sprint)</td></tr>
+                <tr><td>Feedback</td><td>Late</td><td>Early and frequent</td></tr>
+                <tr><td>Best for</td><td>Fixed requirements</td><td>Evolving requirements</td></tr>
+            </table>
+        </div>
+        <div class="card">
+            <h3>Testing Types</h3>
+            <table class="tbl">
+                <tr><th>Type</th><th>Scope</th><th>Who</th></tr>
+                <tr><td>Unit</td><td>Single function/method</td><td>Developer</td></tr>
+                <tr><td>Integration</td><td>Modules working together</td><td>Developer/Tester</td></tr>
+                <tr><td>System</td><td>Full application end-to-end</td><td>QA Team</td></tr>
+                <tr><td>Acceptance</td><td>Client validates requirements</td><td>Client/User</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-title">Cloud Computing</div>
+
+    <div class="card">
+        <h3>Cloud Service Models</h3>
+        <table class="tbl">
+            <tr><th>Model</th><th>You get</th><th>You manage</th><th>Example</th></tr>
+            <tr><td>IaaS</td><td>Virtual servers, storage, network</td><td>OS, apps, data</td><td>AWS EC2, S3</td></tr>
+            <tr><td>PaaS</td><td>Platform to deploy apps</td><td>Apps, data only</td><td>Google App Engine, Heroku</td></tr>
+            <tr><td>SaaS</td><td>Ready-to-use software</td><td>Nothing (just use it)</td><td>Gmail, Google Docs, Slack</td></tr>
+        </table>
+        <div class="explain"><strong>Analogy:</strong> IaaS = renting empty land + building. PaaS = renting a furnished office. SaaS = booking a hotel room — everything ready.</div>
+    </div>
+
+    <div class="card">
+        <h3>AWS Services <span class="badge b-red">Asked if in resume</span></h3>
+        <table class="tbl">
+            <tr><th>Service</th><th>What it does</th><th>Analogy</th></tr>
+            <tr><td><strong>EC2</strong></td><td>Elastic Compute Cloud — virtual servers. Launch, configure, scale compute capacity in the cloud.</td><td>Renting a computer in the cloud</td></tr>
+            <tr><td><strong>S3</strong></td><td>Simple Storage Service — object storage. Store/retrieve any amount of data. Highly durable (99.999999999%).</td><td>Infinite hard drive in the cloud</td></tr>
+            <tr><td><strong>IAM</strong></td><td>Identity & Access Management — controls WHO can access WHAT in your AWS account. Users, roles, policies.</td><td>Security guard + ID cards</td></tr>
+            <tr><td><strong>RDS</strong></td><td>Managed relational database (MySQL, PostgreSQL)</td><td>Database as a service</td></tr>
+            <tr><td><strong>Lambda</strong></td><td>Serverless — run code without managing servers. Pay per execution.</td><td>Run function on demand</td></tr>
+        </table>
+        <pre>// How to connect to S3 (Node.js example)
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3({
+    accessKeyId: "YOUR_KEY",
+    secretAccessKey: "YOUR_SECRET",
+    region: "ap-south-1"
+});
+
+// Upload file
+s3.upload({
+    Bucket: "my-bucket",
+    Key: "file.pdf",
+    Body: fileBuffer
+}).promise();</pre>
+    </div>
+
+    <div class="card">
+        <h3>List of Cloud Platforms <span class="badge b-amber">Asked</span></h3>
+        <table class="tbl">
+            <tr><th>Provider</th><th>Key Strength</th></tr>
+            <tr><td>AWS (Amazon)</td><td>Largest market share, most services (200+)</td></tr>
+            <tr><td>Azure (Microsoft)</td><td>
+Best for enterprise, integrates with Microsoft products</td></tr>
+            <tr><td>GCP (Google)</td><td>Strong in AI/ML, Big Data, Kubernetes</td></tr>
+            <tr><td>IBM Cloud</td><td>Enterprise, hybrid cloud</td></tr>
+            <tr><td>Oracle Cloud</td><td>Database-focused</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>DevOps — CI/CD, Docker</h3>
+        <p><span class="badge b-blue">CI/CD</span> Continuous Integration / Continuous Deployment. Developer pushes code → auto build → auto test → auto deploy.</p>
+        <p style="margin-top:.5rem"><span class="badge b-green">Jenkins</span> Open-source CI/CD automation tool. Automates build, test, deploy pipeline.</p>
+        <p style="margin-top:.5rem"><span class="badge b-amber">Docker</span> Containerization. Packages app + all dependencies into a container. Runs same everywhere — solves "works on my machine" problem.</p>
+        <div class="explain"><strong>Docker terms:</strong> Image = blueprint/template. Container = running instance of image. Dockerfile = instructions to build image. Docker Hub = registry to share images.</div>
+    </div>
+
+    <div class="card">
+        <h3>How to Resolve Conflicts (Git) <span class="badge b-amber">Asked</span></h3>
+        <pre># Pull latest changes
+git pull origin main
+
+# If conflict occurs:
+# 1. Open the conflicted file
+# 2. You'll see markers like:
+# &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+#   your changes
+# =======
+#   their changes
+# &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name
+
+# 3. Manually choose which code to keep
+# 4. Remove the conflict markers
+# 5. Stage and commit
+git add .
+git commit -m "Resolved merge conflict"
+git push</pre>
+        <div class="explain"><strong>Best practices:</strong> Pull frequently to reduce conflicts. Communicate with team about who's working on what. Use feature branches. Review changes before merging.</div>
+    </div>
+
+    <div class="section-title">C Language Libraries <span class="badge b-amber">Asked</span></div>
+    <div class="card">
+        <table class="tbl">
+            <tr><th>Library</th><th>Purpose</th><th>Key Functions</th></tr>
+            <tr><td><code>stdio.h</code></td><td>Standard Input/Output</td><td>printf(), scanf(), fopen(), fclose()</td></tr>
+            <tr><td><code>conio.h</code></td><td>Console I/O (DOS/Windows only)</td><td>getch(), clrscr() — NOT standard C</td></tr>
+            <tr><td><code>stdlib.h</code></td><td>Standard Library — memory, conversion</td><td>malloc(), free(), atoi(), exit()</td></tr>
+            <tr><td><code>string.h</code></td><td>String manipulation</td><td>strlen(), strcpy(), strcmp(), strcat()</td></tr>
+            <tr><td><code>math.h</code></td><td>Math operations</td><td>sqrt(), pow(), ceil(), floor()</td></tr>
+        </table>
+        <div class="explain"><strong>stdio.h vs conio.h:</strong> <code>stdio.h</code> is standard C — works everywhere (Linux, Mac, Windows). <code>conio.h</code> is non-standard, Windows/DOS only — provides console functions like getch(). In interviews, always mention stdio.h is the standard one.</div>
+    </div>
+
+    <div class="section-title">Expected Q&A — Cloud & SE</div>
+    <div class="qa"><div class="q">Q: Agile vs Waterfall?</div><div class="a">Waterfall: linear, sequential, rigid, delivery at end. Agile: iterative, flexible, continuous delivery in sprints. Agile is industry standard today — embraces changing requirements.</div></div>
+    <div class="qa"><div class="q">Q: What is EC2?</div><div class="a">Elastic Compute Cloud — virtual servers in AWS. You can launch, configure, and scale computing capacity on demand. Pay only for what you use. Choose CPU, RAM, storage, OS.</div></div>
+    <div class="qa"><div class="q">Q: What is IAM?</div><div class="a">Identity and Access Management. Controls WHO (users, groups, roles) can access WHAT (services, resources) in your AWS account. Follows principle of least privilege — give minimum required permissions.</div></div>
+    <div class="qa"><div class="q">Q: What is cohesion vs coupling?</div><div class="a">High cohesion = functions in a module are closely related (good). Low coupling = modules depend minimally on each other (good). Aim: high cohesion + low coupling for maintainable code.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                 PROJECTS                      -->
+<!-- ============================================ -->
+<div id="projects" class="section">
+    <div class="section-title">Project Explanations — How to Present</div>
+
+    <div class="card">
+        <h3>Project Explanation Framework <span class="badge b-red">Every Panel</span></h3>
+        <div class="explain"><strong>Use this structure (30-60 seconds):</strong><br>
+            1. <strong>What</strong> — One line about what the project does<br>
+            2. <strong>Problem</strong> — What problem it solves<br>
+            3. <strong>Tech Stack</strong> — Technologies used<br>
+            4. <strong>Your Role</strong> — What YOU specifically built<br>
+            5. <strong>Key Feature</strong> — One standout feature<br>
+            Don't over-explain. Be specific. Stop and let them ask follow-ups.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>TrackMate — 30-second Answer</h3>
+        <p>"TrackMate is a <strong>MERN-based real-time bus tracking system</strong>. Drivers share live GPS via Socket.IO. Backend calculates ETA using OSRM with caching and smoothing, then broadcasts to students and admins. Features include live tracking, ETA, notifications, missed-bus redirect, and public tracking."</p>
+    </div>
+
+    <div class="card">
+        <h3>How ETA is Calculated</h3>
+        <p>"I used <strong>OSRM</strong> (Open Source Routing Machine) for road-based travel time between bus location and stops. Added <strong>caching (15s)</strong> to avoid repeated API calls. Applied <strong>exponential smoothing</strong> so ETA doesn't fluctuate with minor GPS changes. Fallback to speed-based estimation if OSRM is unavailable."</p>
+    </div>
+
+    <div class="card">
+        <h3>How Location is Found</h3>
+        <p>"Driver's browser uses the <strong>Geolocation API</strong> to capture GPS coordinates (latitude, longitude). These are emitted via <strong>Socket.IO</strong> to backend. Backend validates, updates DB, recalculates ETA, and broadcasts to all subscribed clients. Throttling limits update frequency."</p>
+    </div>
+
+    <div class="card">
+        <h3>Challenges & Solutions <span class="badge b-red">Important — Always Prepare</span></h3>
+        <table class="tbl">
+            <tr><th>Challenge</th><th>Solution</th></tr>
+            <tr><td>GPS fluctuation / jitter</td><td>Exponential smoothing + throttling (MIN_UPDATE_INTERVAL_MS)</td></tr>
+            <tr><td>OSRM API failure</td><td>Fallback to speed-based distance/time estimation</td></tr>
+            <tr><td>Stop detection accuracy</td><td>Radius-based detection with sustain time</td></tr>
+            <tr><td>High-frequency location updates</td><td>Throttle updates, cache ETA for 15 seconds</td></tr>
+            <tr><td>Missed bus scenario</td><td>System finds alternative buses on same route</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>RIMS — 30-second Answer</h3>
+        <p>"RCEE RIMS is a <strong>MERN-based research information management system</strong> for faculty. It manages publications, patents, workshops, certifications. I built backend APIs with Express, <strong>JWT auth with bcrypt</strong>, file uploads using <strong>Multer</strong>, email services with <strong>Nodemailer</strong>, and PDF export."</p>
+    </div>
+
+    <div class="section-title">Expected Project Q&A</div>
+    <div class="qa"><div class="q">Q: Why did you choose this tech stack?</div><div class="a">MERN is a full-JavaScript stack — same language for frontend and backend. MongoDB is flexible for dynamic data. Socket.IO enables real-time without polling. React's component model makes UI manageable. Node is non-blocking, good for concurrent connections.</div></div>
+    <div class="qa"><div class="q">Q: How did you handle scalability?</div><div class="a">Throttling limits update frequency. ETA caching avoids repeated OSRM calls. MongoDB supports horizontal scaling. Stateless JWT means any server can handle any request — easy to add more servers.</div></div>
+    <div class="qa"><div class="q">Q: What is Socket.IO used for in your project?</div><div class="a">Real-time bidirectional communication. Driver emits location event → backend processes it → broadcasts trip:location_update to all connected students/admins → frontend listens and updates map marker instantly. No polling needed.</div></div>
+    <div class="qa"><div class="q">Q: What challenges did you face?</div><div class="a">GPS jitter causing ETA fluctuation — solved with exponential smoothing. OSRM API downtime — added fallback estimation. High update frequency — implemented throttling. Always explain: problem → what you tried → final solution.</div></div>
+    <div class="qa"><div class="q">Q: What tools are used in your project?</div><div class="a">MongoDB (database), Express.js (backend), React.js (frontend), Node.js (runtime), Socket.IO (real-time), OSRM (routing/ETA), Leaflet/Mapbox (maps), JWT + bcrypt (auth), Multer (file upload), Nodemailer (email).</div></div>
+    <div class="qa"><div class="q">Q: What models did you use? Why?</div><div class="a">For ML projects: mention the specific model (Logistic Regression, Random Forest, etc.), why you chose it (data type, accuracy needs, interpretability), and what alternatives you considered. Always justify your choice.</div></div>
+</div>
+
+<!-- ============================================ -->
+<!--                HR & TIPS                      -->
+<!-- ============================================ -->
+<div id="hr" class="section">
+    <div class="section-title">HR Questions — Prepared Answers</div>
+
+    <div class="card">
+        <h3>Tell Me About Yourself <span class="badge b-red">Every Panel</span></h3>
+        <p>"I'm [Your Name], a Computer Science Engineering student at [College] with a CGPA of [X]. I have hands-on experience building full-stack applications — [Project 1], a [brief description] using [tech stack], and [Project 2], a [brief description]. I've also done internships in [area]. I'm looking to contribute as a [role] while continuously growing."</p>
+        <div class="tip-box"><strong>Structure:</strong> Name → Education → Skills/Projects (2 lines max) → What you're looking for. Keep it under 60 seconds. Don't recite your resume — highlight what makes you stand out.</div>
+    </div>
+
+    <div class="card">
+        <h3>Why TCS? <span class="badge b-red">Every Panel</span></h3>
+        <p>"TCS is a <strong>global technology leader</strong> known for innovation, scale, and strong learning culture. The Prime role aligns with my backend and full-stack skills. I want to work on challenging, real-world systems at enterprise scale and grow in a structured environment that TCS is known for. TCS's focus on continuous learning and diverse project exposure is what attracts me."</p>
+    </div>
+
+    <div class="card">
+        <h3>What Do You Know About TCS? <span class="badge b-amber">Asked</span></h3>
+        <p>TCS (Tata Consultancy Services) is India's largest IT company and part of the Tata Group. Headquartered in Mumbai. Founded in 1968. Over 600,000+ employees across 46 countries. Revenue ~\$28B+. Offers IT services, consulting, and digital solutions. Known for employee development, stability, and ethical business practices.</p>
+    </div>
+
+    <div class="card">
+        <h3>Strengths & Weaknesses <span class="badge b-red">Frequent</span></h3>
+        <p><span class="badge b-green">Strength</span> "Problem-solving and logical thinking. I enjoy breaking down complex problems — demonstrated in my TrackMate ETA algorithm design where I had to handle GPS fluctuation, caching, and fallback logic."</p>
+        <p style="margin-top:.75rem"><span class="badge b-amber">Weakness</span> "I sometimes spend too long perfecting a solution before testing it. I'm improving this by adopting iterative development — build a working version first, then optimize."</p>
+        <div class="warn-box"><strong>Rule:</strong> Always mention a REAL weakness (not "I work too hard"). Then immediately say how you're IMPROVING it. Shows self-awareness and growth mindset.</div>
+    </div>
+
+    <div class="card">
+        <h3>Where Do You See Yourself in 4-5 Years? <span class="badge b-amber">Asked</span></h3>
+        <p>"In 5 years, I see myself as a senior developer or technical lead at TCS, having worked on multiple enterprise projects. I want to deepen my expertise in [backend/full-stack/cloud] and eventually mentor junior developers. I also plan to pursue relevant certifications to stay current with technology."</p>
+    </div>
+
+    <div class="card">
+        <h3>Why Should We Hire You? <span class="badge b-red">Frequent</span></h3>
+        <p>"I bring a combination of strong technical skills and practical project experience. I've built real-world applications using MERN stack with real-time features and complex algorithms. I'm a quick learner, adaptable, and passionate about solving problems. I'm ready to contribute from day one while continuously growing with TCS."</p>
+    </div>
+
+    <div class="card">
+        <h3>Describe Yourself in One Word</h3>
+        <p><strong>"Adaptable"</strong> — because in my projects I've had to learn new technologies quickly, handle unexpected challenges, and adjust my approach. In a fast-changing industry, adaptability is the most valuable trait.</p>
+        <p style="margin-top:.5rem"><em>Alternatives: Persistent, Curious, Problem-solver, Resourceful</em></p>
+    </div>
+
+    <div class="card">
+        <h3>Which Profession If Not Software?</h3>
+        <p>"If not software, I'd pursue teaching or research in technology. I enjoy explaining complex concepts and have always been drawn to problem-solving — whether that's through code or through education."</p>
+    </div>
+
+    <div class="section-title">Situational / Behavioral Questions</div>
+
+    <div class="card">
+        <h3>Common Situational Questions & Answers</h3>
+
+        <div class="qa"><div class="q">Q: If assigned to a project using technologies you don't know, what will you do?</div><div class="a">"I'd take it as a learning opportunity. I'd start by understanding the fundamentals through documentation and online resources. I'd ask senior team members for guidance. In my experience, I learned Socket.IO and OSRM integration from scratch for my TrackMate project — so I'm confident in picking up new technologies quickly."</div></div>
+
+        <div class="qa"><div class="q">Q: If your teammate doesn't agree with your approach, what will you do?</div><div class="a">"I'd listen to their perspective first — they might have a valid point I haven't considered. I'd present my reasoning with technical justification. If we still disagree, I'd suggest we prototype both approaches and let the results decide. The goal is the best solution, not winning the argument."</div></div>
+
+        <div class="qa"><div class="q">Q: Two tasks with the same deadline — how do you handle it?</div><div class="a">"I'd assess which task has higher business impact and dependencies. I'd break both into smaller subtasks, estimate time for each, and create a schedule. If truly impossible to do both alone, I'd communicate early to my manager and ask for support or deadline adjustment. Proactive communication is key."</div></div>
+
+        <div class="qa"><div class="q">Q: If you're the only team member left and the project must be completed?</div><div class="a">"I'd prioritize the most critical deliverables, focus on MVP (minimum viable product), and communicate realistic timelines to stakeholders. I'd put in extra effort but also flag the situation to management early — not as a complaint but as a status update so they can make informed decisions."</div></div>
+
+        <div class="qa"><div class="q">Q: Can you handle multitasking?</div><div class="a">"Yes, during my college projects I often balanced academics, project work, and internships simultaneously. I use prioritization and time-blocking to manage multiple tasks. The key is not doing everything at once, but switching context efficiently and meeting deadlines."</div></div>
+
+        <div class="qa"><div class="q">Q: What if you get another job with more pay? Will you leave TCS?</div><div class="a">"I'm not just looking for a paycheck — I want the right environment to grow. TCS offers learning opportunities, global exposure, and career stability that smaller companies can't match. I believe in long-term commitment and building expertise, not job-hopping for short-term gains."</div></div>
+
+        <div class="qa"><div class="q">Q: If in case we select you for Ninja role instead of Prime?</div><div class="a">"I'd accept it and prove my capabilities. The role is a starting point — what matters more is the work I do and the value I bring. I'm confident that through consistent performance, I can grow into higher roles within TCS."</div></div>
+    </div>
+
+    <div class="section-title">Relocation & Logistics <span class="badge b-red">Every Panel</span></div>
+    <div class="card">
+        <div class="qa"><div class="q">Q: Are you willing to relocate?</div><div class="a">"Yes, absolutely. I'm flexible and ready to relocate anywhere TCS needs me."</div></div>
+        <div class="qa"><div class="q">Q: Preferred locations?</div><div class="a">"Hyderabad, Bangalore, and Chennai are my top preferences, but I'm open to any location." <em>(Always say you're open — then mention preferences)</em></div></div>
+        <div class="qa"><div class="q">Q: Flexible with rotational/night shifts?</div><div class="a">"Yes, I'm comfortable with rotational shifts. I understand that working with global clients requires flexibility in timing."</div></div>
+        <div class="qa"><div class="q">Q: Are you okay with the 1-year service bond?</div><div class="a">"Yes, I'm committed to building my career at TCS. One year is a reasonable timeframe to learn and contribute meaningfully."</div></div>
+        <div class="qa"><div class="q">Q: Tell me about your family.</div><div class="a">"My father is [occupation], my mother is [occupation/homemaker]. I have [siblings if any]. My family is supportive of my career choices and is comfortable with relocation."</div></div>
+    </div>
+
+    <div class="section-title">MR Logical Puzzles</div>
+    <div class="card">
+        <div class="qa"><div class="q">Q: In a pond, I pick one lotus and it doubles daily. In 30 days it covers half the pond. When will it cover the entire pond?</div><div class="a"><strong>Answer: 31 days.</strong> If it doubles daily and covers half on day 30, it will double again on day 31 to cover the full pond. The key insight: doubling means going from half → full takes just one more day.</div></div>
+        <div class="qa"><div class="q">Q: Today is Thursday. What is the day after 45 days?</div><div class="a"><strong>Answer: Saturday.</strong> 45 ÷ 7 = 6 weeks + 3 extra days. Thursday + 3 days = Friday, Saturday, Sunday. Wait — Thursday + 1 = Friday, +2 = Saturday, +3 = Sunday. So 45 days from Thursday = <strong>Sunday</strong>. (Count carefully: 45 mod 7 = 3, Thursday + 3 = Sunday)</div></div>
+    </div>
+
+    <div class="section-title">Interview Strategy & Tips</div>
+    <div class="card">
+        <h3>💡 Golden Rules</h3>
+        <table class="tbl">
+            <tr><th>Tip</th><th>How to Apply</th></tr>
+            <tr><td>Don't say "I don't know"</td><td>Say "I'm not fully sure, but based on my understanding..." then give your best answer</td></tr>
+            <tr><td>Think aloud</td><td>Explain your approach before writing code. Shows thinking process.</td></tr>
+            <tr><td>Connect to your project</td><td>Use TrackMate/RIMS examples for every concept when possible</td></tr>
+            <tr><td>1-line answer first</td><td>Give concise answer, then expand with details if they ask more</td></tr>
+            <tr><td>Ask clarification</td><td>"Should I optimize for time or space?" — shows maturity</td></tr>
+            <tr><td>Be honest</td><td>If you haven't used a technology, say so. Then mention how quickly you learn new things.</td></tr>
+            <tr><td>Be specific about projects</td><td>Don't ramble. State problem → approach → tools → outcome. Stop and let them ask.</td></tr>
+            <tr><td>Prepare your resume thoroughly</td><td>They WILL ask about anything on your resume. If you listed it, you must know it in depth.</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>📋 Documents Checklist</h3>
+        <table class="tbl">
+            <tr><th>☐</th><th>Document</th><th>Format</th></tr>
+            <tr><td>☐</td><td>Resume</td><td>2 hard copies</td></tr>
+            <tr><td>☐</td><td>TCS Application Form (download from NextStep Portal)</td><td>Hard copy</td></tr>
+            <tr><td>☐</td><td>Government ID Proof (Aadhaar/PAN/Passport)</td><td>Original + xerox</td></tr>
+            <tr><td>☐</td><td>College ID Proof</td><td>Original</td></tr>
+            <tr><td>☐</td><td>Aadhaar Card</td><td>Original + xerox</td></tr>
+            <tr><td>☐</td><td>10th Marksheet</td><td>Hard + soft copy</td></tr>
+            <tr><td>☐</td><td>12th Marksheet</td><td>Hard + soft copy</td></tr>
+            <tr><td>☐</td><td>Graduation/PG Marksheets</td><td>Hard + soft copy</td></tr>
+            <tr><td>☐</td><td>Work Experience docs (if applicable)</td><td>Hard + soft copy</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>🎯 Last-Day Revision Priority</h3>
+        <p><span class="badge b-red">🔴 HIGH</span> Self intro + Why TCS (practice out loud)</p>
+        <p><span class="badge b-red">🔴 HIGH</span> Project explanation + challenges + tech used</p>
+        <p><span class="badge b-red">🔴 HIGH</span> OOP concepts with real examples + code</p>
+        <p><span class="badge b-red">🔴 HIGH</span> Coding: Fibonacci, Factorial, Prime, Reverse, Char count</p>
+        <p><span class="badge b-amber">🟡 MEDIUM</span> SQL queries (aggregate, GROUP BY, 2nd highest)</p>
+        <p><span class="badge b-amber">🟡 MEDIUM</span> DBMS (normalization, joins, ACID)</p>
+        <p><span class="badge b-amber">🟡 MEDIUM</span> OS (deadlock, process vs thread)</p>
+        <p><span class="badge b-amber">🟡 MEDIUM</span> CN (OSI layers, TCP vs UDP, HTTP vs HTTPS)</p>
+        <p><span class="badge b-blue">🔵 LOWER</span> Cloud, SE, advanced AI/ML (only if in resume)</p>
+    </div>
+</div>
+
+</div><!-- end .wrap -->
+
+<script>
+function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo({ top: document.getElementById(id).offsetTop - 120, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

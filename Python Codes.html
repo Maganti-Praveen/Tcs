@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Revision Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 16px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dce1e8;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e0e4ea;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #eef1f5;
+            padding: 10px 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #2c3e50;
+            border-bottom: 1px solid #e0e4ea;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header::after {
+            content: '▼';
+            font-size: 0.7rem;
+            color: #888;
+            transition: transform 0.2s;
+        }
+
+        .card-header.collapsed::after {
+            transform: rotate(-90deg);
+        }
+
+        .card-body {
+            padding: 12px 14px;
+            overflow-x: auto;
+        }
+
+        .card-body.hidden {
+            display: none;
+        }
+
+        pre {
+            background-color: #f8f9fb;
+            border: 1px solid #e8ebf0;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: #34495e;
+            margin: 24px 0 12px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e0e4ea;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #f9fafb;
+            border-left: 3px solid #bcc3ce;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            pre {
+                font-size: 0.75rem;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📒 Python Revision Notes</h1>
+
+    <!-- SECTION: Basic Problems -->
+    <h2 class="section-title">Basic Problems</h2>
+
+    <!-- Fibonacci -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">1. Fibonacci Series</div>
+        <div class="card-body">
+            <div class="note">Generate the first <b>n</b> Fibonacci numbers using iteration.</div>
+<pre>
+def fibo(n):
+    r=[]
+    a=0
+    b=1
+    for i in range(n):
+        r.append(a)
+        a,b=b,a+b
+    return r
+</pre>
+        </div>
+    </div>
+
+    <!-- Factorial -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">2. Factorial (Recursion)</div>
+        <div class="card-body">
+            <div class="note">Calculate factorial of <b>n</b> using recursion. Returns "Not Possible" for negative numbers.</div>
+<pre>
+def fact(n):
+    if n&lt;0:
+        return "Not Possible"
+    elif n&lt;=1:
+        return 1
+    return n*fact(n-1)
+</pre>
+        </div>
+    </div>
+
+    <!-- Palindrome -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">3. Palindrome Check</div>
+        <div class="card-body">
+            <div class="note">Check if a string is a palindrome using two-pointer approach.</div>
+<pre>
+def pali(s):
+    l,r=0,len(s)-1
+    while l&lt;r:
+        if s[l]!=s[r]:
+            return False
+        l+=1
+        r-=1
+    return True
+</pre>
+        </div>
+    </div>
+
+    <!-- Armstrong -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">4. Armstrong Number</div>
+        <div class="card-body">
+            <div class="note">Check if a number is an Armstrong number (sum of digits raised to the power of number of digits equals the number).</div>
+<pre>
+def arm(n):
+    l=len(str(n))
+    s=0
+    t=n
+    while t:
+        d=t%10
+        s+=d**l
+        t//=10
+    if s!=n:
+        return False
+    return True
+</pre>
+        </div>
+    </div>
+
+    <!-- Reverse String -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">5. Reverse a String</div>
+        <div class="card-body">
+            <div class="note">Reverse a string by prepending each character.</div>
+<pre>
+def revstr(s):
+    r=""
+    for i in s:
+        r=i+r
+    return r
+</pre>
+        </div>
+    </div>
+
+    <!-- Reverse Number -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">6. Reverse a Number</div>
+        <div class="card-body">
+            <div class="note">Reverse digits of a number using modulo and integer division.</div>
+<pre>
+def revnum(n):
+    r=0
+    t=n
+    while t:
+        d=t%10
+        r=r*10+d
+        t//=10
+    return r
+</pre>
+        </div>
+    </div>
+
+    <!-- Prime Check -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">7. Prime Number Check</div>
+        <div class="card-body">
+            <div class="note">Check if a number is prime by testing divisibility up to n//2.</div>
+<pre>
+def isprime(n):
+    for i in range(2,n//2):
+        if n%i==0:
+            return False
+    return True
+</pre>
+        </div>
+    </div>
+
+    <!-- Strong Number -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">8. Strong Number Check</div>
+        <div class="card-body">
+            <div class="note">A strong number is one where the sum of factorials of its digits equals the number itself. E.g., 145 = 1! + 4! + 5!</div>
+<pre>
+def isstrong(n):
+    s=0
+    t=n
+    while t:
+        d=t%10
+        s+=fact(d)
+        t//=10
+    return n==s
+</pre>
+        </div>
+    </div>
+
+    <!-- Batsman Strike Rate -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">9. Batsman Strike Rate</div>
+        <div class="card-body">
+            <div class="note">Calculate batsman strike rate: (runs / balls) × 100.</div>
+<pre>
+def batstrike(b,t):
+    return (b/t)*100
+</pre>
+        </div>
+    </div>
+
+    <!-- SECTION: String Problems -->
+    <h2 class="section-title">String Problems</h2>
+
+    <!-- Count Characters -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">10. Count Characters in a String</div>
+        <div class="card-body">
+            <div class="note">Count frequency of each character using a dictionary.</div>
+<pre>
+def countchar(s):
+    d={}
+    for i in s:
+        if i in d:
+            d[i]+=1
+        else:
+            d[i]=1
+    for i in d:
+        print(i,":",d[i])
+</pre>
+        </div>
+    </div>
+
+    <!-- Remove Duplicates -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">11. Remove Duplicates from String</div>
+        <div class="card-body">
+            <div class="note">Keep only the first occurrence of each character.</div>
+<pre>
+def remdup(s):
+    r=""
+    for i in s:
+        if i not in r:
+            r+=i
+    return r
+</pre>
+        </div>
+    </div>
+
+    <!-- Reverse Words v1 -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">12. Reverse Words in Sentence (v1 — reverse order + reverse each word)</div>
+        <div class="card-body">
+            <div class="note">Reverse the order of words AND reverse each word individually.</div>
+<pre>
+def revwrdinssen1(s):
+    l=s.split(" ")
+    l=l[::-1]
+    s=""
+    for i in l:
+        s+=i[::-1]+" "
+    return s
+</pre>
+        </div>
+    </div>
+
+    <!-- Reverse Words v2 -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">13. Reverse Words in Sentence (v2 — reverse each word only)</div>
+        <div class="card-body">
+            <div class="note">Reverse each word individually but keep the original order.</div>
+<pre>
+def revwrdinssen2(s):
+    l=s.split(" ")
+    s=""
+    for i in l:
+        s+=i[::-1]+" "
+    return s
+</pre>
+        </div>
+    </div>
+
+    <!-- SECTION: Patterns -->
+    <h2 class="section-title">Pattern Problems</h2>
+
+    <!-- Triangular Patterns -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">14. Triangular Patterns (Star &amp; Number)</div>
+        <div class="card-body">
+            <div class="note">
+                Star pattern: &nbsp; * / ** / *** / **** <br>
+                Number pattern: 1 / 12 / 123 / 1234
+            </div>
+<pre>
+# Star Pattern
+def star_triangle(n):
+    for i in range(1, n+1):
+        print("*" * i)
+
+# Number Pattern
+def num_triangle(n):
+    for i in range(1, n+1):
+        for j in range(1, i+1):
+            print(j, end="")
+        print()
+
+star_triangle(4)
+num_triangle(4)
+</pre>
+        </div>
+    </div>
+
+    <!-- SECTION: Matrix -->
+    <h2 class="section-title">Matrix Operations</h2>
+
+    <!-- Matrix Addition -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">15. Matrix Addition — O(r×c)</div>
+        <div class="card-body">
+            <div class="note">Add two matrices element by element.</div>
+<pre>
+def add_matrix(a, b, r, c):
+    result = [[0]*c for _ in range(r)]
+    for i in range(r):
+        for j in range(c):
+            result[i][j] = a[i][j] + b[i][j]
+    return result
+</pre>
+        </div>
+    </div>
+
+    <!-- Matrix Transpose -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">16. Matrix Transpose — O(r×c)</div>
+        <div class="card-body">
+            <div class="note">Swap rows and columns of a matrix.</div>
+<pre>
+def transpose(a, r, c):
+    result = [[0]*r for _ in range(c)]
+    for i in range(r):
+        for j in range(c):
+            result[j][i] = a[i][j]
+    return result
+</pre>
+        </div>
+    </div>
+
+    <!-- Matrix Multiplication -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">17. Matrix Multiplication — O(n³)</div>
+        <div class="card-body">
+            <div class="note">Multiply two matrices. Condition: columns of A must equal rows of B.</div>
+<pre>
+def multiply(a, b, r1, c1, r2, c2):
+    if c1 != r2:
+        return "Cannot multiply! c1 must equal r2"
+    result = [[0]*c2 for _ in range(r1)]
+    for i in range(r1):
+        for j in range(c2):
+            for k in range(c1):
+                result[i][j] += a[i][k] * b[k][j]
+    return result
+
+# Example
+a = [[1,2,3],[4,5,6]]       # 2×3
+b = [[7,8],[9,10],[11,12]]   # 3×2
+print(multiply(a, b, 2, 3, 3, 2))
+# Output: [[58,64],[139,154]]  (2×2 result)
+</pre>
+        </div>
+    </div>
+
+    <!-- SECTION: OOP / Banking -->
+    <h2 class="section-title">OOP — Banking &amp; ATM System</h2>
+
+    <!-- Bank Classes -->
+    <div class="card">
+        <div class="card-header" onclick="toggle(this)">18. Bank, Savings, Current Account &amp; ATM (Inheritance)</div>
+        <div class="card-body">
+            <div class="note">
+                <b>Bank</b> — Base class with deposit, withdraw, check balance.<br>
+                <b>Sa (Savings)</b> — Inherits Bank, overrides withdrawal.<br>
+                <b>Ca (Current)</b> — Inherits Bank, allows ₹1000 overdraft.<br>
+                <b>Atm</b> — Menu-driven ATM interface using composition.
+            </div>
+<pre>
+class Bank():
+    def __init__(self, balance=0):
+        self.balance=balance
+
+    def checkbalance(self):
+        print("Balance: ",self.balance)
+
+    def withdrawl(self, amount):
+        if amount&lt;=self.balance:
+            self.balance-=amount
+            print(f"Withdrawl of {amount} Successfull")
+        else:
+            print("Insufficient funds")
+
+    def deposite(self, amount):
+        self.balance+=amount
+        print("Amount Deposited Successfully")
+
+
+class Sa(Bank):
+    def withdrawl(self, amt):
+        if amt&lt;=self.balance:
+            self.balance-=amt
+            print(amt," Withdrawed from savings account")
+        else:
+            print("Insufficient funds in savings account")
+
+
+class Ca(Bank):
+    def withdrawl(self, amt):
+        limit=self.balance+1000
+        if amt&lt;=limit:
+            self.balance-=amt
+            print(amt," successfully withdrawn from current account")
+        else:
+            print("Insufficient funds in your current account")
+
+
+class Atm:
+    def __init__(self, account):
+        self.account=account
+
+    def start(self):
+        while True:
+            print("1.Deposite\n2.Withdrawl\n3.GetBalance\n4.Exit")
+            n=int(input())
+            if n==1:
+                amt=int(input("Enter the amount to deposite"))
+                self.account.deposite(amt)
+            elif n==2:
+                amt=int(input("Enter the amount to withdraw"))
+                self.account.withdrawl(amt)
+            elif n==3:
+                self.account.checkbalance()
+            elif n==4:
+                print("Thank you for using our services!")
+                break
+            else:
+                print("Invalid Choice")
+
+
+# --- Driver Code ---
+print("1.Savings Account\n2.Current Account")
+n=int(input())
+if n==1:
+    acc=Sa()
+elif n==2:
+    acc=Ca()
+atm= Atm(acc)
+atm.start()
+</pre>
+        </div>
+    </div>
+
+    <p style="text-align:center; color:#aaa; margin-top:30px; font-size:0.8rem;">— End of Revision Notes —</p>
+
+    <script>
+        function toggle(header) {
+            const body = header.nextElementSibling;
+            body.classList.toggle('hidden');
+            header.classList.toggle('collapsed');
+        }
+    </script>
+
+</body>
+</html>

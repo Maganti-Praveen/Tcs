@@ -1,0 +1,2487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Revision Notes — MERN / Interview Prep</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa; color: #333; padding: 14px; line-height: 1.6;
+        }
+        h1 {
+            text-align: center; font-size: 1.4rem; color: #2c3e50;
+            margin-bottom: 6px; padding-bottom: 8px; border-bottom: 2px solid #dce1e8;
+        }
+        .subtitle {
+            text-align: center; font-size: 0.8rem; color: #888; margin-bottom: 18px;
+        }
+        .section-title {
+            font-size: 1.1rem; color: #34495e; margin: 22px 0 10px 0;
+            padding: 6px 10px; background: #e8ecf1; border-left: 4px solid #5b8c5a;
+            border-radius: 3px;
+        }
+        .card {
+            background: #fff; border: 1px solid #e0e4ea;
+            border-radius: 8px; margin-bottom: 12px; overflow: hidden;
+        }
+        .card-header {
+            background: #eef1f5; padding: 9px 12px; font-weight: 600;
+            font-size: 0.92rem; color: #2c3e50; border-bottom: 1px solid #e0e4ea;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+        }
+        .card-header::after {
+            content: '▼'; font-size: 0.65rem; color: #999; transition: transform 0.2s;
+        }
+        .card-header.collapsed::after { transform: rotate(-90deg); }
+        .card-body { padding: 10px 12px; }
+        .card-body.hidden { display: none; }
+        .note {
+            font-size: 0.82rem; color: #666; margin-bottom: 8px;
+            padding: 5px 9px; background: #f9fafb; border-left: 3px solid #bcc3ce;
+            border-radius: 2px;
+        }
+        .query-row { display: flex; gap: 10px; }
+        .query-code { flex: 1; min-width: 0; }
+        .query-output { flex: 1; min-width: 0; }
+        .label {
+            font-size: 0.72rem; font-weight: 600; color: #7f8c8d;
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+        }
+        pre {
+            background: #f8f9fb; border: 1px solid #e8ebf0; border-radius: 5px;
+            padding: 10px; font-size: 0.78rem; font-family: 'Courier New', monospace;
+            white-space: pre; overflow-x: auto; line-height: 1.45;
+        }
+        .query-output pre { background: #f0fdf4; border-color: #d1e7dd; }
+        .data-card pre { background: #fffbeb; border-color: #fde68a; }
+        .tip-box {
+            background: #fff7ed; border: 1px solid #fed7aa; border-radius: 6px;
+            padding: 10px 12px; font-size: 0.82rem; color: #92400e; margin: 12px 0;
+        }
+        .tip-box b { color: #78350f; }
+        .vs-box {
+            background: #f0f4ff; border: 1px solid #c7d2fe; border-radius: 6px;
+            padding: 10px 12px; font-size: 0.8rem; color: #3730a3; margin: 12px 0;
+        }
+        .vs-box b { color: #312e81; }
+        @media (max-width: 700px) {
+            body { padding: 8px; }
+            .query-row { flex-direction: column; gap: 6px; }
+            pre { font-size: 0.72rem; padding: 8px; }
+            h1 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>🍃 MongoDB Revision Notes</h1>
+<p class="subtitle">MERN Stack / Interview Prep — 55+ Commands &amp; Queries</p>
+
+<!-- ==================== SAMPLE DATA ==================== -->
+<div class="card data-card">
+    <div class="card-header" onclick="toggle(this)">📂 Sample Data Used for All Outputs</div>
+    <div class="card-body">
+        <div class="note">All outputs below are based on this data. Refer back here anytime.</div>
+        <div class="label">employees collection</div>
+<pre>
+{ _id: 1, name: "Amit",  department: "IT",    salary: 60000, manager_id: null, skills: ["Node","React"],     joinDate: "2022-01-10" }
+{ _id: 2, name: "Ravi",  department: "HR",    salary: 40000, manager_id: 1,    skills: ["Excel","PPT"],      joinDate: "2021-03-15" }
+{ _id: 3, name: "Priya", department: "IT",    salary: 55000, manager_id: 1,    skills: ["Python","MongoDB"], joinDate: "2023-02-20" }
+{ _id: 4, name: "Neha",  department: "Sales", salary: 35000, manager_id: 2,    skills: ["Excel"],            joinDate: "2022-06-01" }
+{ _id: 5, name: "Arjun", department: "HR",    salary: 45000, manager_id: 1,    skills: ["PPT","Word"],       joinDate: "2020-11-10" }
+{ _id: 6, name: "Suman", department: "IT",    salary: 70000, manager_id: null, skills: ["React","Node","AWS"], joinDate: "2023-05-15" }
+</pre>
+        <br>
+        <div class="label">departments collection</div>
+<pre>
+{ _id: 1, dept_name: "IT",      location: "Bangalore" }
+{ _id: 2, dept_name: "HR",      location: "Mumbai" }
+{ _id: 3, dept_name: "Sales",   location: "Delhi" }
+{ _id: 4, dept_name: "Finance", location: "Chennai" }
+</pre>
+    </div>
+</div>
+
+<div class="vs-box">
+    <b>🔄 SQL vs MongoDB — Quick Mapping:</b><br>
+    Database → Database &nbsp;|&nbsp; Table → Collection &nbsp;|&nbsp; Row → Document &nbsp;|&nbsp; Column → Field<br>
+    JOIN → $lookup &nbsp;|&nbsp; GROUP BY → $group &nbsp;|&nbsp; WHERE → $match / find filter
+</div>
+
+<!-- ==================== SECTION 1: DATABASE & COLLECTION ==================== -->
+<h2 class="section-title">Section 1 — Database &amp; Collection Operations</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q1. Show All Databases</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+show dbs
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+admin     0.000GB
+config    0.000GB
+local     0.000GB
+mycompany 0.001GB
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q2. Create / Switch to Database</div>
+    <div class="card-body">
+        <div class="note">MongoDB creates DB automatically when you first insert data into it.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+use mycompany
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+switched to db mycompany
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q3. Show Current Database</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+mycompany
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q4. Create Collection</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.createCollection("employees")
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ "ok" : 1 }
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q5. Show All Collections</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+show collections
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+employees
+departments
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q6. Drop Collection</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.drop()
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+true
+
+// Collection 'employees'
+// permanently deleted.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q7. Drop Database</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.dropDatabase()
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  "dropped": "mycompany",
+  "ok": 1
+}
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 2: INSERT ==================== -->
+<h2 class="section-title">Section 2 — Insert Operations (Create)</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q8. insertOne — Single Document</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.insertOne({
+  _id: 1,
+  name: "Amit",
+  department: "IT",
+  salary: 60000,
+  manager_id: null,
+  skills: ["Node","React"],
+  joinDate: "2022-01-10"
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  insertedId: 1
+}
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q9. insertMany — Multiple Documents</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.insertMany([
+ {_id:2, name:"Ravi",
+  department:"HR",
+  salary:40000,
+  manager_id:1,
+  skills:["Excel","PPT"],
+  joinDate:"2021-03-15"},
+ {_id:3, name:"Priya",
+  department:"IT",
+  salary:55000,
+  manager_id:1,
+  skills:["Python","MongoDB"],
+  joinDate:"2023-02-20"},
+ {_id:4, name:"Neha",
+  department:"Sales",
+  salary:35000,
+  manager_id:2,
+  skills:["Excel"],
+  joinDate:"2022-06-01"},
+ {_id:5, name:"Arjun",
+  department:"HR",
+  salary:45000,
+  manager_id:1,
+  skills:["PPT","Word"],
+  joinDate:"2020-11-10"},
+ {_id:6, name:"Suman",
+  department:"IT",
+  salary:70000,
+  manager_id:null,
+  skills:["React","Node","AWS"],
+  joinDate:"2023-05-15"}
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  insertedIds: {
+    0: 2,
+    1: 3,
+    2: 4,
+    3: 5,
+    4: 6
+  }
+}
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 3: FIND / READ ==================== -->
+<h2 class="section-title">Section 3 — Find / Read Operations</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q10. find() — Get All Documents</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL Equivalent:</b> SELECT * FROM employees;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find()
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  department:"IT",
+  salary:60000, ... }
+{ _id:2, name:"Ravi",
+  department:"HR",
+  salary:40000, ... }
+{ _id:3, name:"Priya", ... }
+{ _id:4, name:"Neha", ... }
+{ _id:5, name:"Arjun", ... }
+{ _id:6, name:"Suman", ... }
+(6 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q11. find() with pretty()</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find().pretty()
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  "_id": 1,
+  "name": "Amit",
+  "department": "IT",
+  "salary": 60000,
+  "manager_id": null,
+  "skills": ["Node","React"],
+  "joinDate": "2022-01-10"
+}
+// ... (formatted nicely)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q12. findOne() — Single Document</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.findOne(
+  { name: "Amit" }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  _id: 1,
+  name: "Amit",
+  department: "IT",
+  salary: 60000,
+  manager_id: null,
+  skills: ["Node","React"],
+  joinDate: "2022-01-10"
+}
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q13. find() with Filter — IT Department</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT * FROM employees WHERE department = 'IT';</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find(
+  { department: "IT" }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  salary:60000, ... }
+{ _id:3, name:"Priya",
+  salary:55000, ... }
+{ _id:6, name:"Suman",
+  salary:70000, ... }
+(3 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q14. Projection — Select Specific Fields</div>
+    <div class="card-body">
+        <div class="note">1 = include, 0 = exclude. Cannot mix (except _id).</div>
+        <div class="vs-box"><b>SQL:</b> SELECT name, salary FROM employees;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find(
+  {},
+  { name: 1, salary: 1, _id: 0 }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ name:"Amit",  salary:60000 }
+{ name:"Ravi",  salary:40000 }
+{ name:"Priya", salary:55000 }
+{ name:"Neha",  salary:35000 }
+{ name:"Arjun", salary:45000 }
+{ name:"Suman", salary:70000 }
+(6 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 4: COMPARISON OPERATORS ==================== -->
+<h2 class="section-title">Section 4 — Query / Comparison Operators</h2>
+
+<div class="tip-box">
+    <b>📝 Key Operators:</b> $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin, $and, $or, $not, $exists, $regex
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q15. $gt — Salary Greater Than 50000</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT * FROM employees WHERE salary &gt; 50000;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find(
+  { salary: { $gt: 50000 } }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  salary:60000 }
+{ _id:3, name:"Priya",
+  salary:55000 }
+{ _id:6, name:"Suman",
+  salary:70000 }
+(3 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q16. $gte, $lte — Salary Between Range</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> ... WHERE salary BETWEEN 30000 AND 60000;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  salary: {
+    $gte: 30000,
+    $lte: 60000
+  }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",  sal:60000 }
+{ _id:2, name:"Ravi",  sal:40000 }
+{ _id:3, name:"Priya", sal:55000 }
+{ _id:4, name:"Neha",  sal:35000 }
+{ _id:5, name:"Arjun", sal:45000 }
+(5 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q17. $ne — Not Equal</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> ... WHERE department != 'IT';</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  department: { $ne: "IT" }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:2, name:"Ravi",
+  department:"HR" }
+{ _id:4, name:"Neha",
+  department:"Sales" }
+{ _id:5, name:"Arjun",
+  department:"HR" }
+(3 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q18. $in — Multiple Values</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> ... WHERE department IN ('IT','HR');</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  department: {
+    $in: ["IT", "HR"]
+  }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",  dept:"IT" }
+{ _id:2, name:"Ravi",  dept:"HR" }
+{ _id:3, name:"Priya", dept:"IT" }
+{ _id:5, name:"Arjun", dept:"HR" }
+{ _id:6, name:"Suman", dept:"IT" }
+(5 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q19. $nin — Not In</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  department: {
+    $nin: ["IT", "HR"]
+  }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:4, name:"Neha",
+  department:"Sales" }
+(1 document)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 5: LOGICAL OPERATORS ==================== -->
+<h2 class="section-title">Section 5 — Logical Operators</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q20. $and — Multiple Conditions</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> ... WHERE department='IT' AND salary &gt; 55000;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  $and: [
+    { department: "IT" },
+    { salary: { $gt: 55000 } }
+  ]
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  salary:60000 }
+{ _id:6, name:"Suman",
+  salary:70000 }
+(2 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q20b. Implicit $and (Shorthand)</div>
+    <div class="card-body">
+        <div class="note">When both conditions are on different fields, just comma-separate them.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  department: "IT",
+  salary: { $gt: 55000 }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  salary:60000 }
+{ _id:6, name:"Suman",
+  salary:70000 }
+(2 documents)
+// Same as explicit $and
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q21. $or — Either Condition</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> ... WHERE department='IT' OR salary &gt; 50000;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  $or: [
+    { department: "IT" },
+    { salary: { $gt: 50000 } }
+  ]
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  dept:"IT", sal:60000 }
+{ _id:3, name:"Priya",
+  dept:"IT", sal:55000 }
+{ _id:6, name:"Suman",
+  dept:"IT", sal:70000 }
+(3 documents)
+// All IT + all sal>50k
+// (no extra matches here)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q22. $exists — Check if Field Exists</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> ... WHERE manager_id IS NOT NULL;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+// Has manager_id field
+db.employees.find({
+  manager_id: { $exists: true,
+                $ne: null }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:2, name:"Ravi",  mgr:1 }
+{ _id:3, name:"Priya", mgr:1 }
+{ _id:4, name:"Neha",  mgr:2 }
+{ _id:5, name:"Arjun", mgr:1 }
+(4 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q23. $regex — Pattern Matching (LIKE)</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> ... WHERE name LIKE 'A%';</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  name: { $regex: /^A/ }
+})
+
+// Case-insensitive:
+db.employees.find({
+  name: { $regex: /^a/i }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit" }
+{ _id:5, name:"Arjun" }
+(2 documents)
+
+// ^A  = starts with A
+// A$  = ends with A
+// /i  = case-insensitive
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 6: SORT, LIMIT, SKIP ==================== -->
+<h2 class="section-title">Section 6 — Sort, Limit, Skip &amp; Count</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q24. sort() — Order by Salary Desc</div>
+    <div class="card-body">
+        <div class="note">1 = ascending, -1 = descending</div>
+        <div class="vs-box"><b>SQL:</b> SELECT * FROM employees ORDER BY salary DESC;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find(
+  {},
+  { name:1, salary:1, _id:0 }
+).sort({ salary: -1 })
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ name:"Suman", salary:70000 }
+{ name:"Amit",  salary:60000 }
+{ name:"Priya", salary:55000 }
+{ name:"Arjun", salary:45000 }
+{ name:"Ravi",  salary:40000 }
+{ name:"Neha",  salary:35000 }
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q25. limit() — Top 3 Salaries</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT * FROM employees ORDER BY salary DESC LIMIT 3;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find(
+  {},
+  { name:1, salary:1, _id:0 }
+).sort({ salary: -1 })
+ .limit(3)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ name:"Suman", salary:70000 }
+{ name:"Amit",  salary:60000 }
+{ name:"Priya", salary:55000 }
+(3 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q26. skip() — Pagination / Nth Record</div>
+    <div class="card-body">
+        <div class="note">skip(2).limit(1) = 3rd highest salary (like OFFSET 2 LIMIT 1 in SQL)</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+// 3rd highest salary
+db.employees.find(
+  {},
+  { name:1, salary:1, _id:0 }
+).sort({ salary: -1 })
+ .skip(2)
+ .limit(1)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ name:"Priya", salary:55000 }
+(1 document)
+
+// skip(0)→Suman 70k
+// skip(1)→Amit  60k
+// skip(2)→Priya 55k ✓
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q27. countDocuments()</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT COUNT(*) FROM employees;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+// Total count
+db.employees.countDocuments()
+
+// Filtered count
+db.employees.countDocuments({
+  department: "IT"
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+6
+
+3
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q28. distinct() — Unique Values</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT DISTINCT department FROM employees;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.distinct(
+  "department"
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+[ "IT", "HR", "Sales" ]
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 7: UPDATE ==================== -->
+<h2 class="section-title">Section 7 — Update Operations</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q29. updateOne() — $set</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> UPDATE employees SET salary=65000 WHERE name='Amit';</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.updateOne(
+  { name: "Amit" },
+  { $set: { salary: 65000 } }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  matchedCount: 1,
+  modifiedCount: 1
+}
+// Amit salary: 60000→65000
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q30. updateMany() — Bulk Update</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> UPDATE employees SET salary=salary+5000 WHERE department='IT';</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.updateMany(
+  { department: "IT" },
+  { $inc: { salary: 5000 } }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  matchedCount: 3,
+  modifiedCount: 3
+}
+// All IT salaries +5000
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q31. $unset — Remove a Field</div>
+    <div class="card-body">
+        <div class="note">Unlike SQL, MongoDB can remove a field entirely from a document.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.updateOne(
+  { name: "Amit" },
+  { $unset: { manager_id: "" } }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  matchedCount: 1,
+  modifiedCount: 1
+}
+// manager_id field removed
+// from Amit's document.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q32. $rename — Rename a Field</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.updateMany(
+  {},
+  { $rename: {
+      "joinDate": "join_date"
+  }}
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  matchedCount: 6,
+  modifiedCount: 6
+}
+// Field 'joinDate' renamed
+// to 'join_date' in all docs.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q33. replaceOne() — Replace Entire Document</div>
+    <div class="card-body">
+        <div class="note">Replaces the whole document (except _id). Use carefully!</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.replaceOne(
+  { _id: 4 },
+  {
+    name: "Neha",
+    department: "Marketing",
+    salary: 38000
+  }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  matchedCount: 1,
+  modifiedCount: 1
+}
+// Entire doc replaced.
+// skills, manager_id,
+// joinDate all GONE.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 8: DELETE ==================== -->
+<h2 class="section-title">Section 8 — Delete Operations</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q34. deleteOne()</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> DELETE FROM employees WHERE _id = 4;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.deleteOne(
+  { _id: 4 }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q35. deleteMany() — Delete by Condition</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.deleteMany(
+  { department: "HR" }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  deletedCount: 2
+}
+// Ravi & Arjun deleted.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q36. deleteMany({}) — Delete All (like TRUNCATE)</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.deleteMany({})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  acknowledged: true,
+  deletedCount: 6
+}
+// All docs removed.
+// Collection still exists.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 9: ARRAY OPERATIONS ==================== -->
+<h2 class="section-title">Section 9 — Array Operations (MongoDB Special 🔥)</h2>
+
+<div class="tip-box">
+    <b>Arrays are a major reason to choose MongoDB over SQL.</b> These operations are very commonly asked in MERN interviews.
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q37. Query Array — Has a Specific Skill</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  skills: "React"
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  skills:["Node","React"] }
+{ _id:6, name:"Suman",
+  skills:["React","Node","AWS"]}
+(2 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q38. $all — Has ALL Listed Skills</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.find({
+  skills: {
+    $all: ["Node", "React"]
+  }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  skills:["Node","React"] }
+{ _id:6, name:"Suman",
+  skills:["React","Node","AWS"]}
+(2 documents)
+// Both have Node AND React
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q39. $size — Array Length</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+// Employees with exactly
+// 3 skills
+db.employees.find({
+  skills: { $size: 3 }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:6, name:"Suman",
+  skills:["React","Node","AWS"]}
+(1 document)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q40. $push — Add to Array</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.updateOne(
+  { name: "Amit" },
+  { $push: { skills: "AWS" } }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ modifiedCount: 1 }
+
+// Amit's skills:
+// ["Node","React"]
+//   → ["Node","React","AWS"]
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q41. $addToSet — Add Only if Not Exists</div>
+    <div class="card-body">
+        <div class="note">Unlike $push, $addToSet prevents duplicates in the array.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.updateOne(
+  { name: "Amit" },
+  { $addToSet: {
+      skills: "React"
+  }}
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ modifiedCount: 0 }
+
+// "React" already exists
+// in Amit's skills array.
+// No duplicate added!
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q42. $pull — Remove from Array</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.updateOne(
+  { name: "Amit" },
+  { $pull: { skills: "AWS" } }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ modifiedCount: 1 }
+
+// Amit's skills:
+// ["Node","React","AWS"]
+//   → ["Node","React"]
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q43. $pop — Remove First/Last from Array</div>
+    <div class="card-body">
+        <div class="note">$pop: 1 removes last element, $pop: -1 removes first element.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+// Remove last skill
+db.employees.updateOne(
+  { name: "Suman" },
+  { $pop: { skills: 1 } }
+)
+
+// Remove first skill
+db.employees.updateOne(
+  { name: "Suman" },
+  { $pop: { skills: -1 } }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+// Before: ["React","Node","AWS"]
+
+// After $pop:1
+// → ["React","Node"]
+// (AWS removed - last)
+
+// After $pop:-1
+// → ["Node"]
+// (React removed - first)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 10: AGGREGATION ==================== -->
+<h2 class="section-title">Section 10 — Aggregation Pipeline 🔥</h2>
+
+<div class="tip-box">
+    <b>🔥 Aggregation = MongoDB's most powerful feature.</b> It's like SQL's GROUP BY + JOIN + subqueries all in one pipeline. Stages flow: $match → $group → $sort → $project → $lookup → $limit
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q44. $group — Department-wise Count</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT department, COUNT(*) FROM employees GROUP BY department;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  {
+    $group: {
+      _id: "$department",
+      count: { $sum: 1 }
+    }
+  }
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:"IT",    count:3 }
+{ _id:"HR",    count:2 }
+{ _id:"Sales", count:1 }
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q45. $group — Avg, Max, Min, Sum</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  {
+    $group: {
+      _id: "$department",
+      avgSal: { $avg: "$salary" },
+      maxSal: { $max: "$salary" },
+      minSal: { $min: "$salary" },
+      totalSal: { $sum: "$salary"}
+    }
+  }
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id: "IT",
+  avgSal: 61666.67,
+  maxSal: 70000,
+  minSal: 55000,
+  totalSal: 185000 }
+{ _id: "HR",
+  avgSal: 42500,
+  maxSal: 45000,
+  minSal: 40000,
+  totalSal: 85000 }
+{ _id: "Sales",
+  avgSal: 35000,
+  maxSal: 35000,
+  minSal: 35000,
+  totalSal: 35000 }
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q46. $match + $group — Filter then Group</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT department, AVG(salary) FROM employees WHERE salary &gt; 40000 GROUP BY department;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  { $match: {
+      salary: { $gt: 40000 }
+  }},
+  { $group: {
+      _id: "$department",
+      avgSal: { $avg: "$salary" }
+  }}
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id: "IT",  avgSal: 61666.67 }
+{ _id: "HR",  avgSal: 45000 }
+(2 results)
+
+// Neha(35k) & Ravi(40k)
+// filtered out by $match
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q47. $group + $match — HAVING Equivalent</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT dept, COUNT(*) FROM employees GROUP BY dept HAVING COUNT(*) &gt; 1;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  { $group: {
+      _id: "$department",
+      count: { $sum: 1 }
+  }},
+  { $match: {
+      count: { $gt: 1 }
+  }}
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id: "IT", count: 3 }
+{ _id: "HR", count: 2 }
+(2 results)
+
+// Sales has only 1 employee
+// filtered out by HAVING
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q48. $sort in Aggregation</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  { $group: {
+      _id: "$department",
+      maxSal: { $max: "$salary" }
+  }},
+  { $sort: { maxSal: -1 } }
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:"IT",    maxSal:70000 }
+{ _id:"HR",    maxSal:45000 }
+{ _id:"Sales", maxSal:35000 }
+// Sorted by maxSal DESC
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q49. $project — Reshape Output</div>
+    <div class="card-body">
+        <div class="note">$project is like SELECT in SQL — choose and transform fields.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  { $project: {
+      _id: 0,
+      empName: { $toUpper: "$name" },
+      department: 1,
+      annualSalary: {
+        $multiply: ["$salary", 12]
+      }
+  }}
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ empName:"AMIT",
+  department:"IT",
+  annualSalary:720000 }
+{ empName:"RAVI",
+  department:"HR",
+  annualSalary:480000 }
+{ empName:"PRIYA",
+  department:"IT",
+  annualSalary:660000 }
+... (6 documents)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q50. $lookup — JOIN Equivalent 🔥</div>
+    <div class="card-body">
+        <div class="vs-box"><b>SQL:</b> SELECT * FROM employees e JOIN departments d ON e.department = d.dept_name;</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  {
+    $lookup: {
+      from: "departments",
+      localField: "department",
+      foreignField: "dept_name",
+      as: "dept_info"
+    }
+  }
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:1, name:"Amit",
+  department:"IT",
+  salary:60000,
+  dept_info: [{
+    _id:1,
+    dept_name:"IT",
+    location:"Bangalore"
+  }]
+}
+... (each doc gets
+     dept_info array)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q51. $unwind — Flatten Arrays</div>
+    <div class="card-body">
+        <div class="note">$unwind creates a separate document for each array element. Essential after $lookup or for array analysis.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  { $match: { name: "Suman" } },
+  { $unwind: "$skills" }
+])
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ _id:6, name:"Suman",
+  skills:"React" }
+{ _id:6, name:"Suman",
+  skills:"Node" }
+{ _id:6, name:"Suman",
+  skills:"AWS" }
+(3 documents from 1!)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q52. $lookup + $unwind — Clean Join</div>
+    <div class="card-body">
+        <div class="note">$lookup returns array. $unwind flattens it to get clean joined result.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.aggregate([
+  { $lookup: {
+      from: "departments",
+      localField: "department",
+      foreignField: "dept_name",
+      as: "dept"
+  }},
+  { $unwind: "$dept" },
+  { $project: {
+      name: 1,
+      department: 1,
+      location: "$dept.location",
+      _id: 0
+  }}
+])
+</pre>
+            </div>
+                        <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ name:"Amit",
+  department:"IT",
+  location:"Bangalore" }
+{ name:"Ravi",
+  department:"HR",
+  location:"Mumbai" }
+{ name:"Priya",
+  department:"IT",
+  location:"Bangalore" }
+{ name:"Neha",
+  department:"Sales",
+  location:"Delhi" }
+{ name:"Arjun",
+  department:"HR",
+  location:"Mumbai" }
+{ name:"Suman",
+  department:"IT",
+  location:"Bangalore" }
+(6 documents — clean join!)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 11: INDEXING ==================== -->
+<h2 class="section-title">Section 11 — Indexing (Performance)</h2>
+
+<div class="tip-box">
+    <b>💡 Indexes speed up read queries but slow down writes.</b> By default, MongoDB creates an index on _id. Always index fields you frequently filter/sort on.
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q53. createIndex() — Single Field Index</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.createIndex(
+  { salary: 1 }
+)
+
+// 1 = ascending index
+// -1 = descending index
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  "createdCollectionAutomatically": false,
+  "numIndexesBefore": 1,
+  "numIndexesAfter": 2,
+  "ok": 1
+}
+// Speeds up:
+// find({salary: {$gt:50000}})
+// sort({salary: -1})
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q54. Compound Index — Multiple Fields</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.createIndex(
+  { department: 1, salary: -1 }
+)
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{
+  "numIndexesAfter": 3,
+  "ok": 1
+}
+// Speeds up queries that
+// filter by department AND
+// sort by salary DESC.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q55. getIndexes() — List All Indexes</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+db.employees.getIndexes()
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+[
+  { v:2, key:{_id:1},
+    name:"_id_" },
+  { v:2, key:{salary:1},
+    name:"salary_1" },
+  { v:2, key:{department:1,
+    salary:-1},
+    name:"department_1_salary_-1"}
+]
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q56. dropIndex() — Remove an Index</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+// Drop by name
+db.employees.dropIndex("salary_1")
+
+// Drop all (except _id)
+db.employees.dropIndexes()
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+{ "nIndexesWas": 3, "ok": 1 }
+
+// _id index can never
+// be dropped.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q57. Text Index — Full Text Search</div>
+    <div class="card-body">
+        <div class="note">Text index enables $text search on string fields. Only one text index per collection.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Command</div>
+<pre>
+// Create text index
+db.employees.createIndex(
+  { name: "text" }
+)
+
+// Search using $text
+db.employees.find({
+  $text: { $search: "Amit" }
+})
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+// createIndex:
+{ "numIndexesAfter": 2,
+  "ok": 1 }
+
+// $text search:
+{ _id:1, name:"Amit",
+  department:"IT", ... }
+(1 document)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 12: MONGOOSE (MERN) ==================== -->
+<h2 class="section-title">Section 12 — Mongoose (Node.js / MERN) 🔥</h2>
+
+<div class="tip-box">
+    <b>🔥 In MERN stack interviews, they ask Mongoose, not raw MongoDB shell commands.</b> Mongoose is the ODM (Object Data Modeling) library for MongoDB + Node.js.
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q58. Connect to MongoDB with Mongoose</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code (Node.js)</div>
+<pre>
+const mongoose = require('mongoose');
+
+mongoose.connect(
+  'mongodb://localhost:27017/mycompany'
+)
+.then(() =&gt;
+  console.log('DB Connected'))
+.catch(err =&gt;
+  console.log(err));
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+DB Connected
+
+// For MongoDB Atlas:
+// 'mongodb+srv://user:pass
+//  @cluster.mongodb.net/mydb'
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q59. Define a Schema &amp; Model</div>
+    <div class="card-body">
+        <div class="note">Schema = structure definition. Model = class to interact with collection.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+const empSchema =
+  new mongoose.Schema({
+    name: {
+      type: String,
+      required: true
+    },
+    department: String,
+    salary: {
+      type: Number,
+      default: 0
+    },
+    skills: [String],
+    joinDate: {
+      type: Date,
+      default: Date.now
+    }
+});
+
+const Employee =
+  mongoose.model(
+    'Employee', empSchema
+  );
+
+module.exports = Employee;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// Schema Types:
+// String, Number, Date,
+// Boolean, Array, ObjectId,
+// Buffer, Mixed
+
+// Validators:
+// required, min, max,
+// minlength, maxlength,
+// enum, match (regex)
+
+// Collection name:
+// 'Employee' → 'employees'
+// (auto lowercase + plural)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q60. Mongoose CRUD — Create</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// Method 1: .save()
+const emp = new Employee({
+  name: "Amit",
+  department: "IT",
+  salary: 60000,
+  skills: ["Node", "React"]
+});
+await emp.save();
+
+// Method 2: .create()
+await Employee.create({
+  name: "Ravi",
+  department: "HR",
+  salary: 40000
+});
+
+// Method 3: insertMany
+await Employee.insertMany([
+  { name:"Priya", salary:55000 },
+  { name:"Neha", salary:35000 }
+]);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+// .save() returns:
+{
+  _id: ObjectId("..."),
+  name: "Amit",
+  department: "IT",
+  salary: 60000,
+  skills: ["Node","React"],
+  joinDate: 2025-06-15T...,
+  __v: 0
+}
+
+// .create() returns same
+// .insertMany() returns array
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q61. Mongoose CRUD — Read / Find</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// Find all
+const all =
+  await Employee.find();
+
+// Find with filter
+const itEmps =
+  await Employee.find({
+    department: "IT"
+  });
+
+// Find one
+const amit =
+  await Employee.findOne({
+    name: "Amit"
+  });
+
+// Find by ID
+const emp =
+  await Employee.findById(id);
+
+// With projection
+const names =
+  await Employee.find()
+    .select('name salary -_id');
+
+// With sort + limit
+const top3 =
+  await Employee.find()
+    .sort({ salary: -1 })
+    .limit(3);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// .find()     → returns array
+// .findOne()  → returns object
+// .findById() → returns object
+
+// Chaining:
+// .select()   → projection
+// .sort()     → ordering
+// .limit()    → max results
+// .skip()     → pagination
+// .lean()     → plain JS object
+//               (faster, no mongoose methods)
+
+// .exec()     → returns promise
+//               (optional with await)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q62. Mongoose CRUD — Update</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// updateOne
+await Employee.updateOne(
+  { name: "Amit" },
+  { $set: { salary: 65000 } }
+);
+
+// updateMany
+await Employee.updateMany(
+  { department: "IT" },
+  { $inc: { salary: 5000 } }
+);
+
+// findOneAndUpdate
+// (returns updated doc)
+const updated =
+  await Employee.findOneAndUpdate(
+    { name: "Amit" },
+    { salary: 70000 },
+    { new: true }
+  );
+
+// findByIdAndUpdate
+const doc =
+  await Employee.findByIdAndUpdate(
+    id,
+    { salary: 70000 },
+    { new: true }
+  );
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// { new: true }
+// → returns the UPDATED doc
+// Without it, returns OLD doc
+
+// Update operators:
+// $set    → set field value
+// $inc    → increment by N
+// $unset  → remove field
+// $push   → add to array
+// $pull   → remove from array
+// $rename → rename field
+
+// findOneAndUpdate is most
+// used in Express routes:
+// router.put('/:id', ...)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q63. Mongoose CRUD — Delete</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// deleteOne
+await Employee.deleteOne(
+  { name: "Neha" }
+);
+
+// deleteMany
+await Employee.deleteMany(
+  { department: "HR" }
+);
+
+// findByIdAndDelete
+// (returns deleted doc)
+const deleted =
+  await Employee.findByIdAndDelete(
+    id
+  );
+
+// findOneAndDelete
+const doc =
+  await Employee.findOneAndDelete(
+    { name: "Ravi" }
+  );
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// deleteOne → { deletedCount: 1 }
+// deleteMany → { deletedCount: N }
+
+// findByIdAndDelete
+// → returns the deleted doc
+// → useful for confirmation
+
+// In Express routes:
+// router.delete('/:id',
+//   async (req, res) =&gt; {
+//     await Employee
+//       .findByIdAndDelete(
+//         req.params.id
+//       );
+//     res.json({msg:"Deleted"});
+// });
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q64. Mongoose — Populate (Reference Join)</div>
+    <div class="card-body">
+        <div class="note">populate() is Mongoose's way to do JOINs using ObjectId references between collections.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// Schema with reference
+const empSchema =
+  new mongoose.Schema({
+    name: String,
+    department: {
+      type: mongoose.Schema
+        .Types.ObjectId,
+      ref: 'Department'
+    }
+});
+
+// Query with populate
+const emps =
+  await Employee.find()
+    .populate('department');
+
+// Selective populate
+const emps2 =
+  await Employee.find()
+    .populate('department',
+      'dept_name location');
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+// Without populate:
+{ name:"Amit",
+  department: ObjectId("...") }
+
+// With populate:
+{ name:"Amit",
+  department: {
+    _id: ObjectId("..."),
+    dept_name: "IT",
+    location: "Bangalore"
+  }
+}
+
+// Selective populate:
+{ name:"Amit",
+  department: {
+    dept_name: "IT",
+    location: "Bangalore"
+  }
+}
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q65. Mongoose — Aggregation</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+const result =
+  await Employee.aggregate([
+    { $match: {
+        salary: { $gt: 40000 }
+    }},
+    { $group: {
+        _id: "$department",
+        avgSal: {
+          $avg: "$salary"
+        },
+        count: { $sum: 1 }
+    }},
+    { $sort: { avgSal: -1 } }
+  ]);
+
+console.log(result);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+[
+  { _id: "IT",
+    avgSal: 61666.67,
+    count: 3 },
+  { _id: "HR",
+    avgSal: 45000,
+    count: 1 }
+]
+
+// Same pipeline syntax as
+// MongoDB shell!
+// Mongoose just wraps it.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 13: MERN EXPRESS ROUTES ==================== -->
+<h2 class="section-title">Section 13 — Express + Mongoose (MERN Routes)</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q66. Complete REST API Routes</div>
+    <div class="card-body">
+        <div class="note">This is the typical MERN backend pattern — asked in every MERN interview.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code (routes/employee.js)</div>
+<pre>
+const express = require('express');
+const router = express.Router();
+const Employee =
+  require('../models/Employee');
+
+// GET all
+router.get('/',
+  async (req, res) =&gt; {
+  const emps =
+    await Employee.find();
+  res.json(emps);
+});
+
+// GET by id
+router.get('/:id',
+  async (req, res) =&gt; {
+  const emp =
+    await Employee.findById(
+      req.params.id);
+  res.json(emp);
+});
+
+// POST create
+router.post('/',
+  async (req, res) =&gt; {
+  const emp =
+    await Employee.create(
+      req.body);
+  res.status(201).json(emp);
+});
+
+// PUT update
+router.put('/:id',
+  async (req, res) =&gt; {
+  const emp =
+    await Employee
+      .findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
+  res.json(emp);
+});
+
+// DELETE
+router.delete('/:id',
+  async (req, res) =&gt; {
+  await Employee
+    .findByIdAndDelete(
+      req.params.id);
+  res.json({ msg: "Deleted" });
+});
+
+module.exports = router;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 API Endpoints</div>
+<pre>
+GET    /api/employees
+→ Get all employees
+
+GET    /api/employees/:id
+→ Get one by ID
+
+POST   /api/employees
+→ Create new employee
+  Body: { name, dept, salary }
+
+PUT    /api/employees/:id
+→ Update employee
+  Body: { salary: 70000 }
+
+DELETE /api/employees/:id
+→ Delete employee
+
+// In server.js:
+app.use('/api/employees',
+  require('./routes/employee')
+);
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== STRATEGY ==================== -->
+<h2 class="section-title">🔥 Final Strategy — MongoDB / MERN Interview</h2>
+
+<div class="tip-box">
+    <b>🎯 Most Asked MongoDB Topics:</b><br>
+    ✅ CRUD operations (find, insert, update, delete)<br>
+    ✅ Aggregation pipeline ($match, $group, $sort, $project, $lookup)<br>
+    ✅ Array operators ($push, $pull, $addToSet, $unwind)<br>
+    ✅ Query operators ($gt, $in, $regex, $and, $or)<br>
+    ✅ Mongoose schema, model, populate<br>
+    ✅ Indexing basics
+</div>
+
+<div class="tip-box">
+    <b>💡 MERN Interview Specific:</b><br>
+    • They'll ask Mongoose, not raw shell commands<br>
+    • Know .populate() — it's asked in every MERN interview<br>
+    • Be ready to write Express CRUD routes from memory<br>
+    • Know difference: SQL vs NoSQL (when to use which)<br>
+    • Understand: embedded docs vs references (normalize vs denormalize)
+</div>
+
+<div class="vs-box">
+    <b>📝 SQL vs MongoDB — Quick Cheat:</b><br>
+    <b>SELECT</b> → find() &nbsp;|&nbsp; <b>INSERT</b> → insertOne/Many() &nbsp;|&nbsp; <b>UPDATE</b> → updateOne/Many()<br>
+    <b>DELETE</b> → deleteOne/Many() &nbsp;|&nbsp; <b>JOIN</b> → $lookup / populate()<br>
+    <b>GROUP BY</b> → $group &nbsp;|&nbsp; <b>HAVING</b> → $match after $group &nbsp;|&nbsp; <b>WHERE</b> → $match / find filter<br>
+    <b>ORDER BY</b> → sort() / $sort &nbsp;|&nbsp; <b>LIMIT</b> → limit() / $limit &nbsp;|&nbsp; <b>DISTINCT</b> → distinct()
+</div>
+
+<p style="text-align:center; color:#aaa; margin-top:30px; font-size:0.8rem;">— End of MongoDB Revision Notes (66 Questions) —</p>
+
+<script>
+    function toggle(header) {
+        const body = header.nextElementSibling;
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+    }
+</script>
+
+</body>
+</html>

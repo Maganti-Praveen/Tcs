@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Revision Notes — TCS NQT Prep</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa; color: #333; padding: 14px; line-height: 1.6;
+        }
+        h1 {
+            text-align: center; font-size: 1.4rem; color: #2c3e50;
+            margin-bottom: 6px; padding-bottom: 8px; border-bottom: 2px solid #dce1e8;
+        }
+        .subtitle {
+            text-align: center; font-size: 0.8rem; color: #888; margin-bottom: 18px;
+        }
+        .section-title {
+            font-size: 1.1rem; color: #34495e; margin: 22px 0 10px 0;
+            padding: 6px 10px; background: #e8ecf1; border-left: 4px solid #7f8c9b;
+            border-radius: 3px;
+        }
+        .card {
+            background: #fff; border: 1px solid #e0e4ea;
+            border-radius: 8px; margin-bottom: 12px; overflow: hidden;
+        }
+        .card-header {
+            background: #eef1f5; padding: 9px 12px; font-weight: 600;
+            font-size: 0.92rem; color: #2c3e50; border-bottom: 1px solid #e0e4ea;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+        }
+        .card-header::after {
+            content: '▼'; font-size: 0.65rem; color: #999; transition: transform 0.2s;
+        }
+        .card-header.collapsed::after { transform: rotate(-90deg); }
+        .card-body { padding: 10px 12px; }
+        .card-body.hidden { display: none; }
+        .note {
+            font-size: 0.82rem; color: #666; margin-bottom: 8px;
+            padding: 5px 9px; background: #f9fafb; border-left: 3px solid #bcc3ce;
+            border-radius: 2px;
+        }
+        .query-row {
+            display: flex; gap: 10px;
+        }
+        .query-code { flex: 1; min-width: 0; }
+        .query-output { flex: 1; min-width: 0; }
+        .label {
+            font-size: 0.72rem; font-weight: 600; color: #7f8c8d;
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+        }
+        pre {
+            background: #f8f9fb; border: 1px solid #e8ebf0; border-radius: 5px;
+            padding: 10px; font-size: 0.78rem; font-family: 'Courier New', monospace;
+            white-space: pre; overflow-x: auto; line-height: 1.45;
+        }
+        .query-output pre {
+            background: #f0fdf4; border-color: #d1e7dd;
+        }
+        .data-card pre { background: #fffbeb; border-color: #fde68a; }
+        .tip-box {
+            background: #fff7ed; border: 1px solid #fed7aa; border-radius: 6px;
+            padding: 10px 12px; font-size: 0.82rem; color: #92400e; margin: 12px 0;
+        }
+        .tip-box b { color: #78350f; }
+        @media (max-width: 700px) {
+            body { padding: 8px; }
+            .query-row { flex-direction: column; gap: 6px; }
+            pre { font-size: 0.72rem; padding: 8px; }
+            h1 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>📘 SQL Revision Notes</h1>
+<p class="subtitle">TCS NQT / Prime Interview Prep — 50+ Questions</p>
+
+<!-- ==================== SAMPLE DATA ==================== -->
+<div class="card data-card">
+    <div class="card-header" onclick="toggle(this)">📂 Sample Data Used for All Outputs</div>
+    <div class="card-body">
+        <div class="note">All outputs below are based on this data. Refer back here anytime.</div>
+        <div class="label">employees table</div>
+<pre>
+emp_id | name  | department | salary | manager_id | join_date
+-------|-------|------------|--------|------------|----------
+1      | Amit  | IT         | 60000  | NULL       | 2022-01-10
+2      | Ravi  | HR         | 40000  | 1          | 2021-03-15
+3      | Priya | IT         | 55000  | 1          | 2023-02-20
+4      | Neha  | Sales      | 35000  | 2          | 2022-06-01
+5      | Arjun | HR         | 45000  | 1          | 2020-11-10
+6      | Suman | IT         | 70000  | NULL       | 2023-05-15
+</pre>
+        <br>
+        <div class="label">departments table</div>
+<pre>
+dept_id | dept_name
+--------|----------
+1       | IT
+2       | HR
+3       | Sales
+4       | Finance
+</pre>
+    </div>
+</div>
+
+<!-- ==================== SECTION 1: DDL ==================== -->
+<h2 class="section-title">Section 1 — DDL (Data Definition Language)</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q1. Create Employees Table</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT,
+    manager_id INT,
+    join_date DATE
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK
+
+Table 'employees' created
+successfully.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q2. Create Departments Table</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK
+
+Table 'departments' created
+successfully.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q3. Add a New Column</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+ALTER TABLE employees
+ADD email VARCHAR(100);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK, 0 rows affected
+
+Column 'email' added to
+'employees'.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q4. Modify Column Data Type</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+ALTER TABLE employees
+MODIFY salary DECIMAL(10,2);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK, 6 rows affected
+
+Column 'salary' modified to
+DECIMAL(10,2).
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q5. Drop a Column</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+ALTER TABLE employees
+DROP COLUMN email;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK, 0 rows affected
+
+Column 'email' dropped.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q6. Rename Table</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+ALTER TABLE employees
+RENAME TO emp;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK
+
+Table renamed:
+'employees' → 'emp'
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q7. Drop Table</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+DROP TABLE emp;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK
+
+Table 'emp' dropped
+permanently.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 2: DML ==================== -->
+<h2 class="section-title">Section 2 — DML (Data Manipulation Language)</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q8. Insert Data</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+INSERT INTO employees VALUES
+(1,'Amit','IT',60000,
+ NULL,'2022-01-10'),
+(2,'Ravi','HR',40000,
+ 1,'2021-03-15'),
+(3,'Priya','IT',55000,
+ 1,'2023-02-20'),
+(4,'Neha','Sales',35000,
+ 2,'2022-06-01'),
+(5,'Arjun','HR',45000,
+ 1,'2020-11-10'),
+(6,'Suman','IT',70000,
+ NULL,'2023-05-15');
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK,
+6 rows affected.
+
+Records inserted into
+'employees' table.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q9. Update Salary</div>
+    <div class="card-body">
+        <div class="note">Increase salary of IT dept employees by 5000.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+UPDATE employees
+SET salary = salary + 5000
+WHERE department = 'IT';
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK, 3 rows affected.
+Rows matched: 3  Changed: 3
+
+Amit  → 65000
+Priya → 60000
+Suman → 75000
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q10. Delete Employee</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+DELETE FROM employees
+WHERE emp_id = 4;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK, 1 row affected.
+
+Neha (emp_id=4) deleted.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q11. Truncate Table</div>
+    <div class="card-body">
+        <div class="note">Removes all rows but keeps table structure. Cannot rollback.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+TRUNCATE TABLE employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK
+
+All rows removed.
+Table structure preserved.
+Auto-increment reset.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 3: BASIC QUERIES ==================== -->
+<h2 class="section-title">Section 3 — Basic SELECT &amp; WHERE</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q12. Select All Records</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name |dept  |salary
+------|-----|------|------
+1     |Amit |IT    |60000
+2     |Ravi |HR    |40000
+3     |Priya|IT    |55000
+4     |Neha |Sales |35000
+5     |Arjun|HR    |45000
+6     |Suman|IT    |70000
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q13. Select Specific Columns</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | salary
+------|-------
+Amit  | 60000
+Ravi  | 40000
+Priya | 55000
+Neha  | 35000
+Arjun | 45000
+Suman | 70000
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q14. Employees with Salary &gt; 50000</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees
+WHERE salary &gt; 50000;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name |dept|salary
+------|-----|----|------
+1     |Amit |IT  |60000
+3     |Priya|IT  |55000
+6     |Suman|IT  |70000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q15. Employees in IT Department</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees
+WHERE department = 'IT';
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name |dept|salary
+------|-----|----|------
+1     |Amit |IT  |60000
+3     |Priya|IT  |55000
+6     |Suman|IT  |70000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 4: FILTERING & SORTING ==================== -->
+<h2 class="section-title">Section 4 — Filtering, Sorting &amp; DISTINCT</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q16. Names Starting with 'A' (LIKE)</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees
+WHERE name LIKE 'A%';
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name |dept|salary
+------|-----|----|------
+1     |Amit |IT  |60000
+5     |Arjun|HR  |45000
+(2 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q17. Salary BETWEEN Range</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary
+FROM employees
+WHERE salary
+BETWEEN 30000 AND 60000;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | salary
+------|-------
+Amit  | 60000
+Ravi  | 40000
+Priya | 55000
+Neha  | 35000
+Arjun | 45000
+(5 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q18. ORDER BY Salary Descending</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | salary
+------|-------
+Suman | 70000
+Amit  | 60000
+Priya | 55000
+Arjun | 45000
+Ravi  | 40000
+Neha  | 35000
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q19. Top 3 Highest Salaries (LIMIT)</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 3;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | salary
+------|-------
+Suman | 70000
+Amit  | 60000
+Priya | 55000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q19b. DISTINCT Departments</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT DISTINCT department
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+department
+----------
+IT
+HR
+Sales
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 5: AGGREGATES ==================== -->
+<h2 class="section-title">Section 5 — Aggregate Functions</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q20. COUNT — Total Employees</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT COUNT(*)
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+COUNT(*)
+--------
+6
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q21. AVG — Average Salary</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT AVG(salary)
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+AVG(salary)
+-----------
+50833.33
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q22. MAX Salary per Department</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT department,
+       MAX(salary)
+FROM employees
+GROUP BY department;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+department|MAX(salary)
+----------|----------
+IT        |70000
+HR        |45000
+Sales     |35000
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q23. Department-wise Employee Count</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT department,
+       COUNT(*) AS total
+FROM employees
+GROUP BY department;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+department| total
+----------| -----
+IT        | 3
+HR        | 2
+Sales     | 1
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 6: GROUP BY + HAVING ==================== -->
+<h2 class="section-title">Section 6 — GROUP BY + HAVING</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q24. Departments with More Than 2 Employees</div>
+    <div class="card-body">
+        <div class="note">HAVING filters groups (after GROUP BY), while WHERE filters rows (before GROUP BY).</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT department,
+       COUNT(*) AS total
+FROM employees
+GROUP BY department
+HAVING COUNT(*) &gt; 2;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+department| total
+----------| -----
+IT        | 3
+(1 row)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 7: JOINS ==================== -->
+<h2 class="section-title">Section 7 — JOINS 🔥 (Most Important)</h2>
+
+<div class="tip-box">
+    <b>🔥 Joins are the #1 most asked topic in TCS NQT SQL.</b> Master INNER, LEFT, RIGHT and SELF joins.
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q25. INNER JOIN — Employees with Departments</div>
+    <div class="card-body">
+        <div class="note">Returns only matching rows from both tables.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT e.name, d.dept_name
+FROM employees e
+INNER JOIN departments d
+ON e.department = d.dept_name;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | dept_name
+------|---------
+Amit  | IT
+Ravi  | HR
+Priya | IT
+Neha  | Sales
+Arjun | HR
+Suman | IT
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q26. LEFT JOIN — All Employees + Dept</div>
+    <div class="card-body">
+        <div class="note">Returns ALL rows from left table + matching from right. NULL if no match.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT e.name, d.dept_name
+FROM employees e
+LEFT JOIN departments d
+ON e.department = d.dept_name;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | dept_name
+------|---------
+Amit  | IT
+Ravi  | HR
+Priya | IT
+Neha  | Sales
+Arjun | HR
+Suman | IT
+(6 rows)
+-- All match here. If an
+-- employee had dept='Admin'
+-- it would show NULL.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q27. LEFT JOIN — Employees WITHOUT a Department</div>
+    <div class="card-body">
+        <div class="note">Find employees whose department doesn't exist in departments table.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT e.name
+FROM employees e
+LEFT JOIN departments d
+ON e.department = d.dept_name
+WHERE d.dept_name IS NULL;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name
+----
+(0 rows)
+
+-- All employees have
+-- matching departments
+-- in this dataset.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q27b. RIGHT JOIN — All Depts + Employees</div>
+    <div class="card-body">
+        <div class="note">Returns ALL rows from right table. Finance dept has no employees.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT e.name, d.dept_name
+FROM employees e
+RIGHT JOIN departments d
+ON e.department = d.dept_name;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | dept_name
+------|---------
+Amit  | IT
+Priya | IT
+Suman | IT
+Ravi  | HR
+Arjun | HR
+Neha  | Sales
+NULL  | Finance
+(7 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 8: SUBQUERIES ==================== -->
+<h2 class="section-title">Section 8 — Subqueries</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q28. Salary Greater Than Average</div>
+    <div class="card-body">
+        <div class="note">AVG = 50833.33 → returns employees earning more than that.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary
+FROM employees
+WHERE salary &gt; (
+  SELECT AVG(salary)
+  FROM employees
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | salary
+------|-------
+Amit  | 60000
+Priya | 55000
+Suman | 70000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q29. Employees in IT Dept (Subquery)</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name
+FROM employees
+WHERE department IN (
+  SELECT dept_name
+  FROM departments
+  WHERE dept_name = 'IT'
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name
+-----
+Amit
+Priya
+Suman
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 9: ADVANCED ==================== -->
+<h2 class="section-title">Section 9 — Advanced Queries 🔥</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q30. Second Highest Salary</div>
+    <div class="card-body">
+        <div class="note">Classic TCS interview question. Two approaches shown.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query (Method 1)</div>
+<pre>
+SELECT MAX(salary)
+FROM employees
+WHERE salary &lt; (
+  SELECT MAX(salary)
+  FROM employees
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+MAX(salary)
+-----------
+60000
+
+-- Max is 70000 (Suman)
+-- 2nd max is 60000 (Amit)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q31. Nth Highest Salary (LIMIT OFFSET)</div>
+    <div class="card-body">
+        <div class="note">OFFSET N-1 gives Nth highest. Here N=3 → OFFSET 2.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query (3rd Highest)</div>
+<pre>
+SELECT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 2;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+salary
+------
+55000
+
+-- 1st: 70000 (offset 0)
+-- 2nd: 60000 (offset 1)
+-- 3rd: 55000 (offset 2) ✓
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q32. Delete Duplicate Records</div>
+    <div class="card-body">
+        <div class="note">Keeps the row with smallest emp_id for each (name, department) combination.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+DELETE FROM employees
+WHERE emp_id NOT IN (
+  SELECT MIN(emp_id)
+  FROM employees
+  GROUP BY name, department
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK, 0 rows affected.
+
+-- No duplicates exist
+-- in our sample data.
+-- If 2 "Amit" in IT existed,
+-- one would be deleted.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q33. Self Join — Employee &amp; Manager</div>
+    <div class="card-body">
+        <div class="note">Join employees table with itself to find each employee's manager name.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT e.name AS employee,
+       m.name AS manager
+FROM employees e
+JOIN employees m
+ON e.manager_id = m.emp_id;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+employee | manager
+---------|--------
+Ravi     | Amit
+Priya    | Amit
+Neha     | Ravi
+Arjun    | Amit
+(4 rows-- Amit & Suman have
+-- NULL manager_id, so
+-- they don't appear.
+)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q34. Find Duplicate Records</div>
+    <div class="card-body">
+        <div class="note">Find names that appear more than once in the table.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, COUNT(*)
+FROM employees
+GROUP BY name
+HAVING COUNT(*) &gt; 1;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name | COUNT(*)
+-----|--------
+(0 rows)
+
+-- No duplicate names
+-- in our sample data.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 10: WINDOW FUNCTIONS ==================== -->
+<h2 class="section-title">Section 10 — Window Functions (TCS Prime 🔥)</h2>
+
+<div class="tip-box">
+    <b>💡 ROW_NUMBER vs RANK:</b> ROW_NUMBER gives unique sequential numbers. RANK gives same rank for ties and skips the next number.
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q35. ROW_NUMBER</div>
+    <div class="card-body">
+        <div class="note">Assigns a unique sequential number to each row ordered by salary descending.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary,
+  ROW_NUMBER() OVER (
+    ORDER BY salary DESC
+  ) AS rn
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  |salary|rn
+------|------|-
+Suman |70000 |1
+Amit  |60000 |2
+Priya |55000 |3
+Arjun |45000 |4
+Ravi  |40000 |5
+Neha  |35000 |6
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q36. RANK</div>
+    <div class="card-body">
+        <div class="note">Same rank for ties, skips next. E.g., if two share rank 2, next is rank 4.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary,
+  RANK() OVER (
+    ORDER BY salary DESC
+  ) AS rnk
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  |salary|rnk
+------|------|-
+Suman |70000 |1
+Amit  |60000 |2
+Priya |55000 |3
+Arjun |45000 |4
+Ravi  |40000 |5
+Neha  |35000 |6
+(6 rows)
+-- No ties here, so same
+-- as ROW_NUMBER.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q36b. DENSE_RANK</div>
+    <div class="card-body">
+        <div class="note">Like RANK but does NOT skip numbers after ties. Very commonly compared in interviews.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary,
+  DENSE_RANK() OVER (
+    ORDER BY salary DESC
+  ) AS d_rnk
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  |salary|d_rnk
+------|------|-
+Suman |70000 |1
+Amit  |60000 |2
+Priya |55000 |3
+Arjun |45000 |4
+Ravi  |40000 |5
+Neha  |35000 |6
+(6 rows)
+-- No ties here. With ties:
+-- RANK:  1,2,2,4
+-- DENSE: 1,2,2,3
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 11: CASE ==================== -->
+<h2 class="section-title">Section 11 — CASE &amp; Conditional Logic</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q37. CASE — Salary Category</div>
+    <div class="card-body">
+        <div class="note">Categorize employees into High / Medium / Low based on salary.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, salary,
+CASE
+  WHEN salary &gt; 50000
+    THEN 'High'
+  WHEN salary
+    BETWEEN 30000 AND 50000
+    THEN 'Medium'
+  ELSE 'Low'
+END AS category
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  |salary|category
+------|------|---------
+Amit  |60000 |High
+Ravi  |40000 |Medium
+Priya |55000 |High
+Neha  |35000 |Medium
+Arjun |45000 |Medium
+Suman |70000 |High
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 12: STRING FUNCTIONS ==================== -->
+<h2 class="section-title">Section 12 — String Functions</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q38. UPPER — Uppercase Names</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT UPPER(name) AS uname
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+uname
+-----
+AMIT
+RAVI
+PRIYA
+NEHA
+ARJUN
+SUMAN
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q38b. LOWER — Lowercase Names</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT LOWER(name) AS lname
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+lname
+-----
+amit
+ravi
+priya
+neha
+arjun
+suman
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q38c. LENGTH — Length of Names</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name,
+       LENGTH(name) AS len
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | len
+------|----
+Amit  | 4
+Ravi  | 4
+Priya | 5
+Neha  | 4
+Arjun | 5
+Suman | 5
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q39. SUBSTRING — First 3 Characters</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name,
+  SUBSTRING(name, 1, 3)
+  AS short
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | short
+------|------
+Amit  | Ami
+Ravi  | Rav
+Priya | Pri
+Neha  | Neh
+Arjun | Arj
+Suman | Sum
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q39b. CONCAT — Combine Columns</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT CONCAT(name, ' - ',
+  department) AS info
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+info
+-----------
+Amit - IT
+Ravi - HR
+Priya - IT
+Neha - Sales
+Arjun - HR
+Suman - IT
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q39c. REPLACE — Replace Text</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT REPLACE(department,
+  'IT', 'Tech') AS dept
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+dept
+-----
+Tech
+HR
+Tech
+Sales
+HR
+Tech
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 13: DATE FUNCTIONS ==================== -->
+<h2 class="section-title">Section 13 — Date Functions</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q40. CURRENT_DATE</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT CURRENT_DATE;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+CURRENT_DATE
+------------
+2025-06-15
+(today's date)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q41. Employees Joined After 2022</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, join_date
+FROM employees
+WHERE join_date &gt; '2022-01-01';
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | join_date
+------|-----------
+Amit  | 2022-01-10
+Priya | 2023-02-20
+Neha  | 2022-06-01
+Suman | 2023-05-15
+(4 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q41b. YEAR / MONTH / DAY Extraction</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name,
+  YEAR(join_date) AS yr,
+  MONTH(join_date) AS mn,
+  DAY(join_date) AS dy
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | yr  | mn| dy
+------|-----|---|---
+Amit  |2022 | 1 |10
+Ravi  |2021 | 3 |15
+Priya |2023 | 2 |20
+Neha  |2022 | 6 | 1
+Arjun |2020 |11 |10
+Suman |2023 | 5 |15
+(6 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q41c. DATEDIFF — Days Between Dates</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name,
+  DATEDIFF(CURRENT_DATE,
+    join_date) AS days_worked
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | days_worked
+------|------------
+Amit  | 1252
+Ravi  | 1553
+Priya |  846
+Neha  | 1110
+Arjun | 1678
+Suman |  762
+(approx values as of today)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 14: EXISTS & CTE ==================== -->
+<h2 class="section-title">Section 14 — EXISTS &amp; CTE</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q42. EXISTS — Employees with Valid Dept</div>
+    <div class="card-body">
+        <div class="note">EXISTS returns TRUE if the subquery returns at least one row.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name
+FROM employees e
+WHERE EXISTS (
+  SELECT 1
+  FROM departments d
+  WHERE e.department
+    = d.dept_name
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name
+-----
+Amit
+Ravi
+Priya
+Neha
+Arjun
+Suman
+(6 rows)
+-- All have valid depts.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q42b. NOT EXISTS — Depts with No Employees</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT dept_name
+FROM departments d
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM employees e
+  WHERE e.department
+    = d.dept_name
+);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+dept_name
+---------
+Finance
+(1 row)
+
+-- Finance dept has
+-- no employees.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q43. CTE — Common Table Expression</div>
+    <div class="card-body">
+        <div class="note">CTE creates a temporary named result set. Cleaner than nested subqueries.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+WITH avg_sal AS (
+  SELECT AVG(salary)
+    AS avg_salary
+  FROM employees
+)
+SELECT name, salary
+FROM employees, avg_sal
+WHERE salary &gt; avg_salary;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | salary
+------|-------
+Amit  | 60000
+Priya | 55000
+Suman | 70000
+(3 rows)
+
+-- avg_salary = 50833.33
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 15: REAL INTERVIEW PATTERNS ==================== -->
+<h2 class="section-title">Section 15 — Real Interview Patterns</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q44. Employees with Same Salary</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT salary, COUNT(*)
+FROM employees
+GROUP BY salary
+HAVING COUNT(*) &gt; 1;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+salary | COUNT(*)
+-------|--------
+(0 rows)
+
+-- All salaries are
+-- unique in our data.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q45. Highest Salary per Department</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT department,
+       MAX(salary) AS max_sal
+FROM employees
+GROUP BY department;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+department| max_sal
+----------| ------
+IT        | 70000
+HR        | 45000
+Sales     | 35000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q46. Employees Without a Manager</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name
+FROM employees
+WHERE manager_id IS NULL;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name
+-----
+Amit
+Suman
+(2 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q47. Count per Dept — Sorted Descending</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT department,
+       COUNT(*) AS total
+FROM employees
+GROUP BY department
+ORDER BY total DESC;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+department| total
+----------| -----
+IT        | 3
+HR        | 2
+Sales     | 1
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 16: BONUS ==================== -->
+<h2 class="section-title">Section 16 — Bonus &amp; Edge Questions</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q48. Alternate Rows (Even emp_id)</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees
+WHERE MOD(emp_id, 2) = 0;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name |dept |salary
+------|-----|-----|------
+2     |Ravi |HR   |40000
+4     |Neha |Sales|35000
+6     |Suman|IT   |70000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q48b. Odd Rows</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees
+WHERE MOD(emp_id, 2) = 1;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name |dept |salary
+------|-----|-----|------
+1     |Amit |IT   |60000
+3     |Priya|IT   |55000
+5     |Arjun|HR   |45000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q49. First Record</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees
+ORDER BY emp_id ASC
+LIMIT 1;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name|dept|salary
+------|----|----| -----
+1     |Amit|IT  |60000
+(1 row)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q50. Last Record</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT * FROM employees
+ORDER BY emp_id DESC
+LIMIT 1;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+emp_id|name |dept|salary
+------|-----|----|------
+6     |Suman|IT  |70000
+(1 row)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== EXTRA: MISSED TOPICS ==================== -->
+<h2 class="section-title">Section 17 — Additional Important Topics</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q51. UNION — Combine Results</div>
+    <div class="card-body">
+        <div class="note">UNION removes duplicates. UNION ALL keeps all rows.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name FROM employees
+WHERE department = 'IT'
+UNION
+SELECT name FROM employees
+WHERE salary &gt; 50000;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name
+-----
+Amit
+Priya
+Suman
+(3 rows)
+
+-- Duplicates removed
+-- by UNION.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q52. UNION ALL</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name FROM employees
+WHERE department = 'IT'
+UNION ALL
+SELECT name FROM employees
+WHERE salary &gt; 50000;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name
+-----
+Amit
+Priya
+Suman
+Amit
+Priya
+Suman
+(6 rows)
+
+-- Duplicates kept
+-- by UNION ALL.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q53. IN Operator</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, department
+FROM employees
+WHERE department
+  IN ('IT', 'HR');
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | department
+------|-----------
+Amit  | IT
+Ravi  | HR
+Priya | IT
+Arjun | HR
+Suman | IT
+(5 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q54. NOT IN Operator</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name, department
+FROM employees
+WHERE department
+  NOT IN ('IT', 'HR');
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name | department
+-----|-----------
+Neha | Sales
+(1 row)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q55. IS NULL / IS NOT NULL</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+-- Employees WITH manager
+SELECT name FROM employees
+WHERE manager_id IS NOT NULL;
+
+-- Employees WITHOUT manager
+SELECT name FROM employees
+WHERE manager_id IS NULL;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+-- IS NOT NULL:
+name
+-----
+Ravi
+Priya
+Neha
+Arjun
+(4 rows)
+
+-- IS NULL:
+name
+-----
+Amit
+Suman
+(2 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q56. COALESCE — Handle NULLs</div>
+    <div class="card-body">
+        <div class="note">COALESCE returns the first non-NULL value.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+SELECT name,
+  COALESCE(manager_id, 0)
+  AS mgr
+FROM employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+name  | mgr
+------|----
+Amit  | 0
+Ravi  | 1
+Priya | 1
+Neha  | 2
+Arjun | 1
+Suman | 0
+(6 rows)
+-- NULL replaced with 0
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q57. CREATE VIEW</div>
+    <div class="card-body">
+        <div class="note">A view is a virtual table based on a query. Doesn't store data itself.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+CREATE VIEW it_employees AS
+SELECT name, salary
+FROM employees
+WHERE department = 'IT';
+
+-- Then use it:
+SELECT * FROM it_employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+-- View created.
+
+-- SELECT * FROM it_employees:
+name  | salary
+------|-------
+Amit  | 60000
+Priya | 55000
+Suman | 70000
+(3 rows)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q58. CREATE INDEX</div>
+    <div class="card-body">
+        <div class="note">Index speeds up SELECT queries but slows INSERT/UPDATE. Asked in theory.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+CREATE INDEX idx_salary
+ON employees(salary);
+
+-- Drop index:
+DROP INDEX idx_salary
+ON employees;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK
+
+Index 'idx_salary' created
+on employees(salary).
+
+-- Speeds up:
+-- WHERE salary = ...
+-- ORDER BY salary
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q59. GRANT &amp; REVOKE (DCL)</div>
+    <div class="card-body">
+        <div class="note">DCL — Data Control Language. Controls user permissions.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+-- Grant SELECT permission
+GRANT SELECT
+ON employees TO 'user1';
+
+-- Revoke permission
+REVOKE SELECT
+ON employees FROM 'user1';
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+Query OK
+
+-- GRANT: user1 can now
+-- run SELECT on employees.
+
+-- REVOKE: permission
+-- removed from user1.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q60. TCL — COMMIT, ROLLBACK, SAVEPOINT</div>
+    <div class="card-body">
+        <div class="note">TCL — Transaction Control Language. Manages transactions.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Query</div>
+<pre>
+START TRANSACTION;
+
+UPDATE employees
+SET salary = 80000
+WHERE emp_id = 1;
+
+SAVEPOINT sp1;
+
+DELETE FROM employees
+WHERE emp_id = 4;
+
+-- Undo delete only:
+ROLLBACK TO sp1;
+
+-- Save the update:
+COMMIT;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Output</div>
+<pre>
+-- After COMMIT:
+-- emp_id=1 salary → 80000 ✓
+-- emp_id=4 NOT deleted ✓
+--   (rolled back to sp1)
+
+-- COMMIT = permanent save
+-- ROLLBACK = undo changes
+-- SAVEPOINT = partial undo
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== STRATEGY BOX ==================== -->
+<h2 class="section-title">🔥 Final Strategy — TCS Prime SQL</h2>
+
+<div class="tip-box">
+    <b>70% of questions come from these 6 topics:</b><br>
+    ✅ Joins (INNER, LEFT, RIGHT, SELF)<br>
+    ✅ Subqueries (nested SELECT)<br>
+    ✅ Aggregate functions (COUNT, AVG, MAX, MIN, SUM)<br>
+    ✅ GROUP BY + HAVING<br>
+    ✅ Nth Highest Salary<br>
+    ✅ Window Functions (ROW_NUMBER, RANK, DENSE_RANK)
+</div>
+
+<div class="tip-box">
+    <b>💡 Pro Tips:</b><br>
+    • Write clean, readable queries — they prefer logic over complex syntax<br>
+    • Practice without auto-complete — real test has no suggestions<br>
+    • Know the difference: WHERE vs HAVING, DELETE vs TRUNCATE vs DROP<br>
+    • Time yourself — speed matters in NQT<br>
+    • Practice on: HackerRank SQL, LeetCode SQL (Easy → Medium)
+</div>
+
+<div class="tip-box">
+    <b>📝 Quick Reference — DDL vs DML vs DCL vs TCL:</b><br>
+    <b>DDL:</b> CREATE, ALTER, DROP, TRUNCATE, RENAME<br>
+    <b>DML:</b> SELECT, INSERT, UPDATE, DELETE<br>
+    <b>DCL:</b> GRANT, REVOKE<br>
+    <b>TCL:</b> COMMIT, ROLLBACK, SAVEPOINT
+</div>
+
+<p style="text-align:center; color:#aaa; margin-top:30px; font-size:0.8rem;">— End of SQL Revision Notes (60 Questions) —</p>
+
+<script>
+    function toggle(header) {
+        const body = header.nextElementSibling;
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+    }
+</script>
+
+</body>
+</html>

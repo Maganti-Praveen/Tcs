@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS Prime NQT — HR & MR Round Preparation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+
+        h1 { font-size: 1.7em; margin-bottom: 6px; }
+        .subtitle { color: #555; margin-bottom: 30px; font-size: 0.95em; }
+
+        /* Controls */
+        .controls { margin-bottom: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .ctrl-btn {
+            padding: 7px 16px; border: 1px solid #ccc; background: #f5f5f5;
+            border-radius: 4px; cursor: pointer; font-size: 0.85em; color: #333;
+        }
+        .ctrl-btn:hover { background: #e8e8e8; }
+
+        /* Search */
+        .search-wrap { margin-bottom: 30px; }
+        .search-wrap input {
+            width: 100%; max-width: 400px; padding: 9px 14px;
+            border: 1px solid #ccc; border-radius: 4px;
+            font-size: 0.9em; outline: none;
+        }
+        .search-wrap input:focus { border-color: #555; }
+
+        /* Golden Rules */
+        .golden-rules {
+            border: 1px solid #e0c97a; background: #fffdf0;
+            border-radius: 6px; padding: 18px 22px; margin-bottom: 32px;
+        }
+        .golden-rules h3 { font-size: 1em; margin-bottom: 12px; color: #7a6200; }
+        .golden-rules li { font-size: 0.9em; margin-bottom: 6px; color: #444; padding-left: 4px; }
+        .golden-rules ul { padding-left: 20px; }
+
+        /* TOC */
+        .toc { border: 1px solid #ddd; border-radius: 6px; padding: 18px 22px; margin-bottom: 36px; }
+        .toc h2 { font-size: 1em; margin-bottom: 12px; color: #333; }
+        .toc ol { padding-left: 20px; }
+        .toc li { margin-bottom: 5px; }
+        .toc a { color: #0066cc; text-decoration: none; font-size: 0.9em; }
+        .toc a:hover { text-decoration: underline; }
+
+        /* Section */
+        .section { margin-bottom: 36px; }
+        .section-title {
+            font-size: 1.15em; font-weight: bold; padding: 12px 0 8px 0;
+            border-bottom: 2px solid #1a1a1a; margin-bottom: 16px;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            user-select: none;
+        }
+        .section-title .toggle-icon { font-size: 0.75em; color: #666; }
+        .section-body { display: none; }
+        .section-body.open { display: block; }
+
+        /* QA Card */
+        .qa-card { border-bottom: 1px solid #e0e0e0; padding: 14px 0; }
+        .qa-card:last-child { border-bottom: none; }
+
+        .question-row {
+            cursor: pointer; display: flex; justify-content: space-between;
+            align-items: flex-start; gap: 12px; user-select: none;
+        }
+        .question-text { font-weight: bold; font-size: 0.95em; flex: 1; color: #111; }
+        .freq-tag {
+            font-size: 0.72em; color: #666; white-space: nowrap;
+            border: 1px solid #ccc; border-radius: 3px; padding: 2px 8px;
+            margin-top: 2px;
+        }
+        .freq-high { color: #b30000; border-color: #f0c0c0; background: #fff5f5; }
+        .freq-trap { color: #8b4500; border-color: #f0d9c0; background: #fff8f0; }
+        .qa-toggle { font-size: 0.75em; color: #888; margin-top: 4px; flex-shrink: 0; }
+
+        .qa-answer { display: none; padding: 12px 0 4px 0; }
+        .qa-card.open .qa-answer { display: block; }
+
+        .answer-block { margin-bottom: 12px; }
+        .answer-block p { font-size: 0.9em; color: #222; margin-bottom: 6px; }
+        .answer-block p:last-child { margin-bottom: 0; }
+
+        .block-label {
+            font-size: 0.75em; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 7px; color: #1a7a1a;
+        }
+        .block-label.tip-label { color: #0055aa; }
+        .block-label.warn-label { color: #aa0000; }
+        .block-label.followup-label { color: #8b6200; }
+
+        .tip-block, .warn-block, .followup-block {
+            border-left: 3px solid #ccc; padding-left: 12px; margin-top: 10px;
+        }
+        .tip-block { border-color: #3399cc; background: #f0f8ff; padding: 10px 12px; border-radius: 0 4px 4px 0; }
+        .warn-block { border-color: #cc3333; background: #fff5f5; padding: 10px 12px; border-radius: 0 4px 4px 0; }
+        .followup-block { border-color: #cc9900; background: #fffbf0; padding: 10px 12px; border-radius: 0 4px 4px 0; }
+
+        .puzzle-steps {
+            font-family: 'Courier New', monospace; font-size: 0.88em;
+            background: #f8f8f8; border: 1px solid #ddd; border-radius: 4px;
+            padding: 12px 14px; margin: 10px 0; line-height: 1.9; color: #222;
+        }
+
+        /* Footer */
+        .footer { text-align: center; padding: 24px 0; color: #888; font-size: 0.82em; border-top: 1px solid #ddd; margin-top: 40px; }
+
+        @media (max-width: 600px) {
+            .controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>TCS Prime NQT — HR &amp; MR Round Preparation</h1>
+    <p class="subtitle">Complete Q&amp;A — 60+ Questions with Ready-to-Speak Answers</p>
+
+    <div class="controls">
+        <button class="ctrl-btn" onclick="toggleAllSections(true)">Expand All Sections</button>
+        <button class="ctrl-btn" onclick="toggleAllSections(false)">Collapse All</button>
+        <button class="ctrl-btn" onclick="toggleAllQA(true)">Show All Answers</button>
+        <button class="ctrl-btn" onclick="toggleAllQA(false)">Hide All Answers</button>
+    </div>
+
+    <div class="search-wrap">
+        <input type="text" id="searchBox" placeholder="Search questions..." oninput="filterQuestions()">
+    </div>
+
+    <div class="golden-rules">
+        <h3>3 Golden Rules for Every Answer</h3>
+        <ul>
+            <li><strong>Use your project (TrackMate)</strong> in answers — it's your strongest weapon.</li>
+            <li><strong>Keep answers structured:</strong> Intro → Example → Conclusion.</li>
+            <li><strong>Sound calm, not robotic</strong> — speak like a real person, not memorized lines.</li>
+            <li><strong>TCS wants:</strong> Stability ✅ Learnability ✅ Team player ✅ Honest communication ✅</li>
+        </ul>
+    </div>
+
+    <div class="toc">
+        <h2>Sections</h2>
+        <ol>
+            <li><a href="#sec1">General / Personal (7 Qs)</a></li>
+            <li><a href="#sec2">TCS Specific (7 Qs)</a></li>
+            <li><a href="#sec3">Strengths &amp; Career (8 Qs)</a></li>
+            <li><a href="#sec4">Relocation &amp; Shifts (3 Qs)</a></li>
+            <li><a href="#sec5">Situational / Behavioral — HR (7 Qs)</a></li>
+            <li><a href="#sec6">MR — Puzzles &amp; Aptitude (4 Qs)</a></li>
+            <li><a href="#sec7">MR — Situational / Behavioral (7 Qs)</a></li>
+            <li><a href="#sec8">Technical Awareness (10 Qs)</a></li>
+            <li><a href="#sec9">Additional Likely Questions (10 Qs)</a></li>
+            <li><a href="#sec10">Closing &amp; Document Verification</a></li>
+        </ol>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section" id="sec1">
+        <div class="section-title" onclick="toggleSection(this)">
+            1. General / Personal <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="self introduction tell me about yourself">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Self Introduction / Tell me about yourself</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Good morning sir/madam,</p>
+                        <p>My name is Maganti Praveen Sai, and I am currently pursuing my B.Tech in Computer Science Engineering from Ramachandra College of Engineering with a CGPA of 8.04.</p>
+                        <p>I have a strong foundation in programming languages like Java, Python, and C, along with web technologies such as React and Node.js.</p>
+                        <p>I worked on a project called TrackMate, which is a real-time transport tracking system where I implemented features like live location tracking using Socket.IO and role-based authentication.</p>
+                        <p>I have also completed internships in Web Development and AI/ML, where I gained practical exposure to real-world applications and teamwork.</p>
+                        <p>Additionally, I am a ServiceNow Certified System Administrator.</p>
+                        <p>I am a quick learner, adaptable, and interested in software development roles where I can grow and contribute effectively. Thank you.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>Keep it 60–90 seconds. Don't rush. Smile slightly. This sets the tone for the entire interview.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="family tell me about your family">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Tell me about your family</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I come from a supportive family. My father is a [job/business], and my mother is a [homemaker/working]. They have always encouraged me to focus on education and personal growth. I also have [siblings info if any], and we share a good bonding. My family has been a strong motivation behind my academic and career goals.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>Fill in your actual details. Keep it simple — no long stories. Show values and support system.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="hobbies tell me about your hobbies">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Tell me about your hobbies</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>My hobbies include solving coding problems and exploring new technologies, which helps me improve my problem-solving skills. Apart from that, I enjoy watching tech-related content and learning about new tools. I also like listening to music in my free time, which helps me relax and stay focused.</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Avoid</div>
+                        <p>Don't say only "watching movies" or "sleeping" — always add a learning angle.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="work experience any work experience">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Any work experience?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>As a fresher, I do not have full-time work experience yet. However, I have gained practical exposure through internships and academic projects, where I worked on real-world problems and team collaboration. These experiences helped me understand development workflows and professional responsibilities.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>Don't say "No experience" bluntly. Convert it into a learning experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="internship internships done">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Have you done any internships?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I have completed two internships. First, as a Web Development Intern at SmartInternz, where I worked on developing and debugging web applications and gained experience in team-based development. Second, as an AI/ML Intern at EduSkills, where I worked on data preprocessing and performed sentiment analysis using Logistic Regression on customer reviews data. These internships helped me build practical skills and understand real-world problem solving.</p>
+                    </div>
+                    <div class="followup-block">
+                        <div class="block-label followup-label">Possible Follow-ups</div>
+                        <p>"Explain your AI/ML internship in detail" • "What is Logistic Regression?" • "What did you learn from these internships?"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="favourite subject favorite subject">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is your favourite subject?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer (Recommended: OOP)</div>
+                        <p>My favourite subject is Object-Oriented Programming. I like it because it helps in structuring code in a modular and reusable way using concepts like classes, inheritance, polymorphism, and encapsulation. I have applied these concepts in my projects, especially while designing backend systems. It also improves code maintainability and scalability, which is important in real-world applications.</p>
+                    </div>
+                    <div class="followup-block">
+                        <div class="block-label followup-label">Be Ready For</div>
+                        <p>"What is polymorphism?" • "Difference between abstraction and encapsulation?" • "Explain inheritance with example"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="why cse computer science engineering">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Why did you choose Computer Science?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I chose Computer Science because I have always been fascinated by technology and how software solves real-world problems. During my school days, I developed an interest in programming and logical thinking, which naturally led me to pursue CSE. The field offers diverse career opportunities and continuous learning, which aligns with my interests and career goals.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section" id="sec2">
+        <div class="section-title" onclick="toggleSection(this)">
+            2. TCS Specific <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="why tcs">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Why TCS?</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>TCS is one of the most reputed IT companies known for its strong work culture, employee stability, and global presence. I am particularly interested in TCS because of its focus on continuous learning through platforms like TCS iON and its diverse project opportunities across domains. As a fresher, I believe TCS provides the right environment to build a strong foundation, work on real-world projects, and grow both technically and professionally. Additionally, the company's values and long-term career growth opportunities align with my goals.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Why This Works</div>
+                        <p>Shows research and respect. Focus on learning, not salary.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what do you know about tcs">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What do you know about TCS?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Tata Consultancy Services, part of the Tata Group, is one of the largest IT services and consulting companies in the world. It provides services like software development, cloud computing, AI, and digital transformation across multiple industries such as banking, healthcare, and retail. TCS has a strong global presence in many countries and is known for its employee-friendly policies and stable work environment. It is also recognized for its innovation and consistent growth in the IT industry.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="expect from tcs expectations">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What do you expect from TCS?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>As a fresher, I expect a learning-oriented environment where I can enhance my technical skills and gain exposure to real-world projects. I also look forward to working with experienced professionals, which will help me grow and improve continuously. At the same time, I am ready to contribute my skills and put in my best efforts for the organization.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Balance</div>
+                        <p>Show both Expectation and Contribution — never only expectations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="which role prefer prime digital ninja">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Which role do you prefer? (Prime / Digital / Ninja)</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I would prefer the Prime role as it aligns well with my skills in full-stack development and problem-solving. However, my priority is to start my career with TCS, learn, and grow. So I am open to opportunities where I can contribute effectively.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Strategy</div>
+                        <p>Show preference but stay flexible. TCS loves adaptable candidates.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="ninja role instead okay select">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If we select you for Ninja role instead, is that okay?</span>
+                    <span class="freq-tag freq-trap">Trap Question</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I am absolutely okay with that. My main goal is to start my career with TCS and gain industry experience. I believe once I prove my skills and performance, I will have opportunities to grow within the organization.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">HR Mindset</div>
+                        <p>They want flexible candidates with no ego. Never argue about roles.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="another job more pay leave tcs salary">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If you get another job with more pay, will you leave TCS?</span>
+                    <span class="freq-tag freq-trap">Trap Question</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>For me, career growth, learning opportunities, and a stable work environment are more important than just salary. TCS provides a strong platform for long-term growth, so I would prefer to stay, learn, and build my career here rather than switching for short-term benefits.</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Never Say</div>
+                        <p>"Yes, I will leave" ❌ • "Depends on salary" ❌ • "I'll think about it" ❌</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="service bond 1 year bond okay">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Are you okay with a 1-year service bond?</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I am comfortable with the service bond. I see it as an opportunity to commit myself to the organization, learn, and contribute meaningfully during that period.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>No hesitation. Say confidently. Any pause here raises red flags.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="section" id="sec3">
+        <div class="section-title" onclick="toggleSection(this)">
+            3. Strengths &amp; Career <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="why should we hire you">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Why should we hire you?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I believe I am a good fit for this role because I have a strong foundation in programming and web development, along with practical experience through my projects and internships. I have worked on a real-time project, TrackMate, where I implemented backend logic and real-time communication, which improved my problem-solving and development skills. I am a quick learner, adaptable, and a good team player. I am also a ServiceNow Certified System Administrator, which adds value to my profile. I am committed to learning and contributing effectively to the organization.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Why This Works</div>
+                        <p>Covers: Skills ✅ Project ✅ Certification ✅ Attitude ✅</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="strengths and weaknesses">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What are your strengths and weaknesses?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Strengths</div>
+                        <p>My strengths are problem-solving, adaptability, and willingness to learn. I enjoy working on challenging problems and continuously improving my skills. I am adaptable to new environments and technologies, which helps me quickly adjust to team and project requirements.</p>
+                    </div>
+                    <div class="answer-block">
+                        <div class="block-label">Weakness (Safe + Improvement)</div>
+                        <p>One of my weaknesses is that I sometimes spend extra time trying to perfect my work. However, I am learning to balance quality with time management by setting priorities and deadlines.</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Never Say</div>
+                        <p>"I am lazy" ❌ • "I have no weaknesses" ❌ • "I procrastinate" ❌</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="describe yourself one word">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">How do you describe yourself in one word?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p><strong>Adaptable.</strong> Because I can quickly adjust to new environments, technologies, and team dynamics.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="friends describe you one word">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">How would your friends describe you in one word?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p><strong>Reliable.</strong> My friends know they can count on me for help and support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="where do you see yourself 5 years next">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Where do you see yourself in the next 4–5 years?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>In the next 4 to 5 years, I see myself as a skilled professional in software development, contributing to important projects and taking on more responsibilities within the organization. I aim to continuously improve my technical and problem-solving skills and grow into a role where I can also guide and support team members.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>Stay within TCS in your answer. Show growth, not switching.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="profession not software other career">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Which profession would you choose if not software?</span>
+                    <span class="freq-tag">Sometimes</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>If not software, I would choose a profession related to problem-solving and analysis, such as data analysis. I am interested in working with data, understanding patterns, and deriving insights, which aligns with my analytical thinking skills.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="ai replace jobs artificial intelligence">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Will AI replace jobs? Do you agree? Justify.</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I believe AI will not completely replace jobs, but it will transform them. AI can automate repetitive tasks, but human skills like problem-solving, creativity, and decision-making are still very important. It will create new opportunities while changing existing roles. So, instead of replacing jobs, AI will require people to upskill and adapt to new technologies.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>Balanced answer — never take extreme position. Show awareness and adaptability.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="salary expectations ctc package">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What are your salary expectations?</span>
+                    <span class="freq-tag">Sometimes</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>As a fresher, my primary focus is on learning and career growth rather than a specific salary. I trust that TCS offers a fair and competitive compensation, and I am comfortable with the standard package offered for this role.</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Never</div>
+                        <p>Never negotiate salary in HR round. Never quote a number unless explicitly asked.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="section" id="sec4">
+        <div class="section-title" onclick="toggleSection(this)">
+            4. Relocation &amp; Shifts <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="relocate willing relocation">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Are you willing to relocate?</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I am willing to relocate. I see relocation as an opportunity to explore new environments, learn, and grow professionally. I am flexible with location based on project requirements.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="preferred locations top 3 city">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What are your preferred locations? (Select top 3)</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>My preferred locations would be Hyderabad, Bangalore, and Chennai. However, I am open to working in any location based on organizational needs.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Why These?</div>
+                        <p>TCS major hubs — more opportunities, better projects. HR likes flexibility.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="rotational night shifts flexible">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Are you flexible with rotational / night shifts?</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I am comfortable with rotational and night shifts if required. I understand that IT services involve working with global clients, and I am flexible to adapt based on project needs.</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Avoid</div>
+                        <p>No conditions ❌ • No "only sometimes" ❌ • No hesitation ❌</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="section" id="sec5">
+        <div class="section-title" onclick="toggleSection(this)">
+            5. Situational / Behavioral — HR <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="conference hall handle situation">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If you are in a conference hall, how will you handle it?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>If I am in a conference hall situation, I would first stay calm and understand the purpose of the discussion. I would listen carefully to others, communicate my points clearly and confidently, and ensure that my inputs are relevant. If I am unsure about something, I would politely ask for clarification instead of making assumptions. Overall, I would focus on effective communication and professionalism.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="challenge faced overcome">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Tell me one challenge you faced and how you overcame it</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer (Uses TrackMate Project)</div>
+                        <p>One challenge I faced was during my TrackMate project while implementing real-time location tracking using Socket.IO. Initially, we faced issues with inconsistent updates and synchronization between users. To overcome this, I researched the issue, debugged the code, and optimized how data was emitted and received in real time. After implementing these changes, the system became more stable and efficient. This experience improved my problem-solving skills and taught me the importance of patience and debugging.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Answer Structure</div>
+                        <p>Problem → Action → Result → Learning — use this for ALL behavioral questions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="stress handle pressure deadline">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">How do you handle stress / pressure?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>When I face pressure, I try to stay calm and break down the task into smaller manageable parts. I prioritize the most important tasks first and focus on completing them one step at a time. I also believe in taking short breaks when needed to maintain focus and productivity. During my TrackMate project, I faced tight deadlines and used this approach to deliver the project successfully.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="motivates you motivation">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What motivates you?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I am motivated by solving challenging problems and seeing the impact of my work. When I see a project working successfully after putting in effort, it gives me a sense of accomplishment. I am also motivated by continuous learning and improving my skills every day.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="gender biased woman marriage discontinue hire">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Gender-biased question (Why should I hire you if trends show discontinuation?)</span>
+                    <span class="freq-tag">Reported</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer (Strong + Professional)</div>
+                        <p>I believe career decisions depend on individual goals and commitment, not gender. I am focused on building a stable and long-term career, and I am committed to contributing consistently to the organization. I am confident that my dedication, adaptability, and willingness to learn will make me a reliable employee.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Why This Works</div>
+                        <p>No argument ❌ No emotion ❌ — Just strong and professional ✅</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="offer in hand bde role another offer">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Do you have any offer in hand?</span>
+                    <span class="freq-tag freq-trap">Trap Question</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I have received an offer for a Business Development role. However, my interest and career goal are in the technical domain, especially software development. So I am actively looking for opportunities that align with my skills and long-term goals, which is why I am very interested in this role at TCS.</p>
+                    </div>
+                    <div class="followup-block">
+                        <div class="block-label followup-label">If They Ask: "Why didn't you take it?"</div>
+                        <p>The role was more focused on sales and business development, whereas my skills and interests are in technical fields like software development. So I decided to focus on opportunities that match my career path.</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Never Say</div>
+                        <p>"I didn't like that job" ❌ • "I rejected it because of salary" ❌ — Always say: "Not aligned with my career goals" ✅</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="first interview is this your first">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Is this your first interview?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">If YES</div>
+                        <p>Yes, this is one of my first interview experiences. I have been preparing for interviews and improving my technical and communication skills, and I am excited for this opportunity.</p>
+                    </div>
+                    <div class="answer-block">
+                        <div class="block-label">If NO</div>
+                        <p>I have attended a few interviews before, which helped me understand the process better and improve my confidence. Each experience has helped me learn and perform better.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 6 -->
+    <div class="section" id="sec6">
+        <div class="section-title" onclick="toggleSection(this)">
+            6. MR — Puzzles &amp; Aptitude <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="lotus pond puzzle doubles 30 days">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">🧩 Lotus Pond Puzzle — doubles every day, half in 30 days, full?</span>
+                    <span class="freq-tag freq-high">Classic</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer: 31 days</div>
+                        <p>Since the lotus doubles every day, the quantity on the next day becomes twice the previous day. If the pond is half covered on the 30th day, then on the next day it will double and cover the entire pond. So, the pond will be fully covered on the <strong>31st day</strong>.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">How to Explain</div>
+                        <p>Don't rush to answer. Say the doubling logic clearly. Show your thought process.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="thursday 45 days what day">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">🧩 Today is Thursday. What is the day after 45 days?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer: Sunday</div>
+                        <p>Days repeat every 7 days, so divide: 45 ÷ 7 = 6 weeks + <strong>3 days remainder</strong>. Add 3 days to Thursday: Friday (1) → Saturday (2) → <strong>Sunday (3)</strong>.</p>
+                    </div>
+                    <div class="puzzle-steps">
+45 ÷ 7 = 6 remainder 3
+Thursday + 1 = Friday
+Thursday + 2 = Saturday
+Thursday + 3 = Sunday ✅
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">In Interview</div>
+                        <p>Speak your steps aloud. Even if wrong, logic matters more than the final answer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="manhole cover round circle why">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">🧩 Why are manhole covers round?</span>
+                    <span class="freq-tag">Sometimes</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p>A round manhole cover cannot fall through the hole because the diameter is the same in all directions. A square or rectangular cover could fall through diagonally. Also, round covers are easier to roll and move.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="egg puzzle 100 floors building drop">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">🧩 You have 2 eggs and a 100-floor building. Find the critical floor with minimum attempts.</span>
+                    <span class="freq-tag">Advanced</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer: 14 attempts</div>
+                        <p>Use the interval approach: Drop the first egg from floors 14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100. If the first egg breaks at floor N, use the second egg to check linearly from the previous checkpoint. Maximum attempts = <strong>14</strong>.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>If you don't remember exact solution, explain the approach: "I'd use decreasing intervals with first egg, then linear search with second egg."</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 7 -->
+    <div class="section" id="sec7">
+        <div class="section-title" onclick="toggleSection(this)">
+            7. MR — Situational / Behavioral <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="teammate disagree does not agree ideas">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If your teammate does not agree with your ideas, what will you do?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>If my teammate does not agree with my idea, I would first try to understand their perspective and the reason behind their disagreement. Then I would explain my approach with proper reasoning and examples. If needed, we can discuss together and choose the best solution based on project requirements rather than personal opinions. I believe collaboration and open communication lead to better outcomes.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Key Skills Shown</div>
+                        <p>Teamwork ✅ Respect ✅ Logic over ego ✅</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="conflicting approaches resolve conflict team">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">You and another member have conflicting approaches — how do you resolve it?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>In case of conflicting approaches, I would suggest evaluating both solutions based on factors like efficiency, scalability, and project requirements. We can even test both approaches if time permits and choose the better one. If we are still unable to decide, I would involve a senior or team lead for guidance. My focus would be on selecting the best solution for the project.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="two projects assigned simultaneously manage">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If two projects are assigned to you simultaneously, how will you manage?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>If two projects are assigned to me simultaneously, I would first understand the priority and deadlines of both. Then I would plan my tasks, break them into smaller parts, and allocate time accordingly. If required, I would communicate with my manager for clarity on priorities. Proper planning and time management will help me handle both effectively.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="2 tasks same deadline complete how">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If you have 2 tasks with the same deadline, how will you complete them?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>If two tasks have the same deadline, I would first check their complexity and importance. I would start with the more critical task while planning parallel progress on the other. If needed, I would communicate with my manager or team to ensure proper prioritization or support. My goal would be to complete both tasks efficiently without compromising quality.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="team members cant work only member left alone">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If team members can't work and you're the only one left, what will you do?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>If I am the only one available, I would take responsibility and focus on completing the critical parts of the project. I would prioritize tasks, manage time effectively, and keep my manager updated on progress. If required, I would also seek help or clarification to ensure the work is completed correctly. I believe taking ownership in such situations is important.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="multitasking handle able">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Will you be able to handle multitasking?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I am comfortable with multitasking. During my academics and projects, I managed multiple responsibilities by prioritizing tasks and planning my schedule. I focus on completing tasks efficiently without compromising quality.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="unknown technology assigned project dont know new">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">If assigned to a project using technologies you don't know, what will you do?</span>
+                    <span class="freq-tag freq-high">Frequent</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>If I am assigned a project with technologies I am not familiar with, I would first try to understand the basics through documentation and online resources. I would also seek guidance from team members if needed. I am a quick learner and adaptable, so I am confident I can pick up new technologies and contribute effectively within a short time.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">This Is What TCS Loves</div>
+                        <p>Learning attitude ✅ No fear ✅ Adaptability ✅</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 8 -->
+    <div class="section" id="sec8">
+        <div class="section-title" onclick="toggleSection(this)">
+            8. Technical Awareness (HR May Ask) <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="explain project trackmate">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Explain your project (TrackMate)</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>TrackMate is a real-time transport tracking system I developed using the MERN stack — MongoDB, Express.js, React, and Node.js. The system allows users to track vehicle locations in real time using Socket.IO for live updates. I implemented role-based authentication so that admins, drivers, and users have different access levels. Key features include live location tracking, route history, and notification alerts. This project improved my skills in full-stack development, real-time communication, and REST API design.</p>
+                    </div>
+                    <div class="followup-block">
+                        <div class="block-label followup-label">Possible Follow-ups</div>
+                        <p>"What is Socket.IO?" • "What is MERN stack?" • "What challenges did you face?" • "How does role-based auth work?"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what is servicenow csa certification">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is ServiceNow? Tell me about your CSA certification.</span>
+                    <span class="freq-tag freq-high">Expected</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>ServiceNow is a cloud-based platform used for IT Service Management to automate workflows and manage services like incidents, problems, and requests. I am a ServiceNow Certified System Administrator (CSA), which means I have knowledge of platform administration including tables, forms, UI policies, ACLs, service catalog, notifications, and reporting. This certification gave me understanding of enterprise-level IT platforms and how organizations manage their IT infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="oops object oriented programming pillars">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What are the 4 pillars of OOP?</span>
+                    <span class="freq-tag freq-high">Very Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p><strong>1. Encapsulation</strong> — Wrapping data and methods together, restricting direct access.</p>
+                        <p><strong>2. Abstraction</strong> — Hiding complex implementation, showing only essential features.</p>
+                        <p><strong>3. Inheritance</strong> — One class inherits properties of another class.</p>
+                        <p><strong>4. Polymorphism</strong> — Same method behaves differently based on context (overloading/overriding).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="dbms sql difference between sql nosql">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Difference between SQL and NoSQL?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p><strong>SQL</strong> — Structured, relational, uses tables with rows/columns, fixed schema (MySQL, PostgreSQL).</p>
+                        <p><strong>NoSQL</strong> — Unstructured/semi-structured, flexible schema, document/key-value based (MongoDB).</p>
+                        <p>SQL is better for complex queries and transactions. NoSQL is better for scalability and flexibility.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what is api rest api">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is an API / REST API?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p><strong>API (Application Programming Interface)</strong> — A set of rules that allows two applications to communicate with each other.</p>
+                        <p><strong>REST API</strong> — An API that follows REST principles: uses HTTP methods (GET, POST, PUT, DELETE), is stateless, and communicates using JSON.</p>
+                        <p>In my TrackMate project, I created REST APIs for user authentication, vehicle data, and location updates.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what is cloud computing">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is Cloud Computing?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p>Cloud computing is the delivery of computing services — like servers, storage, databases, and software — over the internet. Instead of owning physical hardware, you use services from providers like AWS, Azure, or Google Cloud on a pay-as-you-use basis. Examples: ServiceNow runs on cloud. Netflix uses AWS.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what is agile scrum methodology">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is Agile / Scrum?</span>
+                    <span class="freq-tag">Sometimes</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p><strong>Agile</strong> — A project management methodology that delivers work in small, iterative increments called sprints, with continuous feedback.</p>
+                        <p><strong>Scrum</strong> — A framework within Agile: team works in 2–4 week sprints, with daily standups, sprint planning, and retrospectives.</p>
+                        <p>TCS uses Agile methodology in most projects.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what is logistic regression machine learning">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is Logistic Regression? (From your internship)</span>
+                    <span class="freq-tag">Expected</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p>Logistic Regression is a classification algorithm used in machine learning to predict binary outcomes (Yes/No, Positive/Negative). In my AI/ML internship, I used it for sentiment analysis on customer reviews — classifying reviews as positive or negative. It uses a sigmoid function to map predictions to probabilities between 0 and 1.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what is socket.io real time websocket">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is Socket.IO? (From your project)</span>
+                    <span class="freq-tag">Expected</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p>Socket.IO is a JavaScript library that enables real-time, bidirectional communication between the client and server. Unlike regular HTTP requests (request-response), Socket.IO keeps a persistent connection open so both sides can send data instantly. In TrackMate, I used it to send live vehicle location updates to users in real time without page refresh.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="difference between java javascript python">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Difference between Java and JavaScript?</span>
+                    <span class="freq-tag">Sometimes</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Answer</div>
+                        <p><strong>Java</strong> — Object-oriented, compiled, strongly typed, runs on JVM. Used for backend, Android, enterprise apps.</p>
+                        <p><strong>JavaScript</strong> — Scripting language, interpreted, dynamically typed, runs in browser and Node.js. Used for web frontend and backend.</p>
+                        <p>They are completely different languages despite similar names.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 9 -->
+    <div class="section" id="sec9">
+        <div class="section-title" onclick="toggleSection(this)">
+            9. Additional Likely Questions <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="gap year backlog academic gap">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Do you have any backlogs / gaps in education?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">If No Backlogs</div>
+                        <p>No, I don't have any backlogs. I have maintained a consistent academic record throughout my education.</p>
+                    </div>
+                    <div class="answer-block">
+                        <div class="block-label">If Yes (Be Honest)</div>
+                        <p>I did face a backlog in [subject], but I cleared it and learned from that experience. It taught me the importance of consistency and time management.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="work from home remote wfh office">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Are you okay with Work from Office? What about WFH?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I am comfortable with working from office. I believe it provides better collaboration and learning opportunities, especially for freshers. However, I am also adaptable to hybrid or remote setups if the organization requires it.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="leadership example lead team">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Give an example where you showed leadership.</span>
+                    <span class="freq-tag">MR Round</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>During my TrackMate project, I took the initiative to plan the project structure, divide tasks among team members, and coordinate the development process. When we faced issues with real-time updates, I researched solutions, guided the team, and helped implement the fix. This experience taught me that leadership is about taking responsibility and supporting the team, not just giving instructions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="biggest achievement accomplishment proud">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What is your biggest achievement?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>One of my biggest achievements is earning the ServiceNow CSA certification during my college years. It required understanding an enterprise-level platform, and achieving it as a student gave me confidence that I can learn new technologies quickly. Additionally, successfully completing my TrackMate project with real-time features was a proud moment for me.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="failure biggest failure mistake learned">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Tell me about a failure / mistake you made.</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>During my initial coding journey, I once spent too much time trying to build everything from scratch without using available libraries or asking for help. This taught me the importance of working smart — using existing tools effectively and not hesitating to seek guidance from others. Since then, I always balance learning with efficiency.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>Always end with what you LEARNED. Never end on a negative note.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="teamwork team player example collaboration">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Are you a team player? Give an example.</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I consider myself a good team player. During my TrackMate project, I collaborated with team members to divide tasks based on individual strengths. When a teammate faced difficulties with the frontend, I helped them debug and resolve the issue. I believe a team succeeds when members support each other and communicate effectively.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="what makes you different unique stand out">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">What makes you different from other candidates?</span>
+                    <span class="freq-tag">MR Round</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I believe my combination of technical skills, certifications, and practical project experience makes me stand out. I have hands-on experience with full-stack development through TrackMate, two internship experiences, and a ServiceNow CSA certification — all during my college years. Additionally, my adaptability and eagerness to learn new technologies quickly help me contribute effectively.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="higher studies mba masters plan education">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Are you planning for higher studies / MBA?</span>
+                    <span class="freq-tag freq-trap">Trap Question</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Currently, my focus is on building a strong career in the industry and gaining practical experience. I believe hands-on work experience is more valuable at this stage. I may consider further education in the future if it aligns with my career growth, but my priority right now is to learn and contribute professionally.</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Never Say</div>
+                        <p>"Yes, I'm planning MBA next year" ❌ — They'll think you'll leave soon.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="long hours overtime extra work willing">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Are you willing to work long hours / overtime when needed?</span>
+                    <span class="freq-tag">Common</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>Yes, I understand that project deadlines sometimes require extra effort, and I am willing to put in additional hours when needed. I believe in delivering quality work and meeting deadlines, even if it requires working beyond regular hours.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="rate yourself scale 1 to 10 programming">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Rate yourself on a scale of 1–10 in programming.</span>
+                    <span class="freq-tag">Sometimes</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Your Answer</div>
+                        <p>I would rate myself 7 out of 10. I have a solid understanding of programming concepts and practical experience through projects, but I know there is always more to learn and improve. I am continuously working on strengthening my skills.</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tip</div>
+                        <p>Never say 10 (arrogant) or below 5 (low confidence). 7–8 is the sweet spot.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 10 -->
+    <div class="section" id="sec10">
+        <div class="section-title" onclick="toggleSection(this)">
+            10. Closing &amp; Document Verification <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="qa-card" data-search="any questions for us do you have questions">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Do you have any questions for us?</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Best Questions to Ask (Pick 1–2)</div>
+                        <p><strong>1.</strong> "What kind of projects or technologies can freshers expect to work on in the initial phase?"</p>
+                        <p><strong>2.</strong> "What learning opportunities or training programs does TCS provide for freshers?"</p>
+                        <p><strong>3.</strong> "How does TCS support employees in transitioning to new technologies?"</p>
+                    </div>
+                    <div class="warn-block">
+                        <div class="block-label warn-label">Never Ask</div>
+                        <p>Salary / CTC details ❌ • Leave policy ❌ • "When will I get results?" ❌ • "Can I choose my project?" ❌</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="document verification documents required">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Document Verification — What to carry</span>
+                    <span class="freq-tag freq-high">Every Panel</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Checklist</div>
+                        <p>📄 Resume (2–3 printed copies)</p>
+                        <p>🪪 Aadhaar Card / Government ID proof</p>
+                        <p>📋 10th Marksheet + Certificate</p>
+                        <p>📋 12th / Intermediate Marksheet + Certificate</p>
+                        <p>📋 B.Tech Marksheets (all semesters available)</p>
+                        <p>📋 Provisional / Degree Certificate (if available)</p>
+                        <p>🏆 ServiceNow CSA Certificate</p>
+                        <p>🏆 Internship Certificates (SmartInternz, EduSkills)</p>
+                        <p>📸 Passport-size photos (2–3)</p>
+                        <p>🛂 Passport (if available)</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Tips</div>
+                        <p>Keep everything organized in a clear folder. Carry both originals and photocopies. Be well-groomed and arrive early.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card" data-search="closing statement final impression end interview">
+                <div class="question-row" onclick="toggleQA(this)">
+                    <span class="question-text">Closing Statement (Last Impression)</span>
+                    <span class="freq-tag freq-high">Always</span>
+                    <span class="qa-toggle">▼</span>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-block">
+                        <div class="block-label">Say This Before Leaving</div>
+                        <p>"Thank you for the opportunity. It was a great experience interacting with you. I look forward to contributing to TCS."</p>
+                    </div>
+                    <div class="tip-block">
+                        <div class="block-label tip-label">Final 10-Second Impression</div>
+                        <p>Smile 🙂 • Stand up properly • Make eye contact • Say thank you • Walk out confidently</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        TCS Prime NQT — HR &amp; MR Round Complete Preparation<br>
+        Good luck! Remember: Stability ✅ Learning ✅ Team Player ✅
+    </div>
+
+</div>
+
+<script>
+    function toggleSection(header) {
+        var body = header.nextElementSibling;
+        var icon = header.querySelector('.toggle-icon');
+        var isOpen = body.classList.contains('open');
+        body.classList.toggle('open');
+        icon.textContent = isOpen ? '▼' : '▲';
+    }
+
+    function toggleQA(row) {
+        var card = row.closest('.qa-card');
+        var icon = row.querySelector('.qa-toggle');
+        var isOpen = card.classList.contains('open');
+        card.classList.toggle('open');
+        icon.textContent = isOpen ? '▼' : '▲';
+    }
+
+    function toggleAllSections(expand) {
+        document.querySelectorAll('.section-body').forEach(function(b) {
+            if (expand) b.classList.add('open'); else b.classList.remove('open');
+        });
+        document.querySelectorAll('.toggle-icon').forEach(function(i) {
+            i.textContent = expand ? '▲' : '▼';
+        });
+    }
+
+    function toggleAllQA(expand) {
+        document.querySelectorAll('.qa-card').forEach(function(card) {
+            if (expand) card.classList.add('open'); else card.classList.remove('open');
+        });
+        document.querySelectorAll('.qa-toggle').forEach(function(i) {
+            i.textContent = expand ? '▲' : '▼';
+        });
+    }
+
+    function filterQuestions() {
+        var query = document.getElementById('searchBox').value.toLowerCase();
+        document.querySelectorAll('.qa-card').forEach(function(card) {
+            var text = (card.getAttribute('data-search') || '') + ' ' + card.textContent.toLowerCase();
+            card.style.display = text.includes(query) ? '' : 'none';
+        });
+        if (query.length > 0) {
+            document.querySelectorAll('.section').forEach(function(sec) {
+                var visible = sec.querySelectorAll('.qa-card:not([style*="display: none"])');
+                var body = sec.querySelector('.section-body');
+                var icon = sec.querySelector('.toggle-icon');
+                if (visible.length > 0) {
+                    body.classList.add('open');
+                    if (icon) icon.textContent = '▲';
+                } else {
+                    body.classList.remove('open');
+                    if (icon) icon.textContent = '▼';
+                }
+            });
+        }
+    }
+
+    document.querySelectorAll('.toc a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.getElementById(this.getAttribute('href').substring(1));
+            if (target) {
+                var body = target.querySelector('.section-body');
+                var icon = target.querySelector('.toggle-icon');
+                if (body) { body.classList.add('open'); if (icon) icon.textContent = '▲'; }
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+</body>
+</html>

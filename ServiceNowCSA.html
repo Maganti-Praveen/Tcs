@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceNow CSA - Complete Interview Notes | TCS Prime NQT</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #e8f0fe;
+            --secondary: #34a853;
+            --accent: #fbbc04;
+            --danger: #ea4335;
+            --dark: #202124;
+            --gray: #5f6368;
+            --light-gray: #f1f3f4;
+            --white: #ffffff;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark); line-height: 1.7; min-height: 100vh;
+        }
+        .hero {
+            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #1a73e8 100%);
+            color: white; padding: 40px 20px; text-align: center; position: relative; overflow: hidden;
+        }
+        .hero h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .hero .subtitle { font-size: 1.2em; opacity: 0.9; }
+        .hero .badge {
+            display: inline-block; background: var(--accent); color: var(--dark);
+            padding: 5px 20px; border-radius: 20px; font-weight: bold; margin-top: 15px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .toc {
+            background: var(--white); border-radius: var(--radius);
+            padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow-lg);
+        }
+        .toc h2 {
+            color: var(--primary-dark); margin-bottom: 20px; font-size: 1.5em;
+            border-bottom: 3px solid var(--primary); padding-bottom: 10px;
+        }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+        .toc a {
+            display: block; padding: 10px 15px; color: var(--primary); text-decoration: none;
+            border-radius: var(--radius-sm); transition: all 0.3s; border-left: 3px solid transparent;
+        }
+        .toc a:hover { background: var(--primary-light); border-left-color: var(--primary); transform: translateX(5px); }
+        .toc a .toc-num {
+            display: inline-block; background: var(--primary); color: white;
+            width: 28px; height: 28px; border-radius: 50%; text-align: center;
+            line-height: 28px; font-size: 0.8em; margin-right: 10px;
+        }
+        .section-card {
+            background: var(--white); border-radius: var(--radius);
+            margin-bottom: 25px; box-shadow: var(--shadow); overflow: hidden;
+        }
+        .section-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white; padding: 20px 25px; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; user-select: none;
+        }
+        .section-header h2 { font-size: 1.4em; display: flex; align-items: center; gap: 10px; }
+        .section-header .toggle { font-size: 1.5em; transition: transform 0.3s; }
+        .section-header.active .toggle { transform: rotate(180deg); }
+        .section-body { padding: 25px; display: none; }
+        .section-body.show { display: block; }
+        h3 { color: var(--primary-dark); margin: 25px 0 12px; font-size: 1.25em; border-left: 4px solid var(--primary); padding-left: 12px; }
+        h4 { color: var(--gray); margin: 18px 0 8px; font-size: 1.05em; }
+        p { margin-bottom: 12px; color: #333; }
+        .info-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 15px 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 15px 0; }
+        .warning-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 15px 0; }
+        .success-box { background: #e8f5e9; border-left: 4px solid var(--secondary); padding: 15px 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 15px 0; }
+        .danger-box { background: #fce4ec; border-left: 4px solid var(--danger); padding: 15px 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 15px 0; }
+        .interview-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
+            border: 2px solid var(--accent); padding: 18px 22px;
+            border-radius: var(--radius-sm); margin: 18px 0;
+        }
+        .interview-box::before { content: '🎯 Interview Question'; display: block; font-weight: bold; color: #e65100; margin-bottom: 8px; font-size: 0.95em; }
+        .interview-box .q { font-weight: bold; color: var(--dark); margin-bottom: 5px; }
+        .interview-box .a { color: #1b5e20; padding-left: 15px; border-left: 3px solid var(--secondary); }
+        .styled-table { width: 100%; border-collapse: collapse; margin: 15px 0; border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+        .styled-table thead { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; }
+        .styled-table th, .styled-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+        .styled-table tbody tr:nth-child(even) { background: var(--light-gray); }
+        .styled-table tbody tr:hover { background: var(--primary-light); }
+        code { background: #263238; color: #80cbc4; padding: 2px 8px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+        pre { background: #263238; color: #eeffff; padding: 20px; border-radius: var(--radius-sm); overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.5; }
+        ul, ol { padding-left: 25px; margin: 10px 0; }
+        li { margin-bottom: 6px; }
+        .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin: 15px 0; padding: 15px; background: var(--light-gray); border-radius: var(--radius-sm); }
+        .flow-item { background: var(--primary); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9em; font-weight: 500; }
+        .flow-arrow { color: var(--gray); font-size: 1.2em; font-weight: bold; }
+        .key-point { display: inline-block; background: var(--danger); color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; margin-right: 5px; }
+        .tag { display: inline-block; padding: 3px 12px; border-radius: 15px; font-size: 0.8em; font-weight: 600; margin: 2px; }
+        .tag-blue { background: #e3f2fd; color: #1565c0; }
+        .tag-green { background: #e8f5e9; color: #2e7d32; }
+        .tag-orange { background: #fff3e0; color: #e65100; }
+        .tag-red { background: #fce4ec; color: #c62828; }
+        .revision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
+        .revision-card { background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: var(--radius-sm); padding: 18px; border: 1px solid #e0e0e0; }
+        .revision-card h4 { color: var(--primary-dark); margin: 0 0 8px; }
+        .revision-card p { font-size: 0.9em; margin: 0; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .comparison-item { background: var(--light-gray); padding: 15px; border-radius: var(--radius-sm); border-top: 4px solid var(--primary); }
+        .comparison-item.right { border-top-color: var(--secondary); }
+        .comparison-item h4 { margin-top: 0; color: var(--primary-dark); }
+        .scenario { background: linear-gradient(135deg, #e0f7fa 0%, #e8eaf6 100%); border: 1px solid #b3e5fc; border-radius: var(--radius-sm); padding: 18px; margin: 15px 0; }
+        .scenario .req { font-weight: bold; color: var(--primary-dark); }
+        .scenario .sol { color: #1b5e20; font-weight: 600; margin-top: 8px; }
+        .highlight { background: yellow; padding: 1px 4px; border-radius: 3px; }
+        hr { border: none; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); margin: 20px 0; }
+        .controls { text-align: center; margin-bottom: 20px; }
+        .btn {
+            display: inline-block; padding: 10px 25px; background: var(--primary); color: white;
+            border: none; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 600;
+            transition: all 0.3s; box-shadow: var(--shadow); margin: 5px;
+        }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-secondary { background: var(--secondary); }
+        .btn-secondary:hover { background: #2e7d32; }
+        .progress-section { background: white; border-radius: var(--radius); padding: 20px 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
+        .progress-bar-bg { background: var(--light-gray); border-radius: 10px; height: 20px; overflow: hidden; margin-top: 10px; }
+        .progress-bar-fill { background: linear-gradient(90deg, var(--secondary), #66bb6a); height: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75em; font-weight: bold; }
+        @media print {
+            body { background: white; }
+            .hero { padding: 20px; }
+            .section-body { display: block !important; }
+            .section-header .toggle { display: none; }
+            .section-card { box-shadow: none; border: 1px solid #ddd; }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8em; }
+            .toc-grid { grid-template-columns: 1fr; }
+            .comparison { grid-template-columns: 1fr; }
+            .revision-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>📘 ServiceNow CSA</h1>
+    <div class="subtitle">Complete Interview Preparation Notes</div>
+    <div class="badge">🎯 TCS Prime NQT Interview Ready</div>
+</div>
+
+<div class="container">
+
+    <div class="progress-section">
+        <strong>📊 CSA Syllabus Coverage: 100% Complete</strong>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width:100%;">100%</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">📖 Expand All</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">📕 Collapse All</button>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+        <h2>📑 Table of Contents</h2>
+        <div class="toc-grid">
+            <a href="#s1"><span class="toc-num">1</span> ServiceNow Fundamentals</a>
+            <a href="#s2"><span class="toc-num">2</span> Tables, Fields & Dictionary</a>
+            <a href="#s3"><span class="toc-num">3</span> Forms & List Customization</a>
+            <a href="#s4"><span class="toc-num">4</span> UI Policies</a>
+            <a href="#s5"><span class="toc-num">5</span> Users, Groups & Roles</a>
+            <a href="#s6"><span class="toc-num">6</span> ACL (Access Control)</a>
+            <a href="#s7"><span class="toc-num">7</span> Service Catalog</a>
+            <a href="#s8"><span class="toc-num">8</span> Notifications & Events</a>
+            <a href="#s9"><span class="toc-num">9</span> Import Sets & Data Loading</a>
+            <a href="#s10"><span class="toc-num">10</span> Reports & Dashboards</a>
+            <a href="#s11"><span class="toc-num">11</span> SLA</a>
+            <a href="#s12"><span class="toc-num">12</span> Additional CSA Topics</a>
+            <a href="#s13"><span class="toc-num">13</span> Interview Questions & Answers</a>
+            <a href="#s14"><span class="toc-num">14</span> Scenario-Based Questions</a>
+            <a href="#s15"><span class="toc-num">15</span> Quick Revision Cheat Sheet</a>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 1 ============ -->
+    <div class="section-card" id="s1">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 1. ServiceNow Fundamentals</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is ServiceNow?</h3>
+            <p>ServiceNow is a <strong>cloud-based platform</strong> used by companies to manage IT services, automate workflows, and streamline business processes.</p>
+            <div class="info-box">
+                <strong>Companies use ServiceNow for:</strong>
+                <ul>
+                    <li>IT Service Management (ITSM)</li>
+                    <li>Employee workflows</li>
+                    <li>Asset management</li>
+                    <li>Incident and problem tracking</li>
+                    <li>Automation of business processes</li>
+                </ul>
+            </div>
+
+            <h3>1. Instance</h3>
+            <p>An <strong>instance</strong> is your ServiceNow environment — a dedicated server with its own database, applications, and configurations.</p>
+            <p><strong>Example URL:</strong> <code>https://devXXXXX.service-now.com</code></p>
+            <table class="styled-table">
+                <thead><tr><th>Instance Type</th><th>Purpose</th></tr></thead>
+                <tbody>
+                    <tr><td>Developer Instance (PDI)</td><td>Personal practice (free)</td></tr>
+                    <tr><td>Test Instance</td><td>Testing configurations</td></tr>
+                    <tr><td>Production Instance</td><td>Live usage by real users</td></tr>
+                </tbody>
+            </table>
+
+            <h3>2. Tables</h3>
+            <p>A <strong>table</strong> stores data — similar to a spreadsheet or database table.</p>
+            <table class="styled-table">
+                <thead><tr><th>Table Label</th><th>Table Name</th><th>Purpose</th></tr></thead>
+                <tbody>
+                    <tr><td>Incident</td><td><code>incident</code></td><td>Stores incident tickets</td></tr>
+                    <tr><td>Problem</td><td><code>problem</code></td><td>Stores problems</td></tr>
+                    <tr><td>Change Request</td><td><code>change_request</code></td><td>Stores changes</td></tr>
+                    <tr><td>User</td><td><code>sys_user</code></td><td>Stores users</td></tr>
+                    <tr><td>Group</td><td><code>sys_user_group</code></td><td>Stores groups</td></tr>
+                </tbody>
+            </table>
+
+            <h3>3. Records</h3>
+            <p>A <strong>record</strong> = one row in a table.</p>
+            <div class="info-box"><strong>Example:</strong> INC0010001, INC0010002 are records in the <code>incident</code> table.</div>
+
+            <h3>4. Forms</h3>
+            <p>A <strong>form</strong> is the <strong>detailed view</strong> of a single record — shows all fields like Number, Caller, State, Priority.</p>
+
+            <h3>5. Lists</h3>
+            <p>A <strong>list</strong> shows <strong>multiple records</strong> in a table/grid format. Lists allow Filtering, Sorting, Searching.</p>
+
+            <h3>6. Applications & Modules</h3>
+            <p><strong>Application</strong> = category of features. <strong>Module</strong> = specific page/link inside an application.</p>
+            <div class="info-box">
+                <strong>Example:</strong> Application → Incident | Modules → Create New, Open, All
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: Difference between Table, Record, Form, and List?</div>
+                <div class="a"><strong>Table</strong> → stores data | <strong>Record</strong> → single row | <strong>Form</strong> → detailed view of one record | <strong>List</strong> → multiple records in table format</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 2 ============ -->
+    <div class="section-card" id="s2">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 2. Tables, Fields & Dictionary</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>Fields (Columns)</h3>
+            <table class="styled-table">
+                <thead><tr><th>Field Type</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td>String</td><td>Short description</td></tr>
+                    <tr><td>Integer</td><td>Priority</td></tr>
+                    <tr><td>Reference</td><td>Caller (links to <code>sys_user</code>)</td></tr>
+                    <tr><td>Date/Time</td><td>Created date</td></tr>
+                    <tr><td>Choice</td><td>State (New, In Progress, Closed)</td></tr>
+                    <tr><td>Boolean</td><td>Active (true/false)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Reference Field <span class="key-point">IMPORTANT</span></h3>
+            <p>A <strong>reference field</strong> creates a <strong>relationship</strong> between two tables.</p>
+            <div class="info-box"><strong>Example:</strong> Caller field on Incident → references <code>sys_user</code> table.</div>
+
+            <h3>Dictionary <span class="key-point">IMPORTANT</span></h3>
+            <p>The <strong>Dictionary</strong> stores <strong>metadata</strong> of fields — type, max length, mandatory status, default value.</p>
+            <div class="info-box"><strong>Navigation:</strong> <code>System Definition → Dictionary</code></div>
+
+            <div class="interview-box">
+                <div class="q">Q: What is a Dictionary in ServiceNow?</div>
+                <div class="a">Dictionary defines properties of fields in a table like type, length, default value, and behavior.</div>
+            </div>
+
+            <h3>Table Extension (Parent–Child) <span class="key-point">MOST IMPORTANT</span></h3>
+            <div class="info-box">
+<pre style="background:transparent;color:#333;padding:10px;margin:5px 0;">Task (Parent Table)
+   ├── Incident
+   ├── Problem
+   └── Change Request</pre>
+                <p><strong>Task</strong> = base table. Child tables inherit all Task fields automatically. Incident then adds its own fields (Impact, Urgency, Priority).</p>
+            </div>
+            <div class="success-box"><strong>Verify:</strong> <code>System Definition → Tables</code> → Open <code>incident</code> → Check <strong>"Extends Table = Task"</strong></div>
+
+            <div class="interview-box">
+                <div class="q">Q: Why is the Task table important?</div>
+                <div class="a">Task is the base table providing common fields and structure for all task-based applications like Incident, Problem, and Change. This avoids duplicate fields through inheritance.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 3 ============ -->
+    <div class="section-card" id="s3">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 3. Forms & List Customization</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>Form Layout Customization</h3>
+            <div class="success-box">
+                <strong>Steps:</strong> Open Incident record → Right-click header → <code>Configure → Form Layout</code> → Move fields → Save
+            </div>
+
+            <h3>List Layout Customization</h3>
+            <div class="success-box">
+                <strong>Steps:</strong> Go to <code>Incident → All</code> → Right-click column header → <code>Configure → List Layout</code> → Add/remove columns → Save
+            </div>
+
+            <h3>Making Fields Mandatory / Read-only / Hidden</h3>
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h4>Dictionary (Static)</h4>
+                    <p>Always mandatory. No conditions.</p>
+                </div>
+                <div class="comparison-item right">
+                    <h4>UI Policy (Dynamic) ⭐</h4>
+                    <p>Mandatory only when condition is met.</p>
+                </div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: When to use UI Policy vs Dictionary?</div>
+                <div class="a"><strong>Dictionary</strong> → field is ALWAYS mandatory (static). <strong>UI Policy</strong> → field becomes mandatory only when a condition is met (dynamic).</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 4 ============ -->
+    <div class="section-card" id="s4">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 4. UI Policies</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is a UI Policy?</h3>
+            <p>UI Policy dynamically controls form field behavior <strong>without code</strong>. You can make fields: Mandatory, Read-only, Visible/Hidden.</p>
+            <div class="info-box"><strong>Example:</strong> If State = Closed → Make "Close Notes" mandatory.</div>
+
+            <h3>Types of UI Policies</h3>
+            <table class="styled-table">
+                <thead><tr><th>Type</th><th>Where Used</th><th>Focus?</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>System UI Policy</strong></td><td>Incident, Problem, Change forms</td><td><span class="tag tag-green">✅ YES (Main)</span></td></tr>
+                    <tr><td>Catalog UI Policy</td><td>Service Catalog variables</td><td><span class="tag tag-blue">Later</span></td></tr>
+                    <tr><td>Mobile UI Policy</td><td>Mobile app</td><td><span class="tag tag-red">❌ Skip</span></td></tr>
+                    <tr><td>Debug UI Policy</td><td>Troubleshooting</td><td><span class="tag tag-red">❌ Skip</span></td></tr>
+                </tbody>
+            </table>
+
+            <h3>How to Create a UI Policy</h3>
+            <div class="success-box">
+                <ol>
+                    <li>Navigate to <code>System UI → UI Policies</code></li>
+                    <li>Click New</li>
+                    <li>Table → Incident</li>
+                    <li>Condition → State = Closed</li>
+                    <li>Submit</li>
+                    <li>Add UI Policy Action: Field → Close Notes, Mandatory → true</li>
+                    <li>Save</li>
+                </ol>
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: UI Policy vs Client Script?</div>
+                <div class="a"><strong>UI Policy</strong> → no coding, simple conditions. <strong>Client Script</strong> → uses JavaScript, more powerful.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 5 ============ -->
+    <div class="section-card" id="s5">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 5. Users, Groups & Roles</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>Users</h3>
+            <p>A user = a person who logs into ServiceNow.</p>
+            <div class="success-box"><strong>Create:</strong> <code>User Administration → Users → New</code></div>
+
+            <h3>Groups</h3>
+            <p>A group = collection of users (Service Desk, Network Team, HR Team).</p>
+            <div class="success-box"><strong>Create:</strong> <code>User Administration → Groups → New</code> → Add members via Members related list.</div>
+
+            <h3>Roles <span class="key-point">MOST IMPORTANT</span></h3>
+            <p><span class="highlight">No role = No access</span></p>
+            <table class="styled-table">
+                <thead><tr><th>Role</th><th>Access</th></tr></thead>
+                <tbody>
+                    <tr><td><code>admin</code></td><td>Full access</td></tr>
+                    <tr><td><code>itil</code></td><td>Work on incidents, problems, changes</td></tr>
+                </tbody>
+            </table>
+
+            <h3>How It Connects</h3>
+            <div class="flow">
+                <span class="flow-item">User</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Group</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Role</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: How do you give access in ServiceNow?</div>
+                <div class="a">By assigning roles to users or groups. Roles define permissions and access rights.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 6 ============ -->
+    <div class="section-card" id="s6">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 6. ACL (Access Control) <span class="tag tag-red">CRITICAL</span></h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is ACL?</h3>
+            <p><strong>ACL = Access Control List.</strong> Controls who can <strong>read, write, create, or delete</strong> data.</p>
+
+            <table class="styled-table">
+                <thead><tr><th>Operation</th><th>Meaning</th></tr></thead>
+                <tbody>
+                    <tr><td><code>read</code></td><td>View data</td></tr>
+                    <tr><td><code>write</code></td><td>Edit data</td></tr>
+                    <tr><td><code>create</code></td><td>Create new records</td></tr>
+                    <tr><td><code>delete</code></td><td>Delete records</td></tr>
+                </tbody>
+            </table>
+
+            <h3>How ACL Works</h3>
+            <div class="flow">
+                <span class="flow-item">User Request</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Role Check</span><span class="flow-arrow">→</span>
+                <span class="flow-item">ACL Check</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Granted / Denied</span>
+            </div>
+
+            <h3>ACL Levels</h3>
+            <ul>
+                <li><strong>Table level</strong> → controls entire table</li>
+                <li><strong>Field level</strong> → controls specific field</li>
+            </ul>
+
+            <h3>ACL Can Have</h3>
+            <ul>
+                <li><strong>Condition</strong> (no code) — e.g., State = Active</li>
+                <li><strong>Script</strong> — e.g., <code>answer = gs.hasRole('admin');</code></li>
+            </ul>
+
+            <div class="success-box">
+                <strong>Create ACL:</strong> Access Control (ACL) → New → Type: Record → Operation: read → Table: Incident → Requires role: <code>itil</code> → Submit
+            </div>
+
+            <div class="comparison">
+                <div class="comparison-item"><h4>Role</h4><p><strong>Gives</strong> permission. Assigned to user.</p></div>
+                <div class="comparison-item right"><h4>ACL</h4><p><strong>Enforces</strong> permission. Defined on table/field.</p></div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: What is ACL?</div>
+                <div class="a">ACL controls access to records and fields based on roles, conditions, and scripts.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q: Can UI Policy be used for security?</div>
+                <div class="a">❌ No. UI Policy is only for UI behavior. Security must use ACL.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 7 ============ -->
+    <div class="section-card" id="s7">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 7. Service Catalog <span class="tag tag-orange">HIGH PRIORITY</span></h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is Service Catalog?</h3>
+            <p>Service Catalog creates <strong>request forms</strong> for users to request services or items.</p>
+            <div class="info-box"><strong>Examples:</strong> Laptop request, Leave request, Software installation.</div>
+
+            <h3>Key Components</h3>
+            <table class="styled-table">
+                <thead><tr><th>Component</th><th>Meaning</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Catalog Item</strong></td><td>The request form users fill</td></tr>
+                    <tr><td><strong>Variables</strong></td><td>Input fields in the form</td></tr>
+                    <tr><td><strong>Record Producer</strong></td><td>Creates record in a table</td></tr>
+                    <tr><td><strong>Order Guide</strong></td><td>Bundles multiple items</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Variable Types</h3>
+            <table class="styled-table">
+                <thead><tr><th>Type</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td>Single Line Text</td><td>Employee Name</td></tr>
+                    <tr><td>Select Box</td><td>Laptop Type (Dell/HP/Lenovo)</td></tr>
+                    <tr><td>Yes/No</td><td>Need Accessories?</td></tr>
+                    <tr><td>Reference</td><td>User lookup</td></tr>
+                </tbody>
+            </table>
+
+            <h3>How Catalog Works</h3>
+            <div class="flow">
+                <span class="flow-item">User</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Opens Catalog</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Fills Form</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Submits</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Request Created</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: Catalog Item vs Record Producer?</div>
+                <div class="a"><strong>Catalog Item</strong> → request services (creates request + requested items). <strong>Record Producer</strong> → directly creates record in a specific table.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q: UI Policy vs Catalog UI Policy?</div>
+                <div class="a"><strong>UI Policy</strong> → works on table fields. <strong>Catalog UI Policy</strong> → works on catalog variables.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 8 ============ -->
+    <div class="section-card" id="s8">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 8. Notifications & Events</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is a Notification?</h3>
+            <p>Sends <strong>emails automatically</strong> based on actions/events.</p>
+            <div class="flow">
+                <span class="flow-item">Event/Trigger</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Notification Rule</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Email Sent</span>
+            </div>
+
+            <div class="success-box">
+                <strong>Create:</strong> Notifications → New → Table: Incident → When: Inserted → Who: Caller → Subject & Body → Save
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: What is a Notification?</div>
+                <div class="a">Used to send automated emails when specific events or conditions occur (e.g., incident created, assigned, breached).</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 9 ============ -->
+    <div class="section-card" id="s9">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 9. Import Sets & Data Loading</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is Import Set?</h3>
+            <p>Used to <strong>load external data</strong> (Excel/CSV) into ServiceNow.</p>
+
+            <div class="flow">
+                <span class="flow-item">Excel/CSV</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Import Set Table</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Transform Map</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Target Table</span>
+            </div>
+
+            <h3>Key Concepts</h3>
+            <ul>
+                <li><strong>Import Set Table</strong> → temporary staging table</li>
+                <li><strong>Transform Map</strong> → maps source columns to target fields</li>
+                <li><strong>Coalesce</strong> → decides INSERT new or UPDATE existing</li>
+            </ul>
+
+            <div class="success-box"><strong>Steps:</strong> Load Data → Upload file → Create Transform Map → Map fields → Run Transform</div>
+
+            <div class="interview-box">
+                <div class="q">Q: What is Coalesce?</div>
+                <div class="a">Coalesce decides whether to insert a new record or update an existing one. If a matching record is found, it updates; otherwise it inserts.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 10 ============ -->
+    <div class="section-card" id="s10">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 10. Reports & Dashboards</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is a Report?</h3>
+            <p>Used to <strong>visualize and analyze</strong> data. Types: Bar, Pie, Line, List, Donut charts.</p>
+
+            <div class="success-box"><strong>Create:</strong> Reports → Create New → Table: Incident → Type: Bar chart → Group by: Priority → Run</div>
+
+            <h3>Dashboards</h3>
+            <p>A Dashboard = collection of multiple reports/widgets on a single page.</p>
+
+            <div class="interview-box">
+                <div class="q">Q: Why use Reports?</div>
+                <div class="a">To analyze and visualize data — e.g., showing incidents by priority, tracking trends over time.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 11 ============ -->
+    <div class="section-card" id="s11">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 11. SLA (Service Level Agreement)</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>What is SLA?</h3>
+            <p>SLA defines <strong>time limits</strong> to complete tasks.</p>
+            <div class="info-box"><strong>Example:</strong> P1 incidents must be resolved within 4 hours.</div>
+
+            <div class="flow">
+                <span class="flow-item">Incident Created</span><span class="flow-arrow">→</span>
+                <span class="flow-item">SLA Starts</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Timer Runs</span><span class="flow-arrow">→</span>
+                <span class="flow-item">Breach if Delayed</span>
+            </div>
+
+            <h3>Key Concepts</h3>
+            <ul>
+                <li><strong>Start Condition</strong> → when SLA clock starts</li>
+                <li><strong>Stop Condition</strong> → when SLA clock stops</li>
+                <li><strong>Breach</strong> → task NOT completed in time</li>
+            </ul>
+
+            <div class="interview-box">
+                <div class="q">Q: What is SLA Breach?</div>
+                <div class="a">An SLA breach occurs when a task is not completed within the defined time limit.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 12 ============ -->
+    <div class="section-card" id="s12">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 12. Additional CSA Topics</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+            <h3>Update Sets</h3>
+            <p>Used to <strong>move configurations</strong> from one instance to another (Dev → Test → Prod).</p>
+            <div class="info-box">Create Update Set → Make changes → Export (XML) → Import in target → Preview → Commit</div>
+
+            <div class="interview-box">
+                <div class="q">Q: What is an Update Set?</div>
+                <div class="a">Used to move configurations and customizations between instances (like dev to production).</div>
+            </div>
+
+            <h3>Data Policy</h3>
+            <p>Similar to UI Policy but works on <strong>server side also</strong>.</p>
+            <div class="warning-box">
+                <strong>UI Policy</strong> → enforces rules only on the form (client).<br>
+                <strong>Data Policy</strong> → enforces rules even through imports, web services, APIs (server).
+            </div>
+
+            <div class="interview-box">
+                <div class="q">Q: UI Policy vs Data Policy?</div>
+                <div class="a"><strong>UI Policy</strong> → client-side form behavior. <strong>Data Policy</strong> → enforces data rules even through imports, APIs, scripts.</div>
+            </div>
+
+            <h3>Business Rule (Basic for CSA)</h3>
+            <p>Executes <strong>server-side logic</strong> when records are inserted, updated, queried, or deleted.</p>
+            <div class="info-box">Types: before, after, async, display. Example: Priority = 1 → auto-assign group.</div>
+
+            <div class="interview-box">
+                <div class="q">Q: Client Script vs Business Rule?</div>
+                <div class="a"><strong>Client Script</strong> → runs on browser (client-side). <strong>Business Rule</strong> → runs on server (backend).</div>
+            </div>
+
+            <h3>Knowledge Management</h3>
+            <p>Create/manage <strong>knowledge articles</strong> (FAQs, how-to guides) to help users find answers without tickets.</p>
+
+            <h3>CMDB</h3>
+            <p>CMDB stores info about <strong>Configuration Items (CIs)</strong> — hardware, software, services and their relationships.</p>
+
+            <div class="interview-box">
+                <div class="q">Q: What is CMDB?</div>
+                <div class="a">CMDB is a database that stores information about Configuration Items (CIs) like servers, applications, and network devices, along with their relationships.</div>
+            </div>
+
+            <h3>ITSM Key Processes</h3>
+            <table class="styled-table">
+                <thead><tr><th>Process</th><th>Purpose</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Incident Management</strong></td><td>Restore service quickly</td></tr>
+                    <tr><td><strong>Problem Management</strong></td><td>Find root cause</td></tr>
+                    <tr><td><strong>Change Management</strong></td><td>Implement permanent solution safely</td></tr>
+                    <tr><td><strong>Request Fulfillment</strong></td><td>Handle user service requests</td></tr>
+                </tbody>
+            </table>
+
+            <div class="interview-box">
+                <div class="q">Q: Difference between Incident, Problem, and Change?</div>
+                <div class="a"><strong>Incident</strong> → fix immediate issue. <strong>Problem</strong> → find root cause. <strong>Change</strong> → implement permanent solution.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 13 ============ -->
+    <div class="section-card" id="s13">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 13. Complete Interview Questions & Answers</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+
+            <h3>Basic Questions</h3>
+
+            <div class="interview-box">
+                <div class="q">Q1: What is ServiceNow?</div>
+                <div class="a">ServiceNow is a cloud-based platform used for IT service management to automate workflows and manage services like incidents, problems, and requests.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q2: What is an Instance?</div>
+                <div class="a">An instance is a single ServiceNow environment with its own database, applications, and configurations.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q3: What is a Table?</div>
+                <div class="a">A table is a collection of records used to store data.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q4: What is a Reference Field?</div>
+                <div class="a">A reference field links one table to another. Example: Caller → sys_user.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q5: What is a Module?</div>
+                <div class="a">A module is a link in the application navigator used to access records or features.</div>
+            </div>
+
+            <h3>Admin Questions</h3>
+
+            <div class="interview-box">
+                <div class="q">Q6: What is UI Policy?</div>
+                <div class="a">UI Policy dynamically controls field behavior (mandatory, read-only, visibility) based on conditions without scripting.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q7: What is ACL?</div>
+                <div class="a">ACL controls access to data by defining who can read, write, create, or delete records based on roles, conditions, and scripts.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q8: Role vs ACL?</div>
+                <div class="a"><strong>Role</strong> → gives permission (assigned to user). <strong>ACL</strong> → enforces permission (defined on table/field).</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q9: What is Service Catalog?</div>
+                <div class="a">Service Catalog creates request forms for users to request services or items.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q10: What is a Notification?</div>
+                <div class="a">Sends automated emails when certain conditions are met.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q11: What is Import Set?</div>
+                <div class="a">Used to load external data (Excel/CSV) into ServiceNow.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q12: What is Transform Map?</div>
+                <div class="a">Maps data from import set table to target table.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q13: What is SLA?</div>
+                <div class="a">SLA defines the time limit to complete a task. Breach = task not completed in time.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q14: What is Update Set?</div>
+                <div class="a">Used to move configurations from one instance to another.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q15: What is Table Extension?</div>
+                <div class="a">One table inherits fields from another. Example: Incident extends Task, getting all Task fields.</div>
+            </div>
+
+            <h3>Comparison Questions</h3>
+
+            <div class="interview-box">
+                <div class="q">Q16: UI Policy vs Dictionary?</div>
+                <div class="a"><strong>Dictionary</strong> → static (always applies). <strong>UI Policy</strong> → dynamic (condition-based).</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q17: UI Policy vs Data Policy?</div>
+                <div class="a"><strong>UI Policy</strong> → client-side only (forms). <strong>Data Policy</strong> → works on server side too (imports, APIs).</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q18: Client Script vs Business Rule?</div>
+                <div class="a"><strong>Client Script</strong> → browser, UI-related. <strong>Business Rule</strong> → server, backend logic.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q19: Catalog Item vs Record Producer?</div>
+                <div class="a"><strong>Catalog Item</strong> → request services. <strong>Record Producer</strong> → creates records in a specific table.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q20: Incident vs Problem vs Change?</div>
+                <div class="a"><strong>Incident</strong> → fix immediate issue. <strong>Problem</strong> → find root cause. <strong>Change</strong> → permanent solution.</div>
+            </div>
+
+            <h3>Tricky Questions</h3>
+
+            <div class="interview-box">
+                <div class="q">Q: Can UI Policy be used for security?</div>
+                <div class="a">❌ No. UI Policy is only for UI behavior. Use ACL for security.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q: Can a user access data without a role?</div>
+                <div class="a">❌ Generally no. No role = no access.</div>
+            </div>
+            <div class="interview-box">
+                <div class="q">Q: What happens if no ACL is defined?</div>
+                <div class="a">System applies default access rules (usually restrictive).</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECTION 14 ============ -->
+    <div class="section-card" id="s14">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 14. Scenario-Based Questions</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="scenario">
+                <div class="req">Scenario 1: If Incident is Closed → Close Notes must be mandatory</div>
+                <div class="sol">✅ Solution: Use <strong>UI Policy</strong> — Condition: State = Closed → Action: Close Notes mandatory = true</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 2: Only ITIL users should access incidents</div>
+                <div class="sol">✅ Solution: Use <strong>ACL</strong> with <code>itil</code> role on Incident table (read operation)</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 3: When incident is created → send email</div>
+                <div class="sol">✅ Solution: Use <strong>Notification</strong> — When: Inserted, Table: Incident</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 4: Load 1000 employee records from Excel</div>
+                <div class="sol">✅ Solution: Use <strong>Import Set + Transform Map</strong></div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 5: Show incidents based on priority</div>
+                <div class="sol">✅ Solution: Use <strong>Report</strong> — Bar chart grouped by Priority</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 6: Hide a field only in certain condition</div>
+                <div class="sol">✅ Solution: Use <strong>UI Policy</strong> — Set field visible = false based on condition</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 7: Move customizations from Dev to Prod</div>
+                <div class="sol">✅ Solution: Use <strong>Update Sets</strong> — Export from Dev, Import to Prod, Preview, Commit</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 8: Only assigned user should edit their incident</div>
+                <div class="sol">✅ Solution: Use <strong>ACL</strong> (write) with condition: Assigned to = current user</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 9: Employees need to request laptops through a portal</div>
+                <div class="sol">✅ Solution: Create <strong>Catalog Item</strong> with variables (name, laptop type, accessories) in Service Catalog</div>
+            </div>
+
+            <div class="scenario">
+                <div class="req">Scenario 10: Ensure field is mandatory even when data comes via API</div>
+                <div class="sol">✅ Solution: Use <strong>Data Policy</strong> (not UI Policy, since UI Policy only works on forms)</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============ SECTION 15 ============ -->
+    <div class="section-card" id="s15">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>📌 15. Quick Revision Cheat Sheet</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+
+            <h3>🔑 Core Concepts at a Glance</h3>
+            <div class="revision-grid">
+                <div class="revision-card"><h4>Instance</h4><p>Your ServiceNow environment with its own DB and apps.</p></div>
+                <div class="revision-card"><h4>Table</h4><p>Stores data (like incident, problem, sys_user).</p></div>
+                <div class="revision-card"><h4>Record</h4><p>One row in a table (e.g., INC0010001).</p></div>
+                <div class="revision-card"><h4>Form</h4><p>Detailed view of a single record.</p></div>
+                <div class="revision-card"><h4>List</h4><p>Multiple records displayed in table format.</p></div>
+                <div class="revision-card"><h4>Dictionary</h4><p>Metadata of fields — type, length, mandatory.</p></div>
+                <div class="revision-card"><h4>Reference Field</h4><p>Links one table to another (Caller → sys_user).</p></div>
+                <div class="revision-card"><h4>Table Extension</h4><p>Child inherits parent fields (Incident extends Task).</p></div>
+                <div class="revision-card"><h4>UI Policy</h4><p>Dynamic field control — mandatory/read-only/visible.</p></div>
+                <div class="revision-card"><h4>ACL</h4><p>Security — who can read/write/create/delete data.</p></div>
+                <div class="revision-card"><h4>Role</h4><p>Defines permissions (admin, itil). No role = no access.</p></div>
+                <div class="revision-card"><h4>Service Catalog</h4><p>Request forms for users (laptop request, etc.).</p></div>
+                <div class="revision-card"><h4>Variables</h4><p>Input fields inside catalog items.</p></div>
+                <div class="revision-card"><h4>Notification</h4><p>Automated emails on events/conditions.</p></div>
+                <div class="revision-card"><h4>Import Set</h4><p>Load external data (Excel) into ServiceNow.</p></div>
+                <div class="revision-card"><h4>Transform Map</h4><p>Maps source columns to target table fields.</p></div>
+                <div class="revision-card"><h4>Coalesce</h4><p>Insert new or update existing during import.</p></div>
+                <div class="revision-card"><h4>SLA</h4><p>Time limit to complete tasks. Breach = missed deadline.</p></div>
+                <div class="revision-card"><h4>Update Set</h4><p>Move configs between instances (Dev → Prod).</p></div>
+                <div class="revision-card"><h4>Data Policy</h4><p>Like UI Policy but works on server side too.</p></div>
+                <div class="revision-card"><h4>Business Rule</h4><p>Server-side logic on record changes.</p></div>
+                <div class="revision-card"><h4>Client Script</h4><p>Client-side JavaScript on forms.</p></div>
+                <div class="revision-card"><h4>CMDB</h4><p>Database of Configuration Items and relationships.</p></div>
+                <div class="revision-card"><h4>Knowledge Mgmt</h4><p>FAQ articles to reduce tickets.</p></div>
+            </div>
+
+            <h3>🔥 Must-Know Comparisons</h3>
+            <table class="styled-table">
+                <thead><tr><th>Concept A</th><th>vs</th><th>Concept B</th><th>Key Difference</th></tr></thead>
+                <tbody>
+                    <tr><td>UI Policy</td><td>vs</td><td>Dictionary</td><td>Dynamic vs Static</td></tr>
+                    <tr><td>UI Policy</td><td>vs</td><td>Data Policy</td><td>Client-side vs Server-side too</td></tr>
+                    <tr><td>UI Policy</td><td>vs</td><td>Client Script</td><td>No code vs JavaScript</td></tr>
+                    <tr><td>Client Script</td><td>vs</td><td>Business Rule</td><td>Browser vs Server</td></tr>
+                    <tr><td>Role</td><td>vs</td><td>ACL</td><td>Gives vs Enforces permission</td></tr>
+                    <tr><td>Catalog Item</td><td>vs</td><td>Record Producer</td><td>Request service vs Create record</td></tr>
+                    <tr><td>Incident</td><td>vs</td><td>Problem</td><td>Fix now vs Find root cause</td></tr>
+                    <tr><td>System UI Policy</td><td>vs</td><td>Catalog UI Policy</td><td>Table fields vs Catalog variables</td></tr>
+                </tbody>
+            </table>
+
+            <h3>💡 Interview Tips</h3>
+            <div class="success-box">
+                <ul>
+                    <li>Always give <strong>definition + example</strong> in answers</li>
+                    <li>Say <em>"UI Policy is used to..."</em> not <em>"I think..."</em></li>
+                    <li>If you don't know something, say: <em>"I haven't worked on that yet, but I understand the concept is..."</em></li>
+                    <li><strong>Revise strongly:</strong> UI Policy, ACL, Service Catalog, Tables & Relationships, Users/Roles</li>
+                    <li>Practice speaking answers out loud before interview</li>
+                    <li>For scenarios: identify the <strong>tool</strong> first (UI Policy / ACL / Notification / Import Set)</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</div> <!-- end container -->
+
+<!-- ============ JAVASCRIPT ============ -->
+<script>
+    function toggleSection(header) {
+        header.classList.toggle('active');
+        var body = header.nextElementSibling;
+        body.classList.toggle('show');
+    }
+
+    function toggleAll(expand) {
+        var headers = document.querySelectorAll('.section-header');
+        var bodies = document.querySelectorAll('.section-body');
+        headers.forEach(function(header) {
+            if (expand) {
+                header.classList.add('active');
+            } else {
+                header.classList.remove('active');
+            }
+        });
+        bodies.forEach(function(body) {
+            if (expand) {
+                body.classList.add('show');
+            } else {
+                body.classList.remove('show');
+            }
+        });
+    }
+
+    // Smooth scroll for TOC links
+    document.querySelectorAll('.toc a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var targetId = this.getAttribute('href').substring(1);
+            var target = document.getElementById(targetId);
+            if (target) {
+                // Auto-expand the section
+                var header = target.querySelector('.section-header');
+                var body = target.querySelector('.section-body');
+                if (header && !header.classList.contains('active')) {
+                    header.classList.add('active');
+                }
+                if (body && !body.classList.contains('show')) {
+                    body.classList.add('show');
+                }
+                // Scroll to it
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

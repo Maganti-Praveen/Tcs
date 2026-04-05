@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TCS Prime Study Hub</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #0f766e;
+      --accent-2: #0ea5e9;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top right, #dff6ff 0%, var(--bg) 45%), var(--bg);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 36px 18px 48px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 2vw + 1rem, 2.8rem);
+      color: #0f172a;
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #111827;
+      font-size: 1.2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    a.card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    a.card-link:hover {
+      transform: translateY(-2px);
+      border-color: #bae6fd;
+      box-shadow: 0 8px 18px rgba(2, 132, 199, 0.12);
+    }
+
+    .name {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #0b1220;
+      word-break: break-word;
+    }
+
+    .path {
+      color: var(--muted);
+      font-size: 0.85rem;
+      word-break: break-all;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      margin-left: 8px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      color: #0c4a6e;
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>TCS Prime Study Hub</h1>
+    <p class="subtitle">Single landing page for all your preparation files (HTML and PDF).</p>
+
+    <section class="panel">
+      <h2>Files</h2>
+      <ul class="grid">
+        <li>
+          <a class="card-link" href="CreditMantri%20Sql.html">
+            <div class="name">CreditMantri Sql <span class="tag">HTML</span></div>
+            <div class="path">CreditMantri Sql.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="mongodb.html">
+            <div class="name">MongoDB <span class="tag">HTML</span></div>
+            <div class="path">mongodb.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="node%26express.html">
+            <div class="name">Node &amp; Express <span class="tag">HTML</span></div>
+            <div class="path">node&amp;express.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="Python%20Codes.html">
+            <div class="name">Python Codes <span class="tag">HTML</span></div>
+            <div class="path">Python Codes.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="ServiceNowCSA.html">
+            <div class="name">ServiceNow CSA <span class="tag">HTML</span></div>
+            <div class="path">ServiceNowCSA.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="SqlCodes.html">
+            <div class="name">SQL Codes <span class="tag">HTML</span></div>
+            <div class="path">SqlCodes.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="TCS%20HR%20Answers.html">
+            <div class="name">TCS HR Answers <span class="tag">HTML</span></div>
+            <div class="path">TCS HR Answers.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="TCS%20Questions.html">
+            <div class="name">TCS Questions <span class="tag">HTML</span></div>
+            <div class="path">TCS Questions.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="TCS_HR_Answers_Clean.html">
+            <div class="name">TCS HR Answers Clean <span class="tag">HTML</span></div>
+            <div class="path">TCS_HR_Answers_Clean.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="tcs_prime_interview_notes.html">
+            <div class="name">TCS Prime Interview Notes <span class="tag">HTML</span></div>
+            <div class="path">tcs_prime_interview_notes.html</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="Maganti%20Praveen%20Sai.pdf">
+            <div class="name">Maganti Praveen Sai <span class="tag">PDF</span></div>
+            <div class="path">Maganti Praveen Sai.pdf</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="Networking%20Interview%20Questions.pdf">
+            <div class="name">Networking Interview Questions <span class="tag">PDF</span></div>
+            <div class="path">Networking Interview Questions.pdf</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="python-cheatsheet.pdf">
+            <div class="name">Python Cheatsheet <span class="tag">PDF</span></div>
+            <div class="path">python-cheatsheet.pdf</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="Sql%20Notes.pdf">
+            <div class="name">SQL Notes <span class="tag">PDF</span></div>
+            <div class="path">Sql Notes.pdf</div>
+          </a>
+        </li>
+        <li>
+          <a class="card-link" href="TCS%20Digital%20Interview.pdf">
+            <div class="name">TCS Digital Interview <span class="tag">PDF</span></div>
+            <div class="path">TCS Digital Interview.pdf</div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      Tip: Upload all files in this same folder/repository root so these relative links work directly on GitHub Pages.
+    </footer>
+  </main>
+</body>
+</html>
