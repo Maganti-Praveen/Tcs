@@ -1,0 +1,3035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React.js Revision Notes — MERN / Interview Prep</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa; color: #333; padding: 14px; line-height: 1.6;
+        }
+        h1 {
+            text-align: center; font-size: 1.4rem; color: #2c3e50;
+            margin-bottom: 6px; padding-bottom: 8px; border-bottom: 2px solid #dce1e8;
+        }
+        .subtitle {
+            text-align: center; font-size: 0.8rem; color: #888; margin-bottom: 18px;
+        }
+        .section-title {
+            font-size: 1.1rem; color: #34495e; margin: 22px 0 10px 0;
+            padding: 6px 10px; background: #e8ecf1; border-left: 4px solid #61dafb;
+            border-radius: 3px;
+        }
+        .card {
+            background: #fff; border: 1px solid #e0e4ea;
+            border-radius: 8px; margin-bottom: 12px; overflow: hidden;
+        }
+        .card-header {
+            background: #eef1f5; padding: 9px 12px; font-weight: 600;
+            font-size: 0.92rem; color: #2c3e50; border-bottom: 1px solid #e0e4ea;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+        }
+        .card-header::after {
+            content: '▼'; font-size: 0.65rem; color: #999; transition: transform 0.2s;
+        }
+        .card-header.collapsed::after { transform: rotate(-90deg); }
+        .card-body { padding: 10px 12px; }
+        .card-body.hidden { display: none; }
+        .note {
+            font-size: 0.82rem; color: #666; margin-bottom: 8px;
+            padding: 5px 9px; background: #f9fafb; border-left: 3px solid #bcc3ce;
+            border-radius: 2px;
+        }
+        .query-row { display: flex; gap: 10px; }
+        .query-code { flex: 1; min-width: 0; }
+        .query-output { flex: 1; min-width: 0; }
+        .label {
+            font-size: 0.72rem; font-weight: 600; color: #7f8c8d;
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+        }
+        pre {
+            background: #f8f9fb; border: 1px solid #e8ebf0; border-radius: 5px;
+            padding: 10px; font-size: 0.78rem; font-family: 'Courier New', monospace;
+            white-space: pre; overflow-x: auto; line-height: 1.45;
+        }
+        .query-output pre { background: #f0fdf4; border-color: #d1e7dd; }
+        .data-card pre { background: #fffbeb; border-color: #fde68a; }
+        .tip-box {
+            background: #fff7ed; border: 1px solid #fed7aa; border-radius: 6px;
+            padding: 10px 12px; font-size: 0.82rem; color: #92400e; margin: 12px 0;
+        }
+        .tip-box b { color: #78350f; }
+        .vs-box {
+            background: #f0f4ff; border: 1px solid #c7d2fe; border-radius: 6px;
+            padding: 10px 12px; font-size: 0.8rem; color: #3730a3; margin: 12px 0;
+        }
+        .vs-box b { color: #312e81; }
+        @media (max-width: 700px) {
+            body { padding: 8px; }
+            .query-row { flex-direction: column; gap: 6px; }
+            pre { font-size: 0.72rem; padding: 8px; }
+            h1 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>⚛️ React.js Revision Notes</h1>
+<p class="subtitle">MERN Stack / Interview Prep — 65+ Concepts &amp; Code Snippets</p>
+
+<!-- ==================== PROJECT STRUCTURE ==================== -->
+<div class="card data-card">
+    <div class="card-header" onclick="toggle(this)">📂 React Project Structure (Vite)</div>
+    <div class="card-body">
+<pre>
+my-react-app/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── UserCard.jsx
+│   │   └── ProtectedRoute.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   └── Dashboard.jsx
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   ├── hooks/
+│   │   └── useFetch.js
+│   ├── services/
+│   │   └── api.js
+│   ├── App.jsx
+│   ├── App.css
+│   └── main.jsx
+├── .env
+├── package.json
+└── vite.config.js
+</pre>
+    </div>
+</div>
+
+<!-- ==================== SECTION 1: BASICS ==================== -->
+<h2 class="section-title">Section 1 — React Basics &amp; Setup</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q1. What is React?</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Key Points</div>
+<pre>
+// React is:
+// ✅ A JavaScript LIBRARY
+//    (not a framework)
+// ✅ Built by Facebook (Meta)
+// ✅ For building UIs
+// ✅ Component-based
+// ✅ Uses Virtual DOM
+// ✅ Declarative
+// ✅ One-way data flow
+
+// Create React App (Vite)
+npm create vite@latest my-app
+  -- --template react
+cd my-app
+npm install
+npm run dev
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// React is NOT:
+// ❌ A framework (Angular is)
+// ❌ A language
+// ❌ Full MVC (just the V)
+
+// Virtual DOM:
+// → In-memory copy of real DOM
+// → React compares old vs new
+// → Updates only what changed
+// → This is called "Diffing"
+// → Makes React fast!
+
+// Vite vs CRA:
+// Vite → faster, modern (use this)
+// CRA  → slower, legacy (avoid)
+
+// Dev server: localhost:5173
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q2. JSX — JavaScript XML</div>
+    <div class="card-body">
+        <div class="note">JSX lets you write HTML-like syntax in JavaScript. It compiles to React.createElement() calls.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// JSX
+const element =
+  &lt;h1 className="title"&gt;
+    Hello World
+  &lt;/h1&gt;;
+
+// Compiles to:
+React.createElement(
+  'h1',
+  { className: 'title' },
+  'Hello World'
+);
+
+// JSX Rules:
+// 1. Return single parent element
+// 2. className (not class)
+// 3. htmlFor (not for)
+// 4. camelCase attributes
+// 5. Self-close tags: &lt;img /&gt;
+// 6. Wrap in () for multiline
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 JSX Expressions</div>
+<pre>
+const name = "Amit";
+const age = 25;
+
+// Variables in JSX
+const el = &lt;h1&gt;Hi {name}&lt;/h1&gt;;
+
+// Expressions
+const el2 = &lt;p&gt;{age * 2}&lt;/p&gt;;
+
+// Ternary
+const el3 =
+  &lt;p&gt;{age &gt; 18 ? "Adult" : "Minor"}
+  &lt;/p&gt;;
+
+// Function calls
+const el4 =
+  &lt;p&gt;{name.toUpperCase()}&lt;/p&gt;;
+
+// ❌ Cannot use:
+// if/else, for loops, switch
+// inside JSX curly braces.
+// Use ternary or map() instead.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 2: COMPONENTS ==================== -->
+<h2 class="section-title">Section 2 — Components 🔥</h2>
+
+<div class="tip-box">
+    <b>🔥 Components are the building blocks of React.</b> Everything in React is a component. Modern React uses functional components with hooks (not class components).
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q3. Functional Component</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// ---- Greeting.jsx ----
+const Greeting = () =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Hello World!&lt;/h1&gt;
+      &lt;p&gt;Welcome to React&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default Greeting;
+
+// ---- App.jsx ----
+import Greeting from
+  './components/Greeting';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;Greeting /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Renders</div>
+<pre>
+Hello World!
+Welcome to React
+
+// Component Rules:
+// ✅ Name must be PascalCase
+// ✅ Must return JSX
+// ✅ One component per file
+// ✅ export default at bottom
+// ✅ Use &lt;Component /&gt; to render
+
+// Fragment (no extra div):
+const App = () =&gt; (
+  &lt;&gt;
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p&gt;Text&lt;/p&gt;
+  &lt;/&gt;
+);
+// &lt;&gt;...&lt;/&gt; = React.Fragment
+// Avoids unnecessary div wrapper
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q4. Class Component (Legacy — Know for Interviews)</div>
+    <div class="card-body">
+        <div class="note">Class components are legacy but still asked in interviews. Know the syntax but use functional components in practice.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import React, { Component }
+  from 'react';
+
+class Greeting extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+
+  increment = () =&gt; {
+    this.setState({
+      count: this.state.count + 1
+    });
+  };
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;{this.props.name}&lt;/h1&gt;
+        &lt;p&gt;Count: {this.state.count}
+        &lt;/p&gt;
+        &lt;button
+          onClick={this.increment}&gt;
+          +1
+        &lt;/button&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default Greeting;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Class vs Functional</div>
+<pre>
+// CLASS:
+// this.state, this.setState()
+// this.props
+// render() method
+// Lifecycle methods
+// constructor, super(props)
+
+// FUNCTIONAL (Modern ✅):
+// useState() hook
+// props as parameter
+// return JSX directly
+// useEffect() for lifecycle
+// No constructor needed
+
+// INTERVIEW ANSWER:
+// "I use functional components
+//  with hooks because they're
+//  simpler, cleaner, and the
+//  recommended approach by
+//  the React team."
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 3: PROPS ==================== -->
+<h2 class="section-title">Section 3 — Props (Properties)</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q5. Passing &amp; Receiving Props</div>
+    <div class="card-body">
+        <div class="note">Props are read-only data passed from parent to child. Like function arguments.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// ---- UserCard.jsx (Child) ----
+const UserCard = ({ name, age,
+  role }) =&gt; {
+  return (
+    &lt;div className="card"&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;Age: {age}&lt;/p&gt;
+      &lt;p&gt;Role: {role}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default UserCard;
+
+// ---- App.jsx (Parent) ----
+import UserCard from
+  './components/UserCard';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;UserCard
+        name="Amit"
+        age={25}
+        role="Developer"
+      /&gt;
+      &lt;UserCard
+        name="Priya"
+        age={28}
+        role="Designer"
+      /&gt;
+    &lt;/div&gt;
+  );
+}
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Renders</div>
+<pre>
+┌─────────────┐
+│ Amit        │
+│ Age: 25     │
+│ Role: Developer │
+└─────────────┘
+┌─────────────┐
+│ Priya       │
+│ Age: 28     │
+│ Role: Designer │
+└─────────────┘
+
+// Props are:
+// ✅ Read-only (immutable)
+// ✅ Passed parent → child
+// ✅ Can be any type:
+//    string, number, array,
+//    object, function, JSX
+
+// Destructuring in params:
+// ({ name, age }) vs (props)
+// Same as: props.name, props.age
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q6. Default Props &amp; Children Props</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// Default Props
+const Button = ({
+  text = "Click Me",
+  color = "blue"
+}) =&gt; {
+  return (
+    &lt;button
+      style={{color: color}}&gt;
+      {text}
+    &lt;/button&gt;
+  );
+};
+
+// Children Props
+const Card = ({ children, title })
+  =&gt; {
+  return (
+    &lt;div className="card"&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      {children}
+    &lt;/div&gt;
+  );
+};
+
+// Usage:
+&lt;Card title="Profile"&gt;
+  &lt;p&gt;Name: Amit&lt;/p&gt;
+  &lt;p&gt;Age: 25&lt;/p&gt;
+&lt;/Card&gt;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Renders</div>
+<pre>
+// &lt;Button /&gt;
+// → "Click Me" (default)
+
+// &lt;Button text="Submit" /&gt;
+// → "Submit"
+
+// Card renders:
+┌──────────────┐
+│ Profile      │
+│ Name: Amit   │
+│ Age: 25      │
+└──────────────┘
+
+// children = anything between
+// opening and closing tags
+// &lt;Card&gt;THIS IS CHILDREN&lt;/Card&gt;
+
+// Very useful for:
+// Layout components
+// Modal wrappers
+// Card containers
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q7. Passing Functions as Props (Child → Parent)</div>
+    <div class="card-body">
+        <div class="note">To send data from child to parent, pass a function as a prop. This is called "lifting state up".</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// ---- Parent ----
+const App = () =&gt; {
+  const handleDelete = (id) =&gt; {
+    console.log("Delete user:", id);
+  };
+
+  return (
+    &lt;UserCard
+      name="Amit"
+      id={1}
+      onDelete={handleDelete}
+    /&gt;
+  );
+};
+
+// ---- Child ----
+const UserCard = ({ name, id,
+  onDelete }) =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;button
+        onClick={() =&gt; onDelete(id)}&gt;
+        Delete
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// When "Delete" clicked:
+// → Child calls onDelete(1)
+// → Parent's handleDelete runs
+// → Console: "Delete user: 1"
+
+// Data flow in React:
+// Props: Parent → Child (down)
+// Events: Child → Parent (up)
+
+// Common pattern:
+// Parent holds state
+// Parent passes data + functions
+// Child calls parent function
+// Parent updates state
+// React re-renders
+
+// ❌ onClick={onDelete(id)}
+//    → calls immediately!
+// ✅ onClick={() =&gt; onDelete(id)}
+//    → calls only on click
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 4: STATE ==================== -->
+<h2 class="section-title">Section 4 — State &amp; useState 🔥</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q8. useState — Basic State</div>
+    <div class="card-body">
+        <div class="note">State is mutable data that belongs to a component. When state changes, the component re-renders.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useState } from 'react';
+
+const Counter = () =&gt; {
+  const [count, setCount] =
+    useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Count: {count}&lt;/h1&gt;
+      &lt;button
+        onClick={() =&gt;
+          setCount(count + 1)}&gt;
+        Increment
+      &lt;/button&gt;
+      &lt;button
+        onClick={() =&gt;
+          setCount(count - 1)}&gt;
+        Decrement
+      &lt;/button&gt;
+      &lt;button
+        onClick={() =&gt;
+          setCount(0)}&gt;
+        Reset
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+Count: 0
+[Increment] [Decrement] [Reset]
+
+// useState(initialValue)
+// Returns: [value, setter]
+
+// const [count, setCount] =
+//   useState(0);
+// count     → current value
+// setCount  → function to update
+
+// Rules:
+// ✅ Call at top of component
+// ✅ Never inside if/for/nested
+// ✅ setCount triggers re-render
+// ❌ count = 5 (never mutate!)
+// ✅ setCount(5) (use setter)
+
+// State vs Props:
+// State → owned by component
+//   → mutable (via setter)
+// Props → passed from parent
+//   → read-only (immutable)
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q9. useState — Object &amp; Array State</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// Object State
+const [user, setUser] = useState({
+  name: "Amit",
+  age: 25,
+  city: "Delhi"
+});
+
+// Update one field (spread!)
+setUser({
+  ...user,
+  age: 26
+});
+// ❌ setUser({ age: 26 })
+//    → loses name and city!
+
+// Array State
+const [todos, setTodos] = useState([
+  { id: 1, text: "Learn React" },
+  { id: 2, text: "Build project" }
+]);
+
+// Add item
+setTodos([...todos,
+  { id: 3, text: "Deploy" }]);
+
+// Remove item
+setTodos(
+  todos.filter(t =&gt; t.id !== 2));
+
+// Update item
+setTodos(todos.map(t =&gt;
+  t.id === 1
+    ? { ...t, text: "Done!" }
+    : t
+));
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Key Rules</div>
+<pre>
+// ALWAYS create new reference!
+// React compares references to
+// detect changes.
+
+// ❌ WRONG (mutation):
+// user.age = 26;
+// setUser(user);
+// → Same reference, no re-render!
+
+// ✅ CORRECT (new object):
+// setUser({ ...user, age: 26 });
+// → New reference, re-renders!
+
+// Array operations:
+// Add:    [...arr, newItem]
+// Remove: arr.filter(x =&gt; x.id !== id)
+// Update: arr.map(x =&gt;
+//           x.id === id ? {...} : x)
+
+// ❌ NEVER use:
+// push(), pop(), splice()
+// These mutate the original array!
+
+// ✅ ALWAYS use:
+// spread, filter, map, concat
+// These return NEW arrays!
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q10. Functional Updates (Previous State)</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// ❌ Problem with direct value:
+const handleClick = () =&gt; {
+  setCount(count + 1);
+  setCount(count + 1);
+  setCount(count + 1);
+  // Only increments by 1!
+  // All 3 use same stale count
+};
+
+// ✅ Solution: functional update
+const handleClick = () =&gt; {
+  setCount(prev =&gt; prev + 1);
+  setCount(prev =&gt; prev + 1);
+  setCount(prev =&gt; prev + 1);
+  // Increments by 3! ✅
+  // Each uses latest prev value
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// Use functional form when:
+// → New state depends on old
+// → Multiple updates in handler
+// → Inside setTimeout/intervals
+
+// setCount(count + 1)
+//   → uses stale closure value
+// setCount(prev =&gt; prev + 1)
+//   → uses latest value ✅
+
+// INTERVIEW QUESTION:
+// "Why does clicking +3
+//  only add 1?"
+// → Because React batches
+//   state updates, and all 3
+//   setCount calls see the
+//   same count value.
+// → Use prev =&gt; prev + 1
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 5: EVENTS ==================== -->
+<h2 class="section-title">Section 5 — Event Handling</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q11. Events in React</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+const EventDemo = () =&gt; {
+  // Click
+  const handleClick = () =&gt; {
+    alert("Clicked!");
+  };
+
+  // With event object
+  const handleInput = (e) =&gt; {
+    console.log(e.target.value);
+  };
+
+  // With parameter
+  const handleDelete = (id) =&gt; {
+    console.log("Delete:", id);
+  };
+
+  // Form submit
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    console.log("Submitted!");
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={handleClick}&gt;
+        Click&lt;/button&gt;
+
+      &lt;input onChange={handleInput}
+        /&gt;
+
+      &lt;button onClick={
+        () =&gt; handleDelete(5)}&gt;
+        Delete&lt;/button&gt;
+
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;button type="submit"&gt;
+          Submit&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// React events are camelCase:
+// onClick (not onclick)
+// onChange (not onchange)
+// onSubmit (not onsubmit)
+// onKeyDown, onMouseOver, etc.
+
+// Common Events:
+// onClick     → button click
+// onChange    → input change
+// onSubmit   → form submit
+// onKeyDown  → keyboard press
+// onFocus    → input focused
+// onBlur     → input unfocused
+// onMouseEnter/Leave → hover
+
+// Passing arguments:
+// ❌ onClick={handleDelete(5)}
+//    → calls immediately!
+// ✅ onClick={() =&gt; handleDelete(5)}
+//    → calls only on click
+
+// e.preventDefault()
+//   → stops form page refresh
+// e.target.value
+//   → gets input value
+// e.target.name
+//   → gets input name attribute
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 6: CONDITIONAL RENDERING ==================== -->
+<h2 class="section-title">Section 6 — Conditional Rendering &amp; Lists</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q12. Conditional Rendering</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+const Dashboard = ({ isLoggedIn,
+  isAdmin, notifications }) =&gt; {
+  return (
+    &lt;div&gt;
+      {/* Ternary */}
+      {isLoggedIn
+        ? &lt;h1&gt;Welcome!&lt;/h1&gt;
+        : &lt;h1&gt;Please Login&lt;/h1&gt;
+      }
+
+      {/* AND operator */}
+      {isAdmin &amp;&amp;
+        &lt;button&gt;Admin Panel
+        &lt;/button&gt;
+      }
+
+      {/* Notifications badge */}
+      {notifications &gt; 0 &amp;&amp;
+        &lt;span&gt;({notifications})
+        &lt;/span&gt;
+      }
+
+      {/* Multiple conditions */}
+      {isLoggedIn &amp;&amp; isAdmin
+        ? &lt;p&gt;Full Access&lt;/p&gt;
+        : isLoggedIn
+          ? &lt;p&gt;Limited Access&lt;/p&gt;
+          : &lt;p&gt;No Access&lt;/p&gt;
+      }
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// 3 Ways to Conditionally Render:
+
+// 1. Ternary (? :)
+// → When you have if/else
+// {cond ? &lt;A/&gt; : &lt;B/&gt;}
+
+// 2. AND (&amp;&amp;)
+// → When you only have if
+// {cond &amp;&amp; &lt;A/&gt;}
+
+// 3. Early return
+const Comp = ({ data }) =&gt; {
+  if (!data) return &lt;p&gt;Loading&lt;/p&gt;;
+  return &lt;p&gt;{data.name}&lt;/p&gt;;
+};
+
+// ⚠️ Gotcha with &amp;&amp;:
+// {0 &amp;&amp; &lt;p&gt;Show&lt;/p&gt;}
+// → Renders "0" (not nothing!)
+// Fix: {count &gt; 0 &amp;&amp; &lt;p&gt;Show&lt;/p&gt;}
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q13. Rendering Lists — map() &amp; key</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+const UserList = () =&gt; {
+  const [users] = useState([
+    { id: 1, name: "Amit",
+      role: "Dev" },
+    { id: 2, name: "Priya",
+      role: "Designer" },
+    { id: 3, name: "Ravi",
+      role: "DevOps" }
+  ]);
+
+  return (
+    &lt;ul&gt;
+      {users.map(user =&gt; (
+        &lt;li key={user.id}&gt;
+          {user.name} — {user.role}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Renders</div>
+<pre>
+• Amit — Dev
+• Priya — Designer
+• Ravi — DevOps
+
+// KEY is mandatory!
+// ✅ key={user.id}  (unique ID)
+// ❌ key={index}    (avoid!)
+
+// Why keys matter:
+// → Helps React identify which
+//   items changed/added/removed
+// → Without key: full re-render
+// → With key: efficient update
+
+// Using index as key is BAD when:
+// → List can be reordered
+// → Items can be added/removed
+// → Causes bugs with state
+
+// INTERVIEW: "Why are keys
+//   important in React lists?"
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 7: FORMS ==================== -->
+<h2 class="section-title">Section 7 — Forms &amp; Controlled Components</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q14. Controlled Form — Single Input</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useState } from 'react';
+
+const SearchBar = () =&gt; {
+  const [query, setQuery] =
+    useState('');
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    console.log("Search:", query);
+    setQuery(''); // clear
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        type="text"
+        value={query}
+        onChange={(e) =&gt;
+          setQuery(e.target.value)}
+        placeholder="Search..."
+      /&gt;
+      &lt;button type="submit"&gt;
+        Search&lt;/button&gt;
+    &lt;/form&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// Controlled Component:
+// → React controls the input value
+// → value={state}
+// → onChange updates state
+// → Single source of truth
+
+// Uncontrolled Component:
+// → DOM controls the value
+// → Uses useRef() instead
+// → Less common, less control
+
+// Flow:
+// User types → onChange fires
+// → setQuery(newValue)
+// → Re-render → input shows new value
+
+// INTERVIEW:
+// "What is a controlled component?"
+// → An input whose value is
+//   controlled by React state.
+//   The component state is the
+//   single source of truth.
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q15. Controlled Form — Multiple Inputs</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+const RegisterForm = () =&gt; {
+  const [formData, setFormData] =
+    useState({
+      name: '',
+      email: '',
+      password: ''
+    });
+
+  const { name, email, password }
+    = formData;
+
+  const handleChange = (e) =&gt; {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    console.log(formData);
+    // API call here
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input name="name"
+        value={name}
+        onChange={handleChange}
+        placeholder="Name" /&gt;
+      &lt;input name="email"
+        type="email"
+        value={email}
+        onChange={handleChange}
+        placeholder="Email" /&gt;
+      &lt;input name="password"
+        type="password"
+        value={password}
+        onChange={handleChange}
+        placeholder="Password" /&gt;
+      &lt;button type="submit"&gt;
+        Register&lt;/button&gt;
+    &lt;/form&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Key Trick</div>
+<pre>
+// The magic line:
+// [e.target.name]: e.target.value
+
+// This uses computed property:
+// If input name="email"
+// → { ...formData, email: "x" }
+
+// If input name="password"
+// → { ...formData, password: "y" }
+
+// One handler for ALL inputs!
+// Just match input 'name' attr
+// to state key.
+
+// This pattern is used in
+// every MERN project:
+// Registration forms
+// Login forms
+// Profile update forms
+// Search/filter forms
+
+// Console output on submit:
+// {
+//   name: "Amit",
+//   email: "amit@test.com",
+//   password: "123456"
+// }
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 8: useEffect ==================== -->
+<h2 class="section-title">Section 8 — useEffect (Side Effects) 🔥</h2>
+
+<div class="tip-box">
+    <b>🔥 useEffect is the #1 most asked React hook in interviews.</b> It handles side effects: API calls, subscriptions, timers, DOM manipulation.
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q16. useEffect — Basics &amp; Dependency Array</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useState, useEffect }
+  from 'react';
+
+const Demo = () =&gt; {
+  const [count, setCount] =
+    useState(0);
+
+  // 1. Runs on EVERY render
+  useEffect(() =&gt; {
+    console.log("Every render");
+  });
+
+  // 2. Runs ONCE (on mount)
+  useEffect(() =&gt; {
+    console.log("Mounted!");
+  }, []);  // ← empty array
+
+  // 3. Runs when count changes
+  useEffect(() =&gt; {
+    console.log("Count:", count);
+  }, [count]);  // ← dependency
+
+  // 4. Cleanup (unmount)
+  useEffect(() =&gt; {
+    const timer = setInterval(
+      () =&gt; console.log("tick"),
+      1000
+    );
+    return () =&gt; {
+      clearInterval(timer);
+      console.log("Cleaned up!");
+    };
+  }, []);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button onClick={() =&gt;
+        setCount(c =&gt; c + 1)}&gt;
+        +1&lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Rules</div>
+<pre>
+// Dependency Array Controls WHEN:
+
+// useEffect(() =&gt; {}, )
+//   → No array → every render
+
+// useEffect(() =&gt; {}, [])
+//   → Empty [] → only on mount
+
+// useEffect(() =&gt; {}, [count])
+//   → [dep] → when dep changes
+
+// Cleanup function:
+// return () =&gt; { ... }
+// → Runs on unmount
+// → Also runs before re-run
+// → Used for: timers, sockets,
+//   subscriptions, event listeners
+
+// Lifecycle mapping:
+// componentDidMount → useEffect(,[])
+// componentDidUpdate → useEffect(,[dep])
+// componentWillUnmount → cleanup
+
+// ⚠️ Common mistake:
+// Missing dependency → stale data
+// Extra dependency → infinite loop
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q17. useEffect — API Call (Fetch Data)</div>
+    <div class="card-body">
+        <div class="note">This is the most common real-world usage of useEffect — fetching data on component mount.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+const UserList = () =&gt; {
+  const [users, setUsers] =
+    useState([]);
+  const [loading, setLoading] =
+    useState(true);
+  const [error, setError] =
+    useState(null);
+
+  useEffect(() =&gt; {
+    const fetchUsers = async () =&gt; {
+      try {
+        const res = await fetch(
+          '/api/users');
+        if (!res.ok)
+          throw new Error('Failed');
+        const data =
+          await res.json();
+        setUsers(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []); // Run once on mount
+
+  if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;
+  if (error) return &lt;p&gt;Error: {error}&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {users.map(u =&gt; (
+        &lt;li key={u._id}&gt;{u.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Pattern</div>
+<pre>
+// Standard fetch pattern:
+// 1. State: data, loading, error
+// 2. useEffect with async function
+// 3. try/catch/finally
+// 4. Conditional rendering
+
+// Loading → true → show spinner
+// Success → set data → render list
+// Error → set error → show message
+
+// ⚠️ Can't make useEffect async:
+// ❌ useEffect(async () =&gt; {})
+// ✅ Define async inside, call it
+
+// With Axios (cleaner):
+// const res = await axios.get(url);
+// setUsers(res.data);
+
+// Cleanup for abortable fetch:
+useEffect(() =&gt; {
+  const controller =
+    new AbortController();
+  fetch(url, {
+    signal: controller.signal
+  });
+  return () =&gt; controller.abort();
+}, []);
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 9: MORE HOOKS ==================== -->
+<h2 class="section-title">Section 9 — Essential Hooks</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q18. useRef — DOM Access &amp; Persistent Values</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useRef, useEffect }
+  from 'react';
+
+const InputFocus = () =&gt; {
+  const inputRef = useRef(null);
+  const renderCount = useRef(0);
+
+  // Focus input on mount
+  useEffect(() =&gt; {
+    inputRef.current.focus();
+  }, []);
+
+  // Track renders (no re-render)
+  useEffect(() =&gt; {
+    renderCount.current += 1;
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;input ref={inputRef}
+        placeholder="Auto-focused"
+      /&gt;
+      &lt;p&gt;Renders:
+        {renderCount.current}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// useRef returns:
+// { current: value }
+
+// Two main uses:
+
+// 1. Access DOM elements
+// ref={inputRef}
+// inputRef.current.focus()
+// inputRef.current.value
+// inputRef.current.scrollTo()
+
+// 2. Store mutable values
+// That persist across renders
+// WITHOUT causing re-render
+// (unlike useState)
+
+// useRef vs useState:
+// useState → re-renders on change
+// useRef   → does NOT re-render
+
+// Common uses:
+// Auto-focus input
+// Scroll to element
+// Store previous value
+// Store timer IDs
+// Uncontrolled form inputs
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q19. useMemo — Expensive Computations</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useState, useMemo }
+  from 'react';
+
+const ExpensiveList = ({ items }) =&gt; {
+  const [query, setQuery] =
+    useState('');
+
+  // Without useMemo:
+  // Filters on EVERY re-render
+  // Even when query didn't change!
+
+  // With useMemo:
+  // Only re-computes when
+  // items or query changes
+  const filtered = useMemo(() =&gt; {
+    console.log("Filtering...");
+    return items.filter(item =&gt;
+      item.name.toLowerCase()
+        .includes(query.toLowerCase())
+    );
+  }, [items, query]);
+
+  return (
+    &lt;div&gt;
+      &lt;input value={query}
+        onChange={e =&gt;
+          setQuery(e.target.value)}
+        placeholder="Search..."
+      /&gt;
+      {filtered.map(item =&gt; (
+        &lt;p key={item.id}&gt;
+          {item.name}&lt;/p&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// useMemo(fn, [deps])
+// → Caches the RETURN VALUE
+// → Re-computes only when
+//   deps change
+
+// When to use:
+// ✅ Expensive calculations
+// ✅ Filtering large lists
+// ✅ Complex sorting
+// ✅ Derived data
+
+// When NOT to use:
+// ❌ Simple calculations
+// ❌ Everything (premature)
+
+// useMemo vs useCallback:
+// useMemo → caches VALUE
+// useCallback → caches FUNCTION
+
+// INTERVIEW:
+// "useMemo memoizes the result
+//  of a computation. It only
+//  re-runs when dependencies
+//  change, preventing unnecessary
+//  expensive recalculations."
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q20. useCallback — Memoize Functions</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useState, useCallback }
+  from 'react';
+
+const Parent = () =&gt; {
+  const [count, setCount] =
+    useState(0);
+
+  // Without useCallback:
+  // New function every render
+  // → Child re-renders always!
+
+  // With useCallback:
+  // Same function reference
+  // → Child skips re-render
+  const handleDelete =
+    useCallback((id) =&gt; {
+      console.log("Delete:", id);
+    }, []);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button onClick={() =&gt;
+        setCount(c =&gt; c + 1)}&gt;
+        +1&lt;/button&gt;
+      &lt;ChildList
+        onDelete={handleDelete} /&gt;
+    &lt;/div&gt;
+  );
+};
+
+// Wrap child with React.memo
+const ChildList = React.memo(
+  ({ onDelete }) =&gt; {
+    console.log("Child rendered");
+    return &lt;button
+      onClick={() =&gt;
+        onDelete(1)}&gt;
+      Delete&lt;/button&gt;;
+});
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// useCallback(fn, [deps])
+// → Caches the FUNCTION itself
+// → Same reference unless deps change
+
+// Pair with React.memo:
+// React.memo → skips re-render
+//   if props haven't changed
+// useCallback → ensures function
+//   prop has same reference
+
+// Without useCallback:
+// Parent re-renders → new function
+// → New reference → Child re-renders
+
+// With useCallback:
+// Parent re-renders → same function
+// → Same reference → Child skips!
+
+// Summary:
+// useMemo   → cache computed VALUE
+// useCallback → cache FUNCTION
+// React.memo  → cache COMPONENT
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q21. useReducer — Complex State Logic</div>
+    <div class="card-body">
+        <div class="note">useReducer is like useState but for complex state with multiple actions. Similar to Redux pattern.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useReducer } from 'react';
+
+const initialState = {
+  count: 0,
+  step: 1
+};
+
+const reducer = (state, action) =&gt; {
+  switch (action.type) {
+    case 'INCREMENT':
+      return {
+        ...state,
+        count: state.count
+          + state.step
+      };
+    case 'DECREMENT':
+      return {
+        ...state,
+        count: state.count
+          - state.step
+      };
+    case 'SET_STEP':
+      return {
+        ...state,
+        step: action.payload
+      };
+    case 'RESET':
+      return initialState;
+    default:
+      return state;
+  }
+};
+
+const Counter = () =&gt; {
+  const [state, dispatch] =
+    useReducer(reducer,
+      initialState);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {state.count}&lt;/p&gt;
+      &lt;p&gt;Step: {state.step}&lt;/p&gt;
+      &lt;button onClick={() =&gt;
+        dispatch({
+          type: 'INCREMENT'
+        })}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt;
+        dispatch({
+          type: 'DECREMENT'
+        })}&gt;-&lt;/button&gt;
+      &lt;input type="number"
+        value={state.step}
+        onChange={(e) =&gt;
+          dispatch({
+            type: 'SET_STEP',
+            payload:
+              Number(e.target.value)
+          })}
+      /&gt;
+      &lt;button onClick={() =&gt;
+        dispatch({
+          type: 'RESET'
+        })}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// useReducer(reducer, initialState)
+// Returns: [state, dispatch]
+
+// reducer(state, action) =&gt; newState
+// dispatch({ type, payload })
+
+// When to use useReducer:
+// ✅ Multiple related state values
+// ✅ Complex state transitions
+// ✅ Next state depends on previous
+// ✅ Many action types
+
+// When to use useState:
+// ✅ Simple state (single value)
+// ✅ Independent state values
+
+// useState vs useReducer:
+// useState  → simple, independent
+// useReducer → complex, related
+
+// INTERVIEW:
+// "useReducer is an alternative
+//  to useState for complex state.
+//  It follows the reducer pattern:
+//  dispatch an action → reducer
+//  returns new state."
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 10: CONTEXT API ==================== -->
+<h2 class="section-title">Section 10 — Context API (Global State) 🔥</h2>
+
+<div class="tip-box">
+    <b>🔥 Context API solves "prop drilling" — passing props through many layers.</b> Used for global state: auth, theme, language.
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q22. Context API — Complete Pattern</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 context/AuthContext.jsx</div>
+<pre>
+import { createContext,
+  useState, useContext }
+  from 'react';
+
+// 1. Create Context
+const AuthContext = createContext();
+
+// 2. Create Provider
+export const AuthProvider =
+  ({ children }) =&gt; {
+    const [user, setUser] =
+      useState(null);
+    const [token, setToken] =
+      useState(
+        localStorage.getItem('token')
+      );
+
+    const login = (userData,
+      tokenStr) =&gt; {
+      setUser(userData);
+      setToken(tokenStr);
+      localStorage.setItem(
+        'token', tokenStr);
+    };
+
+    const logout = () =&gt; {
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem(
+        'token');
+    };
+
+    return (
+      &lt;AuthContext.Provider
+        value={{
+          user, token,
+          login, logout,
+          isAuthenticated: !!token
+        }}&gt;
+        {children}
+      &lt;/AuthContext.Provider&gt;
+    );
+};
+
+// 3. Custom Hook
+export const useAuth = () =&gt;
+  useContext(AuthContext);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">💻 Usage</div>
+<pre>
+// ---- main.jsx ----
+import { AuthProvider }
+  from './context/AuthContext';
+
+ReactDOM.createRoot(
+  document.getElementById('root')
+).render(
+  &lt;AuthProvider&gt;
+    &lt;App /&gt;
+  &lt;/AuthProvider&gt;
+);
+
+// ---- Any Component ----
+import { useAuth }
+  from '../context/AuthContext';
+
+const Navbar = () =&gt; {
+  const { user, logout,
+    isAuthenticated } = useAuth();
+
+  return (
+    &lt;nav&gt;
+      {isAuthenticated
+        ? &lt;&gt;
+            &lt;span&gt;Hi {user.name}&lt;/span&gt;
+            &lt;button
+              onClick={logout}&gt;
+              Logout&lt;/button&gt;
+          &lt;/&gt;
+        : &lt;a href="/login"&gt;Login&lt;/a&gt;
+      }
+    &lt;/nav&gt;
+  );
+};
+
+// No prop drilling needed!
+// Access auth state ANYWHERE
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 11: REACT ROUTER ==================== -->
+<h2 class="section-title">Section 11 — React Router 🔥</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q23. React Router — Setup &amp; Basic Routes</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 App.jsx</div>
+<pre>
+// npm i react-router-dom
+
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link,
+  Navigate
+} from 'react-router-dom';
+
+import Home from './pages/Home';
+import About from './pages/About';
+import Users from './pages/Users';
+import UserDetail
+  from './pages/UserDetail';
+import NotFound
+  from './pages/NotFound';
+
+function App() {
+  return (
+    &lt;Router&gt;
+      {/* Navigation */}
+      &lt;nav&gt;
+        &lt;Link to="/"&gt;Home&lt;/Link&gt;
+        &lt;Link to="/about"&gt;About
+        &lt;/Link&gt;
+        &lt;Link to="/users"&gt;Users
+        &lt;/Link&gt;
+      &lt;/nav&gt;
+
+      {/* Routes */}
+      &lt;Routes&gt;
+        &lt;Route path="/"
+          element={&lt;Home /&gt;} /&gt;
+        &lt;Route path="/about"
+          element={&lt;About /&gt;} /&gt;
+        &lt;Route path="/users"
+          element={&lt;Users /&gt;} /&gt;
+        &lt;Route path="/users/:id"
+          element={&lt;UserDetail /&gt;}
+        /&gt;
+        &lt;Route path="/old"
+          element={
+            &lt;Navigate to="/" /&gt;
+          } /&gt;
+        &lt;Route path="*"
+          element={&lt;NotFound /&gt;}
+        /&gt;
+      &lt;/Routes&gt;
+    &lt;/Router&gt;
+  );
+}
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// Key components:
+// BrowserRouter → wraps app
+// Routes → groups routes
+// Route → single route
+// Link → navigation (no reload)
+// Navigate → redirect
+
+// path="*" → 404 catch-all
+// path="/users/:id" → dynamic
+// &lt;Navigate to="/" /&gt; → redirect
+
+// Link vs &lt;a&gt; tag:
+// &lt;Link&gt; → no page reload (SPA)
+// &lt;a&gt;   → full page reload
+
+// NavLink (active styling):
+import { NavLink } from
+  'react-router-dom';
+&lt;NavLink to="/about"
+  className={({ isActive }) =&gt;
+    isActive ? 'active' : ''
+  }&gt;
+  About
+&lt;/NavLink&gt;
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q24. useParams &amp; useNavigate</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useParams, useNavigate }
+  from 'react-router-dom';
+
+// ---- Dynamic Route ----
+const UserDetail = () =&gt; {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] =
+    useState(null);
+
+  useEffect(() =&gt; {
+    fetch(`/api/users/${id}`)
+      .then(res =&gt; res.json())
+      .then(data =&gt; setUser(data));
+  }, [id]);
+
+  const handleDelete = async () =&gt; {
+    await fetch(`/api/users/${id}`,
+      { method: 'DELETE' });
+    navigate('/users');
+    // Redirect after delete
+  };
+
+  if (!user) return &lt;p&gt;Loading&lt;/p&gt;;
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{user.name}&lt;/h1&gt;
+      &lt;p&gt;{user.email}&lt;/p&gt;
+      &lt;button
+        onClick={handleDelete}&gt;
+        Delete&lt;/button&gt;
+      &lt;button
+        onClick={() =&gt;
+          navigate(-1)}&gt;
+        Go Back&lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// useParams()
+// → Gets URL parameters
+// Route: /users/:id
+// URL:   /users/42
+// { id } = useParams()
+// id === "42"
+
+// useNavigate()
+// → Programmatic navigation
+// navigate('/users')  → go to
+// navigate(-1)        → go back
+// navigate('/login',
+//   { replace: true })
+//   → replace history entry
+
+// useSearchParams()
+// → Get/set query params
+const [params, setParams] =
+  useSearchParams();
+const page = params.get('page');
+// URL: /users?page=2
+
+// useLocation()
+// → Current URL info
+const location = useLocation();
+// location.pathname
+// location.search
+// location.state
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q25. Protected Routes</div>
+    <div class="card-body">
+        <div class="note">Redirect unauthenticated users to login page. Very common in MERN apps.</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 ProtectedRoute.jsx</div>
+<pre>
+import { Navigate } from
+  'react-router-dom';
+import { useAuth } from
+  '../context/AuthContext';
+
+const ProtectedRoute =
+  ({ children }) =&gt; {
+    const { isAuthenticated } =
+      useAuth();
+
+    if (!isAuthenticated) {
+      return &lt;Navigate to="/login"
+        replace /&gt;;
+    }
+
+    return children;
+};
+
+export default ProtectedRoute;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">💻 Usage in App.jsx</div>
+<pre>
+&lt;Routes&gt;
+  &lt;Route path="/login"
+    element={&lt;Login /&gt;} /&gt;
+
+  {/* Protected Routes */}
+  &lt;Route path="/dashboard"
+    element={
+      &lt;ProtectedRoute&gt;
+        &lt;Dashboard /&gt;
+      &lt;/ProtectedRoute&gt;
+    } /&gt;
+
+  &lt;Route path="/profile"
+    element={
+      &lt;ProtectedRoute&gt;
+        &lt;Profile /&gt;
+      &lt;/ProtectedRoute&gt;
+    } /&gt;
+&lt;/Routes&gt;
+
+// Flow:
+// Not logged in → /dashboard
+//   → Redirects to /login
+// Logged in → /dashboard
+//   → Shows Dashboard
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 12: API CALLS ==================== -->
+<h2 class="section-title">Section 12 — API Calls (Axios + MERN)</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q26. Axios Setup &amp; API Service</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 services/api.js</div>
+<pre>
+// npm i axios
+import axios from 'axios';
+
+const API = axios.create({
+  baseURL: 'http://localhost:5000/api'
+});
+
+// Add token to every request
+API.interceptors.request.use(
+  (config) =&gt; {
+    const token =
+      localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization
+        = `Bearer ${token}`;
+    }
+    return config;
+  }
+);
+
+// API functions
+export const getUsers = () =&gt;
+  API.get('/users');
+
+export const getUser = (id) =&gt;
+  API.get(`/users/${id}`);
+
+export const createUser = (data) =&gt;
+  API.post('/users', data);
+
+export const updateUser =
+  (id, data) =&gt;
+    API.put(`/users/${id}`, data);
+
+export const deleteUser = (id) =&gt;
+  API.delete(`/users/${id}`);
+
+export const login = (creds) =&gt;
+  API.post('/auth/login', creds);
+
+export const register = (data) =&gt;
+  API.post('/auth/register', data);
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">💻 Usage in Component</div>
+<pre>
+import { getUsers, deleteUser }
+  from '../services/api';
+
+const UserList = () =&gt; {
+  const [users, setUsers] =
+    useState([]);
+
+  useEffect(() =&gt; {
+    const fetchData = async () =&gt; {
+      const { data } =
+        await getUsers();
+      setUsers(data);
+    };
+    fetchData();
+  }, []);
+
+  const handleDelete =
+    async (id) =&gt; {
+      await deleteUser(id);
+      setUsers(users.filter(
+        u =&gt; u._id !== id));
+  };
+
+  return (
+    &lt;ul&gt;
+      {users.map(u =&gt; (
+        &lt;li key={u._id}&gt;
+          {u.name}
+          &lt;button onClick={() =&gt;
+            handleDelete(u._id)}&gt;
+            Delete&lt;/button&gt;
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+};
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 13: CUSTOM HOOKS ==================== -->
+<h2 class="section-title">Section 13 — Custom Hooks</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q27. useFetch — Reusable Data Fetching Hook</div>
+    <div class="card-body">
+        <div class="note">Custom hooks extract reusable logic. They always start with "use".</div>
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 hooks/useFetch.js</div>
+<pre>
+import { useState, useEffect }
+  from 'react';
+
+const useFetch = (url) =&gt; {
+  const [data, setData] =
+    useState(null);
+  const [loading, setLoading] =
+    useState(true);
+  const [error, setError] =
+    useState(null);
+
+  useEffect(() =&gt; {
+    const fetchData = async () =&gt; {
+      try {
+        setLoading(true);
+        const res = await fetch(url);
+        if (!res.ok)
+          throw new Error('Failed');
+        const json =
+          await res.json();
+        setData(json);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+};
+
+export default useFetch;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">💻 Usage</div>
+<pre>
+import useFetch
+  from '../hooks/useFetch';
+
+const Users = () =&gt; {
+  const { data, loading, error }
+    = useFetch('/api/users');
+
+  if (loading) return &lt;p&gt;Loading&lt;/p&gt;;
+  if (error) return &lt;p&gt;{error}&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {data.map(u =&gt; (
+        &lt;li key={u._id}&gt;
+          {u.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+};
+
+// Also works for any URL:
+const { data: posts } =
+  useFetch('/api/posts');
+const { data: profile } =
+  useFetch('/api/profile');
+
+// Custom hooks:
+// ✅ Start with "use"
+// ✅ Can use other hooks inside
+// ✅ Encapsulate reusable logic
+// ✅ Return values/functions
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q28. useLocalStorage — Persist State</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 hooks/useLocalStorage.js</div>
+<pre>
+import { useState } from 'react';
+
+const useLocalStorage =
+  (key, initialValue) =&gt; {
+    const [value, setValue] =
+      useState(() =&gt; {
+        const saved =
+          localStorage.getItem(key);
+        return saved
+          ? JSON.parse(saved)
+          : initialValue;
+      });
+
+    const setStoredValue =
+      (newValue) =&gt; {
+        setValue(newValue);
+        localStorage.setItem(
+          key,
+          JSON.stringify(newValue)
+        );
+      };
+
+    return [value, setStoredValue];
+};
+
+export default useLocalStorage;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">💻 Usage</div>
+<pre>
+import useLocalStorage
+  from '../hooks/useLocalStorage';
+
+const App = () =&gt; {
+  const [theme, setTheme] =
+    useLocalStorage('theme', 'light');
+
+  const [user, setUser] =
+    useLocalStorage('user', null);
+
+  return (
+    &lt;div className={theme}&gt;
+      &lt;button onClick={() =&gt;
+        setTheme(
+          theme === 'light'
+            ? 'dark' : 'light'
+        )}&gt;
+        Toggle Theme
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
+
+// Data persists across:
+// ✅ Page refresh
+// ✅ Browser close/open
+// ✅ Tab close/open
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 14: STYLING ==================== -->
+<h2 class="section-title">Section 14 — Styling in React</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q29. Styling Methods — All 4 Ways</div>
+    <div class="card-body">
+<pre>
+// ===== 1. CSS File (import) =====
+// App.css
+// .card { padding: 16px; border: 1px solid #ccc; }
+import './App.css';
+const App = () =&gt; &lt;div className="card"&gt;Hello&lt;/div&gt;;
+
+// ===== 2. Inline Styles =====
+const App = () =&gt; (
+  &lt;div style={{
+    padding: '16px',         // camelCase!
+    backgroundColor: '#f5f5f5',
+    border: '1px solid #ccc'
+  }}&gt;
+    Hello
+  &lt;/div&gt;
+);
+
+// ===== 3. CSS Modules =====
+// Card.module.css
+// .card { padding: 16px; color: blue; }
+import styles from './Card.module.css';
+const Card = () =&gt; &lt;div className={styles.card}&gt;Hello&lt;/div&gt;;
+// Generates: class="Card_card_abc123"
+// ===== 4. Tailwind CSS =====
+// npm i -D tailwindcss postcss autoprefixer
+// npx tailwindcss init -p
+const App = () =&gt; (
+  &lt;div className="p-4 bg-gray-100 border border-gray-300 rounded-lg"&gt;
+    Hello
+  &lt;/div&gt;
+);
+
+// Which to use?
+// Small project → CSS file or inline
+// Medium project → CSS Modules
+// Large project → Tailwind CSS ✅
+// Tailwind is most popular in 2024-25
+</pre>
+    </div>
+</div>
+
+<!-- ==================== SECTION 15: LIFECYCLE COMPARISON ==================== -->
+<h2 class="section-title">Section 15 — Lifecycle Methods (Class vs Hooks)</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q30. Lifecycle Mapping — Class to Hooks</div>
+    <div class="card-body">
+<pre>
+// ======= CLASS LIFECYCLE =======          // ======= HOOKS EQUIVALENT =======
+
+// --- MOUNTING ---
+constructor()                                // useState(initialValue)
+componentDidMount()                          // useEffect(() =&gt; {}, [])
+
+// --- UPDATING ---
+componentDidUpdate(prevProps, prevState)      // useEffect(() =&gt; {}, [dep])
+shouldComponentUpdate()                      // React.memo()
+
+// --- UNMOUNTING ---
+componentWillUnmount()                       // useEffect cleanup: return () =&gt; {}
+
+// ======= EXAMPLE =======
+
+// CLASS:
+class Timer extends Component {
+  state = { seconds: 0 };
+  componentDidMount() {
+    this.timer = setInterval(() =&gt; this.setState(
+      s =&gt; ({ seconds: s.seconds + 1 })), 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+  render() { return &lt;p&gt;{this.state.seconds}s&lt;/p&gt;; }
+}
+
+// FUNCTIONAL (same thing):
+const Timer = () =&gt; {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() =&gt; {
+    const timer = setInterval(() =&gt; setSeconds(s =&gt; s + 1), 1000);
+    return () =&gt; clearInterval(timer);  // cleanup
+  }, []);
+  return &lt;p&gt;{seconds}s&lt;/p&gt;;
+};
+</pre>
+    </div>
+</div>
+
+<!-- ==================== SECTION 16: COMPLETE MERN FLOW ==================== -->
+<h2 class="section-title">Section 16 — Complete MERN Auth Flow 🔥</h2>
+
+<div class="tip-box">
+    <b>🔥 This is the full Login/Register flow interviewers expect you to know.</b> Frontend (React) ↔ Backend (Express) ↔ Database (MongoDB).
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q31. Login Page — Complete Component</div>
+    <div class="card-body">
+<pre>
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { login as loginAPI } from '../services/api';
+
+const Login = () =&gt; {
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleChange = (e) =&gt; {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) =&gt; {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const { data } = await loginAPI(formData);
+      login(data, data.token);   // Save to context + localStorage
+      navigate('/dashboard');     // Redirect
+    } catch (err) {
+      setError(err.response?.data?.msg || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Login&lt;/h2&gt;
+      {error &amp;&amp; &lt;p style={{color:'red'}}&gt;{error}&lt;/p&gt;}
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input name="email" type="email" value={formData.email}
+          onChange={handleChange} placeholder="Email" required /&gt;
+        &lt;input name="password" type="password" value={formData.password}
+          onChange={handleChange} placeholder="Password" required /&gt;
+        &lt;button type="submit" disabled={loading}&gt;
+          {loading ? 'Logging in...' : 'Login'}
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default Login;
+</pre>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q32. Register Page — Complete Component</div>
+    <div class="card-body">
+<pre>
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { register as registerAPI } from '../services/api';
+
+const Register = () =&gt; {
+  const [formData, setFormData] = useState({
+    name: '', email: '', password: ''
+  });
+  const [error, setError] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleChange = (e) =&gt; {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) =&gt; {
+    e.preventDefault();
+    try {
+      const { data } = await registerAPI(formData);
+      login(data, data.token);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.msg || 'Registration failed');
+    }
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Register&lt;/h2&gt;
+      {error &amp;&amp; &lt;p style={{color:'red'}}&gt;{error}&lt;/p&gt;}
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input name="name" value={formData.name}
+          onChange={handleChange} placeholder="Name" required /&gt;
+        &lt;input name="email" type="email" value={formData.email}
+          onChange={handleChange} placeholder="Email" required /&gt;
+        &lt;input name="password" type="password" value={formData.password}
+          onChange={handleChange} placeholder="Password (min 6)" required /&gt;
+        &lt;button type="submit"&gt;Register&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default Register;
+</pre>
+    </div>
+</div>
+
+<!-- ==================== SECTION 17: PERFORMANCE ==================== -->
+<h2 class="section-title">Section 17 — Performance Optimization</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q33. React.memo — Prevent Unnecessary Re-renders</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import React from 'react';
+
+// Without memo:
+// Re-renders EVERY time parent
+// re-renders, even if props same
+
+// With memo:
+// Only re-renders if props change
+const UserCard = React.memo(
+  ({ name, role }) =&gt; {
+    console.log("UserCard rendered");
+    return (
+      &lt;div&gt;
+        &lt;h2&gt;{name}&lt;/h2&gt;
+        &lt;p&gt;{role}&lt;/p&gt;
+      &lt;/div&gt;
+    );
+});
+
+export default UserCard;
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// React.memo(Component)
+// → HOC (Higher-Order Component)
+// → Shallow compares props
+// → Skips re-render if same
+
+// When to use:
+// ✅ Component renders often
+// ✅ Same props most of time
+// ✅ Component is expensive
+
+// Optimization trio:
+// React.memo → cache component
+// useMemo    → cache value
+// useCallback → cache function
+
+// Performance tips:
+// 1. Don't optimize prematurely
+// 2. Use React DevTools Profiler
+// 3. Avoid inline objects/functions
+//    in JSX (creates new ref)
+// 4. Virtualize long lists
+//    (react-window, react-virtualized)
+// 5. Lazy load components
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q34. React.lazy &amp; Suspense — Code Splitting</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import React, { Suspense, lazy }
+  from 'react';
+
+// Lazy load heavy components
+const Dashboard = lazy(() =&gt;
+  import('./pages/Dashboard'));
+const AdminPanel = lazy(() =&gt;
+  import('./pages/AdminPanel'));
+
+function App() {
+  return (
+    &lt;Suspense
+      fallback={
+        &lt;p&gt;Loading page...&lt;/p&gt;
+      }&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/dashboard"
+          element={&lt;Dashboard /&gt;}
+        /&gt;
+        &lt;Route path="/admin"
+          element={&lt;AdminPanel /&gt;}
+        /&gt;
+      &lt;/Routes&gt;
+    &lt;/Suspense&gt;
+  );
+}
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// React.lazy()
+// → Loads component only when
+//   it's actually needed
+// → Splits bundle into chunks
+// → Faster initial page load
+
+// Suspense
+// → Shows fallback while loading
+// → Wrap lazy components in it
+
+// Without lazy:
+// All pages bundled together
+// User downloads everything upfront
+// Slow initial load
+
+// With lazy:
+// Each page = separate chunk
+// Downloaded only when visited
+// Fast initial load! ✅
+
+// Works great with React Router:
+// Each page loaded on demand
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 18: COMMON PATTERNS ==================== -->
+<h2 class="section-title">Section 18 — Common React Patterns</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q35. Loading / Error / Data Pattern</div>
+    <div class="card-body">
+<pre>
+// This pattern is used EVERYWHERE in MERN apps
+
+const DataComponent = () =&gt; {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    const fetchData = async () =&gt; {
+      try {
+        const res = await axios.get('/api/data');
+        setData(res.data);
+      } catch (err) {
+        setError(err.response?.data?.msg || 'Something went wrong');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Conditional rendering (order matters!)
+  if (loading) return &lt;Spinner /&gt;;
+  if (error) return &lt;ErrorMessage msg={error} /&gt;;
+  if (!data || data.length === 0) return &lt;EmptyState /&gt;;
+
+  return (
+    &lt;div&gt;
+      {data.map(item =&gt; (
+        &lt;Card key={item._id} data={item} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};
+</pre>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q36. Debounce Search — Real-Time Search</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+import { useState, useEffect }
+  from 'react';
+
+const SearchUsers = () =&gt; {
+  const [query, setQuery] =
+    useState('');
+  const [results, setResults] =
+    useState([]);
+
+  // Debounce: wait 500ms after
+  // user stops typing
+  useEffect(() =&gt; {
+    if (!query.trim()) {
+      setResults([]);
+      return;
+    }
+
+    const timer = setTimeout(
+      async () =&gt; {
+        const res = await fetch(
+          `/api/users?search=${query}`
+        );
+        const data =
+          await res.json();
+        setResults(data);
+      }, 500);
+
+    // Cleanup: clear timer if
+    // user types again within 500ms
+    return () =&gt;
+      clearTimeout(timer);
+  }, [query]);
+
+  return (
+    &lt;div&gt;
+      &lt;input value={query}
+        onChange={e =&gt;
+          setQuery(e.target.value)}
+        placeholder="Search users..."
+      /&gt;
+      {results.map(u =&gt; (
+        &lt;p key={u._id}&gt;{u.name}&lt;/p&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// Without debounce:
+// User types "amit"
+// → 4 API calls: a, am, ami, amit
+
+// With debounce (500ms):
+// User types "amit"
+// → 1 API call: amit
+// → Waits until user stops typing
+
+// How it works:
+// 1. User types → query changes
+// 2. useEffect runs, sets timer
+// 3. User types again within 500ms
+// 4. Cleanup clears old timer
+// 5. New timer starts
+// 6. After 500ms idle → API call
+
+// This is a VERY common
+// interview question:
+// "How do you implement
+//  debounced search in React?"
+
+// Alternative: lodash debounce
+// import { debounce } from 'lodash'
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q37. Modal / Popup Component</div>
+    <div class="card-body">
+        <div class="query-row">
+            <div class="query-code">
+                <div class="label">💻 Code</div>
+<pre>
+// ---- Modal.jsx ----
+const Modal = ({ isOpen, onClose,
+  title, children }) =&gt; {
+
+  if (!isOpen) return null;
+
+  return (
+    &lt;div className="modal-overlay"
+      onClick={onClose}&gt;
+      &lt;div className="modal-content"
+        onClick={e =&gt;
+          e.stopPropagation()}&gt;
+        &lt;div className="modal-header"&gt;
+          &lt;h2&gt;{title}&lt;/h2&gt;
+          &lt;button
+            onClick={onClose}&gt;
+            ✕&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div className="modal-body"&gt;
+          {children}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+// ---- Usage ----
+const App = () =&gt; {
+  const [showModal, setShowModal]
+    = useState(false);
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt;
+        setShowModal(true)}&gt;
+        Open Modal&lt;/button&gt;
+
+      &lt;Modal
+        isOpen={showModal}
+        onClose={() =&gt;
+          setShowModal(false)}
+        title="Confirm"&gt;
+        &lt;p&gt;Are you sure?&lt;/p&gt;
+        &lt;button onClick={() =&gt;
+          setShowModal(false)}&gt;
+          Yes&lt;/button&gt;
+      &lt;/Modal&gt;
+    &lt;/div&gt;
+  );
+};
+</pre>
+            </div>
+            <div class="query-output">
+                <div class="label">📋 Notes</div>
+<pre>
+// Key patterns:
+// 1. isOpen controls visibility
+// 2. onClose passed from parent
+// 3. children for flexible content
+// 4. stopPropagation prevents
+//    closing when clicking inside
+// 5. Click overlay to close
+
+// CSS for overlay:
+// .modal-overlay {
+//   position: fixed;
+//   top: 0; left: 0;
+//   width: 100%; height: 100%;
+//   background: rgba(0,0,0,0.5);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 1000;
+// }
+// .modal-content {
+//   background: white;
+//   padding: 20px;
+//   border-radius: 8px;
+//   min-width: 300px;
+// }
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SECTION 19: INTERVIEW QUESTIONS ==================== -->
+<h2 class="section-title">Section 19 — Top Interview Questions 🔥</h2>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q38. Theory Questions — Quick Answers</div>
+    <div class="card-body">
+<pre>
+Q: What is React?
+A: A JavaScript library for building user interfaces using components.
+
+Q: What is the Virtual DOM?
+A: An in-memory representation of the real DOM. React compares old vs new
+   (diffing), then updates only what changed (reconciliation).
+
+Q: What is JSX?
+A: JavaScript XML — lets you write HTML-like syntax in JS. Compiles to
+   React.createElement() calls via Babel.
+
+Q: What are hooks?
+A: Functions that let you use state and lifecycle features in functional
+   components. useState, useEffect, useRef, useMemo, useCallback, etc.
+
+Q: What is the difference between state and props?
+A: State is internal, mutable (via setter). Props are external, read-only
+   (passed from parent). Both trigger re-render when changed.
+
+Q: What is useEffect?
+A: Hook for side effects (API calls, timers, subscriptions). Runs after
+   render. Dependency array controls when it re-runs.
+
+Q: What is the Context API?
+A: React's built-in way to share state globally without prop drilling.
+   createContext → Provider (wraps app) → useContext (consume).
+
+Q: What is React.memo?
+A: Higher-order component that memoizes a component. Skips re-render if
+   props haven't changed. Pairs with useCallback for function props.
+
+Q: What is the key prop in lists?
+A: Unique identifier that helps React efficiently update list items.
+   Should be stable ID (not array index) for correct behavior.
+
+Q: Controlled vs Uncontrolled components?
+A: Controlled: value managed by React state (value + onChange).
+   Uncontrolled: value managed by DOM (useRef).
+
+Q: What is prop drilling? How to fix it?
+A: Passing props through many intermediate components. Fix with Context API,
+   Redux, or Zustand.
+
+Q: What is React Router?
+A: Library for client-side routing in SPAs. Maps URLs to components without
+   page reload. Uses BrowserRouter, Routes, Route, Link.
+
+Q: What is lifting state up?
+A: Moving state to the nearest common parent when siblings need to share it.
+   Parent holds state, passes down as props + callback functions.
+
+Q: Class vs Functional components?
+A: Functional (modern): simpler, uses hooks, recommended by React team.
+   Class (legacy): uses this.state, lifecycle methods, more verbose.
+
+Q: What are custom hooks?
+A: Reusable functions starting with "use" that encapsulate hook logic.
+   Example: useFetch, useAuth, useLocalStorage.
+
+Q: useMemo vs useCallback?
+A: useMemo caches a computed VALUE. useCallback caches a FUNCTION reference.
+   Both take a dependency array and recompute only when deps change.
+
+Q: What is lazy loading in React?
+A: Loading components on demand using React.lazy() + Suspense.
+   Splits bundle into chunks for faster initial page load.
+
+Q: How does React handle forms?
+A: Controlled components: value={state}, onChange={setState}.
+   Single handler with [e.target.name] for multiple inputs.
+</pre>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header" onclick="toggle(this)">Q39. Hooks Rules — Must Know!</div>
+    <div class="card-body">
+<pre>
+// ======= RULES OF HOOKS =======
+
+// 1. Only call hooks at the TOP LEVEL
+// ❌ Inside if/else, for loops, nested functions
+// ✅ Top of component function body
+
+// 2. Only call hooks from REACT FUNCTIONS
+// ✅ Functional components
+// ✅ Custom hooks
+// ❌ Regular JavaScript functions
+// ❌ Class components
+
+// 3. Hooks MUST be called in the SAME ORDER every render
+// ❌ Conditionally calling hooks
+if (loggedIn) {
+  useEffect(() =&gt; {}) // ❌ WRONG!
+}
+
+// ✅ Put condition INSIDE the hook
+useEffect(() =&gt; {
+  if (loggedIn) { /* do something */ }
+}, [loggedIn]);
+
+// 4. Custom hooks must start with "use"
+// ❌ getUsers()
+// ✅ useUsers()
+
+// INTERVIEW: "What are the rules of hooks?"
+// → Only at top level, only in React functions,
+//   same order every render, custom hooks start with "use".
+</pre>
+    </div>
+</div>
+
+<!-- ==================== STRATEGY ==================== -->
+<h2 class="section-title">🔥 Final Strategy — React Interview</h2>
+
+<div class="tip-box">
+    <b>🎯 Most Asked React Topics (in order):</b><br>
+    1️⃣ Hooks (useState, useEffect, useRef, useMemo, useCallback)<br>
+    2️⃣ Component lifecycle &amp; Virtual DOM<br>
+    3️⃣ Props vs State, lifting state up<br>
+    4️⃣ Context API (global state, prop drilling)<br>
+    5️⃣ Controlled components &amp; forms<br>
+    6️⃣ Conditional rendering &amp; lists (keys)<br>
+    7️⃣ React Router (routes, params, protected routes)<br>
+    8️⃣ API calls with useEffect + Axios<br>
+    9️⃣ Performance (React.memo, lazy loading)<br>
+    🔟 Custom hooks
+</div>
+
+<div class="tip-box">
+    <b>💡 Pro Tips:</b><br>
+    • Be ready to build a CRUD app with auth from scratch<br>
+    • Know the full MERN flow: React → Axios → Express → MongoDB<br>
+    • Explain Virtual DOM diffing &amp; reconciliation clearly<br>
+    • Understand when to use which hook (don't over-optimize)<br>
+    • Practice building without tutorials — from memory<br>
+    • Know the Context API pattern: create → provide → consume
+</div>
+
+<div class="vs-box">
+    <b>📝 React Hooks Quick Cheat:</b><br>
+    <b>useState</b> → state management &nbsp;|&nbsp; <b>useEffect</b> → side effects / lifecycle<br>
+    <b>useRef</b> → DOM access / persist value &nbsp;|&nbsp; <b>useContext</b> → consume context<br>
+    <b>useMemo</b> → cache value &nbsp;|&nbsp; <b>useCallback</b> → cache function<br>
+    <b>useReducer</b> → complex state &nbsp;|&nbsp; <b>useNavigate</b> → programmatic routing<br>
+    <b>useParams</b> → URL params &nbsp;|&nbsp; <b>useSearchParams</b> → query strings
+</div>
+
+<p style="text-align:center; color:#aaa; margin-top:30px; font-size:0.8rem;">— End of React.js Revision Notes (39 Questions) —</p>
+
+<script>
+    function toggle(header) {
+        const body = header.nextElementSibling;
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+    }
+</script>
+
+</body>
+</html>
