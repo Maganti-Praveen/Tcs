@@ -69,6 +69,32 @@
             display: none;
         }
 
+        .code-output-wrapper {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .code-output-wrapper .code-block,
+        .code-output-wrapper .output-block {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .output-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .code-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
         pre {
             background-color: #f8f9fb;
             border: 1px solid #e8ebf0;
@@ -79,6 +105,12 @@
             white-space: pre;
             overflow-x: auto;
             line-height: 1.5;
+        }
+
+        pre.output {
+            background-color: #1e1e2e;
+            color: #a6e3a1;
+            border: 1px solid #444;
         }
 
         .section-title {
@@ -99,6 +131,16 @@
             border-radius: 2px;
         }
 
+        .complexity {
+            font-size: 0.78rem;
+            color: #888;
+            margin-bottom: 8px;
+            padding: 4px 10px;
+            background: #fffbe6;
+            border-left: 3px solid #f0c040;
+            border-radius: 2px;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -112,21 +154,30 @@
             h1 {
                 font-size: 1.3rem;
             }
+
+            .code-output-wrapper {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>📒 Python Revision Notes</h1>
+    <h1>📒 Python Revision Notes — TCS Prime</h1>
 
-    <!-- SECTION: Basic Problems -->
+    <!-- ============================================================ -->
     <h2 class="section-title">Basic Problems</h2>
+    <!-- ============================================================ -->
 
-    <!-- Fibonacci -->
+    <!-- 1. Fibonacci -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">1. Fibonacci Series</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">1. Fibonacci Series</div>
+        <div class="card-body hidden">
             <div class="note">Generate the first <b>n</b> Fibonacci numbers using iteration.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def fibo(n):
     r=[]
@@ -136,15 +187,29 @@ def fibo(n):
         r.append(a)
         a,b=b,a+b
     return r
+
+print(fibo(8))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[0, 1, 1, 2, 3, 5, 8, 13]
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Factorial -->
+    <!-- 2. Factorial -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">2. Factorial (Recursion)</div>
-        <div class="card-body">
-            <div class="note">Calculate factorial of <b>n</b> using recursion. Returns "Not Possible" for negative numbers.</div>
+        <div class="card-header collapsed" onclick="toggle(this)">2. Factorial (Recursion)</div>
+        <div class="card-body hidden">
+            <div class="note">Calculate factorial of <b>n</b> using recursion.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(n) — call stack</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def fact(n):
     if n&lt;0:
@@ -152,15 +217,33 @@ def fact(n):
     elif n&lt;=1:
         return 1
     return n*fact(n-1)
+
+print(fact(5))
+print(fact(0))
+print(fact(-3))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+120
+1
+Not Possible
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Palindrome -->
+    <!-- 3. Palindrome -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">3. Palindrome Check</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">3. Palindrome Check</div>
+        <div class="card-body hidden">
             <div class="note">Check if a string is a palindrome using two-pointer approach.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def pali(s):
     l,r=0,len(s)-1
@@ -170,15 +253,31 @@ def pali(s):
         l+=1
         r-=1
     return True
+
+print(pali("madam"))
+print(pali("hello"))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+True
+False
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Armstrong -->
+    <!-- 4. Armstrong -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">4. Armstrong Number</div>
-        <div class="card-body">
-            <div class="note">Check if a number is an Armstrong number (sum of digits raised to the power of number of digits equals the number).</div>
+        <div class="card-header collapsed" onclick="toggle(this)">4. Armstrong Number</div>
+        <div class="card-body hidden">
+            <div class="note">Sum of digits raised to the power of number of digits equals the number. E.g., 153 = 1³+5³+3³</div>
+            <div class="complexity">⏱ Time: O(d) where d = number of digits &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def arm(n):
     l=len(str(n))
@@ -188,33 +287,65 @@ def arm(n):
         d=t%10
         s+=d**l
         t//=10
-    if s!=n:
-        return False
-    return True
+    return s==n
+
+print(arm(153))
+print(arm(123))
+print(arm(9474))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+True
+False
+True
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Reverse String -->
+    <!-- 5. Reverse String -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">5. Reverse a String</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">5. Reverse a String</div>
+        <div class="card-body hidden">
             <div class="note">Reverse a string by prepending each character.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def revstr(s):
     r=""
     for i in s:
         r=i+r
     return r
+
+print(revstr("hello"))
+print(revstr("TCS"))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+olleh
+SCT
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Reverse Number -->
+    <!-- 6. Reverse Number -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">6. Reverse a Number</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">6. Reverse a Number</div>
+        <div class="card-body hidden">
             <div class="note">Reverse digits of a number using modulo and integer division.</div>
+            <div class="complexity">⏱ Time: O(d) &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def revnum(n):
     r=0
@@ -224,31 +355,75 @@ def revnum(n):
         r=r*10+d
         t//=10
     return r
+
+print(revnum(1234))
+print(revnum(9000))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+4321
+9
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Prime Check -->
+    <!-- 7. Prime Check (Fixed) -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">7. Prime Number Check</div>
-        <div class="card-body">
-            <div class="note">Check if a number is prime by testing divisibility up to n//2.</div>
+        <div class="card-header collapsed" onclick="toggle(this)">7. Prime Number Check ✅ Fixed</div>
+        <div class="card-body hidden">
+            <div class="note">Check if a number is prime by testing divisibility up to √n.</div>
+            <div class="complexity">⏱ Time: O(√n) &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def isprime(n):
-    for i in range(2,n//2):
+    if n&lt;2:
+        return False
+    for i in range(2, int(n**0.5)+1):
         if n%i==0:
             return False
     return True
+
+print(isprime(1))
+print(isprime(2))
+print(isprime(4))
+print(isprime(17))
+print(isprime(20))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+False
+True
+False
+True
+False
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Strong Number -->
+    <!-- 8. Strong Number -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">8. Strong Number Check</div>
-        <div class="card-body">
-            <div class="note">A strong number is one where the sum of factorials of its digits equals the number itself. E.g., 145 = 1! + 4! + 5!</div>
+        <div class="card-header collapsed" onclick="toggle(this)">8. Strong Number Check</div>
+        <div class="card-body hidden">
+            <div class="note">A strong number: sum of factorials of digits = number. E.g., 145 = 1! + 4! + 5!</div>
+            <div class="complexity">⏱ Time: O(d) &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
+def fact(n):
+    if n&lt;=1: return 1
+    return n*fact(n-1)
+
 def isstrong(n):
     s=0
     t=n
@@ -257,49 +432,134 @@ def isstrong(n):
         s+=fact(d)
         t//=10
     return n==s
+
+print(isstrong(145))
+print(isstrong(123))
+print(isstrong(40585))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+True
+False
+True
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Batsman Strike Rate -->
+    <!-- 9. GCD / LCM -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">9. Batsman Strike Rate</div>
-        <div class="card-body">
-            <div class="note">Calculate batsman strike rate: (runs / balls) × 100.</div>
+        <div class="card-header collapsed" onclick="toggle(this)">9. GCD &amp; LCM</div>
+        <div class="card-body hidden">
+            <div class="note">GCD using Euclidean algorithm. LCM = (a×b) / GCD(a,b).</div>
+            <div class="complexity">⏱ Time: O(log(min(a,b))) &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
-def batstrike(b,t):
-    return (b/t)*100
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    return (a * b) // gcd(a, b)
+
+print("GCD(12,18):", gcd(12, 18))
+print("LCM(12,18):", lcm(12, 18))
+print("GCD(7,13):", gcd(7, 13))
+print("LCM(4,6):", lcm(4, 6))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+GCD(12,18): 6
+LCM(12,18): 36
+GCD(7,13): 1
+LCM(4,6): 12
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- SECTION: String Problems -->
-    <h2 class="section-title">String Problems</h2>
-
-    <!-- Count Characters -->
+    <!-- 10. Batsman Strike Rate -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">10. Count Characters in a String</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">10. Batsman Strike Rate</div>
+        <div class="card-body hidden">
+            <div class="note">Strike Rate = (runs / balls) × 100.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def batstrike(runs, balls):
+    return (runs / balls) * 100
+
+print(batstrike(45, 30))
+print(batstrike(100, 60))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+150.0
+166.66666666666669
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="section-title">String Problems</h2>
+    <!-- ============================================================ -->
+
+    <!-- 11. Count Characters -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">11. Count Characters in a String</div>
+        <div class="card-body hidden">
             <div class="note">Count frequency of each character using a dictionary.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(k) where k = unique chars</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def countchar(s):
     d={}
     for i in s:
-        if i in d:
-            d[i]+=1
-        else:
-            d[i]=1
-    for i in d:
-        print(i,":",d[i])
+        d[i]=d.get(i,0)+1
+    for k,v in d.items():
+        print(k,":",v)
+
+countchar("hello")
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+h : 1
+e : 1
+l : 2
+o : 1
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Remove Duplicates -->
+    <!-- 12. Remove Duplicates -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">11. Remove Duplicates from String</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">12. Remove Duplicates from String</div>
+        <div class="card-body hidden">
             <div class="note">Keep only the first occurrence of each character.</div>
+            <div class="complexity">⏱ Time: O(n²) — due to <code>in</code> check on string &nbsp;|&nbsp; 📦 Space: O(n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def remdup(s):
     r=""
@@ -307,61 +567,135 @@ def remdup(s):
         if i not in r:
             r+=i
     return r
+
+print(remdup("programming"))
+print(remdup("aabbcc"))
 </pre>
-        </div>
-    </div>
-
-    <!-- Reverse Words v1 -->
-    <div class="card">
-        <div class="card-header" onclick="toggle(this)">12. Reverse Words in Sentence (v1 — reverse order + reverse each word)</div>
-        <div class="card-body">
-            <div class="note">Reverse the order of words AND reverse each word individually.</div>
-<pre>
-def revwrdinssen1(s):
-    l=s.split(" ")
-    l=l[::-1]
-    s=""
-    for i in l:
-        s+=i[::-1]+" "
-    return s
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+progamin
+abc
 </pre>
-        </div>
-    </div>
-
-    <!-- Reverse Words v2 -->
-    <div class="card">
-        <div class="card-header" onclick="toggle(this)">13. Reverse Words in Sentence (v2 — reverse each word only)</div>
-        <div class="card-body">
-            <div class="note">Reverse each word individually but keep the original order.</div>
-<pre>
-def revwrdinssen2(s):
-    l=s.split(" ")
-    s=""
-    for i in l:
-        s+=i[::-1]+" "
-    return s
-</pre>
-        </div>
-    </div>
-
-    <!-- SECTION: Patterns -->
-    <h2 class="section-title">Pattern Problems</h2>
-
-    <!-- Triangular Patterns -->
-    <div class="card">
-        <div class="card-header" onclick="toggle(this)">14. Triangular Patterns (Star &amp; Number)</div>
-        <div class="card-body">
-            <div class="note">
-                Star pattern: &nbsp; * / ** / *** / **** <br>
-                Number pattern: 1 / 12 / 123 / 1234
+                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 13. Reverse Words v1 -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">13. Reverse Words in Sentence (Reverse order)</div>
+        <div class="card-body hidden">
+            <div class="note">Reverse the order of words in a sentence.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
-# Star Pattern
+def revwords(s):
+    return " ".join(s.split()[::-1])
+
+print(revwords("hello world"))
+print(revwords("TCS Prime Exam"))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+world hello
+Exam Prime TCS
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 14. Reverse Each Word -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">14. Reverse Each Word in Sentence</div>
+        <div class="card-body hidden">
+            <div class="note">Reverse each word individually but keep the original order.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def reveachword(s):
+    return " ".join(w[::-1] for w in s.split())
+
+print(reveachword("hello world"))
+print(reveachword("TCS Prime"))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+olleh dlrow
+SCT emirP
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 15. Balanced Parentheses -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">15. Balanced Parentheses (Stack)</div>
+        <div class="card-body hidden">
+            <div class="note">Check if brackets are balanced using a stack (list). Handles <code>() [] {}</code>.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def isbal(s):
+    d={"{":"}", "[":"]", "(":")"}
+    l=[]
+    for i in s:
+        if i in "({[":
+            l.append(i)
+        else:
+            if not l or d[l[-1]]!=i:
+                return False
+            l.pop()
+    return len(l)==0
+
+print(isbal("{[()]}"))
+print(isbal("{[(])}"))
+print(isbal("((()))"))
+print(isbal("(()"))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+True
+False
+True
+False
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="section-title">Pattern Problems</h2>
+    <!-- ============================================================ -->
+
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">16. Triangular Patterns (Star &amp; Number)</div>
+        <div class="card-body hidden">
+            <div class="note">Right-angled triangle patterns with stars and numbers.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
 def star_triangle(n):
     for i in range(1, n+1):
         print("*" * i)
 
-# Number Pattern
 def num_triangle(n):
     for i in range(1, n+1):
         for j in range(1, i+1):
@@ -369,19 +703,300 @@ def num_triangle(n):
         print()
 
 star_triangle(4)
+print()
 num_triangle(4)
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+*
+**
+***
+****
+
+1
+12
+123
+1234
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- SECTION: Matrix -->
+    <!-- ============================================================ -->
+    <h2 class="section-title">Searching Algorithms</h2>
+    <!-- ============================================================ -->
+
+    <!-- Linear Search -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">17. Linear Search — O(n)</div>
+        <div class="card-body hidden">
+            <div class="note">Search element by checking each item one by one.</div>
+            <div class="complexity">⏱ Time: O(n) &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+    return -1
+
+a = [10, 23, 45, 70, 11, 15]
+print(linear_search(a, 70))
+print(linear_search(a, 99))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+3
+-1
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Binary Search -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">18. Binary Search — O(log n)</div>
+        <div class="card-body hidden">
+            <div class="note">Efficient search on <b>sorted</b> array. Divides search space in half each step.</div>
+            <div class="complexity">⏱ Time: O(log n) &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def binary_search(arr, target):
+    l, r = 0, len(arr) - 1
+    while l &lt;= r:
+        mid = (l + r) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] &lt; target:
+            l = mid + 1
+        else:
+            r = mid - 1
+    return -1
+
+a = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
+print(binary_search(a, 23))
+print(binary_search(a, 50))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+5
+-1
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="section-title">Sorting Algorithms</h2>
+    <!-- ============================================================ -->
+
+    <!-- Bubble Sort -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">19. Bubble Sort — O(n²)</div>
+        <div class="card-body hidden">
+            <div class="note">Repeatedly swap adjacent elements if they're in wrong order. Stable sort.</div>
+            <div class="complexity">⏱ Time: O(n²) worst/avg, O(n) best &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        swapped = False
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+
+a = [64, 34, 25, 12, 22, 11, 90]
+print(bubble_sort(a))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[11, 12, 22, 25, 34, 64, 90]
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Selection Sort -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">20. Selection Sort — O(n²)</div>
+        <div class="card-body hidden">
+            <div class="note">Find the minimum element and place it at the beginning. Repeat for unsorted portion.</div>
+            <div class="complexity">⏱ Time: O(n²) always &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] &lt; arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr
+
+a = [64, 25, 12, 22, 11]
+print(selection_sort(a))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[11, 12, 22, 25, 64]
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insertion Sort -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">21. Insertion Sort — O(n²)</div>
+        <div class="card-body hidden">
+            <div class="note">Build sorted array one element at a time by inserting each into correct position. Best for nearly sorted data.</div>
+            <div class="complexity">⏱ Time: O(n²) worst, O(n) best &nbsp;|&nbsp; 📦 Space: O(1)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+
+a = [12, 11, 13, 5, 6]
+print(insertion_sort(a))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[5, 6, 11, 12, 13]
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Sort -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">22. Quick Sort — O(n log n) avg</div>
+        <div class="card-body hidden">
+            <div class="note">Divide and conquer: pick pivot, partition array, recursively sort sub-arrays.</div>
+            <div class="complexity">⏱ Time: O(n log n) avg, O(n²) worst &nbsp;|&nbsp; 📦 Space: O(log n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def quick_sort(arr):
+    if len(arr) &lt;= 1:
+        return arr
+    pivot = arr[-1]
+    left = [x for x in arr[:-1] if x &lt;= pivot]
+    right = [x for x in arr[:-1] if x > pivot]
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+a = [10, 7, 8, 9, 1, 5]
+print(quick_sort(a))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[1, 5, 7, 8, 9, 10]
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Merge Sort -->
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">23. Merge Sort — O(n log n)</div>
+        <div class="card-body hidden">
+            <div class="note">Divide array in half, recursively sort, then merge. Stable sort. Consistent O(n log n).</div>
+            <div class="complexity">⏱ Time: O(n log n) always &nbsp;|&nbsp; 📦 Space: O(n)</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+def merge_sort(arr):
+    if len(arr) &lt;= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(l, r):
+    result = []
+    i = j = 0
+    while i &lt; len(l) and j &lt; len(r):
+        if l[i] &lt;= r[j]:
+            result.append(l[i])
+            i += 1
+        else:
+            result.append(r[j])
+            j += 1
+    result.extend(l[i:])
+    result.extend(r[j:])
+    return result
+
+a = [38, 27, 43, 3, 9, 82, 10]
+print(merge_sort(a))
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[3, 9, 10, 27, 38, 43, 82]
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
     <h2 class="section-title">Matrix Operations</h2>
+    <!-- ============================================================ -->
 
     <!-- Matrix Addition -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">15. Matrix Addition — O(r×c)</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">24. Matrix Addition — O(r×c)</div>
+        <div class="card-body hidden">
             <div class="note">Add two matrices element by element.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def add_matrix(a, b, r, c):
     result = [[0]*c for _ in range(r)]
@@ -389,15 +1004,30 @@ def add_matrix(a, b, r, c):
         for j in range(c):
             result[i][j] = a[i][j] + b[i][j]
     return result
+
+a = [[1,2],[3,4]]
+b = [[5,6],[7,8]]
+print(add_matrix(a, b, 2, 2))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[[6, 8], [10, 12]]
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Matrix Transpose -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">16. Matrix Transpose — O(r×c)</div>
-        <div class="card-body">
-            <div class="note">Swap rows and columns of a matrix.</div>
+        <div class="card-header collapsed" onclick="toggle(this)">25. Matrix Transpose — O(r×c)</div>
+        <div class="card-body hidden">
+            <div class="note">Swap rows and columns.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def transpose(a, r, c):
     result = [[0]*r for _ in range(c)]
@@ -405,19 +1035,33 @@ def transpose(a, r, c):
         for j in range(c):
             result[j][i] = a[i][j]
     return result
+
+a = [[1,2,3],[4,5,6]]
+print(transpose(a, 2, 3))
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[[1, 4], [2, 5], [3, 6]]
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Matrix Multiplication -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">17. Matrix Multiplication — O(n³)</div>
-        <div class="card-body">
-            <div class="note">Multiply two matrices. Condition: columns of A must equal rows of B.</div>
+        <div class="card-header collapsed" onclick="toggle(this)">26. Matrix Multiplication — O(n³)</div>
+        <div class="card-body hidden">
+            <div class="note">Multiply two matrices. Columns of A must equal rows of B.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 def multiply(a, b, r1, c1, r2, c2):
     if c1 != r2:
-        return "Cannot multiply! c1 must equal r2"
+        return "Cannot multiply!"
     result = [[0]*c2 for _ in range(r1)]
     for i in range(r1):
         for j in range(c2):
@@ -425,104 +1069,323 @@ def multiply(a, b, r1, c1, r2, c2):
                 result[i][j] += a[i][k] * b[k][j]
     return result
 
-# Example
-a = [[1,2,3],[4,5,6]]       # 2×3
-b = [[7,8],[9,10],[11,12]]   # 3×2
+a = [[1,2,3],[4,5,6]]
+b = [[7,8],[9,10],[11,12]]
 print(multiply(a, b, 2, 3, 3, 2))
-# Output: [[58,64],[139,154]]  (2×2 result)
 </pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+[[58, 64], [139, 154]]
+</pre>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- SECTION: OOP / Banking -->
-    <h2 class="section-title">OOP — Banking &amp; ATM System</h2>
+    <!-- ============================================================ -->
+    <h2 class="section-title">Linked List</h2>
+    <!-- ============================================================ -->
 
-    <!-- Bank Classes -->
     <div class="card">
-        <div class="card-header" onclick="toggle(this)">18. Bank, Savings, Current Account &amp; ATM (Inheritance)</div>
-        <div class="card-body">
+        <div class="card-header collapsed" onclick="toggle(this)">27. Singly Linked List — All Operations</div>
+        <div class="card-body hidden">
+            <div class="note">
+                <b>Operations:</b> Insert at beginning/end/position, Delete at beginning/end/position, Display, Reverse, Detect Cycle, Find Middle.<br>
+                <b>Time:</b> Insert/Delete at beginning O(1), at end O(n), at position O(k), Reverse O(n), Cycle O(n), Middle O(n).
+            </div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LL:
+    def __init__(self, val):
+        self.head = Node(val)
+
+    def insatbeg(self, data):
+        t = Node(data)
+        t.next = self.head
+        self.head = t
+
+    def insatend(self, data):
+        t = Node(data)
+        temp = self.head
+        while temp.next:
+            temp = temp.next
+        temp.next = t
+
+    def insatpos(self, k, data):
+        t = Node(data)
+        temp = self.head
+        i = 0
+        while i &lt; (k - 1):
+            temp = temp.next
+            i += 1
+        t.next = temp.next
+        temp.next = t
+
+    def delatbeg(self):
+        if self.head:
+            self.head = self.head.next
+        else:
+            print("No elements to delete")
+
+    def delatend(self):
+        if not self.head:
+            return "No"
+        if self.head.next == None:
+            self.head = None
+            return
+        temp = self.head
+        while temp.next.next:
+            temp = temp.next
+        temp.next = None
+
+    def delatpos(self, k):
+        if not self.head:
+            return "No"
+        if k == 0:
+            self.delatbeg()
+            return
+        i = 0
+        temp = self.head
+        while i &lt; (k - 1):
+            temp = temp.next
+            i += 1
+        temp.next = temp.next.next
+
+    def show(self):
+        temp = self.head
+        while temp.next:
+            print(temp.data, end="->")
+            temp = temp.next
+        print(temp.data)
+
+    def rev(self):
+        temp = self.head
+        prev = None
+        while temp:
+            nxt = temp.next
+            temp.next = prev
+            prev = temp
+            temp = nxt
+        self.head = prev
+
+    def has_cycle(self):
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+
+    def middle(self):
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow.data
+
+# --- Driver ---
+l = LL(0)
+l.insatbeg(2)
+lis = [1, 2, 3, 4, 5]
+for i in lis:
+    l.insatbeg(i)
+
+print("Original:")
+l.show()
+
+print("Middle:", l.middle())
+print("Has Cycle:", l.has_cycle())
+
+l.rev()
+print("Reversed:")
+l.show()
+
+l.insatend(99)
+print("After insert 99 at end:")
+l.show()
+
+l.delatbeg()
+print("After delete at beginning:")
+l.show()
+
+l.delatend()
+print("After delete at end:")
+l.show()
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+Original:
+5->4->3->2->1->2->0
+
+Middle: 2
+
+Has Cycle: False
+
+Reversed:
+0->2->1->2->3->4->5
+
+After insert 99 at end:
+0->2->1->2->3->4->5->99
+
+After delete at beginning:
+2->1->2->3->4->5->99
+
+After delete at end:
+2->1->2->3->4->5
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="section-title">OOP — Banking &amp; ATM System</h2>
+    <!-- ============================================================ -->
+
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">28. Bank, Savings, Current Account &amp; ATM (Inheritance)</div>
+        <div class="card-body hidden">
             <div class="note">
                 <b>Bank</b> — Base class with deposit, withdraw, check balance.<br>
                 <b>Sa (Savings)</b> — Inherits Bank, overrides withdrawal.<br>
                 <b>Ca (Current)</b> — Inherits Bank, allows ₹1000 overdraft.<br>
                 <b>Atm</b> — Menu-driven ATM interface using composition.
             </div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
 <pre>
 class Bank():
     def __init__(self, balance=0):
-        self.balance=balance
+        self.balance = balance
 
     def checkbalance(self):
-        print("Balance: ",self.balance)
+        print("Balance:", self.balance)
 
     def withdrawl(self, amount):
-        if amount&lt;=self.balance:
-            self.balance-=amount
-            print(f"Withdrawl of {amount} Successfull")
+        if amount &lt;= self.balance:
+            self.balance -= amount
+            print(f"Withdrawal of {amount} Successful")
         else:
             print("Insufficient funds")
 
     def deposite(self, amount):
-        self.balance+=amount
+        self.balance += amount
         print("Amount Deposited Successfully")
 
 
 class Sa(Bank):
     def withdrawl(self, amt):
-        if amt&lt;=self.balance:
-            self.balance-=amt
-            print(amt," Withdrawed from savings account")
+        if amt &lt;= self.balance:
+            self.balance -= amt
+            print(amt, "Withdrawn from savings")
         else:
-            print("Insufficient funds in savings account")
+            print("Insufficient funds in savings")
 
 
 class Ca(Bank):
     def withdrawl(self, amt):
-        limit=self.balance+1000
-        if amt&lt;=limit:
-            self.balance-=amt
-            print(amt," successfully withdrawn from current account")
+        limit = self.balance + 1000
+        if amt &lt;= limit:
+            self.balance -= amt
+            print(amt, "Withdrawn from current")
         else:
-            print("Insufficient funds in your current account")
+            print("Insufficient funds in current")
 
 
 class Atm:
     def __init__(self, account):
-        self.account=account
+        self.account = account
 
     def start(self):
         while True:
-            print("1.Deposite\n2.Withdrawl\n3.GetBalance\n4.Exit")
-            n=int(input())
-            if n==1:
-                amt=int(input("Enter the amount to deposite"))
+            print("\n1.Deposit 2.Withdraw"
+                  " 3.Balance 4.Exit")
+            n = int(input("Choice: "))
+            if n == 1:
+                amt = int(input("Amount: "))
                 self.account.deposite(amt)
-            elif n==2:
-                amt=int(input("Enter the amount to withdraw"))
+            elif n == 2:
+                amt = int(input("Amount: "))
                 self.account.withdrawl(amt)
-            elif n==3:
+            elif n == 3:
                 self.account.checkbalance()
-            elif n==4:
-                print("Thank you for using our services!")
+            elif n == 4:
+                print("Thank you!")
                 break
             else:
                 print("Invalid Choice")
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Sample Output</div>
+<pre class="output">
+# Savings Account Demo:
+s = Sa(5000)
+s.deposite(2000)
+→ Amount Deposited Successfully
 
+s.checkbalance()
+→ Balance: 7000
 
-# --- Driver Code ---
-print("1.Savings Account\n2.Current Account")
-n=int(input())
-if n==1:
-    acc=Sa()
-elif n==2:
-    acc=Ca()
-atm= Atm(acc)
-atm.start()
+s.withdrawl(3000)
+→ 3000 Withdrawn from savings
+
+s.withdrawl(9000)
+→ Insufficient funds in savings
+
+# Current Account Demo:
+c = Ca(500)
+c.withdrawl(1200)
+→ 1200 Withdrawn from current
+
+c.checkbalance()
+→ Balance: -700
+
+c.withdrawl(500)
+→ Insufficient funds in current
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="section-title">Quick Reference — Sorting Comparison</h2>
+    <!-- ============================================================ -->
+
+    <div class="card">
+        <div class="card-header collapsed" onclick="toggle(this)">📊 Sorting Algorithm Comparison Table</div>
+        <div class="card-body hidden">
+<pre>
+┌──────────────────┬───────────┬───────────┬───────────┬────────┬────────┐
+│    Algorithm     │   Best    │  Average  │   Worst   │ Space  │ Stable │
+├──────────────────┼───────────┼───────────┼───────────┼────────┼────────┤
+│ Bubble Sort      │  O(n)     │  O(n²)    │  O(n²)    │ O(1)   │  Yes   │
+│ Selection Sort   │  O(n²)    │  O(n²)    │  O(n²)    │ O(1)   │  No    │
+│ Insertion Sort   │  O(n)     │  O(n²)    │  O(n²)    │ O(1)   │  Yes   │
+│ Quick Sort       │ O(n logn) │ O(n logn) │  O(n²)    │O(logn) │  No    │
+│ Merge Sort       │ O(n logn) │ O(n logn) │ O(n logn) │ O(n)   │  Yes   │
+└──────────────────┴───────────┴───────────┴───────────┴────────┴────────┘
 </pre>
         </div>
     </div>
 
-    <p style="text-align:center; color:#aaa; margin-top:30px; font-size:0.8rem;">— End of Revision Notes —</p>
+    <p style="text-align:center; color:#aaa; margin-top:30px; font-size:0.8rem;">— End of Revision Notes — Good Luck with TCS Prime! 🚀 —</p>
 
     <script>
         function toggle(header) {

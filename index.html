@@ -6,236 +6,445 @@
   <title>TCS Prime Study Hub</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --accent: #0f766e;
-      --accent-2: #0ea5e9;
-      --border: #e5e7eb;
+      --bg-a: #ffffff;
+      --bg-b: #ffffff;
+      --text: #12263a;
+      --muted: #5f6b76;
+      --panel: #ffffff;
+      --line: #e7e7e7;
+      --chip: #ffffff;
+      --chip-text: #2f3a45;
+      --link: #2f3a45;
+      --link-hover: #1f2933;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at top right, #dff6ff 0%, var(--bg) 45%), var(--bg);
+      background: linear-gradient(145deg, var(--bg-a), var(--bg-b));
       min-height: 100vh;
     }
 
     .container {
       max-width: 980px;
       margin: 0 auto;
-      padding: 36px 18px 48px;
+      padding: 34px 16px 56px;
+    }
+
+    .hero {
+      margin-bottom: 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+      backdrop-filter: blur(4px);
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: clamp(1.8rem, 2vw + 1rem, 2.8rem);
-      color: #0f172a;
+      margin: 0 0 10px;
+      font-size: clamp(1.9rem, 3.2vw, 3rem);
+      line-height: 1.05;
+      color: #0f2131;
+      letter-spacing: 0.3px;
     }
 
     .subtitle {
-      margin: 0 0 24px;
+      margin: 0;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
 
-    .panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+    .legend {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    h2 {
-      margin-top: 0;
-      color: #111827;
-      font-size: 1.2rem;
+    .badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #dfdfdf;
+      background: var(--chip);
+      color: var(--chip-text);
+      font-weight: 700;
     }
 
-    .grid {
+    .accordion {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
+      gap: 10px;
+    }
+
+    details.section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+      transform: translateY(12px);
+      opacity: 0;
+      animation: rise 420ms ease forwards;
+    }
+
+    details.section:nth-child(2) { animation-delay: 60ms; }
+    details.section:nth-child(3) { animation-delay: 120ms; }
+    details.section:nth-child(4) { animation-delay: 180ms; }
+    details.section:nth-child(5) { animation-delay: 240ms; }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 700;
+      color: #1f2933;
+      background: linear-gradient(180deg, #ffffff, #fafafa);
+      border-bottom: 1px solid transparent;
+    }
+
+    details[open] summary {
+      border-bottom-color: var(--line);
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .meta {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #3e4954;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .items {
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    a.card-link {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    .items li + li {
+      border-top: 1px solid #eeeeee;
     }
 
-    a.card-link:hover {
-      transform: translateY(-2px);
-      border-color: #bae6fd;
-      box-shadow: 0 8px 18px rgba(2, 132, 199, 0.12);
+    a.item-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: background-color 0.2s ease, transform 0.16s ease;
+    }
+
+    a.item-link:hover {
+      background: #fafafa;
+      transform: translateX(2px);
+    }
+
+    .left {
+      min-width: 0;
     }
 
     .name {
       font-weight: 600;
-      margin-bottom: 4px;
-      color: #0b1220;
+      color: #1d2833;
       word-break: break-word;
     }
 
-    .path {
+    .file {
+      margin-top: 3px;
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       word-break: break-all;
     }
 
+    .type {
+      flex: 0 0 auto;
+      font-size: 0.74rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #dfdfdf;
+      background: #ffffff;
+      color: #3e4954;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
     footer {
-      margin-top: 20px;
-      font-size: 0.9rem;
+      margin-top: 18px;
+      font-size: 0.88rem;
       color: var(--muted);
     }
 
-    .tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      margin-left: 8px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      color: #0c4a6e;
-      background: #e0f2fe;
-      border: 1px solid #bae6fd;
-      vertical-align: middle;
+    @keyframes rise {
+      from {
+        transform: translateY(12px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-top: 20px;
+      }
+
+      summary {
+        padding: 12px 12px;
+      }
+
+      a.item-link {
+        padding: 11px 12px;
+      }
+
+      .meta {
+        font-size: 0.72rem;
+      }
     }
   </style>
 </head>
 <body>
   <main class="container">
-    <h1>TCS Prime Study Hub</h1>
-    <p class="subtitle">Single landing page for all your preparation files (HTML and PDF).</p>
+    <section class="hero">
+      <h1>TCS Prime Study Hub</h1>
+      <p class="subtitle">Expand each section to access your preparation files faster. Topics are grouped as requested: web technologies, codes, questions, and HR.</p>
+      <div class="legend">
+        <span class="badge">Expandable Sections</span>
+        <span class="badge">Topic-Wise Arrangement</span>
+        <span class="badge">Mobile Friendly</span>
+      </div>
+    </section>
 
-    <section class="panel">
-      <h2>Files</h2>
-      <ul class="grid">
-        <li>
-          <a class="card-link" href="CreditMantri%20Sql.html">
-            <div class="name">CreditMantri Sql <span class="tag">HTML</span></div>
-            <div class="path">CreditMantri Sql.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="mongodb.html">
-            <div class="name">MongoDB <span class="tag">HTML</span></div>
-            <div class="path">mongodb.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="html%26css.html">
-            <div class="name">HTML &amp; CSS <span class="tag">HTML</span></div>
-            <div class="path">html&amp;css.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="javascript.html">
-            <div class="name">JavaScript <span class="tag">HTML</span></div>
-            <div class="path">javascript.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="node%26express.html">
-            <div class="name">Node &amp; Express <span class="tag">HTML</span></div>
-            <div class="path">node&amp;express.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="Python%20Codes.html">
-            <div class="name">Python Codes <span class="tag">HTML</span></div>
-            <div class="path">Python Codes.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="react.html">
-            <div class="name">React <span class="tag">HTML</span></div>
-            <div class="path">react.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="ServiceNowCSA.html">
-            <div class="name">ServiceNow CSA <span class="tag">HTML</span></div>
-            <div class="path">ServiceNowCSA.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="SqlCodes.html">
-            <div class="name">SQL Codes <span class="tag">HTML</span></div>
-            <div class="path">SqlCodes.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="TCS%20HR%20Answers.html">
-            <div class="name">TCS HR Answers <span class="tag">HTML</span></div>
-            <div class="path">TCS HR Answers.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="TCS%20Questions.html">
-            <div class="name">TCS Questions <span class="tag">HTML</span></div>
-            <div class="path">TCS Questions.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="TCS_HR_Answers_Clean.html">
-            <div class="name">TCS HR Answers Clean <span class="tag">HTML</span></div>
-            <div class="path">TCS_HR_Answers_Clean.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="tcs_prime_interview_notes.html">
-            <div class="name">TCS Prime Interview Notes <span class="tag">HTML</span></div>
-            <div class="path">tcs_prime_interview_notes.html</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="Maganti%20Praveen%20Sai.pdf">
-            <div class="name">Maganti Praveen Sai <span class="tag">PDF</span></div>
-            <div class="path">Maganti Praveen Sai.pdf</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="Networking%20Interview%20Questions.pdf">
-            <div class="name">Networking Interview Questions <span class="tag">PDF</span></div>
-            <div class="path">Networking Interview Questions.pdf</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="python-cheatsheet.pdf">
-            <div class="name">Python Cheatsheet <span class="tag">PDF</span></div>
-            <div class="path">python-cheatsheet.pdf</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="Sql%20Notes.pdf">
-            <div class="name">SQL Notes <span class="tag">PDF</span></div>
-            <div class="path">Sql Notes.pdf</div>
-          </a>
-        </li>
-        <li>
-          <a class="card-link" href="TCS%20Digital%20Interview.pdf">
-            <div class="name">TCS Digital Interview <span class="tag">PDF</span></div>
-            <div class="path">TCS Digital Interview.pdf</div>
-          </a>
-        </li>
-      </ul>
+    <section class="accordion">
+      <details class="section" open>
+        <summary>
+          <span>Web Technologies</span>
+          <span class="meta">5 files</span>
+        </summary>
+        <ul class="items">
+          <li>
+            <a class="item-link" href="html%26css.html">
+              <div class="left">
+                <div class="name">HTML &amp; CSS</div>
+                <div class="file">html&amp;css.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="javascript.html">
+              <div class="left">
+                <div class="name">JavaScript</div>
+                <div class="file">javascript.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="react.html">
+              <div class="left">
+                <div class="name">React</div>
+                <div class="file">react.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="node%26express.html">
+              <div class="left">
+                <div class="name">Node &amp; Express</div>
+                <div class="file">node&amp;express.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="mongodb.html">
+              <div class="left">
+                <div class="name">MongoDB</div>
+                <div class="file">mongodb.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+        </ul>
+      </details>
+
+      <details class="section">
+        <summary>
+          <span>Codes</span>
+          <span class="meta">4 files</span>
+        </summary>
+        <ul class="items">
+          <li>
+            <a class="item-link" href="CreditMantri%20Sql.html">
+              <div class="left">
+                <div class="name">CreditMantri SQL</div>
+                <div class="file">CreditMantri Sql.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="SqlCodes.html">
+              <div class="left">
+                <div class="name">SQL Codes</div>
+                <div class="file">SqlCodes.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="Python%20Codes.html">
+              <div class="left">
+                <div class="name">Python Codes</div>
+                <div class="file">Python Codes.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="python-cheatsheet.pdf">
+              <div class="left">
+                <div class="name">Python Cheatsheet</div>
+                <div class="file">python-cheatsheet.pdf</div>
+              </div>
+              <span class="type">PDF</span>
+            </a>
+          </li>
+        </ul>
+      </details>
+
+      <details class="section">
+        <summary>
+          <span>Questions</span>
+          <span class="meta">4 files</span>
+        </summary>
+        <ul class="items">
+          <li>
+            <a class="item-link" href="TCS%20Questions.html">
+              <div class="left">
+                <div class="name">TCS Questions</div>
+                <div class="file">TCS Questions.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="Networking%20Interview%20Questions.pdf">
+              <div class="left">
+                <div class="name">Networking Interview Questions</div>
+                <div class="file">Networking Interview Questions.pdf</div>
+              </div>
+              <span class="type">PDF</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="TCS%20Digital%20Interview.pdf">
+              <div class="left">
+                <div class="name">TCS Digital Interview</div>
+                <div class="file">TCS Digital Interview.pdf</div>
+              </div>
+              <span class="type">PDF</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="ServiceNowCSA.html">
+              <div class="left">
+                <div class="name">ServiceNow CSA</div>
+                <div class="file">ServiceNowCSA.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+        </ul>
+      </details>
+
+      <details class="section">
+        <summary>
+          <span>HR</span>
+          <span class="meta">3 files</span>
+        </summary>
+        <ul class="items">
+          <li>
+            <a class="item-link" href="TCS%20HR%20Answers.html">
+              <div class="left">
+                <div class="name">TCS HR Answers</div>
+                <div class="file">TCS HR Answers.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="TCS_HR_Answers_Clean.html">
+              <div class="left">
+                <div class="name">TCS HR Answers Clean</div>
+                <div class="file">TCS_HR_Answers_Clean.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="tcs_prime_interview_notes.html">
+              <div class="left">
+                <div class="name">TCS Prime Interview Notes</div>
+                <div class="file">tcs_prime_interview_notes.html</div>
+              </div>
+              <span class="type">HTML</span>
+            </a>
+          </li>
+        </ul>
+      </details>
+
+      <details class="section">
+        <summary>
+          <span>Other PDFs</span>
+          <span class="meta">2 files</span>
+        </summary>
+        <ul class="items">
+          <li>
+            <a class="item-link" href="Maganti%20Praveen%20Sai.pdf">
+              <div class="left">
+                <div class="name">Maganti Praveen Sai</div>
+                <div class="file">Maganti Praveen Sai.pdf</div>
+              </div>
+              <span class="type">PDF</span>
+            </a>
+          </li>
+          <li>
+            <a class="item-link" href="Sql%20Notes.pdf">
+              <div class="left">
+                <div class="name">SQL Notes</div>
+                <div class="file">Sql Notes.pdf</div>
+              </div>
+              <span class="type">PDF</span>
+            </a>
+          </li>
+        </ul>
+      </details>
     </section>
 
     <footer>
-      Tip: Upload all files in this same folder/repository root so these relative links work directly on GitHub Pages.
+      Tip: Keep files in the same repository root so these links continue to work on GitHub Pages.
     </footer>
   </main>
 </body>

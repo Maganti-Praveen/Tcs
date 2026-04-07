@@ -1,0 +1,2984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML & CSS Interview Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 16px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dce1e8;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 8px 20px;
+            border: 2px solid #3498db;
+            background: #fff;
+            color: #3498db;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #ebf5fb;
+        }
+
+        .tab-btn.active {
+            background: #3498db;
+            color: #fff;
+        }
+
+        .tab-btn.css-btn {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .tab-btn.css-btn:hover {
+            background: #fdedec;
+        }
+
+        .tab-btn.css-btn.active {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .tab-btn.qa-btn {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .tab-btn.qa-btn:hover {
+            background: #eafaf1;
+        }
+
+        .tab-btn.qa-btn.active {
+            background: #27ae60;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e0e4ea;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 10px 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 1px solid #e0e4ea;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .card-header::after {
+            content: '▼';
+            font-size: 0.7rem;
+            color: #888;
+            transition: transform 0.2s;
+        }
+
+        .card-header.collapsed::after {
+            transform: rotate(-90deg);
+        }
+
+        /* HTML cards */
+        .html-card .card-header {
+            background-color: #ebf5fb;
+            color: #2471a3;
+        }
+
+        /* CSS cards */
+        .css-card .card-header {
+            background-color: #fdedec;
+            color: #c0392b;
+        }
+
+        /* QA cards */
+        .qa-card .card-header {
+            background-color: #eafaf1;
+            color: #1e8449;
+        }
+
+        .card-body {
+            padding: 12px 14px;
+            overflow-x: auto;
+        }
+
+        .card-body.hidden {
+            display: none;
+        }
+
+        .code-output-wrapper {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .code-output-wrapper .code-block,
+        .code-output-wrapper .output-block {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .code-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .output-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        pre {
+            background-color: #f8f9fb;
+            border: 1px solid #e8ebf0;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.82rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        pre.output {
+            background-color: #1e1e2e;
+            color: #a6e3a1;
+            border: 1px solid #444;
+        }
+
+        pre.browser {
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            color: #333;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .section-title {
+            font-size: 1.15rem;
+            color: #34495e;
+            margin: 24px 0 12px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e0e4ea;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #f9fafb;
+            border-left: 3px solid #bcc3ce;
+            border-radius: 2px;
+        }
+
+        .tip {
+            font-size: 0.85rem;
+            color: #1a5276;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #d4efdf;
+            border-left: 3px solid #27ae60;
+            border-radius: 2px;
+        }
+
+        .warning {
+            font-size: 0.85rem;
+            color: #7d6608;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #fef9e7;
+            border-left: 3px solid #f1c40f;
+            border-radius: 2px;
+        }
+
+        .qa-item {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 6px;
+            border: 1px solid #e8ebf0;
+        }
+
+        .qa-item .question {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .qa-item .answer {
+            font-size: 0.88rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .qa-item .answer b {
+            color: #2c3e50;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .tag-easy { background: #d5f5e3; color: #1e8449; }
+        .tag-medium { background: #fef9e7; color: #b7950b; }
+        .tag-hard { background: #fdedec; color: #c0392b; }
+        .tag-html { background: #ebf5fb; color: #2471a3; }
+        .tag-css { background: #fdedec; color: #c0392b; }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f3f7;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        tr:nth-child(even) {
+            background: #fafbfc;
+        }
+
+        .search-box {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            padding: 10px 16px;
+            border: 2px solid #dce1e8;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: #3498db;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #e74c3c, #27ae60);
+            z-index: 9999;
+            transition: width 0.2s;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            pre { font-size: 0.72rem; padding: 10px; }
+            h1 { font-size: 1.3rem; }
+            .code-output-wrapper { flex-direction: column; }
+            .tab-btn { padding: 6px 14px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<h1>📘 HTML &amp; CSS — Interview Prep Notes</h1>
+<p class="subtitle">Complete revision guide with concepts, code examples &amp; 50+ interview Q&amp;A</p>
+
+<input type="text" class="search-box" id="searchBox" placeholder="🔍 Search topics, tags, questions..." oninput="searchCards()">
+
+<!-- Tab Navigation -->
+<div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('html')">🟠 HTML</button>
+    <button class="tab-btn css-btn" onclick="switchTab('css')">🔵 CSS</button>
+    <button class="tab-btn qa-btn" onclick="switchTab('qa')">🟢 Interview Q&amp;A</button>
+</div>
+
+<!-- ================================================================ -->
+<!-- HTML TAB -->
+<!-- ================================================================ -->
+<div class="tab-content active" id="tab-html">
+
+    <h2 class="section-title">🧱 HTML Fundamentals</h2>
+
+    <!-- HTML Boilerplate -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">1. HTML5 Boilerplate</div>
+        <div class="card-body hidden">
+            <div class="note">Every HTML document starts with this basic structure. <code>&lt;!DOCTYPE html&gt;</code> tells the browser it's HTML5.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport"
+          content="width=device-width,
+          initial-scale=1.0"&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">🌐 Browser</div>
+<pre class="browser">
+<b style="font-size:1.5rem;">Hello World!</b>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Semantic HTML -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">2. Semantic HTML5 Elements</div>
+        <div class="card-body hidden">
+            <div class="note">Semantic elements describe their meaning. Improves <b>SEO</b>, <b>accessibility</b>, and <b>readability</b>.</div>
+            <div class="tip">💡 Always prefer semantic over <code>&lt;div&gt;</code> soup!</div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Element</th><th>Purpose</th><th>Replaces</th></tr>
+                    <tr><td><code>&lt;header&gt;</code></td><td>Page/section header</td><td><code>&lt;div id="header"&gt;</code></td></tr>
+                    <tr><td><code>&lt;nav&gt;</code></td><td>Navigation links</td><td><code>&lt;div id="nav"&gt;</code></td></tr>
+                    <tr><td><code>&lt;main&gt;</code></td><td>Main content (only one per page)</td><td><code>&lt;div id="content"&gt;</code></td></tr>
+                    <tr><td><code>&lt;article&gt;</code></td><td>Self-contained content (blog post)</td><td><code>&lt;div class="post"&gt;</code></td></tr>
+                    <tr><td><code>&lt;section&gt;</code></td><td>Thematic grouping</td><td><code>&lt;div class="section"&gt;</code></td></tr>
+                    <tr><td><code>&lt;aside&gt;</code></td><td>Sidebar / related content</td><td><code>&lt;div id="sidebar"&gt;</code></td></tr>
+                    <tr><td><code>&lt;footer&gt;</code></td><td>Page/section footer</td><td><code>&lt;div id="footer"&gt;</code></td></tr>
+                    <tr><td><code>&lt;figure&gt;</code></td><td>Image with caption</td><td><code>&lt;div class="img"&gt;</code></td></tr>
+                    <tr><td><code>&lt;figcaption&gt;</code></td><td>Caption for figure</td><td><code>&lt;p class="caption"&gt;</code></td></tr>
+                    <tr><td><code>&lt;mark&gt;</code></td><td>Highlighted text</td><td><code>&lt;span class="highlight"&gt;</code></td></tr>
+                    <tr><td><code>&lt;time&gt;</code></td><td>Date/time</td><td><code>&lt;span class="date"&gt;</code></td></tr>
+                    <tr><td><code>&lt;details&gt;</code></td><td>Collapsible content</td><td>JS accordion</td></tr>
+                    <tr><td><code>&lt;summary&gt;</code></td><td>Visible heading for details</td><td>—</td></tr>
+                </table>
+            </div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+&lt;header&gt;
+    &lt;nav&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+        &lt;a href="/about"&gt;About&lt;/a&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+    &lt;article&gt;
+        &lt;h2&gt;Blog Post Title&lt;/h2&gt;
+        &lt;p&gt;Content here...&lt;/p&gt;
+        &lt;figure&gt;
+            &lt;img src="photo.jpg" alt="A photo"&gt;
+            &lt;figcaption&gt;Photo caption&lt;/figcaption&gt;
+        &lt;/figure&gt;
+    &lt;/article&gt;
+
+    &lt;aside&gt;
+        &lt;h3&gt;Related Links&lt;/h3&gt;
+    &lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;&amp;copy; 2025 My Site&lt;/p&gt;
+&lt;/footer&gt;
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📐 Structure</div>
+<pre class="output">
+┌──────────────────────┐
+│       HEADER         │
+│   Home  |  About     │
+├──────────────────────┤
+│  MAIN                │
+│  ┌─────────┐ ┌─────┐ │
+│  │ ARTICLE │ │ASIDE│ │
+│  │ h2, p,  │ │     │ │
+│  │ figure  │ │     │ │
+│  └─────────┘ └─────┘ │
+├──────────────────────┤
+│       FOOTER         │
+│   © 2025 My Site     │
+└──────────────────────┘
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Headings & Text -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">3. Headings &amp; Text Formatting</div>
+        <div class="card-body hidden">
+            <div class="note">HTML has 6 heading levels. Use <b>only one h1</b> per page for SEO.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+&lt;h1&gt;Heading 1&lt;/h1&gt;
+&lt;h2&gt;Heading 2&lt;/h2&gt;
+&lt;h3&gt;Heading 3&lt;/h3&gt;
+&lt;h4&gt;Heading 4&lt;/h4&gt;
+&lt;h5&gt;Heading 5&lt;/h5&gt;
+&lt;h6&gt;Heading 6&lt;/h6&gt;
+
+&lt;p&gt;This is a &lt;b&gt;bold&lt;/b&gt; and
+   &lt;i&gt;italic&lt;/i&gt; text.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Strong&lt;/strong&gt; vs
+   &lt;em&gt;Emphasis&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;mark&gt;Highlighted&lt;/mark&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;Deleted&lt;/del&gt;
+   &lt;ins&gt;Inserted&lt;/ins&gt;&lt;/p&gt;
+&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O and
+   x&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;abbr title="HyperText Markup
+Language"&gt;HTML&lt;/abbr&gt;&lt;/p&gt;
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">🌐 Renders As</div>
+<pre class="browser">
+<b>b/strong</b> → Bold text
+<i>i/em</i> → Italic text
+<mark>mark</mark> → Highlighted
+<del>del</del> → Strikethrough
+<ins>ins</ins> → Underlined
+H₂O → Subscript
+x² → Superscript
+</pre>
+                </div>
+            </div>
+            <div class="warning">⚠️ <code>&lt;b&gt;</code> is visual only. <code>&lt;strong&gt;</code> has semantic meaning (important text).</div>
+        </div>
+    </div>
+
+    <!-- Lists -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">4. Lists (Ordered, Unordered, Description)</div>
+        <div class="card-body hidden">
+            <div class="note">Three types of lists: <b>ol</b> (numbered), <b>ul</b> (bullets), <b>dl</b> (term-description pairs).</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+&lt;!-- Unordered List --&gt;
+&lt;ul&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Ordered List --&gt;
+&lt;ol type="1" start="1"&gt;
+    &lt;li&gt;First&lt;/li&gt;
+    &lt;li&gt;Second&lt;/li&gt;
+    &lt;li&gt;Third&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- Description List --&gt;
+&lt;dl&gt;
+    &lt;dt&gt;HTML&lt;/dt&gt;
+    &lt;dd&gt;Markup Language&lt;/dd&gt;
+    &lt;dt&gt;CSS&lt;/dt&gt;
+    &lt;dd&gt;Styling Language&lt;/dd&gt;
+&lt;/dl&gt;
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">🌐 Browser</div>
+<pre class="browser">
+• HTML
+• CSS
+• JavaScript
+
+1. First
+2. Second
+3. Third
+
+HTML
+    Markup Language
+CSS
+    Styling Language
+</pre>
+                </div>
+            </div>
+            <div class="tip">💡 <code>ol</code> types: <code>1, A, a, I, i</code>. Use <code>start</code> and <code>reversed</code> attributes.</div>
+        </div>
+    </div>
+
+    <!-- Links & Images -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">5. Links &amp; Images</div>
+        <div class="card-body hidden">
+            <div class="note">Links use <code>&lt;a&gt;</code>, images use <code>&lt;img&gt;</code>. Always add <code>alt</code> for accessibility.</div>
+<pre>
+&lt;!-- Links --&gt;
+&lt;a href="https://google.com"&gt;Google&lt;/a&gt;
+&lt;a href="https://google.com" target="_blank"&gt;Open in New Tab&lt;/a&gt;
+&lt;a href="#section1"&gt;Jump to Section 1&lt;/a&gt;
+&lt;a href="mailto:test@mail.com"&gt;Email Us&lt;/a&gt;
+&lt;a href="tel:+1234567890"&gt;Call Us&lt;/a&gt;
+&lt;a href="file.pdf" download&gt;Download PDF&lt;/a&gt;
+
+&lt;!-- Images --&gt;
+&lt;img src="photo.jpg" alt="Description" width="300" height="200"&gt;
+
+&lt;!-- Image as Link --&gt;
+&lt;a href="/page"&gt;
+    &lt;img src="logo.png" alt="Logo"&gt;
+&lt;/a&gt;
+
+&lt;!-- Responsive Image --&gt;
+&lt;picture&gt;
+    &lt;source media="(max-width:600px)" srcset="small.jpg"&gt;
+    &lt;source media="(max-width:1200px)" srcset="medium.jpg"&gt;
+    &lt;img src="large.jpg" alt="Responsive"&gt;
+&lt;/picture&gt;
+</pre>
+            <div class="warning">⚠️ <code>target="_blank"</code> should always use <code>rel="noopener noreferrer"</code> for security.</div>
+        </div>
+    </div>
+
+    <!-- Tables -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">6. Tables</div>
+        <div class="card-body hidden">
+            <div class="note">Tables are for <b>tabular data only</b>, not for page layout.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+&lt;table border="1"&gt;
+    &lt;caption&gt;Student Marks&lt;/caption&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Math&lt;/th&gt;
+            &lt;th&gt;Science&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Alice&lt;/td&gt;
+            &lt;td&gt;90&lt;/td&gt;
+            &lt;td&gt;85&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Bob&lt;/td&gt;
+            &lt;td colspan="2"&gt;Absent&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Average&lt;/td&gt;
+            &lt;td&gt;90&lt;/td&gt;
+            &lt;td&gt;85&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tfoot&gt;
+&lt;/table&gt;
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">🌐 Browser</div>
+<pre class="browser">
+     Student Marks
+┌───────┬──────┬─────────┐
+│ Name  │ Math │ Science │
+├───────┼──────┼─────────┤
+│ Alice │  90  │   85    │
+├───────┼──────┴─────────┤
+│ Bob   │    Absent      │
+├───────┼──────┬─────────┤
+│Average│  90  │   85    │
+└───────┴──────┴─────────┘
+</pre>
+                </div>
+            </div>
+            <div class="tip">💡 <code>colspan</code> merges columns, <code>rowspan</code> merges rows.</div>
+        </div>
+    </div>
+
+    <!-- Forms -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">7. Forms — Complete Reference</div>
+        <div class="card-body hidden">
+            <div class="note">Forms collect user input. Key attributes: <code>action</code>, <code>method</code> (GET/POST).</div>
+<pre>
+&lt;form action="/submit" method="POST"&gt;
+
+    &lt;!-- Text Input --&gt;
+    &lt;label for="name"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name"
+           placeholder="Enter name" required
+           minlength="2" maxlength="50"&gt;
+
+    &lt;!-- Email --&gt;
+    &lt;input type="email" name="email" required&gt;
+
+    &lt;!-- Password --&gt;
+    &lt;input type="password" name="pass"
+           pattern=".{8,}" title="Min 8 chars"&gt;
+
+    &lt;!-- Number --&gt;
+    &lt;input type="number" name="age"
+           min="1" max="120" step="1"&gt;
+
+    &lt;!-- Phone --&gt;
+    &lt;input type="tel" name="phone"
+           pattern="[0-9]{10}"&gt;
+
+    &lt;!-- URL --&gt;
+    &lt;input type="url" name="website"&gt;
+
+    &lt;!-- Date/Time --&gt;
+    &lt;input type="date" name="dob"&gt;
+    &lt;input type="time" name="time"&gt;
+    &lt;input type="datetime-local" name="dt"&gt;
+
+    &lt;!-- Range Slider --&gt;
+    &lt;input type="range" min="0" max="100"&gt;
+
+    &lt;!-- Color Picker --&gt;
+    &lt;input type="color" name="favcolor"&gt;
+
+    &lt;!-- File Upload --&gt;
+    &lt;input type="file" name="doc"
+           accept=".pdf,.doc" multiple&gt;
+
+    &lt;!-- Radio Buttons --&gt;
+    &lt;input type="radio" name="gender"
+           value="M" id="male"&gt;
+    &lt;label for="male"&gt;Male&lt;/label&gt;
+    &lt;input type="radio" name="gender"
+           value="F" id="female"&gt;
+    &lt;label for="female"&gt;Female&lt;/label&gt;
+
+    &lt;!-- Checkboxes --&gt;
+    &lt;input type="checkbox" name="agree"
+           id="agree" required&gt;
+    &lt;label for="agree"&gt;I agree&lt;/label&gt;
+
+    &lt;!-- Select Dropdown --&gt;
+    &lt;select name="city"&gt;
+        &lt;option value="" disabled selected&gt;
+            Choose city
+        &lt;/option&gt;
+        &lt;optgroup label="India"&gt;
+            &lt;option value="mum"&gt;Mumbai&lt;/option&gt;
+            &lt;option value="del"&gt;Delhi&lt;/option&gt;
+        &lt;/optgroup&gt;
+    &lt;/select&gt;
+
+    &lt;!-- Textarea --&gt;
+    &lt;textarea name="msg" rows="4" cols="30"
+              placeholder="Message..."&gt;&lt;/textarea&gt;
+
+    &lt;!-- Datalist (autocomplete) --&gt;
+    &lt;input list="browsers" name="browser"&gt;
+    &lt;datalist id="browsers"&gt;
+        &lt;option value="Chrome"&gt;
+        &lt;option value="Firefox"&gt;
+        &lt;option value="Safari"&gt;
+    &lt;/datalist&gt;
+
+    &lt;!-- Hidden Field --&gt;
+    &lt;input type="hidden" name="token"
+           value="abc123"&gt;
+
+    &lt;!-- Buttons --&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;button type="reset"&gt;Reset&lt;/button&gt;
+
+&lt;/form&gt;
+</pre>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Attribute</th><th>Purpose</th></tr>
+                    <tr><td><code>required</code></td><td>Field must be filled</td></tr>
+                    <tr><td><code>placeholder</code></td><td>Hint text</td></tr>
+                    <tr><td><code>readonly</code></td><td>Can't edit, but submitted</td></tr>
+                    <tr><td><code>disabled</code></td><td>Can't edit, NOT submitted</td></tr>
+                    <tr><td><code>autofocus</code></td><td>Auto-focus on page load</td></tr>
+                    <tr><td><code>autocomplete</code></td><td>on/off browser autocomplete</td></tr>
+                    <tr><td><code>pattern</code></td><td>Regex validation</td></tr>
+                    <tr><td><code>novalidate</code></td><td>Skip form validation (on form tag)</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Media -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">8. Audio, Video &amp; Iframe</div>
+        <div class="card-body hidden">
+            <div class="note">HTML5 native media elements — no plugins needed.</div>
+<pre>
+&lt;!-- Video --&gt;
+&lt;video width="320" height="240" controls autoplay muted loop poster="thumb.jpg"&gt;
+    &lt;source src="movie.mp4" type="video/mp4"&gt;
+    &lt;source src="movie.ogg" type="video/ogg"&gt;
+    Your browser does not support video.
+&lt;/video&gt;
+
+&lt;!-- Audio --&gt;
+&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio.ogg" type="audio/ogg"&gt;
+    Your browser does not support audio.
+&lt;/audio&gt;
+
+&lt;!-- YouTube Embed --&gt;
+&lt;iframe width="560" height="315"
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    frameborder="0"
+    allow="accelerometer; autoplay;
+           clipboard-write; encrypted-media"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+
+&lt;!-- Google Map Embed --&gt;
+&lt;iframe src="https://www.google.com/maps/embed?..."
+    width="600" height="450"
+    style="border:0;" loading="lazy"&gt;
+&lt;/iframe&gt;
+</pre>
+        </div>
+    </div>
+
+    <!-- Meta Tags -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">9. Meta Tags &amp; SEO</div>
+        <div class="card-body hidden">
+            <div class="note">Meta tags go inside <code>&lt;head&gt;</code>. Critical for SEO and social sharing.</div>
+<pre>
+&lt;head&gt;
+    &lt;!-- Essential --&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Page Title (50-60 chars)&lt;/title&gt;
+
+    &lt;!-- SEO --&gt;
+    &lt;meta name="description" content="Page description (150-160 chars)"&gt;
+    &lt;meta name="keywords" content="html, css, interview"&gt;
+    &lt;meta name="author" content="Your Name"&gt;
+    &lt;meta name="robots" content="index, follow"&gt;
+
+    &lt;!-- Open Graph (Facebook/LinkedIn) --&gt;
+    &lt;meta property="og:title" content="Title"&gt;
+    &lt;meta property="og:description" content="Desc"&gt;
+    &lt;meta property="og:image" content="image.jpg"&gt;
+    &lt;meta property="og:url" content="https://..."&gt;
+    &lt;meta property="og:type" content="website"&gt;
+
+    &lt;!-- Twitter Card --&gt;
+    &lt;meta name="twitter:card" content="summary_large_image"&gt;
+    &lt;meta name="twitter:title" content="Title"&gt;
+
+    &lt;!-- Favicon --&gt;
+    &lt;link rel="icon" type="image/png" href="favicon.png"&gt;
+
+    &lt;!-- Canonical URL (avoid duplicate content) --&gt;
+    &lt;link rel="canonical" href="https://example.com/page"&gt;
+
+    &lt;!-- Auto-redirect (5 sec) --&gt;
+    &lt;meta http-equiv="refresh" content="5;url=https://..."&gt;
+&lt;/head&gt;
+</pre>
+        </div>
+    </div>
+
+    <!-- HTML5 APIs -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">10. HTML5 New Features &amp; APIs</div>
+        <div class="card-body hidden">
+            <div class="note">Key features introduced in HTML5.</div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Feature</th><th>Description</th></tr>
+                    <tr><td>Semantic Tags</td><td>header, nav, main, section, article, aside, footer</td></tr>
+                    <tr><td>New Input Types</td><td>email, url, date, color, range, search, tel, number</td></tr>
+                    <tr><td>Audio/Video</td><td>Native media without Flash</td></tr>
+                    <tr><td>Canvas</td><td>2D drawing via JavaScript</td></tr>
+                    <tr><td>SVG</td><td>Scalable Vector Graphics inline</td></tr>
+                    <tr><td>Geolocation API</td><td>Get user's location</td></tr>
+                    <tr><td>Web Storage</td><td>localStorage & sessionStorage</td></tr>
+                    <tr><td>Web Workers</td><td>Background threads</td></tr>
+                    <tr><td>WebSocket</td><td>Real-time communication</td></tr>
+                    <tr><td>Drag & Drop</td><td>Native drag & drop API</td></tr>
+                    <tr><td>Form Validation</td><td>required, pattern, min, max (no JS needed)</td></tr>
+                    <tr><td>data-* attributes</td><td>Custom data attributes</td></tr>
+                    <tr><td>details/summary</td><td>Native collapsible widget</td></tr>
+                    <tr><td>contenteditable</td><td>Make any element editable</td></tr>
+                </table>
+            </div>
+<pre>
+&lt;!-- Canvas --&gt;
+&lt;canvas id="myCanvas" width="200" height="100"&gt;&lt;/canvas&gt;
+
+&lt;!-- SVG --&gt;
+&lt;svg width="100" height="100"&gt;
+    &lt;circle cx="50" cy="50" r="40" fill="red"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- Details/Summary --&gt;
+&lt;details&gt;
+    &lt;summary&gt;Click to expand&lt;/summary&gt;
+    &lt;p&gt;Hidden content here!&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;!-- Data Attributes --&gt;
+&lt;div data-user-id="123" data-role="admin"&gt;
+    User Card
+&lt;/div&gt;
+
+&lt;!-- Content Editable --&gt;
+&lt;p contenteditable="true"&gt;Edit this text!&lt;/p&gt;
+
+&lt;!-- Local Storage --&gt;
+&lt;script&gt;
+    localStorage.setItem("name", "Alice");
+    console.log(localStorage.getItem("name"));
+    // sessionStorage works the same
+    // but clears when tab closes
+&lt;/script&gt;
+</pre>
+        </div>
+    </div>
+
+    <!-- Entities -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">11. HTML Entities &amp; Special Characters</div>
+        <div class="card-body hidden">
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Character</th><th>Entity</th><th>Code</th></tr>
+                    <tr><td>&lt;</td><td><code>&amp;lt;</code></td><td><code>&amp;#60;</code></td></tr>
+                    <tr><td>&gt;</td><td><code>&amp;gt;</code></td><td><code>&amp;#62;</code></td></tr>
+                    <tr><td>&amp;</td><td><code>&amp;amp;</code></td><td><code>&amp;#38;</code></td></tr>
+                    <tr><td>"</td><td><code>&amp;quot;</code></td><td><code>&amp;#34;</code></td></tr>
+                    <tr><td>'</td><td><code>&amp;apos;</code></td><td><code>&amp;#39;</code></td></tr>
+                    <tr><td>&nbsp;(space)</td><td><code>&amp;nbsp;</code></td><td><code>&amp;#160;</code></td></tr>
+                    <tr><td>©</td><td><code>&amp;copy;</code></td><td><code>&amp;#169;</code></td></tr>
+                    <tr><td>®</td><td><code>&amp;reg;</code></td><td><code>&amp;#174;</code></td></tr>
+                    <tr><td>→</td><td><code>&amp;rarr;</code></td><td><code>&amp;#8594;</code></td></tr>
+                    <tr><td>★</td><td>—</td><td><code>&amp;#9733;</code></td></tr>
+                    <tr><td>₹</td><td>—</td><td><code>&amp;#8377;</code></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Block vs Inline -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">12. Block vs Inline Elements</div>
+        <div class="card-body hidden">
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Block Elements</th><th>Inline Elements</th></tr>
+                    <tr><td>Takes full width</td><td>Takes only needed width</td></tr>
+                    <tr><td>Starts on new line</td><td>Stays in same line</td></tr>
+                    <tr><td><code>div, p, h1-h6, ul, ol, li, table, form, section, article, header, footer, main, nav, aside, blockquote, pre, hr</code></td>
+                        <td><code>span, a, img, strong, em, b, i, br, input, label, select, textarea, button, code, abbr, mark, sub, sup, small</code></td></tr>
+                </table>
+            </div>
+            <div class="tip">💡 <code>&lt;div&gt;</code> = generic block container. <code>&lt;span&gt;</code> = generic inline container.</div>
+<pre>
+&lt;!-- Block: full width, new line --&gt;
+&lt;div style="background:lightblue"&gt;I'm a block&lt;/div&gt;
+&lt;div style="background:lightcoral"&gt;New line!&lt;/div&gt;
+
+&lt;!-- Inline: same line --&gt;
+&lt;span style="background:yellow"&gt;I'm&lt;/span&gt;
+&lt;span style="background:lightgreen"&gt;inline!&lt;/span&gt;
+
+&lt;!-- Inline-block: inline + width/height --&gt;
+&lt;span style="display:inline-block;
+    width:100px; height:50px;
+    background:pink"&gt;Box&lt;/span&gt;
+</pre>
+        </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="card html-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">13. Accessibility (a11y) Best Practices</div>
+        <div class="card-body hidden">
+            <div class="note">Make websites usable for everyone, including people with disabilities.</div>
+<pre>
+&lt;!-- 1. Always use alt text --&gt;
+&lt;img src="cat.jpg" alt="Orange cat sleeping on a couch"&gt;
+
+&lt;!-- 2. Label form inputs --&gt;
+&lt;label for="email"&gt;Email:&lt;/label&gt;
+&lt;input type="email" id="email" name="email"&gt;
+
+&lt;!-- 3. Use ARIA roles when needed --&gt;
+&lt;div role="navigation" aria-label="Main menu"&gt;...&lt;/div&gt;
+&lt;button aria-expanded="false" aria-controls="menu"&gt;Menu&lt;/button&gt;
+
+&lt;!-- 4. Skip navigation link --&gt;
+&lt;a href="#main-content" class="skip-link"&gt;Skip to content&lt;/a&gt;
+
+&lt;!-- 5. Use semantic HTML (biggest a11y win!) --&gt;
+&lt;nav&gt; instead of &lt;div class="nav"&gt;
+
+&lt;!-- 6. Tab order --&gt;
+&lt;button tabindex="0"&gt;Focusable&lt;/button&gt;
+&lt;div tabindex="-1"&gt;Programmatically focusable only&lt;/div&gt;
+
+&lt;!-- 7. Language attribute --&gt;
+&lt;html lang="en"&gt;
+</pre>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>ARIA Attribute</th><th>Purpose</th></tr>
+                    <tr><td><code>role</code></td><td>Define element role (button, navigation, alert)</td></tr>
+                    <tr><td><code>aria-label</code></td><td>Invisible label for screen readers</td></tr>
+                    <tr><td><code>aria-hidden="true"</code></td><td>Hide from screen readers</td></tr>
+                    <tr><td><code>aria-expanded</code></td><td>Expanded/collapsed state</td></tr>
+                    <tr><td><code>aria-required</code></td><td>Mark as required</td></tr>
+                    <tr><td><code>aria-live="polite"</code></td><td>Announce dynamic content changes</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end HTML tab -->
+
+
+<!-- ================================================================ -->
+<!-- CSS TAB -->
+<!-- ================================================================ -->
+<div class="tab-content" id="tab-css">
+
+    <h2 class="section-title">🎨 CSS Fundamentals</h2>
+
+    <!-- CSS Inclusion -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">1. Ways to Include CSS</div>
+        <div class="card-body hidden">
+            <div class="note">Three ways to add CSS, in order of preference: External → Internal → Inline.</div>
+<pre>
+&lt;!-- 1. External CSS (Best Practice) --&gt;
+&lt;link rel="stylesheet" href="styles.css"&gt;
+
+&lt;!-- 2. Internal CSS --&gt;
+&lt;style&gt;
+    body { margin: 0; }
+&lt;/style&gt;
+
+&lt;!-- 3. Inline CSS (Avoid!) --&gt;
+&lt;p style="color: red; font-size: 16px;"&gt;Text&lt;/p&gt;
+</pre>
+            <div class="warning">⚠️ Inline styles have the highest specificity (except !important). Hard to maintain!</div>
+        </div>
+    </div>
+
+    <!-- Selectors -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">2. CSS Selectors — Complete Guide</div>
+        <div class="card-body hidden">
+            <div class="note">Selectors target HTML elements to apply styles.</div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Selector</th><th>Example</th><th>Targets</th></tr>
+                    <tr><td>Universal</td><td><code>*</code></td><td>All elements</td></tr>
+                    <tr><td>Element</td><td><code>p</code></td><td>All &lt;p&gt; tags</td></tr>
+                    <tr><td>Class</td><td><code>.box</code></td><td>class="box"</td></tr>
+                    <tr><td>ID</td><td><code>#header</code></td><td>id="header"</td></tr>
+                    <tr><td>Descendant</td><td><code>div p</code></td><td>p inside div (any depth)</td></tr>
+                    <tr><td>Child</td><td><code>div > p</code></td><td>Direct child p of div</td></tr>
+                    <tr><td>Adjacent sibling</td><td><code>h1 + p</code></td><td>First p right after h1</td></tr>
+                    <tr><td>General sibling</td><td><code>h1 ~ p</code></td><td>All p after h1 (same parent)</td></tr>
+                    <tr><td>Attribute</td><td><code>[type="text"]</code></td><td>Elements with type="text"</td></tr>
+                    <tr><td>Attr starts with</td><td><code>[href^="https"]</code></td><td>href starting with https</td></tr>
+                    <tr><td>Attr ends with</td><td><code>[src$=".png"]</code></td><td>src ending with .png</td></tr>
+                    <tr><td>Attr contains</td><td><code>[class*="btn"]</code></td><td>class containing "btn"</td></tr>
+                    <tr><td>Group</td><td><code>h1, h2, h3</code></td><td>Multiple selectors</td></tr>
+                </table>
+            </div>
+<pre>
+/* Pseudo-classes */
+a:hover { color: red; }
+a:visited { color: purple; }
+a:active { color: orange; }
+input:focus { border-color: blue; }
+input:checked { background: green; }
+li:first-child { font-weight: bold; }
+li:last-child { color: gray; }
+li:nth-child(2) { color: red; }         /* 2nd item */
+li:nth-child(odd) { background: #f5f5f5; }
+li:nth-child(3n) { color: blue; }       /* every 3rd */
+p:first-of-type { font-size: 1.2em; }
+div:empty { display: none; }
+input:not([type="submit"]) { border: 1px solid #ccc; }
+input:required { border-left: 3px solid red; }
+input:valid { border-color: green; }
+input:invalid { border-color: red; }
+input:disabled { opacity: 0.5; }
+
+/* Pseudo-elements */
+p::before { content: "→ "; color: blue; }
+p::after { content: " ←"; color: red; }
+p::first-line { font-weight: bold; }
+p::first-letter { font-size: 2em; float: left; }
+::selection { background: yellow; color: black; }
+input::placeholder { color: #999; font-style: italic; }
+</pre>
+        </div>
+    </div>
+
+    <!-- Specificity -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">3. Specificity &amp; Cascade</div>
+        <div class="card-body hidden">
+            <div class="note">When multiple rules target the same element, specificity determines which wins.</div>
+<pre>
+/* Specificity Calculation: (a, b, c, d)
+   a = inline styles
+   b = ID selectors
+   c = class / pseudo-class / attribute selectors
+   d = element / pseudo-element selectors
+*/
+
+*                    →  (0,0,0,0)
+p                    →  (0,0,0,1)
+p.class              →  (0,0,1,1)
+p#id                 →  (0,1,0,1)
+#id .class p         →  (0,1,1,1)
+style="..."          →  (1,0,0,0)
+!important           →  Overrides everything! ⚠️
+</pre>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Example</div>
+<pre>
+/* Who wins? */
+p { color: blue; }           /* 0,0,0,1 */
+.text { color: green; }      /* 0,0,1,0 ✅ */
+#intro { color: red; }       /* 0,1,0,0 ✅✅ */
+
+&lt;p id="intro" class="text"&gt;
+    This text is RED
+&lt;/p&gt;
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Specificity Hierarchy</div>
+<pre class="output">
+!important     → 🔴 HIGHEST (avoid!)
+inline style   → (1,0,0,0)
+#id            → (0,1,0,0)
+.class         → (0,0,1,0)
+element        → (0,0,0,1)
+*              → (0,0,0,0)
+inherited      → 🟢 LOWEST
+</pre>
+                </div>
+            </div>
+            <div class="warning">⚠️ Avoid <code>!important</code> — it makes debugging very hard. Use specificity instead.</div>
+        </div>
+    </div>
+
+    <!-- Box Model -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">4. Box Model — The Foundation</div>
+        <div class="card-body hidden">
+            <div class="note">Every HTML element is a box with: <b>content → padding → border → margin</b>.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+.box {
+    width: 200px;
+    height: 100px;
+    padding: 20px;
+    border: 5px solid #333;
+    margin: 10px;
+
+    /* Without this: total = 200+40+10 = 250px wide! */
+    /* With this: total = 200px (padding+border inside) */
+    box-sizing: border-box;
+}
+
+/* Best practice: apply to ALL elements */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📐 Box Model Diagram</div>
+<pre class="output">
+┌─── Margin (10px) ──────────────┐
+│ ┌─── Border (5px) ───────────┐ │
+│ │ ┌─── Padding (20px) ─────┐ │ │
+│ │ │                         │ │ │
+│ │ │      CONTENT            │ │ │
+│ │ │    200px × 100px        │ │ │
+│ │ │                         │ │ │
+│ │ └─────────────────────────┘ │ │
+│ └─────────────────────────────┘ │
+└─────────────────────────────────┘
+
+content-box (default):
+  Total width = width + padding + border
+  = 200 + 40 + 10 = 250px
+
+border-box (recommended):
+  Total width = width = 200px
+  (padding+border fit inside)
+</pre>
+                </div>
+            </div>
+            <div class="tip">💡 Always use <code>box-sizing: border-box</code> globally!</div>
+        </div>
+    </div>
+
+    <!-- Display -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">5. Display Property</div>
+        <div class="card-body hidden">
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Value</th><th>Behavior</th><th>Width/Height</th></tr>
+                    <tr><td><code>block</code></td><td>Full width, new line</td><td>✅ Yes</td></tr>
+                    <tr><td><code>inline</code></td><td>Content width, same line</td><td>❌ No</td></tr>
+                    <tr><td><code>inline-block</code></td><td>Same line + width/height</td><td>✅ Yes</td></tr>
+                    <tr><td><code>none</code></td><td>Hidden, removed from flow</td><td>—</td></tr>
+                    <tr><td><code>flex</code></td><td>Flexbox container</td><td>✅ Yes</td></tr>
+                    <tr><td><code>grid</code></td><td>Grid container</td><td>✅ Yes</td></tr>
+                    <tr><td><code>table</code></td><td>Behaves like &lt;table&gt;</td><td>✅ Yes</td></tr>
+                </table>
+            </div>
+<pre>
+/* display: none vs visibility: hidden */
+.hidden-1 { display: none; }          /* Removed from flow, takes NO space */
+.hidden-2 { visibility: hidden; }     /* Invisible but STILL takes space */
+.hidden-3 { opacity: 0; }             /* Invisible, takes space, clickable! */
+</pre>
+        </div>
+    </div>
+
+    <!-- Position -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">6. Position Property</div>
+        <div class="card-body hidden">
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Value</th><th>Relative To</th><th>In Flow?</th><th>Use Case</th></tr>
+                    <tr><td><code>static</code></td><td>Normal flow (default)</td><td>✅</td><td>Default behavior</td></tr>
+                    <tr><td><code>relative</code></td><td>Its own position</td><td>✅</td><td>Offset + parent for absolute children</td></tr>
+                    <tr><td><code>absolute</code></td><td>Nearest positioned ancestor</td><td>❌</td><td>Tooltips, dropdowns</td></tr>
+                    <tr><td><code>fixed</code></td><td>Viewport</td><td>❌</td><td>Sticky navbar, back-to-top</td></tr>
+                    <tr><td><code>sticky</code></td><td>Scroll position</td><td>✅ until stuck</td><td>Sticky headers</td></tr>
+                </table>
+            </div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+/* Relative */
+.relative-box {
+    position: relative;
+    top: 10px;    /* moves down 10px */
+    left: 20px;   /* moves right 20px */
+}
+
+/* Absolute (needs positioned parent) */
+.parent {
+    position: relative;  /* anchor */
+}
+.child {
+    position: absolute;
+    top: 0;
+    right: 0;    /* top-right corner of parent */
+}
+
+/* Fixed navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Sticky header */
+.header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
+}
+
+/* Center absolutely positioned element */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📐 Visual</div>
+<pre class="output">
+static:    Normal flow
+           ┌────────┐
+           │  Box   │
+           └────────┘
+
+relative:  Offset from original
+           ┌────────┐ ← ghost
+           │ ╔══════╗ ← actual
+           │ ║ Box  ║
+           └─╚══════╝
+
+absolute:  Relative to parent
+  ┌──────────────┐ parent
+  │         ╔═══╗│
+  │         ║abs║│ top:0 right:0
+  │         ╚═══╝  │         ╚═══╝│
+  │              │
+  └──────────────┘
+
+fixed:     Relative to viewport
+  ╔════════════════╗ ← stays here
+  ║  Fixed Navbar  ║    on scroll
+  ╚════════════════╝
+
+sticky:    Normal → fixed on scroll
+  ┌────────┐
+  │ Sticky │ ← scrolls normally
+  └────────┘   then sticks at top
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flexbox -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">7. Flexbox — Complete Guide</div>
+        <div class="card-body hidden">
+            <div class="note">Flexbox is a <b>one-dimensional</b> layout system (row OR column). Parent = flex container, Children = flex items.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Container Properties</div>
+<pre>
+.container {
+    display: flex;
+
+    /* Direction */
+    flex-direction: row;          /* default → */
+    flex-direction: row-reverse;  /* ← */
+    flex-direction: column;       /* ↓ */
+    flex-direction: column-reverse; /* ↑ */
+
+    /* Wrap */
+    flex-wrap: nowrap;     /* default: squeeze */
+    flex-wrap: wrap;       /* wrap to next line */
+    flex-wrap: wrap-reverse;
+
+    /* Shorthand */
+    flex-flow: row wrap;
+
+    /* Main axis alignment */
+    justify-content: flex-start;   /* |||_____ */
+    justify-content: flex-end;     /* _____|||  */
+    justify-content: center;       /* ___|||___ */
+    justify-content: space-between;/* |__|__|__ */
+    justify-content: space-around; /* _|__|__|_ */
+    justify-content: space-evenly; /* _|_|_|_|_ */
+
+    /* Cross axis alignment */
+    align-items: stretch;     /* default: fill */
+    align-items: flex-start;  /* top */
+    align-items: flex-end;    /* bottom */
+    align-items: center;      /* center */
+    align-items: baseline;    /* text baseline */
+
+    /* Multi-line cross alignment */
+    align-content: flex-start;
+    align-content: center;
+    align-content: space-between;
+
+    /* Gap between items */
+    gap: 10px;
+    row-gap: 10px;
+    column-gap: 20px;
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">💻 Item Properties</div>
+<pre>
+.item {
+    /* Growth ratio */
+    flex-grow: 0;    /* default: don't grow */
+    flex-grow: 1;    /* take available space */
+
+    /* Shrink ratio */
+    flex-shrink: 1;  /* default: can shrink */
+    flex-shrink: 0;  /* don't shrink */
+
+    /* Base size before grow/shrink */
+    flex-basis: auto;   /* default */
+    flex-basis: 200px;
+    flex-basis: 25%;
+
+    /* Shorthand: grow shrink basis */
+    flex: 0 1 auto;     /* default */
+    flex: 1;             /* = 1 1 0% (grow!) */
+    flex: 1 0 200px;
+
+    /* Override align-items for this item */
+    align-self: center;
+    align-self: flex-end;
+
+    /* Order (default: 0) */
+    order: -1;   /* move first */
+    order: 1;    /* move last */
+}
+</pre>
+                </div>
+            </div>
+            <div class="tip">💡 <b>Common patterns:</b></div>
+<pre>
+/* Center everything (holy grail!) */
+.center-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Navbar: logo left, links right */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+/* Equal width columns */
+.columns {
+    display: flex;
+    gap: 20px;
+}
+.columns > * {
+    flex: 1;    /* each takes equal space */
+}
+
+/* Sticky footer */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    flex: 1;    /* main grows, footer stays at bottom */
+}
+</pre>
+        </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">8. CSS Grid — Complete Guide</div>
+        <div class="card-body hidden">
+            <div class="note">Grid is a <b>two-dimensional</b> layout system (rows AND columns simultaneously).</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Container Properties</div>
+<pre>
+.grid {
+    display: grid;
+
+    /* Define columns */
+    grid-template-columns: 200px 200px 200px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit,
+        minmax(250px, 1fr));  /* responsive! */
+    grid-template-columns: 200px 1fr 2fr;
+
+    /* Define rows */
+    grid-template-rows: 100px auto 50px;
+    grid-auto-rows: minmax(100px, auto);
+
+    /* Gap */
+    gap: 20px;
+    row-gap: 10px;
+    column-gap: 20px;
+
+    /* Alignment */
+    justify-items: start|center|end|stretch;
+    align-items: start|center|end|stretch;
+    place-items: center;  /* both axes */
+
+    justify-content: center;  /* grid in container */
+    align-content: center;
+
+    /* Named areas */
+    grid-template-areas:
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">💻 Item Properties</div>
+<pre>
+.item {
+    /* Span columns */
+    grid-column: 1 / 3;       /* col 1 to 3 */
+    grid-column: 1 / span 2;  /* start 1, span 2 */
+    grid-column: 1 / -1;      /* full width */
+
+    /* Span rows */
+    grid-row: 1 / 3;
+
+    /* Named areas */
+    grid-area: header;
+    grid-area: sidebar;
+    grid-area: main;
+    grid-area: footer;
+
+    /* Self alignment */
+    justify-self: center;
+    align-self: end;
+    place-self: center;
+}
+</pre>
+                </div>
+            </div>
+<pre>
+/* Responsive card grid (NO media queries!) */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Holy grail layout */
+.page {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "nav    main   aside"
+        "footer footer footer";
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+.page header { grid-area: header; }
+.page nav    { grid-area: nav; }
+.page main   { grid-area: main; }
+.page aside  { grid-area: aside; }
+.page footer { grid-area: footer; }
+</pre>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Flexbox</th><th>Grid</th></tr>
+                    <tr><td>One-dimensional (row OR column)</td><td>Two-dimensional (rows AND columns)</td></tr>
+                    <tr><td>Content-first (content defines layout)</td><td>Layout-first (grid defines layout)</td></tr>
+                    <tr><td>Best for: navbars, centering, simple rows</td><td>Best for: page layout, card grids, dashboards</td></tr>
+                    <tr><td>Items flow in one direction</td><td>Items placed in both directions</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">🎨 CSS Styling &amp; Effects</h2>
+
+    <!-- Units -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">9. CSS Units — px, em, rem, %, vh, vw</div>
+        <div class="card-body hidden">
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Unit</th><th>Type</th><th>Relative To</th><th>Use Case</th></tr>
+                    <tr><td><code>px</code></td><td>Absolute</td><td>Screen pixel</td><td>Borders, shadows, small fixed sizes</td></tr>
+                    <tr><td><code>em</code></td><td>Relative</td><td>Parent's font-size</td><td>Padding/margin relative to text</td></tr>
+                    <tr><td><code>rem</code></td><td>Relative</td><td>Root (html) font-size</td><td>Font sizes, spacing (consistent!)</td></tr>
+                    <tr><td><code>%</code></td><td>Relative</td><td>Parent element</td><td>Widths, responsive layouts</td></tr>
+                    <tr><td><code>vw</code></td><td>Relative</td><td>1% of viewport width</td><td>Full-width sections</td></tr>
+                    <tr><td><code>vh</code></td><td>Relative</td><td>1% of viewport height</td><td>Full-screen sections, hero</td></tr>
+                    <tr><td><code>vmin</code></td><td>Relative</td><td>Smaller of vw/vh</td><td>Responsive squares</td></tr>
+                    <tr><td><code>vmax</code></td><td>Relative</td><td>Larger of vw/vh</td><td>—</td></tr>
+                    <tr><td><code>ch</code></td><td>Relative</td><td>Width of "0" character</td><td>Max text width (60ch–80ch)</td></tr>
+                    <tr><td><code>fr</code></td><td>Relative</td><td>Fraction of available space</td><td>CSS Grid only</td></tr>
+                </table>
+            </div>
+<pre>
+/* Best practice */
+html { font-size: 16px; }    /* 1rem = 16px */
+body { font-size: 1rem; }    /* 16px */
+h1 { font-size: 2rem; }      /* 32px */
+h2 { font-size: 1.5rem; }    /* 24px */
+small { font-size: 0.875rem; } /* 14px */
+
+p { max-width: 65ch; }       /* readable line length */
+section { height: 100vh; }   /* full screen */
+.container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+/* clamp() — responsive without media queries */
+h1 { font-size: clamp(1.5rem, 4vw, 3rem); }
+.container { width: clamp(300px, 90%, 1200px); }
+</pre>
+        </div>
+    </div>
+
+    <!-- Colors -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">10. Colors &amp; Backgrounds</div>
+        <div class="card-body hidden">
+<pre>
+/* Color Formats */
+color: red;                        /* Named */
+color: #ff0000;                    /* Hex */
+color: #f00;                       /* Hex shorthand */
+color: rgb(255, 0, 0);             /* RGB */
+color: rgba(255, 0, 0, 0.5);      /* RGBA (alpha) */
+color: hsl(0, 100%, 50%);          /* HSL */
+color: hsla(0, 100%, 50%, 0.5);   /* HSLA */
+
+/* Background */
+background-color: #f5f5f5;
+background-image: url('bg.jpg');
+background-size: cover;            /* fill container */
+background-size: contain;          /* fit inside */
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;      /* parallax effect */
+
+/* Shorthand */
+background: #f5f5f5 url('bg.jpg') no-repeat center/cover;
+
+/* Gradients */
+background: linear-gradient(to right, #3498db, #e74c3c);
+background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb);
+background: radial-gradient(circle, #fff, #000);
+
+/* Multiple backgrounds */
+background:
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('bg.jpg') center/cover;
+
+/* CSS Variables (Custom Properties) */
+:root {
+    --primary: #3498db;
+    --secondary: #e74c3c;
+    --text: #333;
+    --bg: #f5f5f5;
+}
+.btn { background: var(--primary); color: white; }
+.btn-danger { background: var(--secondary); }
+</pre>
+        </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">11. Typography &amp; Text Styling</div>
+        <div class="card-body hidden">
+<pre>
+/* Font */
+font-family: 'Segoe UI', Tahoma, sans-serif;
+font-size: 1rem;
+font-weight: 400;        /* normal */
+font-weight: 700;        /* bold */
+font-style: italic;
+font-variant: small-caps;
+
+/* Shorthand: style variant weight size/line-height family */
+font: italic small-caps 700 1rem/1.6 'Segoe UI', sans-serif;
+
+/* Text */
+text-align: left | center | right | justify;
+text-decoration: none;         /* remove underline */
+text-decoration: underline wavy red;
+text-transform: uppercase | lowercase | capitalize;
+text-indent: 2em;              /* first line indent */
+text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+/* Spacing */
+letter-spacing: 1px;
+word-spacing: 4px;
+line-height: 1.6;             /* best for readability */
+
+/* Overflow */
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;       /* ... truncation */
+
+/* Multi-line ellipsis */
+display: -webkit-box;
+-webkit-line-clamp: 3;
+-webkit-box-orient: vertical;
+overflow: hidden;
+
+/* Google Fonts */
+/* In &lt;head&gt;: */
+/* &lt;link href="https://fonts.googleapis.com/css2?
+   family=Roboto:wght@400;700&amp;display=swap"
+   rel="stylesheet"&gt; */
+body { font-family: 'Roboto', sans-serif; }
+
+/* @font-face (custom fonts) */
+@font-face {
+    font-family: 'MyFont';
+    src: url('myfont.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+</pre>
+        </div>
+    </div>
+
+    <!-- Borders & Shadows -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">12. Borders, Border-Radius &amp; Shadows</div>
+        <div class="card-body hidden">
+<pre>
+/* Borders */
+border: 2px solid #333;
+border-top: 3px dashed red;
+border-style: solid | dashed | dotted | double | groove | ridge | none;
+border-width: 1px 2px 3px 4px;  /* top right bottom left */
+border-color: red blue green yellow;
+
+/* Border Radius */
+border-radius: 8px;              /* all corners */
+border-radius: 50%;              /* circle */
+border-radius: 10px 0 10px 0;   /* diagonal */
+border-radius: 20px 20px 0 0;   /* top rounded */
+
+/* Box Shadow */
+box-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+/* x-offset  y-offset  blur  color */
+
+box-shadow: 0 0 0 3px #3498db;  /* outline effect */
+box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); /* inner shadow */
+
+/* Multiple shadows */
+box-shadow:
+    0 2px 4px rgba(0,0,0,0.1),
+    0 8px 16px rgba(0,0,0,0.1);
+
+/* Outline (doesn't affect layout) */
+outline: 2px solid blue;
+outline-offset: 4px;
+
+/* Common card shadow */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12),
+                0 1px 2px rgba(0,0,0,0.24);
+    transition: box-shadow 0.3s;
+}
+.card:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.15),
+                0 10px 10px rgba(0,0,0,0.12);
+}
+</pre>
+        </div>
+    </div>
+
+    <!-- Transitions & Animations -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">13. Transitions &amp; Animations</div>
+        <div class="card-body hidden">
+            <div class="note"><b>Transitions</b> = between two states. <b>Animations</b> = multi-step keyframes.</div>
+<pre>
+/* ===== TRANSITIONS ===== */
+.btn {
+    background: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+
+    /* Transition */
+    transition: all 0.3s ease;
+    /* property | duration | timing | delay */
+    transition: background 0.3s ease,
+                transform 0.2s ease-out;
+}
+.btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Timing functions */
+transition-timing-function: linear;
+transition-timing-function: ease;        /* default */
+transition-timing-function: ease-in;
+transition-timing-function: ease-out;
+transition-timing-function: ease-in-out;
+transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+    0%   { transform: translateX(-100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+.element {
+    animation: fadeIn 0.5s ease forwards;
+    /* name | duration | timing | fill-mode */
+}
+
+.loader {
+    animation: spin 1s linear infinite;
+    /* infinite = loops forever */
+}
+
+/* Animation properties */
+animation-name: fadeIn;
+animation-duration: 1s;
+animation-timing-function: ease;
+animation-delay: 0.5s;
+animation-iteration-count: infinite | 3;
+animation-direction: normal | reverse | alternate;
+animation-fill-mode: forwards | backwards | both;
+animation-play-state: running | paused;
+</pre>
+        </div>
+    </div>
+
+    <!-- Transforms -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">14. CSS Transforms (2D &amp; 3D)</div>
+        <div class="card-body hidden">
+<pre>
+/* 2D Transforms */
+transform: translateX(50px);
+transform: translateY(-20px);
+transform: translate(50px, -20px);
+
+transform: rotate(45deg);
+transform: rotate(-90deg);
+
+transform: scaleX(1.5);
+transform: scaleY(0.5);
+transform: scale(2);            /* 2x bigger */
+transform: scale(0.5);          /* half size */
+
+transform: skewX(10deg);
+transform: skewY(5deg);
+transform: skew(10deg, 5deg);
+
+/* Combine multiple */
+transform: translate(50px, 0) rotate(45deg) scale(1.2);
+
+/* Transform origin (default: center) */
+transform-origin: top left;
+transform-origin: 0% 0%;
+transform-origin: center bottom;
+
+/* 3D Transforms */
+transform: perspective(500px) rotateY(30deg);
+transform: rotateX(45deg);
+transform: translateZ(100px);
+transform-style: preserve-3d;
+backface-visibility: hidden;
+
+/* Practical: Card flip */
+.card-container { perspective: 1000px; }
+.card-inner {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+.card-container:hover .card-inner {
+    transform: rotateY(180deg);
+}
+.card-front, .card-back {
+    backface-visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.card-back { transform: rotateY(180deg); }
+</pre>
+        </div>
+    </div>
+
+    <h2 class="section-title">📱 Responsive Design</h2>
+
+    <!-- Media Queries -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">15. Media Queries &amp; Responsive Design</div>
+        <div class="card-body hidden">
+            <div class="note">Mobile-first approach: start with mobile styles, then add breakpoints for larger screens.</div>
+<pre>
+/* Mobile First (recommended) */
+
+/* Base styles = mobile */
+.container {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Tablet (≥768px) */
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+        margin: 0 auto;
+    }
+}
+
+/* Desktop (≥1024px) */
+@media (min-width: 1024px) {
+    .container {
+        width: 970px;
+    }
+}
+
+/* Large Desktop (≥1200px) */
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+
+/* Common Breakpoints */
+/* 480px  — small phones */
+/* 768px  — tablets */
+/* 1024px — laptops */
+/* 1200px — desktops */
+/* 1440px — large screens */
+
+/* Orientation */
+@media (orientation: portrait) { ... }
+@media (orientation: landscape) { ... }
+
+/* Print styles */
+@media print {
+    .no-print { display: none; }
+    body { font-size: 12pt; color: black; }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    body { background: #1a1a2e; color: #eee; }
+}
+
+/* Reduced motion (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important;
+        transition: none !important; }
+}
+
+/* Hover capability */
+@media (hover: hover) {
+    .btn:hover { transform: scale(1.05); }
+}
+
+/* Responsive without media queries */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,
+        minmax(280px, 1fr));
+    gap: 20px;
+}
+h1 { font-size: clamp(1.5rem, 4vw, 3rem); }
+img { max-width: 100%; height: auto; }
+</pre>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Technique</th><th>How</th></tr>
+                    <tr><td>Viewport meta</td><td><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></td></tr>
+                    <tr><td>Fluid widths</td><td><code>width: 90%</code> instead of <code>width: 960px</code></td></tr>
+                    <tr><td>Max-width</td><td><code>max-width: 1200px; margin: 0 auto;</code></td></tr>
+                    <tr><td>Responsive images</td><td><code>img { max-width: 100%; height: auto; }</code></td></tr>
+                    <tr><td>CSS Grid auto-fit</td><td><code>repeat(auto-fit, minmax(250px, 1fr))</code></td></tr>
+                    <tr><td>clamp()</td><td><code>font-size: clamp(1rem, 2.5vw, 2rem)</code></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overflow & Scrolling -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">16. Overflow, Float &amp; Clear</div>
+        <div class="card-body hidden">
+<pre>
+/* Overflow */
+overflow: visible;    /* default: content spills out */
+overflow: hidden;     /* clips content */
+overflow: scroll;     /* always shows scrollbar */
+overflow: auto;       /* scrollbar only when needed */
+overflow-x: auto;     /* horizontal only */
+overflow-y: scroll;   /* vertical only */
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+
+/* Float (legacy — use flexbox/grid instead) */
+.img-left {
+    float: left;
+    margin-right: 15px;
+}
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</pre>
+        </div>
+    </div>
+
+    <!-- Z-index & Stacking -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">17. Z-index &amp; Stacking Context</div>
+        <div class="card-body hidden">
+            <div class="note"><code>z-index</code> only works on <b>positioned</b> elements (relative, absolute, fixed, sticky).</div>
+<pre>
+/* Higher z-index = on top */
+.background { z-index: 1; }
+.content    { z-index: 10; }
+.modal      { z-index: 100; }
+.overlay    { z-index: 99; }
+.tooltip    { z-index: 1000; }
+.navbar     { z-index: 1000; }
+
+/* New stacking context is created by: */
+/* - position + z-index */
+/* - opacity less than 1 */
+/* - transform */
+/* - filter */
+/* - will-change */
+
+/* Common z-index scale */
+/* 1     — default/background */
+/* 10    — content overlaps */
+/* 100   — sticky elements */
+/* 1000  — navbar, sidebar */
+/* 10000 — modals, popups */
+/* 99999 — tooltips */
+</pre>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">📐 Visual</div>
+<pre class="output">
+      z-index: 1000  ← Tooltip
+    ┌───────────┐
+    │ z: 100    │   ← Modal
+  ┌─┤           ├─┐
+  │ │  z: 10    │ │ ← Content
+  │ ├───────────┤ │
+  │ │  z: 1     │ │ ← Background
+  └─┴───────────┴─┘
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSS Variables -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">18. CSS Variables (Custom Properties)</div>
+        <div class="card-body hidden">
+<pre>
+/* Define variables on :root (global) */
+:root {
+    --primary: #3498db;
+    --secondary: #e74c3c;
+    --success: #27ae60;
+    --text-color: #333;
+    --bg-color: #f5f5f5;
+    --font-main: 'Segoe UI', sans-serif;
+    --spacing: 16px;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Use variables */
+.btn {
+    background: var(--primary);
+    color: white;
+    padding: var(--spacing);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    font-family: var(--font-main);
+}
+
+/* Fallback value */
+color: var(--text-color, #000);
+
+/* Override in scope */
+.dark-theme {
+    --text-color: #eee;
+    --bg-color: #1a1a2e;
+}
+
+/* Dark mode with media query */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #eee;
+        --bg-color: #1a1a2e;
+    }
+}
+
+/* Use in calc() */
+.box {
+    padding: calc(var(--spacing) * 2);
+    margin-bottom: calc(var(--spacing) / 2);
+}
+</pre>
+        </div>
+    </div>
+
+    <!-- Miscellaneous -->
+    <div class="card css-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">19. Useful CSS Properties &amp; Tricks</div>
+        <div class="card-body hidden">
+<pre>
+/* Cursor */
+cursor: pointer | default | text | grab | not-allowed | crosshair | wait;
+
+/* User select */
+user-select: none;       /* prevent text selection */
+
+/* Pointer events */
+pointer-events: none;    /* click-through element */
+
+/* Filter */
+filter: blur(5px);
+filter: brightness(1.2);
+filter: grayscale(100%);
+filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+filter: sepia(100%);
+filter: contrast(150%);
+filter: hue-rotate(90deg);
+filter: invert(100%);
+
+/* Backdrop filter (frosted glass) */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Object fit (for images/video in container) */
+img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;       /* crop to fill */
+    object-fit: contain;     /* fit inside */
+    object-fit: fill;        /* stretch (default) */
+    object-position: center;
+}
+
+/* Aspect ratio */
+.video-container {
+    aspect-ratio: 16 / 9;
+}
+
+/* Columns (newspaper layout) */
+.text-columns {
+    column-count: 3;
+    column-gap: 20px;
+    column-rule: 1px solid #ddd;
+}
+
+/* Resize */
+textarea { resize: vertical; }
+.resizable { resize: both; overflow: auto; }
+
+/* Caret color */
+input { caret-color: red; }
+
+/* Accent color (form controls) */
+input[type="checkbox"] { accent-color: #3498db; }
+
+/* Scroll snap */
+.carousel {
+    scroll-snap-type: x mandatory;
+    overflow-x: scroll;
+    display: flex;
+}
+.carousel > * {
+    scroll-snap-align: start;
+    min-width: 100%;
+}
+
+/* Container queries (modern) */
+.card-container {
+    container-type: inline-size;
+}
+@container (min-width: 400px) {
+    .card { flex-direction: row; }
+}
+</pre>
+        </div>
+    </div>
+
+</div><!-- end CSS tab -->
+
+
+<!-- ================================================================ -->
+<!-- INTERVIEW Q&A TAB -->
+<!-- ================================================================ -->
+<div class="tab-content" id="tab-qa">
+
+    <h2 class="section-title">🟠 HTML Interview Questions</h2>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">HTML Questions (1–25)</div>
+        <div class="card-body hidden">
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q1. What is HTML?</div>
+                <div class="answer"><b>HTML (HyperText Markup Language)</b> is the standard markup language for creating web pages. It describes the <b>structure</b> of web content using elements/tags. It is <b>not</b> a programming language — it doesn't have logic, loops, or conditions.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q2. What is the difference between HTML and HTML5?</div>
+                <div class="answer">
+                    HTML5 is the latest version with new features:<br>
+                    • <b>Semantic tags</b>: header, nav, main, section, article, aside, footer<br>
+                    • <b>New input types</b>: email, date, color, range, url, search<br>
+                    • <b>Media</b>: &lt;audio&gt;, &lt;video&gt; without plugins<br>
+                    • <b>Canvas &amp; SVG</b> for graphics<br>
+                    • <b>APIs</b>: Geolocation, Web Storage, Web Workers, Drag &amp; Drop<br>
+                    • <b>Simpler doctype</b>: &lt;!DOCTYPE html&gt;
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q3. What are semantic elements? Why use them?</div>
+                <div class="answer">Semantic elements clearly describe their meaning to both the <b>browser</b> and the <b>developer</b>. Examples: &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;section&gt;, &lt;footer&gt;.<br><br><b>Benefits:</b> Better <b>SEO</b>, improved <b>accessibility</b> (screen readers), cleaner and more <b>readable</b> code, easier <b>maintenance</b>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q4. What is the difference between &lt;div&gt; and &lt;span&gt;?</div>
+                <div class="answer"><b>&lt;div&gt;</b> is a <b>block-level</b> element — takes full width, starts on a new line. Used for grouping large sections.<br><b>&lt;span&gt;</b> is an <b>inline</b> element — takes only the needed width, stays in the same line. Used for styling small text portions.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q5. What is the difference between &lt;b&gt; and &lt;strong&gt;?</div>
+                <div class="answer"><b>&lt;b&gt;</b> — Visually bold only. No semantic meaning.<br><b>&lt;strong&gt;</b> — Bold with <b>semantic importance</b>. Screen readers may emphasize it. Preferred for SEO and accessibility.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q6. What is the difference between &lt;i&gt; and &lt;em&gt;?</div>
+                <div class="answer"><b>&lt;i&gt;</b> — Visually italic, no semantic meaning (used for icons, technical terms).<br><b>&lt;em&gt;</b> — Italic with <b>emphasis</b>. Screen readers change tone. Semantic meaning.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q7. What is the difference between id and class?</div>
+                <div class="answer">
+                    <b>id</b>: Unique — only ONE element per page. Higher specificity. Used for unique elements. Selected with <code>#id</code>.<br>
+                    <b>class</b>: Reusable — multiple elements can share. Lower specificity. Used for styling groups. Selected with <code>.class</code>.<br>
+                    An element can have <b>multiple classes</b> but only <b>one id</b>.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q8. What are void/self-closing elements?</div>
+                <div class="answer">Elements that <b>don't have a closing tag</b> and can't have children:<br>
+                    <code>&lt;br&gt;, &lt;hr&gt;, &lt;img&gt;, &lt;input&gt;, &lt;meta&gt;, &lt;link&gt;, &lt;area&gt;, &lt;col&gt;, &lt;source&gt;, &lt;embed&gt;, &lt;wbr&gt;</code>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q9. What is the difference between GET and POST?</div>
+                <div class="answer">
+                    <b>GET</b>: Data in URL, visible, limited length (~2048 chars), bookmarkable, cached, for fetching data.<br>
+                    <b>POST</b>: Data in body, hidden from URL, no size limit, not cached, for sending/modifying data (forms, passwords).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q10. What is the difference between localStorage and sessionStorage?</div>
+                <div class="answer">
+                    Both store key-value pairs in the browser (5-10MB).<br>
+                    <b>localStorage</b>: Persists <b>forever</b> (until manually cleared). Shared across tabs of same origin.<br>
+                    <b>sessionStorage</b>: Cleared when <b>tab closes</b>. Per-tab storage, not shared.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q11. What is the purpose of the alt attribute in images?</div>
+                <div class="answer">
+                    • Provides <b>alternative text</b> when image fails to load<br>
+                    • Read by <b>screen readers</b> for accessibility<br>
+                    • Helps with <b>SEO</b> — search engines understand image content<br>
+                    • Required by <b>WCAG</b> accessibility standards
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q12. What is the difference between &lt;link&gt; and &lt;a&gt;?</div>
+                <div class="answer">
+                    <b>&lt;link&gt;</b>: Used in &lt;head&gt; to link external resources (CSS, favicon, fonts). Not visible. Self-closing.<br>
+                    <b>&lt;a&gt;</b>: Anchor tag for <b>hyperlinks</b>. Visible and clickable. Used in &lt;body&gt;.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q13. What is the viewport meta tag?</div>
+                <div class="answer">
+                    <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code><br><br>
+                    It tells the browser to match the screen's width and set initial zoom to 100%. <b>Essential for responsive design</b> — without it, mobile browsers render at desktop width (~980px) and zoom out.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q14. What are data-* attributes?</div>
+                <div class="answer">
+                    Custom attributes to store extra data on HTML elements without non-standard attributes.<br>
+                    <code>&lt;div data-user-id="123" data-role="admin"&gt;</code><br>
+                    Access via JS: <code>element.dataset.userId</code>, <code>element.dataset.role</code><br>
+                    Valid, won't conflict with future HTML attributes.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q15. What is the difference between &lt;script&gt;, &lt;script async&gt;, and &lt;script defer&gt;?</div>
+                <div class="answer">
+                    <b>&lt;script&gt;</b>: Blocks HTML parsing. Downloads & executes immediately.<br>
+                    <b>&lt;script async&gt;</b>: Downloads in parallel, executes as soon as ready (may interrupt parsing). Order not guaranteed.<br>
+                    <b>&lt;script defer&gt;</b>: Downloads in parallel, executes <b>after</b> HTML parsing. Order guaranteed. <b>Best for most scripts!</b>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q16. What is the difference between &lt;section&gt; and &lt;div&gt;?</div>
+                <div class="answer">
+                    <b>&lt;section&gt;</b>: Semantic — represents a thematic grouping of content, typically with a heading. Meaningful to screen readers and search engines.<br>
+                    <b>&lt;div&gt;</b>: Non-semantic — generic container with no meaning. Use when no semantic element fits.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q17. What is the difference between &lt;article&gt; and &lt;section&gt;?</div>
+                <div class="answer">
+                    <b>&lt;article&gt;</b>: Self-contained, independently distributable content (blog post, news article, comment, product card).<br>
+                    <b>&lt;section&gt;</b>: Thematic grouping that's part of a larger whole (chapter, tab panel, grouped related content).<br>
+                    Rule: If content makes sense on its own (in an RSS feed) → article. Otherwise → section.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-hard">Hard</span> Q18. What is Shadow DOM?</div>
+                <div class="answer">
+                    Shadow DOM is a web standard that provides <b>encapsulation</b> for DOM and CSS. It allows attaching a "hidden" DOM tree to an element. Styles inside Shadow DOM don't leak out, and external styles don't leak in. Used in <b>Web Components</b>. Example: browser's default &lt;video&gt; controls use Shadow DOM internally.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q19. What is the difference between disabled and readonly?</div>
+                <div class="answer">
+                    <b>disabled</b>: Can't interact, grayed out, value <b>NOT submitted</b> with form.<br>
+                    <b>readonly</b>: Can't edit but can select/copy, value <b>IS submitted</b> with form. Only works on text inputs and textareas.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q20. What are Web Workers?</div>
+                <div class="answer">
+                    Web Workers run JavaScript in a <b>background thread</b>, separate from the main thread. This prevents heavy computations from blocking the UI. They communicate with the main thread via <code>postMessage()</code>. They <b>cannot</b> access the DOM directly.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q21. What is the &lt;!DOCTYPE html&gt; declaration?</div>
+                <div class="answer">
+                    It tells the browser which version of HTML the page uses. <code>&lt;!DOCTYPE html&gt;</code> activates <b>standards mode</b> (HTML5). Without it, browsers use <b>quirks mode</b> which emulates old, buggy behavior for backward compatibility. Always include it at the very top.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q22. What is the difference between Canvas and SVG?</div>
+                <div class="answer">
+                    <b>Canvas</b>: Pixel-based (raster), drawn via JavaScript, better for games/complex animations, doesn't scale well, single DOM element.<br>
+                    <b>SVG</b>: Vector-based, defined in XML/HTML, scales perfectly (any resolution), each shape is a DOM element (can attach events), better for icons/charts/logos.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q23. What is CORS?</div>
+                <div class="answer">
+                    <b>Cross-Origin Resource Sharing</b> — a security mechanism that allows/restricts web pages from making requests to a different domain. Browsers block cross-origin requests by default. The server must send <code>Access-Control-Allow-Origin</code> headers to allow it.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-easy">Easy</span> Q24. What is the difference between colspan and rowspan?</div>
+                <div class="answer">
+                    <b>colspan</b>: Makes a table cell span across multiple <b>columns</b> horizontally.<br>
+                    <b>rowspan</b>: Makes a table cell span across multiple <b>rows</b> vertically.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q25. What are ARIA roles and when should you use them?</div>
+                <div class="answer">
+                    ARIA (Accessible Rich Internet Applications) roles define what an element <b>is</b> or <b>does</b> for assistive technologies. Examples: <code>role="button"</code>, <code>role="navigation"</code>, <code>role="alert"</code>.<br><br>
+                    <b>Rule:</b> Use semantic HTML first (it has built-in ARIA). Only add ARIA roles when you're building custom interactive widgets that can't be represented with native HTML elements.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <h2 class="section-title">🔵 CSS Interview Questions</h2>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">CSS Questions (26–55)</div>
+        <div class="card-body hidden">
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q26. What is the CSS Box Model?</div>
+                <div class="answer">
+                    Every HTML element is a rectangular box with 4 layers (inside out):<br>
+                    <b>Content</b> → <b>Padding</b> → <b>Border</b> → <b>Margin</b><br><br>
+                    With <code>box-sizing: content-box</code> (default), width/height apply to content only; padding and border are added extra.<br>
+                    With <code>box-sizing: border-box</code>, width/height include padding and border.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q27. What is CSS specificity? How is it calculated?</div>
+                <div class="answer">
+                    Specificity determines which CSS rule wins when multiple rules target the same element. Calculated as <b>(a, b, c, d)</b>:<br>
+                    <b>a</b> = inline styles (1,0,0,0)<br>
+                    <b>b</b> = ID selectors (0,1,0,0)<br>
+                    <b>c</b> = class / pseudo-class / attribute selectors (0,0,1,0)<br>
+                    <b>d</b> = element / pseudo-element selectors (0,0,0,1)<br>
+                    Higher value wins. <code>!important</code> overrides everything (avoid!).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q28. What is the difference between margin and padding?</div>
+                <div class="answer">
+                    <b>Padding</b>: Space <b>inside</b> the border, between content and border. Background color applies to padding. Always positive.<br>
+                    <b>Margin</b>: Space <b>outside</b> the border, between the element and its neighbors. Transparent. Can be <b>negative</b>. Vertical margins <b>collapse</b> (overlap).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q29. What is margin collapse?</div>
+                <div class="answer">
+                    When two <b>vertical margins</b> touch, they <b>merge into one</b> (the larger value wins, they don't add up).<br>
+                    Example: Element A has <code>margin-bottom: 20px</code>, Element B has <code>margin-top: 30px</code>. The gap between them is <b>30px</b>, not 50px.<br><br>
+                    <b>Doesn't happen:</b> with horizontal margins, flex/grid items, floated elements, or elements with padding/border between them.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q30. What is the difference between display: none and visibility: hidden?</div>
+                <div class="answer">
+                    <b>display: none</b> — Element is completely <b>removed from layout</b>. Takes no space. Like it doesn't exist.<br>
+                    <b>visibility: hidden</b> — Element is <b>invisible</b> but still <b>occupies space</b> in the layout.<br>
+                    <b>opacity: 0</b> — Invisible, occupies space, and is still <b>clickable/interactive</b>.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q31. Explain the position property values.</div>
+                <div class="answer">
+                    <b>static</b>: Default. Normal flow. top/left/z-index don't work.<br>
+                    <b>relative</b>: Offset from its normal position. Space is preserved.<br>
+                    <b>absolute</b>: Positioned relative to nearest positioned ancestor. Removed from flow.<br>
+                    <b>fixed</b>: Positioned relative to viewport. Stays on scroll. Removed from flow.<br>
+                    <b>sticky</b>: Acts like relative until scroll threshold, then acts like fixed.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q32. What is Flexbox? Explain main and cross axis.</div>
+                <div class="answer">
+                    Flexbox is a <b>one-dimensional</b> layout system for arranging items in a row or column.<br><br>
+                    <b>Main axis</b>: Direction items flow (default: horizontal →). Controlled by <code>justify-content</code>.<br>
+                    <b>Cross axis</b>: Perpendicular to main axis (default: vertical ↓). Controlled by <code>align-items</code>.<br><br>
+                    <code>flex-direction: column</code> swaps the axes.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q33. What is CSS Grid? How is it different from Flexbox?</div>
+                <div class="answer">
+                    Grid is a <b>two-dimensional</b> layout system (rows AND columns simultaneously).<br><br>
+                    <b>Flexbox</b>: 1D, content-driven, best for components (navbars, card rows).<br>
+                    <b>Grid</b>: 2D, layout-driven, best for page structure (full layouts, dashboards).<br><br>
+                    They complement each other — use Grid for the page layout, Flexbox for components inside.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q34. What are pseudo-classes and pseudo-elements?</div>
+                <div class="answer">
+                    <b>Pseudo-classes</b> (<code>:</code>) — Style based on <b>state</b>: <code>:hover, :focus, :active, :first-child, :nth-child(), :not()</code><br>
+                    <b>Pseudo-elements</b> (<code>::</code>) — Style a <b>specific part</b>: <code>::before, ::after, ::first-line, ::first-letter, ::selection, ::placeholder</code><br><br>
+                    <code>::before</code> and <code>::after</code> create virtual elements (require <code>content</code> property).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q35. What is a media query?</div>
+                <div class="answer">
+                    Media queries apply CSS rules based on device characteristics (screen width, orientation, color scheme, etc.).<br>
+                    <code>@media (max-width: 768px) { ... }</code> — Applies when screen is ≤768px.<br>
+                    <b>Mobile-first</b>: Use <code>min-width</code> (start small, add complexity).<br>
+                    <b>Desktop-first</b>: Use <code>max-width</code> (start large, simplify).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q36. What are the different CSS units?</div>
+                <div class="answer">
+                    <b>Absolute:</b> <code>px</code> (pixels)<br>
+                    <b>Relative:</b><br>
+                    • <code>em</code> — relative to parent's font-size<br>
+                    • <code>rem</code> — relative to root (html) font-size<br>
+                    • <code>%</code> — relative to parent<br>
+                    • <code>vw/vh</code> — 1% of viewport width/height<br>
+                    • <code>fr</code> — fraction (Grid only)<br>
+                    • <code>ch</code> — width of "0" character<br><br>
+                    <b>Best practice:</b> Use <code>rem</code> for font sizes, <code>px</code> for borders, <code>%</code> or <code>vw</code> for widths.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q37. What is the difference between em and rem?</div>
+                <div class="answer">
+                    <b>em</b>: Relative to the <b>parent element's</b> font-size. Compounds (nesting multiplies). Can be unpredictable.<br>
+                    <b>rem</b>: Relative to the <b>root (html)</b> font-size. Consistent and predictable regardless of nesting.<br><br>
+                    If html is 16px: <code>1.5rem = 24px</code> everywhere. But <code>1.5em</code> inside a 20px parent = 30px.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q38. How do you center a div horizontally and vertically?</div>
+                <div class="answer">
+                    <b>Method 1 — Flexbox (recommended):</b><br>
+                    <code>display: flex; justify-content: center; align-items: center; height: 100vh;</code><br><br>
+                    <b>Method 2 — Grid:</b><br>
+                    <code>display: grid; place-items: center; height: 100vh;</code><br><br>
+                    <b>Method 3 — Position + Transform:</b><br>
+                    <code>position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);</code><br><br>
+                    <b>Method 4 — Margin auto (horizontal only):</b><br>
+                    <code>width: 300px; margin: 0 auto;</code>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q39. What is the z-index and how does it work?</div>
+                <div class="answer">
+                    <code>z-index</code> controls the <b>stacking order</b> of overlapping elements. Higher value = on top.<br>
+                    <b>Only works on positioned elements</b> (relative, absolute, fixed, sticky).<br>
+                    Creates a <b>stacking context</b> — z-index values are relative within that context. A child can never appear above a parent's sibling with a higher z-index.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q40. What is the difference betweentransition and animation?</div>
+                <div class="answer">
+                    <b>Transition</b>: Animates between <b>two states</b> (e.g., hover). Needs a trigger (hover, focus, class change). Simple: property, duration, timing.<br><br>
+                    <b>Animation</b>: Multi-step with <b>@keyframes</b>. Can run automatically, loop infinitely, have multiple stages (0%, 50%, 100%). More complex and powerful.<br><br>
+                    <b>Rule of thumb:</b> Use transitions for simple hover/state changes. Use animations for complex, multi-step, or auto-playing effects.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q41. What is the difference between transform, transition, and animation?</div>
+                <div class="answer">
+                    <b>transform</b>: Changes an element's shape/position (rotate, scale, translate, skew). <b>Instant</b>, no motion by itself.<br>
+                    <b>transition</b>: Adds <b>smooth motion</b> between two states when a property changes.<br>
+                    <b>animation</b>: Creates <b>complex multi-step</b> motion using @keyframes. Can auto-play and loop.<br><br>
+                    Transform = WHAT changes. Transition/Animation = HOW it changes over time.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q42. What is a CSS preprocessor? Name some.</div>
+                <div class="answer">
+                    A CSS preprocessor extends CSS with features like <b>variables, nesting, mixins, functions, loops</b>, then compiles to regular CSS.<br><br>
+                    Popular preprocessors:<br>
+                    • <b>SASS/SCSS</b> — Most popular. Variables ($color), nesting, mixins, partials.<br>
+                    • <b>LESS</b> — Similar to SASS, uses @variables.<br>
+                    • <b>Stylus</b> — Flexible syntax, optional semicolons/braces.<br><br>
+                    Note: Modern CSS now has native variables (<code>--var</code>) and nesting support.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q43. What is BEM methodology?</div>
+                <div class="answer">
+                    <b>BEM = Block Element Modifier</b> — a CSS naming convention for maintainable code.<br><br>
+                    <b>Block</b>: Standalone component → <code>.card</code><br>
+                    <b>Element</b>: Part of a block → <code>.card__title</code>, <code>.card__image</code><br>
+                    <b>Modifier</b>: Variation → <code>.card--featured</code>, <code>.card__title--large</code><br><br>
+                    Benefits: Avoids naming conflicts, self-documenting, flat specificity (all classes).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q44. What is the difference between max-width and min-width?</div>
+                <div class="answer">
+                    <b>max-width</b>: Element can be <b>at most</b> this wide. Shrinks on smaller screens. Used for desktop-first responsive design.<br>
+                    <b>min-width</b>: Element is <b>at least</b> this wide. Grows on larger screens. Used for mobile-first responsive design.<br><br>
+                    Example: <code>.container { width: 90%; max-width: 1200px; }</code> — Fluid but caps at 1200px.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-hard">Hard</span> Q45. What is a stacking context?</div>
+                <div class="answer">
+                    A stacking context is a <b>3D conceptual layer</b> where z-index values are relative to <b>that context only</b>.<br><br>
+                    Created by: positioned element with z-index, opacity &lt; 1, transform, filter, will-change, isolation: isolate.<br><br>
+                    Key insight: A child's z-index is <b>confined to its parent's stacking context</b>. Even z-index: 999999 won't escape a parent with z-index: 1.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q46. What is the difference between inline, inline-block, and block?</div>
+                <div class="answer">
+                    <b>inline</b>: No width/height, no top/bottom margin. Flows with text. (<code>span, a, strong</code>)<br>
+                    <b>inline-block</b>: Like inline (same line) but accepts width/height and all margins.<br>
+                    <b>block</b>: Full width, new line, accepts all properties. (<code>div, p, h1</code>)
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q47. How do you make a website responsive?</div>
+                <div class="answer">
+                    1. Add <b>viewport meta tag</b><br>
+                    2. Use <b>relative units</b> (%, rem, vw) instead of fixed px<br>
+                    3. Use <b>Flexbox/Grid</b> for layouts<br>
+                    4. Add <b>media queries</b> for breakpoints<br>
+                    5. Use <b>max-width: 100%</b> on images<br>
+                    6. Use <b>clamp()</b> for fluid typography<br>
+                    7. <b>Mobile-first</b> approach (min-width queries)<br>
+                    8. Test on multiple devices/screen sizes
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q48. What are CSS variables? How do they differ from SASS variables?</div>
+                <div class="answer">
+                    <b>CSS Variables</b> (<code>--name</code>): Native, runtime, can be changed with JS, cascade/inherit, scoped to selectors, work in media queries.<br>
+                    <b>SASS Variables</b> (<code>$name</code>): Compile-time only, can't change at runtime, don't cascade, global or local scope.<br><br>
+                    CSS variables are more powerful because they're <b>live</b> — you can update them with JavaScript or media queries for dark mode, theming, etc.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q49. What is the will-change property?</div>
+                <div class="answer">
+                    <code>will-change</code> hints to the browser that an element will be animated, so it can <b>optimize rendering</b> (e.g., promote to GPU layer).<br>
+                    <code>will-change: transform, opacity;</code><br><br>
+                    <b>Warning:</b> Overuse wastes memory. Only apply to elements that will actually animate. Remove when animation is done.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-hard">Hard</span> Q50. What is the difference between reflow and repaint?</div>
+                <div class="answer">
+                    <b>Reflow (Layout)</b>: Browser recalculates <b>position and size</b> of elements. Expensive. Triggered by: changing width, height, margin, padding, font-size, adding/removing elements.<br><br>
+                    <b>Repaint</b>: Browser redraws <b>visual appearance</b> without layout change. Cheaper. Triggered by: changing color, background, visibility, box-shadow.<br><br>
+                    <b>Best practice:</b> Animate only <code>transform</code> and <code>opacity</code> — they don't trigger reflow or repaint (GPU-accelerated).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-easy">Easy</span> Q51. What is the difference between absolute and relative units?</div>
+                <div class="answer">
+                    <b>Absolute units</b>: Fixed size regardless of context. <code>px, cm, mm, in, pt, pc</code>. Pixel (px) is most common.<br>
+                    <b>Relative units</b>: Size depends on something else. <code>em</code> (parent font), <code>rem</code> (root font), <code>%</code> (parent size), <code>vw/vh</code> (viewport), <code>fr</code> (grid fraction).<br><br>
+                    Relative units are essential for <b>responsive design</b>.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q52. How does CSS float work? Why is it considered legacy?</div>
+                <div class="answer">
+                    <code>float</code> moves an element to the left or right, allowing text to wrap around it. Originally designed for <b>text wrapping around images</b>.<br><br>
+                    It was misused for page layouts before Flexbox/Grid existed. Problems: parent collapse (needs clearfix), hard to center, unpredictable behavior.<br><br>
+                    <b>Modern alternative:</b> Use <b>Flexbox</b> or <b>Grid</b> for layouts. Float only for its original purpose (text wrapping).
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q53. What is clamp() in CSS?</div>
+                <div class="answer">
+                    <code>clamp(min, preferred, max)</code> creates a <b>responsive value</b> that scales between a minimum and maximum.<br><br>
+                    <code>font-size: clamp(1rem, 2.5vw, 3rem);</code><br>
+                    — At least 1rem, ideally 2.5vw, at most 3rem.<br><br>
+                    Eliminates the need for many media queries. Works for font-size, width, padding, etc.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-hard">Hard</span> Q54. What is the contain property?</div>
+                <div class="answer">
+                    <code>contain</code> tells the browser that an element is <b>independent</b> from the rest of the page, allowing rendering optimizations.<br><br>
+                    <code>contain: layout;</code> — Layout changes inside don't affect outside.<br>
+                    <code>contain: paint;</code> — Content doesn't render outside bounds.<br>
+                    <code>contain: size;</code> — Element's size doesn't depend on children.<br>
+                    <code>contain: content;</code> — Shorthand for layout + paint.<br>
+                    <code>contain: strict;</code> — All containment types.<br><br>
+                    Useful for <b>performance</b> in complex pages with many components.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q55. What is the difference between @import and &lt;link&gt; for CSS?</div>
+                <div class="answer">
+                    <b>&lt;link&gt;</b>: Loads CSS in <b>parallel</b>. Recommended. Better performance.<br>
+                    <b>@import</b>: Loads CSS <b>sequentially</b> (blocks rendering). Slower. Can cause FOUC (Flash of Unstyled Content).<br><br>
+                    <b>Always prefer &lt;link&gt;</b> in the HTML &lt;head&gt;. @import is acceptable inside CSS files for organization but avoid in &lt;style&gt; tags.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <h2 class="section-title">🔥 Scenario-Based &amp; Tricky Questions</h2>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">Scenario &amp; Tricky Questions (56–65)</div>
+        <div class="card-body hidden">
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-css">CSS</span><span class="tag tag-hard">Hard</span> Q56. How would you improve the performance of a web page?</div>
+                <div class="answer">
+                    <b>HTML:</b> Minimize DOM depth, use semantic tags, lazy-load images (<code>loading="lazy"</code>), use defer/async for scripts.<br>
+                    <b>CSS:</b> Minimize CSS, remove unused styles, avoid @import, use will-change sparingly, animate only transform/opacity, use contain property.<br>
+                    <b>Images:</b> Use WebP/AVIF formats, responsive images (srcset), compress images, use CDN.<br>
+                    <b>General:</b> Enable gzip/brotli compression, use caching headers, minimize HTTP requests, use critical CSS inline.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-hard">Hard</span> Q57. Why would you use transform: translateZ(0)?</div>
+                <div class="answer">
+                    It's a hack to <b>promote an element to its own GPU layer</b> (hardware acceleration). This can make animations smoother because the browser composites the layer on the GPU instead of repainting on the CPU.<br><br>
+                    Modern alternative: <code>will-change: transform;</code><br>
+                    <b>Warning:</b> Too many GPU layers waste memory. Use only when needed.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q58. How do you create a triangle using only CSS?</div>
+                <div class="answer">
+                    Use borders on an element with zero width/height:<br>
+<pre>
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid red;
+}
+</pre>
+                    The transparent borders create the angled sides, and the colored border forms the visible triangle face.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q59. How do you make a sticky footer that stays at the bottom?</div>
+                <div class="answer">
+                    <b>Flexbox method:</b>
+<pre>
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main { flex: 1; }
+/* footer stays at bottom naturally */
+</pre>
+                    <b>Grid method:</b>
+<pre>
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q60. How do you create a responsive square?</div>
+                <div class="answer">
+                    <b>Modern (aspect-ratio):</b><br>
+                    <code>.square { width: 50%; aspect-ratio: 1 / 1; }</code><br><br>
+                    <b>Legacy (padding trick):</b><br>
+                    <code>.square { width: 50%; padding-bottom: 50%; height: 0; }</code><br>
+                    (Padding % is relative to the element's width, so equal width and padding-bottom = square.)
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q61. What happens if you don't include &lt;!DOCTYPE html&gt;?</div>
+                <div class="answer">
+                    The browser enters <b>quirks mode</b>, emulating bugs and behaviors of old browsers (IE5). This causes inconsistent rendering: box model behaves differently, margins/padding calculate oddly, and modern CSS features may not work correctly. <b>Always include it.</b>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-hard">Hard</span> Q62. How would you implement dark mode?</div>
+                <div class="answer">
+                    <b>Step 1:</b> Define colors as CSS variables:<br>
+<pre>
+:root {
+    --bg: #fff; --text: #333;
+}
+[data-theme="dark"] {
+    --bg: #1a1a2e; --text: #eee;
+}
+body { background: var(--bg); color: var(--text); }
+</pre>
+                    <b>Step 2:</b> Toggle with JS: <code>document.documentElement.dataset.theme = 'dark';</code><br>
+                    <b>Step 3:</b> Auto-detect OS preference: <code>@media (prefers-color-scheme: dark) { ... }</code><br>
+                    <b>Step 4:</b> Save preference in localStorage.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-medium">Medium</span> Q63. What is the difference between :nth-child() and :nth-of-type()?</div>
+                <div class="answer">
+                    <b>:nth-child(n)</b>: Selects the nth child <b>regardless of type</b>. <code>p:nth-child(2)</code> selects the 2nd child IF it's a &lt;p&gt;. If the 2nd child is a &lt;div&gt;, nothing is selected.<br><br>
+                    <b>:nth-of-type(n)</b>: Selects the nth element <b>of that specific type</b>. <code>p:nth-of-type(2)</code> selects the 2nd &lt;p&gt; regardless of other siblings between them.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-html">HTML</span><span class="tag tag-medium">Medium</span> Q64. Can you have multiple &lt;header&gt; or &lt;footer&gt; elements?</div>
+                <div class="answer">
+                    <b>Yes!</b> You can have multiple &lt;header&gt; and &lt;footer&gt; elements — one for each sectioning element (article, section, aside). They don't have to be unique to the page.<br><br>
+                    However, there should only be <b>one &lt;main&gt;</b> element per page.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-css">CSS</span><span class="tag tag-hard">Hard</span> Q65. What is FOUC and how do you prevent it?</div>
+                <div class="answer">
+                    <b>FOUC = Flash of Unstyled Content</b> — the page briefly appears without CSS before styles load.<br><br>
+                    <b>Causes:</b> @import in CSS, JS-loaded stylesheets, slow CSS delivery, render-blocking scripts before CSS.<br><br>
+                    <b>Prevention:</b><br>
+                    • Use &lt;link&gt; in &lt;head&gt; (not @import)<br>
+                    • Inline critical CSS<br>
+                    • Use preload: <code>&lt;link rel="preload" href="style.css" as="style"&gt;</code><br>
+                    • Put scripts at bottom or use defer
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <h2 class="section-title">📋 Quick Reference Cheatsheet</h2>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">🔑 Most Asked Topics — Priority List</div>
+        <div class="card-body hidden">
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Priority</th><th>Topic</th><th>Questions</th></tr>
+                    <tr><td>🔴 Must Know</td><td>Box Model</td><td>Q26, Q28, Q29</td></tr>
+                    <tr><td>🔴 Must Know</td><td>Flexbox</td><td>Q32, Q38</td></tr>
+                    <tr><td>🔴 Must Know</td><td>Position</td><td>Q31</td></tr>
+                    <tr><td>🔴 Must Know</td><td>Specificity</td><td>Q27</td></tr>
+                    <tr><td>🔴 Must Know</td><td>Semantic HTML</td><td>Q3, Q4, Q16, Q17</td></tr>
+                    <tr><td>🔴 Must Know</td><td>Responsive Design</td><td>Q35, Q47</td></tr>
+                    <tr><td>🟡 Important</td><td>CSS Grid</td><td>Q33</td></tr>
+                    <tr><td>🟡 Important</td><td>Display Property</td><td>Q30, Q46</td></tr>
+                    <tr><td>🟡 Important</td><td>Pseudo-classes/elements</td><td>Q34</td></tr>
+                    <tr><td>🟡 Important</td><td>z-index & Stacking</td><td>Q39, Q45</td></tr>
+                    <tr><td>🟡 Important</td><td>Transitions/Animations</td><td>Q40, Q41</td></tr>
+                    <tr><td>🟡 Important</td><td>Accessibility</td><td>Q11, Q25</td></tr>
+                    <tr><td>🟡 Important</td><td>Forms & Inputs</td><td>Q9, Q19</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>CSS Variables</td><td>Q48</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Performance</td><td>Q49, Q50, Q56</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>BEM / Preprocessors</td><td>Q42, Q43</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Dark Mode</td><td>Q62</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Shadow DOM</td><td>Q18</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end Q&A tab -->
+
+
+<p style="text-align:center; color:#aaa; margin-top:30px; font-size:0.8rem;">— End of HTML &amp; CSS Interview Notes — Good luck! 🚀 —</p>
+
+
+<script>
+    // Tab Switching
+    function switchTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+        // Show selected tab
+        document.getElementById('tab-' + tabName).classList.add('active');
+
+        // Highlight button
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => {
+            if (
+                (tabName === 'html' && !btn.classList.contains('css-btn') && !btn.classList.contains('qa-btn')) ||
+                (tabName === 'css' && btn.classList.contains('css-btn')) ||
+                (tabName === 'qa' && btn.classList.contains('qa-btn'))
+            ) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    // Card Toggle
+    function toggle(header) {
+        const body = header.nextElementSibling;
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+    }
+
+    // Search
+    function searchCards() {
+        const query = document.getElementById('searchBox').value.toLowerCase();
+        document.querySelectorAll('.searchable').forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(query) ? '' : 'none';
+        });
+
+        // Show all tabs during search
+        if (query.length > 0) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('active'));
+        } else {
+            // Restore to HTML tab
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-html').classList.add('active');
+        }
+    }
+
+    // Progress Bar
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+    });
+</script>
+
+</body>
+</html>

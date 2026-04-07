@@ -1,0 +1,3560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Interview Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            padding: 16px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #f0c040;
+            margin-bottom: 8px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #21262d;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8b949e;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 8px 20px;
+            border: 2px solid #f0c040;
+            background: transparent;
+            color: #f0c040;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover { background: rgba(240,192,64,0.1); }
+        .tab-btn.active { background: #f0c040; color: #0d1117; }
+
+        .tab-btn.adv-btn { border-color: #58a6ff; color: #58a6ff; }
+        .tab-btn.adv-btn:hover { background: rgba(88,166,255,0.1); }
+        .tab-btn.adv-btn.active { background: #58a6ff; color: #0d1117; }
+
+        .tab-btn.dom-btn { border-color: #3fb950; color: #3fb950; }
+        .tab-btn.dom-btn:hover { background: rgba(63,185,80,0.1); }
+        .tab-btn.dom-btn.active { background: #3fb950; color: #0d1117; }
+
+        .tab-btn.async-btn { border-color: #bc8cff; color: #bc8cff; }
+        .tab-btn.async-btn:hover { background: rgba(188,140,255,0.1); }
+        .tab-btn.async-btn.active { background: #bc8cff; color: #0d1117; }
+
+        .tab-btn.qa-btn { border-color: #f78166; color: #f78166; }
+        .tab-btn.qa-btn:hover { background: rgba(247,129,102,0.1); }
+        .tab-btn.qa-btn.active { background: #f78166; color: #0d1117; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card {
+            background: #161b22;
+            border: 1px solid #21262d;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 10px 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 1px solid #21262d;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .card-header::after {
+            content: '▼';
+            font-size: 0.7rem;
+            color: #484f58;
+            transition: transform 0.2s;
+        }
+
+        .card-header.collapsed::after { transform: rotate(-90deg); }
+
+        .basics-card .card-header { background-color: #1c1e24; color: #f0c040; }
+        .adv-card .card-header { background-color: #0d1926; color: #58a6ff; }
+        .dom-card .card-header { background-color: #0d1f0d; color: #3fb950; }
+        .async-card .card-header { background-color: #1a0d26; color: #bc8cff; }
+        .qa-card .card-header { background-color: #261a0d; color: #f78166; }
+
+        .card-body {
+            padding: 12px 14px;
+            overflow-x: auto;
+        }
+
+        .card-body.hidden { display: none; }
+
+        .code-output-wrapper {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .code-output-wrapper .code-block,
+        .code-output-wrapper .output-block {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .code-label, .output-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 4px;
+        }
+
+        pre {
+            background-color: #0d1117;
+            border: 1px solid #21262d;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.82rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.5;
+            color: #c9d1d9;
+        }
+
+        pre .kw { color: #ff7b72; }
+        pre .str { color: #a5d6ff; }
+        pre .cm { color: #8b949e; }
+        pre .fn { color: #d2a8ff; }
+        pre .num { color: #79c0ff; }
+
+        pre.output {
+            background-color: #000;
+            color: #3fb950;
+            border: 1px solid #1a3d1a;
+        }
+
+        .section-title {
+            font-size: 1.15rem;
+            color: #f0c040;
+            margin: 24px 0 12px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #161b22;
+            border-left: 3px solid #484f58;
+            border-radius: 2px;
+        }
+
+        .tip {
+            font-size: 0.85rem;
+            color: #3fb950;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #0d1f0d;
+            border-left: 3px solid #3fb950;
+            border-radius: 2px;
+        }
+
+        .warning {
+            font-size: 0.85rem;
+            color: #f0c040;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #1c1a0d;
+            border-left: 3px solid #f0c040;
+            border-radius: 2px;
+        }
+
+        .danger {
+            font-size: 0.85rem;
+            color: #f78166;
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background: #261a0d;
+            border-left: 3px solid #f78166;
+            border-radius: 2px;
+        }
+
+        .qa-item {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #0d1117;
+            border-radius: 6px;
+            border: 1px solid #21262d;
+        }
+
+        .qa-item .question {
+            font-weight: 700;
+            color: #f0f6fc;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .qa-item .answer {
+            font-size: 0.88rem;
+            color: #8b949e;
+            line-height: 1.7;
+        }
+
+        .qa-item .answer b { color: #c9d1d9; }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .tag-easy { background: #0d1f0d; color: #3fb950; }
+        .tag-medium { background: #1c1a0d; color: #f0c040; }
+        .tag-hard { background: #261a0d; color: #f78166; }
+        .tag-js { background: #1c1e24; color: #f0c040; }
+
+        .table-wrapper { overflow-x: auto; margin: 8px 0; }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            border: 1px solid #21262d;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #161b22;
+            font-weight: 600;
+            color: #f0c040;
+        }
+
+        tr:nth-child(even) { background: #0d1117; }
+
+        .search-box {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            padding: 10px 16px;
+            border: 2px solid #21262d;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            outline: none;
+            background: #0d1117;
+            color: #c9d1d9;
+            transition: border 0.2s;
+        }
+
+        .search-box:focus { border-color: #f0c040; }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f0c040, #58a6ff, #3fb950, #bc8cff, #f78166);
+            z-index: 9999;
+            transition: width 0.2s;
+        }
+
+        a { color: #58a6ff; }
+
+        code {
+            background: #1c1e24;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #f0c040;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            pre { font-size: 0.72rem; padding: 10px; }
+            h1 { font-size: 1.3rem; }
+            .code-output-wrapper { flex-direction: column; }
+            .tab-btn { padding: 6px 14px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<h1>⚡ JavaScript — Interview Prep Notes</h1>
+<p class="subtitle">Complete guide: fundamentals → advanced → DOM → async → 70+ interview Q&amp;A</p>
+
+<input type="text" class="search-box" id="searchBox" placeholder="🔍 Search topics, questions..." oninput="searchCards()">
+
+<!-- Tab Navigation -->
+<div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('basics')">🟡 Basics</button>
+    <button class="tab-btn adv-btn" onclick="switchTab('advanced')">🔵 Advanced</button>
+    <button class="tab-btn dom-btn" onclick="switchTab('dom')">🟢 DOM</button>
+    <button class="tab-btn async-btn" onclick="switchTab('async')">🟣 Async</button>
+    <button class="tab-btn qa-btn" onclick="switchTab('qa')">🔴 Interview Q&amp;A</button>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- BASICS TAB -->
+<!-- ================================================================ -->
+<div class="tab-content active" id="tab-basics">
+
+    <h2 class="section-title">📦 Variables &amp; Data Types</h2>
+
+    <!-- var let const -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">1. var vs let vs const</div>
+        <div class="card-body hidden">
+            <div class="note">Three ways to declare variables. <code>let</code> and <code>const</code> are block-scoped (ES6+). <code>var</code> is function-scoped (legacy).</div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Feature</th><th>var</th><th>let</th><th>const</th></tr>
+                    <tr><td>Scope</td><td>Function</td><td>Block</td><td>Block</td></tr>
+                    <tr><td>Hoisting</td><td>Yes (undefined)</td><td>Yes (TDZ - error)</td><td>Yes (TDZ - error)</td></tr>
+                    <tr><td>Re-declaration</td><td>✅ Yes</td><td>❌ No</td><td>❌ No</td></tr>
+                    <tr><td>Re-assignment</td><td>✅ Yes</td><td>✅ Yes</td><td>❌ No</td></tr>
+                    <tr><td>window object</td><td>✅ Added</td><td>❌ Not added</td><td>❌ Not added</td></tr>
+                </table>
+            </div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// var - function scoped, hoisted
+console.log(a); // undefined (hoisted)
+var a = 10;
+var a = 20; // re-declaration OK
+
+// let - block scoped
+// console.log(b); // ReferenceError (TDZ)
+let b = 10;
+// let b = 20; // SyntaxError
+b = 20; // re-assignment OK
+
+// const - block scoped, immutable binding
+const c = 10;
+// c = 20; // TypeError
+
+// BUT objects/arrays are mutable!
+const arr = [1, 2, 3];
+arr.push(4); // ✅ OK!
+// arr = [5]; // ❌ TypeError
+
+const obj = { name: "John" };
+obj.name = "Jane"; // ✅ OK!
+// obj = {}; // ❌ TypeError
+
+// Block scope demo
+{
+    var x = 1;
+    let y = 2;
+    const z = 3;
+}
+console.log(x); // 1 (var leaks!)
+// console.log(y); // ReferenceError
+// console.log(z); // ReferenceError
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+undefined
+1
+</pre>
+                </div>
+            </div>
+            <div class="tip">💡 Always use <code>const</code> by default. Use <code>let</code> only when you need to reassign. Never use <code>var</code>.</div>
+        </div>
+    </div>
+
+    <!-- Data Types -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">2. Data Types (Primitive &amp; Reference)</div>
+        <div class="card-body hidden">
+            <div class="note">JavaScript has 8 data types: 7 primitive + 1 reference.</div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Primitive (Immutable, by value)</th><th>Reference (Mutable, by reference)</th></tr>
+                    <tr>
+                        <td>
+                            <code>string</code> — "hello"<br>
+                            <code>number</code> — 42, 3.14, NaN, Infinity<br>
+                            <code>bigint</code> — 123n<br>
+                            <code>boolean</code> — true, false<br>
+                            <code>undefined</code> — declared but no value<br>
+                            <code>null</code> — intentional empty<br>
+                            <code>symbol</code> — Symbol("id")
+                        </td>
+                        <td>
+                            <code>object</code> — {}, [], function, Date, RegExp, Map, Set, etc.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// typeof checks
+console.log(typeof "hello");    // "string"
+console.log(typeof 42);         // "number"
+console.log(typeof true);       // "boolean"
+console.log(typeof undefined);  // "undefined"
+console.log(typeof null);       // "object" ⚠️ BUG!
+console.log(typeof {});         // "object"
+console.log(typeof []);         // "object"
+console.log(typeof function(){}); // "function"
+console.log(typeof Symbol());   // "symbol"
+console.log(typeof 123n);       // "bigint"
+
+// Check array properly
+console.log(Array.isArray([])); // true
+console.log(Array.isArray({})); // false
+
+// Primitive vs Reference
+let a = 10;
+let b = a;     // COPY value
+b = 20;
+console.log(a); // 10 (unchanged)
+
+let obj1 = { x: 1 };
+let obj2 = obj1;  // COPY reference
+obj2.x = 99;
+console.log(obj1.x); // 99 (changed!)
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+string
+number
+boolean
+undefined
+object
+object
+object
+function
+symbol
+bigint
+true
+false
+10
+99
+</pre>
+                </div>
+            </div>
+            <div class="danger">⚠️ <code>typeof null === "object"</code> is a famous JavaScript bug from 1995. Use <code>=== null</code> to check for null.</div>
+        </div>
+    </div>
+
+    <!-- Type Coercion -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">3. Type Coercion &amp; == vs ===</div>
+        <div class="card-body hidden">
+            <div class="note">JavaScript automatically converts types (coercion). Use <code>===</code> to avoid surprises.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// == (loose) vs === (strict)
+console.log(5 == "5");     // true (coercion)
+console.log(5 === "5");    // false (no coercion)
+console.log(null == undefined);  // true
+console.log(null === undefined); // false
+console.log(NaN == NaN);   // false ⚠️
+console.log(NaN === NaN);  // false ⚠️
+
+// Truthy & Falsy
+// Falsy: false, 0, -0, "", null, undefined, NaN
+// Truthy: everything else!
+console.log(Boolean(""));      // false
+console.log(Boolean(0));       // false
+console.log(Boolean(null));    // false
+console.log(Boolean("hello")); // true
+console.log(Boolean([]));      // true ⚠️
+console.log(Boolean({}));      // true ⚠️
+
+// Implicit coercion
+console.log("5" + 3);    // "53" (string concat)
+console.log("5" - 3);    // 2  (numeric)
+console.log("5" * 2);    // 10 (numeric)
+console.log(true + 1);   // 2
+console.log(false + 1);  // 1
+console.log("" + 0);     // "0"
+console.log([] + []);     // ""
+console.log([] + {});     // "[object Object]"
+console.log({} + []);     // 0 or "[object Object]"
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+true
+false
+true
+false
+false
+false
+false
+false
+false
+true
+true
+true
+53
+2
+10
+2
+1
+0
+
+[object Object]
+</pre>
+                </div>
+            </div>
+            <div class="tip">💡 Always use <code>===</code> and <code>!==</code>. Use <code>Number.isNaN()</code> to check for NaN.</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">🔧 Functions</h2>
+
+    <!-- Functions -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">4. Functions — Declaration, Expression, Arrow</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// 1. Function Declaration (hoisted)
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+// 2. Function Expression (NOT hoisted)
+const greet2 = function(name) {
+    return `Hi, ${name}!`;
+};
+
+// 3. Arrow Function (ES6)
+const greet3 = (name) => `Hey, ${name}!`;
+
+// Arrow vs Regular differences:
+// - No own 'this' (inherits from parent)
+// - No 'arguments' object
+// - Can't be used as constructor (no 'new')
+// - No 'prototype' property
+
+// 4. IIFE (Immediately Invoked)
+(function() {
+    console.log("IIFE runs immediately!");
+})();
+
+// 5. Default Parameters
+const add = (a, b = 10) => a + b;
+console.log(add(5));     // 15
+console.log(add(5, 3));  // 8
+
+// 6. Rest Parameters
+const sum = (...nums) => nums.reduce((a, b) => a + b, 0);
+console.log(sum(1, 2, 3, 4)); // 10
+
+// 7. Higher-Order Function
+const double = (fn, val) => fn(val);
+console.log(double(x => x * 2, 5)); // 10
+
+// 8. Pure Function
+// Same input → same output, no side effects
+const pureAdd = (a, b) => a + b; // ✅ Pure
+// let total = 0;
+// const impureAdd = (a) => total += a; // ❌ Impure
+
+console.log(greet("Alice"));
+console.log(greet3("Bob"));
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+IIFE runs immediately!
+15
+8
+10
+10
+Hello, Alice!
+Hey, Bob!
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scope & Hoisting -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">5. Scope &amp; Hoisting</div>
+        <div class="card-body hidden">
+            <div class="note">Scope determines variable accessibility. Hoisting moves declarations to the top (conceptually).</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// === SCOPE ===
+// 1. Global scope
+var globalVar = "I'm global";
+
+// 2. Function scope
+function myFunc() {
+    var funcVar = "I'm function-scoped";
+    console.log(globalVar);  // ✅
+    console.log(funcVar);    // ✅
+}
+// console.log(funcVar); // ❌ ReferenceError
+
+// 3. Block scope (let/const)
+if (true) {
+    let blockLet = "block";
+    var blockVar = "function";
+}
+console.log(blockVar);   // ✅ "function"
+// console.log(blockLet); // ❌ ReferenceError
+
+// 4. Lexical scope (closure)
+function outer() {
+    let outerVar = "outer";
+    function inner() {
+        console.log(outerVar); // ✅ Access parent
+    }
+    inner();
+}
+outer();
+
+// === HOISTING ===
+// var is hoisted (initialized as undefined)
+console.log(x); // undefined
+var x = 5;
+
+// function declarations are fully hoisted
+sayHi(); // ✅ "Hi!"
+function sayHi() { console.log("Hi!"); }
+
+// let/const are hoisted but in TDZ
+// console.log(y); // ❌ ReferenceError
+let y = 10;
+
+// function expressions NOT hoisted
+// sayBye(); // ❌ TypeError
+const sayBye = function() { console.log("Bye!"); };
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+function
+outer
+undefined
+Hi!
+</pre>
+                </div>
+            </div>
+            <div class="warning">⚠️ <b>TDZ (Temporal Dead Zone)</b>: The period between entering scope and the actual declaration where <code>let</code>/<code>const</code> variables can't be accessed.</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">📚 Strings, Arrays &amp; Objects</h2>
+
+    <!-- String Methods -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">6. String Methods — Complete Reference</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+const str = "Hello, World!";
+
+// Length
+console.log(str.length);           // 13
+
+// Access
+console.log(str[0]);               // "H"
+console.log(str.charAt(1));        // "e"
+console.log(str.at(-1));           // "!" (ES2022)
+
+// Search
+console.log(str.indexOf("World")); // 7
+console.log(str.includes("Hello"));// true
+console.log(str.startsWith("He")); // true
+console.log(str.endsWith("!"));    // true
+console.log(str.search(/world/i)); // 7 (regex)
+
+// Extract
+console.log(str.slice(0, 5));      // "Hello"
+console.log(str.slice(-6));        // "orld!"
+console.log(str.substring(0, 5));  // "Hello"
+
+// Modify (returns new string)
+console.log(str.toUpperCase());    // "HELLO, WORLD!"
+console.log(str.toLowerCase());    // "hello, world!"
+console.log(str.replace("World", "JS")); // "Hello, JS!"
+console.log(str.replaceAll("l", "L"));   // "HeLLo, WorLd!"
+
+// Trim
+console.log("  hi  ".trim());      // "hi"
+console.log("  hi  ".trimStart()); // "hi  "
+console.log("  hi  ".trimEnd());   // "  hi"
+
+// Split & Join
+console.log(str.split(", "));     // ["Hello", "World!"]
+console.log("a-b-c".split("-"));  // ["a","b","c"]
+
+// Repeat & Pad
+console.log("ha".repeat(3));      // "hahaha"
+console.log("5".padStart(3,"0")); // "005"
+console.log("5".padEnd(3,"0"));   // "500"
+
+// Template literals
+const name = "Alice";
+const age = 25;
+console.log(`${name} is ${age}`); // "Alice is 25"
+console.log(`Multi
+line string`);
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+13
+H
+e
+!
+7
+true
+true
+true
+7
+Hello
+orld!
+Hello
+HELLO, WORLD!
+hello, world!
+Hello, JS!
+HeLLo, WorLd!
+hi
+hi  
+  hi
+["Hello", "World!"]
+["a", "b", "c"]
+hahaha
+005
+500
+Alice is 25
+Multi
+line string
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Array Methods -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">7. Array Methods — Complete Reference</div>
+        <div class="card-body hidden">
+            <div class="note">Arrays are the most used data structure. Know these methods inside out!</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Mutating Methods</div>
+<pre>
+const arr = [1, 2, 3, 4, 5];
+
+// Add/Remove
+arr.push(6);          // end → [1,2,3,4,5,6]
+arr.pop();            // end → [1,2,3,4,5]
+arr.unshift(0);       // start → [0,1,2,3,4,5]
+arr.shift();          // start → [1,2,3,4,5]
+
+// Splice (add/remove at index)
+arr.splice(2, 1);     // remove 1 at idx 2 → [1,2,4,5]
+arr.splice(2, 0, 3);  // insert 3 at idx 2 → [1,2,3,4,5]
+arr.splice(1, 2, 20, 30); // replace → [1,20,30,4,5]
+
+// Sort
+[3,1,2].sort();              // [1,2,3]
+[3,1,2].sort((a,b) => b-a);  // [3,2,1] desc
+["b","a","c"].sort();         // ["a","b","c"]
+
+// Reverse
+[1,2,3].reverse();   // [3,2,1]
+
+// Fill
+[1,2,3].fill(0);     // [0,0,0]
+[1,2,3].fill(9,1,2); // [1,9,3]
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">💻 Non-Mutating Methods</div>
+<pre>
+const a = [1, 2, 3, 4, 5];
+
+// Iterate
+a.forEach((v, i) => console.log(i, v));
+
+// Transform
+a.map(x => x * 2);        // [2,4,6,8,10]
+a.filter(x => x > 3);     // [4,5]
+a.reduce((sum, x) => sum + x, 0); // 15
+
+// Search
+a.find(x => x > 3);       // 4 (first match)
+a.findIndex(x => x > 3);  // 3
+a.indexOf(3);              // 2
+a.includes(3);             // true
+a.some(x => x > 4);       // true (any?)
+a.every(x => x > 0);      // true (all?)
+
+// Extract
+a.slice(1, 3);             // [2,3]
+a.slice(-2);               // [4,5]
+
+// Combine
+[1,2].concat([3,4]);       // [1,2,3,4]
+[...a, ...[ 6,7]];          // [1,2,3,4,5,6,7]
+a.join("-");                // "1-2-3-4-5"
+
+// Flatten
+[1,[2,[3]]].flat();         // [1,2,[3]]
+[1,[2,[3]]].flat(Infinity); // [1,2,3]
+
+// From & Of
+Array.from("hello");       // ["h","e","l","l","o"]
+Array.from({length:3}, (_,i) => i); // [0,1,2]
+Array.of(1,2,3);           // [1,2,3]
+
+// Destructuring
+const [first, second, ...rest] = a;
+// first=1, second=2, rest=[3,4,5]
+</pre>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Method</th><th>Returns</th><th>Mutates?</th><th>Use For</th></tr>
+                    <tr><td><code>map()</code></td><td>New array</td><td>❌</td><td>Transform each element</td></tr>
+                    <tr><td><code>filter()</code></td><td>New array</td><td>❌</td><td>Keep matching elements</td></tr>
+                    <tr><td><code>reduce()</code></td><td>Single value</td><td>❌</td><td>Accumulate/aggregate</td></tr>
+                    <tr><td><code>forEach()</code></td><td>undefined</td><td>❌</td><td>Side effects only</td></tr>
+                    <tr><td><code>find()</code></td><td>Element/undefined</td><td>❌</td><td>First match</td></tr>
+                    <tr><td><code>some()</code></td><td>boolean</td><td>❌</td><td>Any match?</td></tr>
+                    <tr><td><code>every()</code></td><td>boolean</td><td>❌</td><td>All match?</td></tr>
+                    <tr><td><code>sort()</code></td><td>Same array</td><td>✅</td><td>Sort in place</td></tr>
+                    <tr><td><code>splice()</code></td><td>Removed items</td><td>✅</td><td>Add/remove at index</td></tr>
+                    <tr><td><code>slice()</code></td><td>New array</td><td>❌</td><td>Extract portion</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Object Methods -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">8. Object Methods &amp; Destructuring</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+const person = {
+    name: "Alice",
+    age: 25,
+    city: "Mumbai"
+};
+
+// Access
+console.log(person.name);        // "Alice"
+console.log(person["age"]);      // 25
+
+// Add/Modify
+person.email = "a@b.com";
+person.age = 26;
+
+// Delete
+delete person.city;
+
+// Check
+console.log("name" in person);   // true
+console.log(person.hasOwnProperty("name")); // true
+
+// Object methods
+console.log(Object.keys(person));
+// ["name", "age", "email"]
+
+console.log(Object.values(person));
+// ["Alice", 26, "a@b.com"]
+
+console.log(Object.entries(person));
+// [["name","Alice"],["age",26],["email","a@b.com"]]
+
+// Merge / Copy
+const copy = { ...person };           // shallow copy
+const merged = { ...person, age: 30 }; // override
+const merged2 = Object.assign({}, person, { age: 30 });
+
+// Freeze & Seal
+Object.freeze(person);  // can't add/remove/modify
+Object.seal(person);    // can modify, can't add/remove
+
+// Destructuring
+const { name, age, email = "N/A" } = person;
+console.log(name, age); // "Alice" 26
+
+// Rename
+const { name: userName } = person;
+console.log(userName);  // "Alice"
+
+// Nested
+const user = { address: { city: "Delhi" } };
+const { address: { city } } = user;
+console.log(city);      // "Delhi"
+
+// Computed property
+const key = "score";
+const obj = { [key]: 100 };
+console.log(obj.score); // 100
+
+// Optional chaining (?.)
+const data = { user: { name: "Bob" } };
+console.log(data.user?.name);    // "Bob"
+console.log(data.user?.address?.city); // undefined
+console.log(data.foo?.bar);      // undefined (no error!)
+
+// Nullish coalescing (??)
+console.log(null ?? "default");  // "default"
+console.log(0 ?? "default");    // 0 (not falsy check!)
+console.log("" ?? "default");   // "" 
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+Alice
+25
+true
+true
+["name", "age", "email"]
+["Alice", 26, "a@b.com"]
+[["name","Alice"],["age",26],...]
+Alice 26
+Alice
+Delhi
+100
+Bob
+undefined
+undefined
+default
+0
+
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loops -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">9. Loops &amp; Iteration</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+const arr = [10, 20, 30];
+const obj = { a: 1, b: 2, c: 3 };
+
+// 1. for loop
+for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+}
+
+// 2. for...of (iterables: arrays, strings, maps, sets)
+for (const val of arr) {
+    console.log(val);  // 10, 20, 30
+}
+
+for (const char of "hello") {
+    console.log(char); // h, e, l, l, o
+}
+
+// 3. for...in (object keys — avoid for arrays!)
+for (const key in obj) {
+    console.log(key, obj[key]); // a 1, b 2, c 3
+}
+
+// 4. while
+let i = 0;
+while (i < 3) {
+    console.log(i); // 0, 1, 2
+    i++;
+}
+
+// 5. do...while (runs at least once)
+let j = 5;
+do {
+    console.log(j); // 5
+    j++;
+} while (j < 3);
+
+// 6. forEach (arrays only)
+arr.forEach((val, idx) => {
+    console.log(idx, val);
+});
+
+// 7. map / filter / reduce (see Array Methods)
+
+// break & continue
+for (let i = 0; i < 10; i++) {
+    if (i === 3) continue; // skip 3
+    if (i === 6) break;    // stop at 6
+    console.log(i);        // 0,1,2,4,5
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Comparison</div>
+<pre class="output">
+┌──────────────┬────────┬────────┐
+│   Loop       │ Arrays │Objects │
+├──────────────┼────────┼────────┤
+│ for          │  ✅    │  ❌    │
+│ for...of     │  ✅    │  ❌    │
+│ for...in     │  ⚠️    │  ✅    │
+│ forEach      │  ✅    │  ❌    │
+│ while        │  ✅    │  ✅    │
+│ map/filter   │  ✅    │  ❌    │
+└──────────────┴────────┴────────┘
+
+for...of → values
+for...in → keys (+ inherited!)
+
+⚠️ Don't use for...in on arrays:
+   - Iterates ALL enumerable props
+   - Order not guaranteed
+   - Includes prototype chain
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spread & Rest -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">10. Spread &amp; Rest Operators (...)</div>
+        <div class="card-body hidden">
+            <div class="note">Same syntax <code>...</code>, different context: <b>Spread</b> expands, <b>Rest</b> collects.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// === SPREAD (expand) ===
+// Arrays
+const a = [1, 2, 3];
+const b = [...a, 4, 5];   // [1,2,3,4,5]
+const copy = [...a];       // shallow copy
+
+// Objects
+const obj = { x: 1, y: 2 };
+const obj2 = { ...obj, z: 3 }; // {x:1, y:2, z:3}
+const obj3 = { ...obj, x: 99 }; // {x:99, y:2} override
+
+// Function call
+console.log(Math.max(...a)); // 3
+
+// === REST (collect) ===
+// Function parameters
+function sum(...nums) {
+    return nums.reduce((a, b) => a + b, 0);
+}
+console.log(sum(1, 2, 3, 4)); // 10
+
+// Destructuring
+const [first, ...rest] = [1, 2, 3, 4];
+console.log(first); // 1
+console.log(rest);  // [2, 3, 4]
+
+const { name, ...others } = { name: "A", age: 25, city: "B" };
+console.log(others); // { age: 25, city: "B" }
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+3
+10
+1
+[2, 3, 4]
+{ age: 25, city: "B" }
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map & Set -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">11. Map, Set, WeakMap, WeakSet</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Map &amp; Set</div>
+<pre>
+// === MAP (key-value, any key type) ===
+const map = new Map();
+map.set("name", "Alice");
+map.set(42, "number key");
+map.set(true, "bool key");
+
+console.log(map.get("name"));   // "Alice"
+console.log(map.has(42));        // true
+console.log(map.size);           // 3
+map.delete(true);
+
+for (const [key, val] of map) {
+    console.log(key, "→", val);
+}
+
+// Map vs Object:
+// - Map: any key type, ordered, .size, iterable
+// - Object: string/symbol keys, no .size
+
+// === SET (unique values only) ===
+const set = new Set([1, 2, 2, 3, 3, 3]);
+console.log(set);         // Set {1, 2, 3}
+console.log(set.size);    // 3
+set.add(4);
+set.has(2);               // true
+set.delete(1);
+
+// Remove duplicates from array
+const arr = [1, 1, 2, 2, 3];
+const unique = [...new Set(arr)];
+console.log(unique);      // [1, 2, 3]
+
+for (const val of set) {
+    console.log(val);
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">💻 WeakMap &amp; WeakSet</div>
+<pre>
+// WeakMap - keys must be objects
+// - Keys are weakly held (garbage collected)
+// - Not iterable, no .size
+// - Use for: caching, private data
+
+const wm = new WeakMap();
+let obj = { id: 1 };
+wm.set(obj, "metadata");
+console.log(wm.get(obj)); // "metadata"
+obj = null; // obj can be garbage collected
+
+// WeakSet - values must be objects
+const ws = new WeakSet();
+let el = { type: "div" };
+ws.add(el);
+console.log(ws.has(el)); // true
+el = null; // el can be garbage collected
+
+// Use cases:
+// WeakMap → private data, caching, DOM metadata
+// WeakSet → tracking objects without preventing GC
+</pre>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr><th></th><th>Map</th><th>Set</th><th>WeakMap</th><th>WeakSet</th></tr>
+                    <tr><td>Key type</td><td>Any</td><td>—</td><td>Objects only</td><td>—</td></tr>
+                    <tr><td>Value type</td><td>Any</td><td>Any (unique)</td><td>Any</td><td>Objects only</td></tr>
+                    <tr><td>Iterable</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+                    <tr><td>.size</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+                    <tr><td>GC friendly</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Handling -->
+    <div class="card basics-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">12. Error Handling — try/catch/finally</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Basic try/catch
+try {
+    let result = someFunction(); // throws error
+} catch (error) {
+    console.log(error.message);
+    console.log(error.name);    // "ReferenceError"
+    console.log(error.stack);   // stack trace
+} finally {
+    console.log("Always runs!");
+}
+
+// Throw custom errors
+function divide(a, b) {
+    if (b === 0) {
+        throw new Error("Division by zero!");
+    }
+    return a / b;
+}
+
+try {
+    console.log(divide(10, 0));
+} catch (e) {
+    console.log(e.message); // "Division by zero!"
+}
+
+// Custom Error class
+class ValidationError extends Error {
+    constructor(field, message) {
+        super(message);
+        this.name = "ValidationError";
+        this.field = field;
+    }
+}
+
+try {
+    throw new ValidationError("email", "Invalid email");
+} catch (e) {
+    if (e instanceof ValidationError) {
+        console.log(`${e.field}: ${e.message}`);
+    }
+}
+
+// Error types
+// ReferenceError — undeclared variable
+// TypeError — wrong type operation
+// SyntaxError — invalid syntax
+// RangeError — number out of range
+// URIError — invalid URI
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+someFunction is not defined
+ReferenceError
+Always runs!
+Division by zero!
+email: Invalid email
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end basics tab -->
+
+
+<!-- ================================================================ -->
+<!-- ADVANCED TAB -->
+<!-- ================================================================ -->
+<div class="tab-content" id="tab-advanced">
+
+    <h2 class="section-title">⚙️ Closures, this &amp; Prototypes</h2>
+
+    <!-- Closures -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">1. Closures — Deep Dive</div>
+        <div class="card-body hidden">
+            <div class="note">A closure is a function that <b>remembers</b> its outer scope even after the outer function has returned.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Basic closure
+function outer() {
+    let count = 0;
+    return function inner() {
+        count++;
+        return count;
+    };
+}
+const counter = outer();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+
+// Practical: Private variables
+function createBankAccount(initial) {
+    let balance = initial; // private!
+    return {
+        deposit(amt) { balance += amt; },
+        withdraw(amt) {
+            if (amt > balance) return "Insufficient";
+            balance -= amt;
+        },
+        getBalance() { return balance; }
+    };
+}
+const acc = createBankAccount(1000);
+acc.deposit(500);
+acc.withdraw(200);
+console.log(acc.getBalance()); // 1300
+// acc.balance → undefined (private!)
+
+// Classic interview: loop + closure
+for (var i = 0; i < 3; i++) {
+    setTimeout(() => console.log("var:", i), 100);
+}
+// Output: 3, 3, 3 (var is function-scoped!)
+
+for (let i = 0; i < 3; i++) {
+    setTimeout(() => console.log("let:", i), 200);
+}
+// Output: 0, 1, 2 (let is block-scoped!)
+
+// Fix with IIFE
+for (var i = 0; i < 3; i++) {
+    (function(j) {
+        setTimeout(() => console.log("iife:", j), 300);
+    })(i);
+}
+// Output: 0, 1, 2
+
+// Closure as function factory
+function multiply(x) {
+    return function(y) {
+        return x * y;
+    };
+}
+const double = multiply(2);
+const triple = multiply(3);
+console.log(double(5));  // 10
+console.log(triple(5));  // 15
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+1
+2
+3
+1300
+var: 3
+var: 3
+var: 3
+let: 0
+let: 1
+let: 2
+iife: 0
+iife: 1
+iife: 2
+10
+15
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- this keyword -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">2. 'this' Keyword — All Rules</div>
+        <div class="card-body hidden">
+            <div class="note"><code>this</code> depends on <b>how</b> a function is called, not where it's defined.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// 1. Global context
+console.log(this); // window (browser) / global (node)
+
+// 2. Object method → this = object
+const obj = {
+    name: "Alice",
+    greet() {
+        console.log(this.name); // "Alice"
+    }
+};
+obj.greet();
+
+// 3. Regular function → this = window/undefined(strict)
+function show() {
+    console.log(this); // window (or undefined in strict)
+}
+
+// 4. Arrow function → this = parent scope (lexical)
+const obj2 = {
+    name: "Bob",
+    greet: () => {
+        console.log(this.name); // undefined! (inherits outer)
+    },
+    delayedGreet() {
+        setTimeout(() => {
+            console.log(this.name); // "Bob" ✅ (arrow inherits)
+        }, 100);
+    }
+};
+
+// 5. Constructor → this = new object
+function Person(name) {
+    this.name = name;
+}
+const p = new Person("Charlie");
+console.log(p.name); // "Charlie"
+
+// 6. Explicit binding
+function sayHi() {
+    console.log(`Hi, ${this.name}`);
+}
+
+const user = { name: "Dave" };
+
+// call — invoke immediately with args
+sayHi.call(user);         // "Hi, Dave"
+sayHi.call(user, 1, 2);  // with args
+
+// apply — same but args as array
+sayHi.apply(user);        // "Hi, Dave"
+sayHi.apply(user, [1,2]); // with args
+
+// bind — returns NEW function with this bound
+const boundFn = sayHi.bind(user);
+boundFn();                // "Hi, Dave"
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 this Rules (Priority Order)</div>
+<pre class="output">
+Priority (highest to lowest):
+
+1. new binding
+   new Func() → this = new object
+
+2. Explicit binding
+   call/apply/bind → this = specified
+
+3. Implicit binding
+   obj.method() → this = obj
+
+4. Default binding
+   func() → this = window/undefined
+
+5. Arrow function
+   () => {} → this = parent scope
+   (CANNOT be overridden!)
+
+┌─────────────┬──────────────────┐
+│   call()    │ Invoke now, args │
+│   apply()   │ Invoke now, [arr]│
+│   bind()    │ Return new fn    │
+└─────────────┴──────────────────┘
+
+call vs apply:
+call(obj, a, b, c)
+apply(obj, [a, b, c])
+Remember: Apply = Array
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prototypes -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">3. Prototypes &amp; Prototype Chain</div>
+        <div class="card-body hidden">
+            <div class="note">Every JS object has a hidden <code>[[Prototype]]</code> link. This is how inheritance works.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Every function has a .prototype
+function Animal(name) {
+    this.name = name;
+}
+Animal.prototype.speak = function() {
+    return `${this.name} makes a sound`;
+};
+
+const dog = new Animal("Rex");
+console.log(dog.speak());      // "Rex makes a sound"
+console.log(dog.hasOwnProperty("name"));  // true
+console.log(dog.hasOwnProperty("speak")); // false (on prototype)
+
+// Prototype chain
+console.log(dog.__proto__ === Animal.prototype);     // true
+console.log(Animal.prototype.__proto__ === Object.prototype); // true
+console.log(Object.prototype.__proto__);             // null (end!)
+
+// dog → Animal.prototype → Object.prototype → null
+
+// ES6 Classes (syntactic sugar over prototypes)
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    greet() {
+        return `Hi, I'm ${this.name}`;
+    }
+
+    static create(name) {
+        return new Person(name, 0);
+    }
+
+    get info() {
+        return `${this.name}, ${this.age}`;
+    }
+
+    set info(val) {
+        [this.name, this.age] = val.split(",");
+    }
+}
+
+// Inheritance
+class Student extends Person {
+    constructor(name, age, grade) {
+        super(name, age); // call parent constructor
+        this.grade = grade;
+    }
+
+    greet() {
+        return `${super.greet()}, grade ${this.grade}`;
+    }
+}
+
+const s = new Student("Alice", 20, "A");
+console.log(s.greet());
+// "Hi, I'm Alice, grade A"
+console.log(s instanceof Student); // true
+console.log(s instanceof Person);  // true
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📐 Prototype Chain</div>
+<pre class="output">
+dog
+ ├── name: "Rex"        (own property)
+ └── [[Prototype]] → Animal.prototype
+      ├── speak()       (inherited)
+      └── [[Prototype]] → Object.prototype
+           ├── toString()
+           ├── hasOwnProperty()
+           └── [[Prototype]] → null
+
+Class inheritance:
+Student.prototype
+ └── [[Prototype]] → Person.prototype
+      └── [[Prototype]] → Object.prototype
+           └── [[Prototype]] → null
+
+s instanceof Student → true
+s instanceof Person  → true
+s instanceof Object  → true
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Destructuring & Advanced -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">4. Debounce &amp; Throttle</div>
+        <div class="card-body hidden">
+            <div class="note"><b>Debounce</b>: Wait until user stops. <b>Throttle</b>: Execute at most once per interval.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Debounce</div>
+<pre>
+// Debounce: Waits N ms after LAST call
+// Use: search input, window resize
+function debounce(fn, delay) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(this, args);
+        }, delay);
+    };
+}
+
+// Usage
+const search = debounce((query) => {
+    console.log("Searching:", query);
+}, 300);
+
+// Type: h → he → hel → hello
+// Only fires ONCE: "Searching: hello"
+// (after 300ms of no typing)
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">💻 Throttle</div>
+<pre>
+// Throttle: At most once per N ms
+// Use: scroll events, button clicks
+function throttle(fn, limit) {
+    let inThrottle = false;
+    return function(...args) {
+        if (!inThrottle) {
+            fn.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => {
+                inThrottle = false;
+            }, limit);
+        }
+    };
+}
+
+// Usage
+const onScroll = throttle(() => {
+    console.log("Scroll event!");
+}, 200);
+
+window.addEventListener("scroll", onScroll);
+// Fires at most every 200ms during scroll
+
+// Comparison:
+// Debounce → fires AFTER silence
+// Throttle → fires DURING action (limited)
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Currying & Composition -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">5. Currying &amp; Function Composition</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Currying: f(a,b,c) → f(a)(b)(c)
+function curry(fn) {
+    return function curried(...args) {
+        if (args.length >= fn.length) {
+            return fn.apply(this, args);
+        }
+        return function(...args2) {
+            return curried.apply(this, [...args, ...args2]);
+        };
+    };
+}
+
+const add = (a, b, c) => a + b + c;
+const curriedAdd = curry(add);
+
+console.log(curriedAdd(1)(2)(3));   // 6
+console.log(curriedAdd(1, 2)(3)); // 6
+console.log(curriedAdd(1)(2, 3)); // 6
+
+// Simple currying (manual)
+const multiply = (a) => (b) => a * b;
+const double = multiply(2);
+const triple = multiply(3);
+console.log(double(5));   // 10
+console.log(triple(5));   // 15
+
+// Function Composition: pipe & compose
+const pipe = (...fns) => (x) =>
+    fns.reduce((val, fn) => fn(val), x);
+
+const compose = (...fns) => (x) =>
+    fns.reduceRight((val, fn) => fn(val), x);
+
+const addOne = (x) => x + 1;
+const doubleIt = (x) => x * 2;
+const square = (x) => x * x;
+
+// pipe: left to right
+const pipeFn = pipe(addOne, doubleIt, square);
+console.log(pipeFn(3)); // (3+1)=4 → 4*2=8 → 8²=64
+
+// compose: right to left
+const composeFn = compose(square, doubleIt, addOne);
+console.log(composeFn(3)); // same: 64
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+6
+6
+6
+10
+15
+64
+64
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep vs Shallow Copy -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">6. Shallow Copy vs Deep Copy</div>
+        <div class="card-body hidden">
+            <div class="note">Shallow copy copies one level. Deep copy copies all nested levels.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+const original = {
+    name: "Alice",
+    address: { city: "Mumbai", pin: 400001 },
+    hobbies: ["reading", "coding"]
+};
+
+// === SHALLOW COPY ===
+const shallow1 = { ...original };
+const shallow2 = Object.assign({}, original);
+
+shallow1.name = "Bob";          // ✅ independent
+shallow1.address.city = "Delhi"; // ❌ changes original!
+console.log(original.address.city); // "Delhi" 😱
+
+// === DEEP COPY ===
+
+// Method 1: JSON (simple but limited)
+const deep1 = JSON.parse(JSON.stringify(original));
+// ⚠️ Fails with: functions, undefined, Date, RegExp,
+//    Map, Set, Infinity, NaN, circular references
+
+// Method 2: structuredClone (modern, recommended!)
+const deep2 = structuredClone(original);
+// ✅ Handles: Date, Map, Set, ArrayBuffer, circular refs
+// ❌ Fails with: functions, DOM nodes, symbols
+
+deep2.address.city = "Kolkata";
+console.log(original.address.city); // "Delhi" (safe!)
+
+// Method 3: Recursive function
+function deepClone(obj) {
+    if (obj === null || typeof obj !== "object") return obj;
+    if (obj instanceof Date) return new Date(obj);
+    if (obj instanceof Array) return obj.map(deepClone);
+    const clone = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            clone[key] = deepClone(obj[key]);
+        }
+    }
+    return clone;
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Comparison</div>
+<pre class="output">
+┌────────────────┬───────────────────┐
+│ Shallow Copy   │ Deep Copy         │
+├────────────────┼───────────────────┤
+│ {...obj}       │ structuredClone() │
+│ Object.assign  │ JSON parse/str    │
+│ Array.from()   │ Recursive clone   │
+│ [...arr]       │ lodash.cloneDeep  │
+│ arr.slice()    │                   │
+├────────────────┼───────────────────┤
+│ Fast           │ Slower            │
+│ 1 level deep   │ All levels        │
+│ Nested shared  │ Nested independent│
+└────────────────┴───────────────────┘
+
+structuredClone() — Best option! 🏆
+- Native (no library needed)
+- Handles circular refs
+- Handles Date, Map, Set
+- Available in all modern browsers
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Loop -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">7. Event Loop &amp; Execution Context</div>
+        <div class="card-body hidden">
+            <div class="note">JavaScript is <b>single-threaded</b> with a <b>non-blocking event loop</b>.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Predict the Output!</div>
+<pre>
+console.log("1");
+
+setTimeout(() => {
+    console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log("3");
+});
+
+console.log("4");
+
+// Output: 1, 4, 3, 2
+// Why?
+// 1 → synchronous, runs first
+// setTimeout → macrotask queue
+// Promise.then → microtask queue
+// 4 → synchronous
+// Microtasks run BEFORE macrotasks!
+
+// More complex example
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+setTimeout(() => console.log("C"), 0);
+
+Promise.resolve()
+    .then(() => console.log("D"))
+    .then(() => console.log("E"));
+
+Promise.resolve()
+    .then(() => console.log("F"));
+
+console.log("G");
+
+// Output: A, G, D, F, E, B, C
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📐 Event Loop Diagram</div>
+<pre class="output">
+┌─────────────────────────────┐
+│        CALL STACK           │
+│  (executes synchronous code)│
+└──────────┬──────────────────┘
+           │ empty?
+           ▼
+┌─────────────────────────────┐
+│      MICROTASK QUEUE        │
+│  Promise.then, queueMicro   │
+│  MutationObserver           │
+│  (ALL microtasks run first!)│
+└──────────┬──────────────────┘
+           │ empty?
+           ▼
+┌─────────────────────────────┐
+│      MACROTASK QUEUE        │
+│  setTimeout, setInterval    │
+│  setImmediate, I/O          │
+│  UI rendering               │
+│  (ONE macrotask, then check │
+│   microtasks again)         │
+└─────────────────────────────┘
+
+Priority:
+1. Call Stack (sync code)
+2. Microtasks (Promises)
+3. Macrotasks (setTimeout)
+
+Microtasks ALWAYS run before
+the next macrotask!
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generators & Iterators -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">8. Generators &amp; Iterators</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Generator function (function*)
+function* countUp(start) {
+    let i = start;
+    while (true) {
+        yield i;  // pause & return value
+        i++;
+    }
+}
+
+const gen = countUp(1);
+console.log(gen.next()); // {value:1, done:false}
+console.log(gen.next()); // {value:2, done:false}
+console.log(gen.next()); // {value:3, done:false}
+
+// Finite generator
+function* range(start, end) {
+    for (let i = start; i <= end; i++) {
+        yield i;
+    }
+}
+
+for (const num of range(1, 5)) {
+    console.log(num);  // 1, 2, 3, 4, 5
+}
+
+// Spread with generator
+console.log([...range(1, 5)]); // [1,2,3,4,5]
+
+// Generator for unique IDs
+function* idGenerator() {
+    let id = 1;
+    while (true) {
+        yield `ID_${id++}`;
+    }
+}
+const nextId = idGenerator();
+console.log(nextId.next().value); // "ID_1"
+console.log(nextId.next().value); // "ID_2"
+
+// Custom iterator (Symbol.iterator)
+const iterableObj = {
+    data: [10, 20, 30],
+    [Symbol.iterator]() {
+        let idx = 0;
+        return {
+            next: () => ({
+                value: this.data[idx],
+                done: idx++ >= this.data.length
+            })
+        };
+    }
+};
+
+for (const val of iterableObj) {
+    console.log(val); // 10, 20, 30
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+{value: 1, done: false}
+{value: 2, done: false}
+{value: 3, done: false}
+1
+2
+3
+4
+5
+[1, 2, 3, 4, 5]
+ID_1
+ID_2
+10
+20
+30
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proxy & Reflect -->
+    <div class="card adv-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">9. Proxy &amp; Reflect</div>
+        <div class="card-body hidden">
+            <div class="note">Proxy intercepts operations on objects (get, set, delete, etc.). Used for validation, logging, reactive systems.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Basic Proxy
+const user = { name: "Alice", age: 25 };
+
+const proxy = new Proxy(user, {
+    get(target, prop) {
+        console.log(`Getting ${prop}`);
+        return prop in target ? target[prop] : "N/A";
+    },
+    set(target, prop, value) {
+        if (prop === "age" && typeof value !== "number") {
+            throw new TypeError("Age must be a number");
+        }
+        if (prop === "age" && (value < 0 || value > 150)) {
+            throw new RangeError("Invalid age");
+        }
+        target[prop] = value;
+        return true;
+    },
+    deleteProperty(target, prop) {
+        if (prop === "name") {
+            throw new Error("Can't delete name!");
+        }
+        delete target[prop];
+        return true;
+    }
+});
+
+console.log(proxy.name);       // Getting name → "Alice"
+console.log(proxy.unknown);    // Getting unknown → "N/A"
+proxy.age = 30;                // ✅ OK
+// proxy.age = "thirty";       // ❌ TypeError
+// proxy.age = -5;             // ❌ RangeError
+
+// Reactive system (Vue.js uses this!)
+function reactive(obj) {
+    return new Proxy(obj, {
+        set(target, prop, value) {
+            target[prop] = value;
+            console.log(`${prop} changed to ${value}`);
+            // trigger re-render here
+            return true;
+        }
+    });
+}
+
+const state = reactive({ count: 0 });
+state.count = 1; // "count changed to 1"
+state.count = 2; // "count changed to 2"
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📤 Output</div>
+<pre class="output">
+Getting name
+Alice
+Getting unknown
+N/A
+count changed to 1
+count changed to 2
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end advanced tab -->
+
+
+<!-- ================================================================ -->
+<!-- DOM TAB -->
+<!-- ================================================================ -->
+<div class="tab-content" id="tab-dom">
+
+    <h2 class="section-title">🌳 DOM Selection &amp; Manipulation</h2>
+
+    <!-- DOM Selectors -->
+    <div class="card dom-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">1. DOM Selectors</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// === SELECTING ELEMENTS ===
+
+// By ID (returns single element)
+const el = document.getElementById("myId");
+
+// By class (returns HTMLCollection - live)
+const items = document.getElementsByClassName("item");
+
+// By tag (returns HTMLCollection - live)
+const divs = document.getElementsByTagName("div");
+
+// querySelector (returns FIRST match)
+const first = document.querySelector(".item");
+const header = document.querySelector("h1");
+const input = document.querySelector("[type='email']");
+const nested = document.querySelector("ul > li:first-child");
+
+// querySelectorAll (returns NodeList - static)
+const all = document.querySelectorAll(".item");
+
+// Convert to array for array methods
+const arr = [...document.querySelectorAll(".item")];
+const arr2 = Array.from(document.querySelectorAll(".item"));
+
+// Traversal
+el.parentElement;          // parent
+el.children;               // child elements
+el.firstElementChild;      // first child element
+el.lastElementChild;       // last child element
+el.nextElementSibling;     // next sibling
+el.previousElementSibling; // prev sibling
+el.closest(".container");  // nearest ancestor matching
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Comparison</div>
+<pre class="output">
+┌──────────────────────┬─────────┬────────┐
+│ Method               │ Returns │ Live?  │
+├──────────────────────┼─────────┼────────┤
+│ getElementById       │ Element │ —      │
+│ getElementsByClass   │ HTML    │ ✅ Live│
+│ getElementsByTag     │ Collect.│ ✅ Live│
+│ querySelector        │ Element │ —      │
+│ querySelectorAll     │ NodeList│ ❌ Stat│
+└──────────────────────┴─────────┴────────┘
+
+Live = auto-updates when DOM changes
+Static = snapshot at time of query
+
+💡 Prefer:
+   querySelector / querySelectorAll
+   (more flexible, CSS selector syntax)
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOM Manipulation -->
+    <div class="card dom-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">2. DOM Manipulation — Create, Modify, Remove</div>
+        <div class="card-body hidden">
+<pre>
+// === CREATE ===
+const div = document.createElement("div");
+const text = document.createTextNode("Hello");
+div.appendChild(text);
+
+// === MODIFY CONTENT ===
+el.textContent = "Plain text";         // safe, no HTML parsing
+el.innerHTML = "&lt;b&gt;Bold&lt;/b&gt;";         // parses HTML ⚠️ XSS risk
+el.innerText = "Visible text only";    // respects CSS visibility
+el.outerHTML = "&lt;div&gt;Replaces entire element&lt;/div&gt;";
+
+// === ATTRIBUTES ===
+el.setAttribute("data-id", "123");
+el.getAttribute("data-id");           // "123"
+el.removeAttribute("data-id");
+el.hasAttribute("data-id");           // false
+el.dataset.id;                        // access data-id
+el.dataset.userName = "alice";        // sets data-user-name
+
+// === CLASSES ===
+el.classList.add("active", "highlight");
+el.classList.remove("active");
+el.classList.toggle("dark");           // add/remove
+el.classList.contains("highlight");    // true/false
+el.classList.replace("old", "new");
+el.className = "class1 class2";        // replace ALL classes
+
+// === STYLES ===
+el.style.color = "red";
+el.style.backgroundColor = "#f5f5f5"; // camelCase!
+el.style.cssText = "color:red; font-size:16px;"; // multiple
+const computed = getComputedStyle(el);
+console.log(computed.fontSize);        // actual computed value
+
+// === INSERT ===
+parent.appendChild(child);            // append at end
+parent.prepend(child);                // insert at start
+parent.insertBefore(newEl, refEl);    // before reference
+parent.append(el1, el2, "text");      // multiple items
+el.after(newEl);                       // after element
+el.before(newEl);                      // before element
+
+// insertAdjacentHTML (powerful!)
+el.insertAdjacentHTML("beforebegin", "&lt;p&gt;Before&lt;/p&gt;");
+el.insertAdjacentHTML("afterbegin", "&lt;p&gt;First child&lt;/p&gt;");
+el.insertAdjacentHTML("beforeend", "&lt;p&gt;Last child&lt;/p&gt;");
+el.insertAdjacentHTML("afterend", "&lt;p&gt;After&lt;/p&gt;");
+
+// === REMOVE ===
+el.remove();                           // remove self
+parent.removeChild(child);             // remove child
+
+// === CLONE ===
+const clone = el.cloneNode(true);      // true = deep clone
+const shallow = el.cloneNode(false);   // element only, no children
+
+// === REPLACE ===
+parent.replaceChild(newEl, oldEl);
+oldEl.replaceWith(newEl);
+</pre>
+        </div>
+    </div>
+
+    <!-- Events -->
+    <div class="card dom-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">3. Events — Complete Guide</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// === ADD EVENT LISTENER ===
+const btn = document.querySelector("#btn");
+
+btn.addEventListener("click", function(e) {
+    console.log("Clicked!", e.target);
+});
+
+// Remove listener (needs same function reference)
+function handleClick(e) {
+    console.log("Clicked!");
+}
+btn.addEventListener("click", handleClick);
+btn.removeEventListener("click", handleClick);
+
+// Options
+btn.addEventListener("click", fn, {
+    once: true,      // auto-remove after first call
+    capture: true,   // capture phase (not bubble)
+    passive: true    // won't call preventDefault (perf)
+});
+
+// === EVENT OBJECT ===
+el.addEventListener("click", (e) => {
+    e.target;           // element that was clicked
+    e.currentTarget;    // element listener is on
+    e.type;             // "click"
+    e.preventDefault(); // stop default behavior
+    e.stopPropagation();// stop bubbling
+
+    // Mouse
+    e.clientX; e.clientY;  // viewport coords
+    e.pageX; e.pageY;      // page coords
+    e.button;               // 0=left, 1=middle, 2=right
+
+    // Keyboard
+    e.key;       // "Enter", "a", "Shift"
+    e.code;      // "KeyA", "Enter"
+    e.altKey;    // boolean
+    e.ctrlKey;   // boolean
+    e.shiftKey;  // boolean
+});
+
+// === COMMON EVENTS ===
+// Mouse: click, dblclick, mouseenter, mouseleave,
+//        mouseover, mouseout, mousemove, mousedown, mouseup
+// Keyboard: keydown, keyup, keypress(deprecated)
+// Form: submit, change, input, focus, blur, reset
+// Window: load, DOMContentLoaded, resize, scroll,
+//         beforeunload, hashchange
+// Touch: touchstart, touchmove, touchend
+// Drag: dragstart, drag, dragover, drop, dragend
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📐 Event Phases</div>
+<pre class="output">
+Event Flow (3 phases):
+
+1. CAPTURE phase (top → target)
+   window → document → html → body → div → button
+
+2. TARGET phase (at the target)
+   button ← event fires here
+
+3. BUBBLE phase (target → top)
+   button → div → body → html → document → window
+
+┌──────────────────────────┐
+│ window                    │
+│ ┌────────────────────┐   │
+│ │ document           │   │
+│ │ ┌──────────────┐   │   │
+│ │ │ div          │   │   │
+│ │ │ ┌────────┐   │   │   │
+│ │ │ │ button │ ← CLICK   │
+│ │ │ └────────┘   │   │   │
+│ │ └──────────────┘   │   │
+│ └────────────────────┘   │
+└──────────────────────────┘
+    ↓ capture     ↑ bubble
+
+e.stopPropagation() → stops bubbling
+e.stopImmediatePropagation() → stops
+  bubbling AND other listeners on same el
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Delegation -->
+    <div class="card dom-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">4. Event Delegation</div>
+        <div class="card-body hidden">
+            <div class="note">Instead of adding listeners to each child, add ONE listener to the parent. Uses event bubbling.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// ❌ BAD: listener on every item
+document.querySelectorAll(".item").forEach(item => {
+    item.addEventListener("click", (e) => {
+        console.log(e.target.textContent);
+    });
+});
+// Problem: doesn't work for dynamically added items!
+
+// ✅ GOOD: Event delegation
+document.querySelector("#list").addEventListener("click", (e) => {
+    // Check if clicked element matches
+    if (e.target.matches(".item")) {
+        console.log("Clicked:", e.target.textContent);
+    }
+
+    // Or use closest() for nested elements
+    const item = e.target.closest(".item");
+    if (item) {
+        console.log("Item:", item.dataset.id);
+    }
+});
+
+// Works for dynamically added items too!
+const newItem = document.createElement("li");
+newItem.className = "item";
+newItem.textContent = "New Item";
+document.querySelector("#list").appendChild(newItem);
+// ✅ Click handler works without adding new listener!
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Why Event Delegation?</div>
+<pre class="output">
+Benefits:
+✅ Memory efficient (1 listener vs N)
+✅ Works with dynamic elements
+✅ Less code
+✅ Easier cleanup (1 removeListener)
+
+Pattern:
+1. Add listener to PARENT
+2. Check e.target or e.target.closest()
+3. Act on matched elements
+
+Common use cases:
+- Todo lists (add/remove items)
+- Tables (row clicks)
+- Navigation menus
+- Dynamic content from API
+- Infinite scroll items
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Local Storage -->
+    <div class="card dom-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">5. Web Storage — localStorage &amp; sessionStorage</div>
+        <div class="card-body hidden">
+<pre>
+// === localStorage (persists forever) ===
+localStorage.setItem("name", "Alice");
+localStorage.getItem("name");           // "Alice"
+localStorage.removeItem("name");
+localStorage.clear();                   // remove ALL
+localStorage.length;                    // number of items
+localStorage.key(0);                    // key at index 0
+
+// Store objects (must stringify!)
+const user = { name: "Alice", age: 25 };
+localStorage.setItem("user", JSON.stringify(user));
+const stored = JSON.parse(localStorage.getItem("user"));
+console.log(stored.name); // "Alice"
+
+// === sessionStorage (clears when tab closes) ===
+// Same API as localStorage
+sessionStorage.setItem("token", "abc123");
+sessionStorage.getItem("token");
+
+// === Cookies vs Storage ===
+// ┌──────────────┬──────────┬──────────┬──────────┐
+// │              │ Cookie   │ local    │ session  │
+// ├──────────────┼──────────┼──────────┼──────────┤
+// │ Size         │ ~4KB     │ ~5-10MB  │ ~5-10MB  │
+// │ Sent to      │ Every    │ Never    │ Never    │
+// │ server?      │ request! │          │          │
+// │ Expiry       │ Set date │ Forever  │ Tab close│
+// │ Scope        │ Domain   │ Origin   │ Tab+Orig │
+// │ Access       │ Server+  │ Client   │ Client   │
+// │              │ Client   │ only     │ only     │
+// └──────────────┴──────────┴──────────┴──────────┘
+
+// Listen for storage changes (cross-tab!)
+window.addEventListener("storage", (e) => {
+    console.log(`${e.key}: ${e.oldValue} → ${e.newValue}`);
+});
+</pre>
+        </div>
+    </div>
+
+    <!-- Fetch & Forms -->
+    <div class="card dom-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">6. Form Handling &amp; Validation</div>
+        <div class="card-body hidden">
+<pre>
+// Get form & inputs
+const form = document.querySelector("#myForm");
+const nameInput = document.querySelector("#name");
+
+// Get values
+console.log(nameInput.value);
+console.log(nameInput.checked);  // for checkboxes/radios
+
+// FormData API (get all form data easily!)
+form.addEventListener("submit", (e) => {
+    e.preventDefault(); // prevent page reload
+
+    const data = new FormData(form);
+    console.log(data.get("name"));
+    console.log(data.get("email"));
+
+    // Convert to object
+    const obj = Object.fromEntries(data);
+    console.log(obj); // { name: "...", email: "..." }
+
+    // Convert to JSON
+    const json = JSON.stringify(obj);
+
+    // Send to server
+    fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: json
+    });
+});
+
+// Real-time validation
+nameInput.addEventListener("input", (e) => {
+    const value = e.target.value;
+    const error = document.querySelector("#nameError");
+
+    if (value.length < 2) {
+        error.textContent = "Min 2 characters";
+        nameInput.classList.add("invalid");
+    } else {
+        error.textContent = "";
+        nameInput.classList.remove("invalid");
+    }
+});
+
+// Focus/Blur events
+nameInput.addEventListener("focus", () => {
+    console.log("Input focused");
+});
+nameInput.addEventListener("blur", () => {
+    console.log("Input lost focus, validate!");
+});
+</pre>
+        </div>
+    </div>
+
+</div><!-- end DOM tab -->
+
+
+<!-- ================================================================ -->
+<!-- ASYNC TAB -->
+<!-- ================================================================ -->
+<div class="tab-content" id="tab-async">
+
+    <h2 class="section-title">⏳ Callbacks &amp; Promises</h2>
+
+    <!-- Callbacks -->
+    <div class="card async-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">1. Callbacks &amp; Callback Hell</div>
+        <div class="card-body hidden">
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Callback: function passed as argument
+function fetchData(callback) {
+    setTimeout(() => {
+        callback("Data received!");
+    }, 1000);
+}
+
+fetchData((data) => {
+    console.log(data); // "Data received!" (after 1s)
+});
+
+// Callback Hell (Pyramid of Doom) 😱
+getUser(userId, (user) => {
+    getPosts(user.id, (posts) => {
+        getComments(posts[0].id, (comments) => {
+            getAuthor(comments[0].authorId, (author) => {
+                console.log(author);
+                // deeply nested, hard to read!
+            });
+        });
+    });
+});
+
+// Error-first callback pattern (Node.js)
+function readFile(path, callback) {
+    // callback(error, data)
+    if (!path) {
+        callback(new Error("No path"), null);
+        return;
+    }
+    callback(null, "file content");
+}
+
+readFile("test.txt", (err, data) => {
+    if (err) {
+        console.error(err.message);
+        return;
+    }
+    console.log(data);
+});
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Problems with Callbacks</div>
+<pre class="output">
+Callback Hell problems:
+❌ Hard to read (pyramid shape)
+❌ Hard to handle errors
+❌ Hard to debug
+❌ Inversion of control
+   (you trust callback to be called)
+
+Solution Evolution:
+1. Callbacks      → hard to manage
+2. Promises       → chainable, .then()
+3. async/await    → looks synchronous ✅
+
+Timeline:
+Callbacks → Promises (ES6) → async/await (ES2017)
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promises -->
+    <div class="card async-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">2. Promises — Complete Guide</div>
+        <div class="card-body hidden">
+            <div class="note">A Promise is an object representing the eventual completion or failure of an async operation.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// Create a Promise
+const promise = new Promise((resolve, reject) => {
+    const success = true;
+    setTimeout(() => {
+        if (success) {
+            resolve("Data loaded!");
+        } else {
+            reject(new Error("Failed!"));
+        }
+    }, 1000);
+});
+
+// Consume
+promise
+    .then(data => console.log(data))    // "Data loaded!"
+    .catch(err => console.error(err))
+    .finally(() => console.log("Done"));
+
+// Chaining (return value → next .then)
+fetch("/api/user/1")
+    .then(res => res.json())
+    .then(user => fetch(`/api/posts/${user.id}`))
+    .then(res => res.json())
+    .then(posts => console.log(posts))
+    .catch(err => console.error("Error:", err));
+
+// Promise states:
+// pending → fulfilled (resolved)
+// pending → rejected
+
+// Static methods
+Promise.resolve("instant");  // resolved promise
+Promise.reject("error");     // rejected promise
+
+// Promise.all — ALL must succeed
+Promise.all([
+    fetch("/api/users"),
+    fetch("/api/posts"),
+    fetch("/api/comments")
+]).then(([users, posts, comments]) => {
+    console.log("All loaded!");
+}).catch(err => {
+    console.log("One failed, ALL fail!");
+});
+
+// Promise.allSettled — wait for ALL (success or fail)
+Promise.allSettled([
+    Promise.resolve(1),
+    Promise.reject("err"),
+    Promise.resolve(3)
+]).then(results => {
+    // [{status:"fulfilled",value:1},
+    //  {status:"rejected",reason:"err"},
+    //  {status:"fulfilled",value:3}]
+});
+
+// Promise.race — first to finish (win or fail)
+Promise.race([
+    fetch("/api/fast"),
+    new Promise((_, reject) =>
+        setTimeout(() => reject("Timeout!"), 5000)
+    )
+]);
+
+// Promise.any — first to SUCCEED
+Promise.any([
+    fetch("/api/server1"),
+    fetch("/api/server2"),
+    fetch("/api/server3")
+]).then(fastest => {
+    console.log("First success:", fastest);
+});
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Promise Methods</div>
+<pre class="output">
+┌────────────────┬──────────────────────┐
+│ Method         │ Behavior             │
+├────────────────┼──────────────────────┤
+│ Promise.all    │ ALL succeed or       │
+│                │ first reject         │
+├────────────────┼──────────────────────┤
+│ Promise.       │ Wait for ALL         │
+│ allSettled     │ (never rejects)      │
+├────────────────┼──────────────────────┤
+│ Promise.race   │ First to settle      │
+│                │ (resolve or reject)  │
+├────────────────┼──────────────────────┤
+│ Promise.any    │ First to RESOLVE     │
+│                │ (ignores rejects     │
+│                │  unless all reject)  │
+└────────────────┴──────────────────────┘
+
+States:
+pending  ──resolve──→ fulfilled ✅
+         ──reject───→ rejected  ❌
+
+Once settled, CANNOT change!
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Async/Await -->
+    <div class="card async-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">3. async/await — Modern Async</div>
+        <div class="card-body hidden">
+            <div class="note"><code>async/await</code> is syntactic sugar over Promises. Makes async code look synchronous.</div>
+            <div class="code-output-wrapper">
+                <div class="code-block">
+                    <div class="code-label">💻 Code</div>
+<pre>
+// async function always returns a Promise
+async function fetchUser(id) {
+    const response = await fetch(`/api/users/${id}`);
+    const user = await response.json();
+    return user;
+}
+
+// Error handling with try/catch
+async function getData() {
+    try {
+        const res = await fetch("/api/data");
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        console.log(data);
+    } catch (error) {
+        console.error("Failed:", error.message);
+    } finally {
+        console.log("Cleanup");
+    }
+}
+
+// Parallel execution
+async function loadAll() {
+    // ❌ Sequential (slow!)
+    const users = await fetch("/api/users");
+    const posts = await fetch("/api/posts");
+    // Total time: users + posts
+
+    // ✅ Parallel (fast!)
+    const [usersRes, postsRes] = await Promise.all([
+        fetch("/api/users"),
+        fetch("/api/posts")
+    ]);
+    // Total time: max(users, posts)
+}
+
+// Top-level await (ES2022, modules only)
+// const data = await fetch("/api/data");
+
+// Async iteration
+async function* fetchPages() {
+    let page = 1;
+    while (page <= 3) {
+        const res = await fetch(`/api?page=${page}`);
+        yield await res.json();
+        page++;
+    }
+}
+
+// for await...of
+async function loadPages() {
+    for await (const data of fetchPages()) {
+        console.log(data);
+    }
+}
+
+// Convert callback to Promise
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+    console.log("Start");
+    await delay(2000);
+    console.log("2 seconds later");
+}
+</pre>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">📊 Comparison</div>
+<pre class="output">
+// Callback style
+getUser(id, (user) => {
+    getPosts(user.id, (posts) => {
+        console.log(posts);
+    });
+});
+
+// Promise style
+getUser(id)
+    .then(user => getPosts(user.id))
+    .then(posts => console.log(posts))
+    .catch(err => console.error(err));
+
+// async/await style ✅ BEST
+async function load() {
+    try {
+        const user = await getUser(id);
+        const posts = await getPosts(user.id);
+        console.log(posts);
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+Rules:
+1. await only inside async function
+2. async always returns Promise
+3. Use try/catch for errors
+4. Use Promise.all for parallel
+5. Don't await in loops
+   (use Promise.all instead!)
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fetch API -->
+    <div class="card async-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">4. Fetch API — HTTP Requests</div>
+        <div class="card-body hidden">
+<pre>
+// === GET Request ===
+async function getUsers() {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const users = await res.json();
+    return users;
+}
+
+// === POST Request ===
+async function createUser(userData) {
+    const res = await fetch("https://api.example.com/users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer TOKEN123"
+        },
+        body: JSON.stringify(userData)
+    });
+    return await res.json();
+}
+
+// === PUT Request (update) ===
+async function updateUser(id, data) {
+    const res = await fetch(`/api/users/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+    return await res.json();
+}
+
+// === DELETE Request ===
+async function deleteUser(id) {
+    const res = await fetch(`/api/users/${id}`, {
+        method: "DELETE"
+    });
+    return res.ok;
+}
+
+// === Abort Controller (cancel requests) ===
+const controller = new AbortController();
+
+fetch("/api/data", { signal: controller.signal })
+    .then(res => res.json())
+    .catch(err => {
+        if (err.name === "AbortError") {
+            console.log("Request cancelled");
+        }
+    });
+
+// Cancel after 5 seconds
+setTimeout(() => controller.abort(), 5000);
+
+// === Response properties ===
+const response = await fetch(url);
+response.ok;         // true if 200-299
+response.status;     // 200, 404, 500, etc.
+response.statusText; // "OK", "Not Found"
+response.headers;    // Headers object
+response.url;        // final URL (after redirects)
+response.json();     // parse as JSON
+response.text();     // parse as text
+response.blob();     // parse as Blob (files)
+response.formData(); // parse as FormData
+</pre>
+        </div>
+    </div>
+
+    <!-- Timers -->
+    <div class="card async-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">5. Timers — setTimeout, setInterval, requestAnimationFrame</div>
+        <div class="card-body hidden">
+<pre>
+// setTimeout — run ONCE after delay
+const timer = setTimeout(() => {
+    console.log("Runs after 2 seconds");
+}, 2000);
+clearTimeout(timer); // cancel
+
+// setInterval — run REPEATEDLY
+const interval = setInterval(() => {
+    console.log("Every 1 second");
+}, 1000);
+clearInterval(interval); // stop
+
+// Countdown timer
+function countdown(seconds) {
+    const id = setInterval(() => {
+        console.log(seconds);
+        seconds--;
+        if (seconds < 0) {
+            clearInterval(id);
+            console.log("Done!");
+        }
+    }, 1000);
+}
+
+// requestAnimationFrame — smooth animations (60fps)
+function animate() {
+    // update position, opacity, etc.
+    element.style.left = x + "px";
+    x += 2;
+
+    if (x < 500) {
+        requestAnimationFrame(animate); // next frame
+    }
+}
+requestAnimationFrame(animate);
+
+// Promisified delay
+const delay = (ms) => new Promise(r => setTimeout(r, ms));
+
+async function sequence() {
+    console.log("Step 1");
+    await delay(1000);
+    console.log("Step 2"); // 1s later
+    await delay(1000);
+    console.log("Step 3"); // 2s later
+}
+
+// ⚠️ setTimeout(fn, 0) doesn't run immediately!
+// It goes to macrotask queue, runs after all
+// synchronous code AND microtasks finish.
+console.log("1");
+setTimeout(() => console.log("2"), 0);
+console.log("3");
+// Output: 1, 3, 2
+</pre>
+        </div>
+    </div>
+
+</div><!-- end async tab -->
+
+
+<!-- ================================================================ -->
+<!-- INTERVIEW Q&A TAB -->
+<!-- ================================================================ -->
+<div class="tab-content" id="tab-qa">
+
+    <h2 class="section-title">🔥 Top JavaScript Interview Questions</h2>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">Fundamentals (Q1–Q20)</div>
+        <div class="card-body hidden">
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q1. What are the data types in JavaScript?</div>
+                <div class="answer"><b>7 Primitive:</b> string, number, bigint, boolean, undefined, null, symbol.<br><b>1 Reference:</b> object (includes arrays, functions, Date, RegExp, Map, Set, etc.).<br>Use <code>typeof</code> to check. <b>Bug:</b> <code>typeof null === "object"</code>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q2. What is the difference between == and ===?</div>
+                <div class="answer"><b>==</b> (loose equality): Performs <b>type coercion</b> before comparing. <code>"5" == 5</code> is true.<br><b>===</b> (strict equality): No coercion, compares both <b>value AND type</b>. <code>"5" === 5</code> is false.<br><b>Always use ===</b>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q3. What is the difference between var, let, and const?</div>
+                <div class="answer"><b>var</b>: Function-scoped, hoisted as undefined, can re-declare. Legacy.<br><b>let</b>: Block-scoped, hoisted but in TDZ, can reassign.<br><b>const</b>: Block-scoped, hoisted but in TDZ, can't reassign binding. Objects/arrays inside are still mutable.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q4. What is hoisting?</div>
+                <div class="answer">JavaScript moves <b>declarations</b> (not assignments) to the top of their scope before execution.<br><b>var</b>: Hoisted, initialized as <code>undefined</code>.<br><b>let/const</b>: Hoisted but in <b>Temporal Dead Zone (TDZ)</b> — accessing before declaration throws ReferenceError.<br><b>Function declarations</b>: Fully hoisted (can call before definition).<br><b>Function expressions</b>: NOT hoisted.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q5. What is a closure?</div>
+                <div class="answer">A closure is a function that <b>remembers and accesses variables from its outer scope</b> even after the outer function has returned.<br><br><b>Uses:</b> Data privacy, function factories, memoization, module pattern.<br><b>Classic example:</b> Counter function that remembers <code>count</code> variable.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q6. Explain the 'this' keyword.</div>
+                <div class="answer"><code>this</code> depends on <b>how the function is called</b>:<br>1. <b>Global</b>: window (browser) / global (node)<br>2. <b>Object method</b>: the object<br>3. <b>Constructor (new)</b>: new instance<br>4. <b>call/apply/bind</b>: specified object<br>5. <b>Arrow function</b>: inherits from parent (lexical)<br>6. <b>Event handler</b>: the element that triggered</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q7. What is the difference between null and undefined?</div>
+                <div class="answer"><b>undefined</b>: Variable declared but <b>not assigned</b>. Default for missing function args, missing object properties.<br><b>null</b>: <b>Intentionally</b> assigned to indicate "empty" or "no value".<br><code>typeof undefined === "undefined"</code><br><code>typeof null === "object"</code> (bug!)<br><code>null == undefined</code> is true, <code>null === undefined</code> is false.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q8. What are arrow functions? How are they different?</div>
+                <div class="answer">Arrow functions are a shorter syntax: <code>(a, b) => a + b</code><br><b>Differences from regular functions:</b><br>• No own <code>this</code> (inherits from parent — lexical)<br>• No <code>arguments</code> object<br>• Cannot be used as constructor (<code>new</code>)<br>• No <code>prototype</code> property<br>• Cannot be used as generator</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q9. What is the difference between call, apply, and bind?</div>
+                <div class="answer"><b>call(obj, a, b)</b>: Invoke immediately with specified <code>this</code> and individual args.<br><b>apply(obj, [a, b])</b>: Same as call but args as <b>array</b>. Remember: <b>A</b>pply = <b>A</b>rray.<br><b>bind(obj)</b>: Returns a <b>new function</b> with <code>this</code> permanently bound. Doesn't invoke immediately.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q10. What are template literals?</div>
+                <div class="answer">Strings using backticks <code>`...`</code> (ES6).<br>Features: <b>String interpolation</b> (<code>${expression}</code>), <b>multi-line strings</b>, <b>tagged templates</b>.<br>Example: <code>`Hello ${name}, you are ${age} years old`</code></div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q11. What is the spread operator vs rest operator?</div>
+                <div class="answer">Same syntax <code>...</code>, different context:<br><b>Spread</b> (expands): <code>[...arr]</code>, <code>{...obj}</code>, <code>fn(...args)</code><br><b>Rest</b> (collects): <code>function(...args)</code>, <code>const [a, ...rest]</code><br>Spread = unpack. Rest = pack.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q12. What is destructuring?</div>
+                <div class="answer">Extract values from arrays/objects into variables:<br><b>Array:</b> <code>const [a, b] = [1, 2]</code><br><b>Object:</b> <code>const {name, age} = person</code><br>Features: default values (<code>{a = 5}</code>), renaming (<code>{name: userName}</code>), nested (<code>{address: {city}}</code>), rest (<code>{a, ...rest}</code>).</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q13. What is the difference between map, filter, and reduce?</div>
+                <div class="answer"><b>map</b>: Transform each element → returns <b>new array of same length</b>.<br><b>filter</b>: Keep elements that pass test → returns <b>new array (subset)</b>.<br><b>reduce</b>: Accumulate into <b>single value</b> (sum, object, etc.).<br>All are non-mutating. <code>forEach</code> is for side effects only (returns undefined).</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q14. What are truthy and falsy values?</div>
+                <div class="answer"><b>Falsy</b> (6 values): <code>false, 0, -0, "", null, undefined, NaN</code><br><b>Truthy</b>: Everything else! Including <code>[], {}, "0", "false", Infinity</code>.<br><b>Watch out:</b> Empty array <code>[]</code> and empty object <code>{}</code> are TRUTHY!</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q15. What is the difference between shallow and deep copy?</div>
+                <div class="answer"><b>Shallow</b>: Copies only first level. Nested objects are still shared references. Methods: <code>{...obj}</code>, <code>Object.assign</code>, <code>[...arr]</code>.<br><b>Deep</b>: Copies all levels. Fully independent. Methods: <code>structuredClone()</code> (best!), <code>JSON.parse(JSON.stringify())</code> (limited), recursive function.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q16. What is event delegation?</div>
+                <div class="answer">Instead of adding event listeners to each child element, add <b>ONE listener to the parent</b> and use <code>e.target</code> to identify the clicked child. Uses <b>event bubbling</b>.<br><br><b>Benefits:</b> Memory efficient, works with dynamically added elements, less code, easier cleanup.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q17. What is event bubbling and capturing?</div>
+                <div class="answer">Events travel in 3 phases: <b>Capture</b> (top → target), <b>Target</b> (at element), <b>Bubble</b> (target → top).<br>By default, listeners fire during <b>bubble phase</b>. Use <code>{capture: true}</code> for capture phase.<br><code>e.stopPropagation()</code> stops the event from continuing to parent elements.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q18. What is the difference between for...in and for...of?</div>
+                <div class="answer"><b>for...in</b>: Iterates over <b>keys/properties</b> (enumerable, including inherited). Use for <b>objects</b>. Avoid for arrays.<br><b>for...of</b>: Iterates over <b>values</b> of iterables (arrays, strings, Map, Set). Cannot use on plain objects.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q19. What is the difference between Map and Object?</div>
+                <div class="answer"><b>Object</b>: String/symbol keys only, no <code>.size</code>, not directly iterable, has prototype pollution risk.<br><b>Map</b>: <b>Any key type</b> (objects, functions, etc.), has <code>.size</code>, insertion-ordered, directly iterable, better performance for frequent add/remove.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-easy">Easy</span> Q20. What is optional chaining (?.) and nullish coalescing (??)?</div>
+                <div class="answer"><b>?.</b> (Optional chaining): Safely access nested properties. Returns <code>undefined</code> instead of throwing error. <code>obj?.a?.b?.c</code><br><b>??</b> (Nullish coalescing): Returns right side only if left is <code>null</code> or <code>undefined</code> (not falsy). <code>0 ?? "default"</code> returns <code>0</code>. Different from <code>||</code> which treats 0, "", false as falsy.</div>
+            </div>
+
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">Advanced &amp; Async (Q21–Q40)</div>
+        <div class="card-body hidden">
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q21. Explain the Event Loop.</div>
+                <div class="answer">JS is <b>single-threaded</b> with a non-blocking event loop.<br><b>Call Stack</b>: Executes sync code.<br><b>Microtask Queue</b>: Promise.then, queueMicrotask, MutationObserver — runs after stack empties, <b>before</b> macrotasks.<br><b>Macrotask Queue</b>: setTimeout, setInterval, I/O — runs ONE, then checks microtasks again.<br><br><b>Classic output question:</b><br><code>console.log(1); setTimeout(()=>console.log(2),0); Promise.resolve().then(()=>console.log(3)); console.log(4);</code><br>Output: <b>1, 4, 3, 2</b></div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q22. What is a Promise? Explain its states.</div>
+                <div class="answer">A Promise represents the eventual result of an async operation.<br><b>3 States:</b><br>• <b>Pending</b> — initial state, not yet settled<br>• <b>Fulfilled</b> — operation succeeded (resolved)<br>• <b>Rejected</b> — operation failed<br>Once settled (fulfilled/rejected), it <b>cannot change</b>.<br>Consume with <code>.then()</code>, <code>.catch()</code>, <code>.finally()</code>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q23. What is async/await?</div>
+                <div class="answer"><b>Syntactic sugar</b> over Promises.<br><code>async</code> makes a function return a Promise.<br><code>await</code> pauses execution until Promise resolves.<br>Use <code>try/catch</code> for error handling.<br>Use <code>Promise.all()</code> for parallel execution.<br><b>Rule:</b> <code>await</code> only works inside <code>async</code> functions (or top-level in ES modules).</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q24. What is the difference between Promise.all, Promise.allSettled, Promise.race, and Promise.any?</div>
+                <div class="answer"><b>Promise.all</b>: Resolves when ALL resolve. Rejects if ANY one rejects.<br><b>Promise.allSettled</b>: Waits for ALL to settle (never rejects). Returns array of {status, value/reason}.<br><b>Promise.race</b>: Resolves/rejects with the FIRST one to settle.<br><b>Promise.any</b>: Resolves with FIRST to succeed. Only rejects if ALL reject.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q25. What is the prototype chain?</div>
+                <div class="answer">Every JS object has a hidden <code>[[Prototype]]</code> link. When accessing a property, JS looks at the object first, then walks up the chain: <code>object → Object.prototype → null</code>.<br>This is how inheritance works.<br>ES6 classes are <b>syntactic sugar</b> over prototypal inheritance.<br><code>dog.__proto__ === Animal.prototype</code></div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q26. What is debouncing and throttling?</div>
+                <div class="answer"><b>Debounce</b>: Delays execution until user <b>stops</b> triggering for N ms. Resets timer on each call. Use for: search input, form validation, resize.<br><b>Throttle</b>: Executes at most <b>once per N ms</b> during continuous triggering. Use for: scroll, mousemove, button clicks.<br>Both use closures and setTimeout internally.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q27. What is currying?</div>
+                <div class="answer">Transforming a function with multiple arguments into a sequence of functions each taking one argument: <code>f(a,b,c)</code> → <code>f(a)(b)(c)</code>.<br>Benefits: Reusability, partial application, function composition.<br>Example: <code>const multiply = a => b => a * b; const double = multiply(2); double(5) // 10</code></div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q28. What is memoization?</div>
+                <div class="answer">Caching function results based on inputs to avoid expensive recalculations.<br>
+<pre>
+function memoize(fn) {
+    const cache = {};
+    return function(...args) {
+        const key = JSON.stringify(args);
+        if (key in cache) return cache[key];
+        cache[key] = fn.apply(this, args);
+        return cache[key];
+    };
+}
+const fastFib = memoize(fib);
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q29. What is the difference between textContent, innerText, and innerHTML?</div>
+                <div class="answer"><b>textContent</b>: All text including hidden. No HTML parsing. Fast. <b>Safe from XSS</b>. Recommended for setting text.<br><b>innerText</b>: Only visible text (respects CSS display:none). Triggers reflow. Slower.<br><b>innerHTML</b>: Full HTML string. <b>Parses HTML</b>. ⚠️ XSS risk if inserting user input. Use for HTML content.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q30. What is the Fetch API?</div>
+                <div class="answer">Modern replacement for XMLHttpRequest. Returns a <b>Promise</b>.<br><code>fetch(url)</code> → Response object.<br><code>response.json()</code>, <code>.text()</code>, <code>.blob()</code> to parse body.<br>⚠️ <code>fetch</code> does NOT reject on HTTP errors (404, 500). Check <code>response.ok</code>.<br>Use <code>AbortController</code> to cancel requests.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q31. What is the difference between localStorage and sessionStorage?</div>
+                <div class="answer"><b>localStorage</b>: Persists <b>forever</b> until manually cleared. Shared across tabs of same origin. ~5-10MB.<br><b>sessionStorage</b>: Cleared when <b>tab closes</b>. Per-tab, not shared. ~5-10MB.<br>Both: Key-value strings only (use <code>JSON.stringify/parse</code> for objects). Synchronous API. Client-side only.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q32. What is the difference between setTimeout(fn, 0) and Promise.resolve().then(fn)?</div>
+                <div class="answer"><code>setTimeout(fn, 0)</code>: Goes to <b>macrotask</b> queue.<br><code>Promise.then(fn)</code>: Goes to <b>microtask</b> queue.<br>Microtasks ALWAYS execute before macrotasks. So <code>Promise.then</code> runs first even though both have "zero delay".<br><code>console.log(1); setTimeout(()=>console.log(2),0); Promise.resolve().then(()=>console.log(3));</code><br>Output: 1, 3, 2</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q33. What is Object.freeze() vs Object.seal()?</div>
+                <div class="answer"><b>Object.freeze()</b>: Can't add, remove, OR modify properties. Completely immutable (shallow only!).<br><b>Object.seal()</b>: Can't add or remove, but CAN modify existing properties.<br>Both are <b>shallow</b> — nested objects are still mutable. Use <code>structuredClone</code> + freeze for deep immutability.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q34. What is the difference between slice() and splice()?</div>
+                <div class="answer"><b>slice(start, end)</b>: Returns <b>new array</b> (portion). Does NOT mutate. <code>[1,2,3,4].slice(1,3)</code> → <code>[2,3]</code><br><b>splice(start, deleteCount, ...items)</b>: <b>Mutates</b> original array. Adds/removes in place. Returns removed items. <code>[1,2,3].splice(1,1,'a')</code> → array becomes <code>[1,'a',3]</code></div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q35. What is the output? (Classic closure + loop)</div>
+                <div class="answer">
+<pre>
+for (var i = 0; i < 3; i++) {
+    setTimeout(() => console.log(i), 100);
+}
+// Output: 3, 3, 3
+</pre>
+<b>Why?</b> <code>var</code> is function-scoped. By the time setTimeout runs, loop is done and <code>i === 3</code>.<br><b>Fix 1:</b> Use <code>let</code> (block-scoped, new binding each iteration).<br><b>Fix 2:</b> IIFE: <code>(function(j){ setTimeout(()=>console.log(j),100) })(i)</code><br><b>Fix 3:</b> <code>setTimeout(console.log, 100, i)</code> (third arg).</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q36. What is a higher-order function?</div>
+                <div class="answer">A function that <b>takes a function as argument</b> or <b>returns a function</b>.<br>Examples: <code>map</code>, <code>filter</code>, <code>reduce</code>, <code>forEach</code>, <code>sort</code>, <code>addEventListener</code>.<br>Custom: <code>function multiplier(x) { return (y) => x * y; }</code><br>Foundation of functional programming in JS.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q37. What is the difference between a function declaration and expression?</div>
+                <div class="answer"><b>Declaration</b>: <code>function greet() {}</code> — <b>Fully hoisted</b>. Can call before definition.<br><b>Expression</b>: <code>const greet = function() {}</code> — <b>NOT hoisted</b>. Can't call before definition (TDZ).<br><b>Arrow</b>: <code>const greet = () => {}</code> — Also an expression. NOT hoisted. No own <code>this</code>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q38. Explain JavaScript's garbage collection.</div>
+                <div class="answer">JS automatically frees memory when objects are <b>no longer reachable</b> (no references pointing to them).<br>Uses <b>mark-and-sweep</b> algorithm: starting from roots (global, stack), marks all reachable objects, then sweeps (frees) unreachable ones.<br><b>Memory leaks</b> happen when you accidentally keep references: global variables, forgotten timers/intervals, closures holding large data, detached DOM nodes.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q39. What is event.preventDefault() vs event.stopPropagation()?</div>
+                <div class="answer"><b>preventDefault()</b>: Stops the <b>default browser behavior</b> (form submit, link navigation, checkbox toggle). Event still propagates.<br><b>stopPropagation()</b>: Stops the event from <b>bubbling up</b> to parent elements. Default behavior still happens.<br>Use both together when needed: prevent action AND stop bubbling.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q40. Implement a polyfill for Promise.all</div>
+                <div class="answer">
+<pre>
+function promiseAll(promises) {
+    return new Promise((resolve, reject) => {
+        const results = [];
+        let completed = 0;
+        if (promises.length === 0) return resolve([]);
+        promises.forEach((p, i) => {
+            Promise.resolve(p)
+                .then(value => {
+                    results[i] = value;
+                    completed++;
+                    if (completed === promises.length) {
+                        resolve(results);
+                    }
+                })
+                .catch(reject); // first rejection rejects all
+        });
+    });
+}
+</pre>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">Coding &amp; Tricky Output (Q41–Q55)</div>
+        <div class="card-body hidden">
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q41. Implement debounce from scratch.</div>
+                <div class="answer">
+<pre>
+function debounce(fn, delay) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+// Usage: const search = debounce(apiCall, 300);
+</pre>
+Key: Uses <b>closure</b> to remember <code>timer</code>. <code>clearTimeout</code> resets on every call. <code>fn.apply(this, args)</code> preserves context.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q42. Implement throttle from scratch.</div>
+                <div class="answer">
+<pre>
+function throttle(fn, limit) {
+    let inThrottle = false;
+    return function(...args) {
+        if (!inThrottle) {
+            fn.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+// Usage: const onScroll = throttle(handler, 200);
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q43. Implement Array.prototype.map polyfill.</div>
+                <div class="answer">
+<pre>
+Array.prototype.myMap = function(callback) {
+    const result = [];
+    for (let i = 0; i &lt; this.length; i++) {
+        result.push(callback(this[i], i, this));
+    }
+    return result;
+};
+
+[1,2,3].myMap(x => x * 2); // [2,4,6]
+</pre>
+Similarly for <code>filter</code>: push only if <code>callback</code> returns truthy. For <code>reduce</code>: accumulate with initial value.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q44. Implement Function.prototype.bind polyfill.</div>
+                <div class="answer">
+<pre>
+Function.prototype.myBind = function(context, ...args) {
+    const fn = this;
+    return function(...newArgs) {
+        return fn.apply(context, [...args, ...newArgs]);
+    };
+};
+
+function greet(greeting) {
+    return `${greeting}, ${this.name}`;
+}
+const bound = greet.myBind({name:"Alice"});
+bound("Hello"); // "Hello, Alice"
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q45. Flatten a nested array.</div>
+                <div class="answer">
+<pre>
+// Method 1: Built-in
+[1,[2,[3,[4]]]].flat(Infinity); // [1,2,3,4]
+
+// Method 2: Recursive
+function flatten(arr) {
+    return arr.reduce((acc, val) =>
+        Array.isArray(val)
+            ? acc.concat(flatten(val))
+            : acc.concat(val)
+    , []);
+}
+
+// Method 3: Stack
+function flattenStack(arr) {
+    const stack = [...arr];
+    const result = [];
+    while (stack.length) {
+        const item = stack.pop();
+        Array.isArray(item)
+            ? stack.push(...item)
+            : result.unshift(item);
+    }
+    return result;
+}
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q46. Remove duplicates from an array.</div>
+                <div class="answer">
+<pre>
+const arr = [1, 2, 2, 3, 3, 4];
+
+// Method 1: Set (best)
+[...new Set(arr)]; // [1,2,3,4]
+
+// Method 2: filter
+arr.filter((v, i) => arr.indexOf(v) === i);
+
+// Method 3: reduce
+arr.reduce((acc, v) =>
+    acc.includes(v) ? acc : [...acc, v], []);
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q47. What is the output?</div>
+                <div class="answer">
+<pre>
+console.log(typeof typeof 1);
+</pre>
+Output: <b>"string"</b><br>
+<code>typeof 1</code> → <code>"number"</code> (a string).<br>
+<code>typeof "number"</code> → <code>"string"</code>.<br>
+<code>typeof</code> always returns a string!</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q48. What is the output?</div>
+                <div class="answer">
+<pre>
+const a = {};
+const b = { key: "b" };
+const c = { key: "c" };
+a[b] = 123;
+a[c] = 456;
+console.log(a[b]);
+</pre>
+Output: <b>456</b><br>
+Object keys are strings. Both <code>b</code> and <code>c</code> convert to <code>"[object Object]"</code> → same key! So <code>a[c]</code> overwrites <code>a[b]</code>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q49. Implement a simple pub/sub (EventEmitter).</div>
+                <div class="answer">
+<pre>
+class EventEmitter {
+    constructor() { this.events = {}; }
+
+    on(event, fn) {
+        if (!this.events[event]) this.events[event] = [];
+        this.events[event].push(fn);
+    }
+
+    emit(event, ...args) {
+        (this.events[event] || []).forEach(fn => fn(...args));
+    }
+
+    off(event, fn) {
+        this.events[event] = (this.events[event] || [])
+            .filter(f => f !== fn);
+    }
+}
+
+const emitter = new EventEmitter();
+emitter.on("greet", name => console.log(`Hi ${name}`));
+emitter.emit("greet", "Alice"); // "Hi Alice"
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q50. What is the output?</div>
+                <div class="answer">
+<pre>
+let x = 1;
+let y = { valueOf() { return 2; } };
+console.log(x + y);    // 3
+console.log(`${y}`);   // "[object Object]"
+</pre>
+<b>+</b> operator calls <code>valueOf()</code> → returns 2 → 1+2 = <b>3</b>.<br>
+Template literal calls <code>toString()</code>, not <code>valueOf()</code> → <b>"[object Object]"</b>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q51. Implement a pipe function.</div>
+                <div class="answer">
+<pre>
+const pipe = (...fns) => (x) =>
+    fns.reduce((val, fn) => fn(val), x);
+
+const transform = pipe(
+    x => x + 1,
+    x => x * 2,
+    x => x.toString()
+);
+transform(3); // "8" → (3+1)*2 = 8 → "8"
+</pre>
+<b>compose</b> is the same but uses <code>reduceRight</code> (right to left).</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q52. Implement deep clone.</div>
+                <div class="answer">
+<pre>
+// Best: structuredClone(obj) — native, modern
+
+// Manual recursive:
+function deepClone(obj) {
+    if (obj === null || typeof obj !== "object") return obj;
+    if (obj instanceof Date) return new Date(obj);
+    if (obj instanceof Array) return obj.map(deepClone);
+    const clone = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key))
+            clone[key] = deepClone(obj[key]);
+    }
+    return clone;
+}
+</pre>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q53. What is the difference between Object.keys, Object.values, Object.entries?</div>
+                <div class="answer"><code>Object.keys(obj)</code> → array of <b>keys</b>: <code>["name","age"]</code><br><code>Object.values(obj)</code> → array of <b>values</b>: <code>["Alice",25]</code><br><code>Object.entries(obj)</code> → array of <b>[key,value] pairs</b>: <code>[["name","Alice"],["age",25]]</code><br>All return own enumerable string-keyed properties only.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-medium">Medium</span> Q54. What is IIFE and why use it?</div>
+                <div class="answer"><b>Immediately Invoked Function Expression</b>: <code>(function(){ ... })()</code><br>Runs immediately, creates its own scope, doesn't pollute global namespace.<br><b>Uses:</b> Module pattern (pre-ES6), initialization code, avoiding global variable conflicts, creating private scope.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question"><span class="tag tag-js">JS</span><span class="tag tag-hard">Hard</span> Q55. What is the output?</div>
+                <div class="answer">
+<pre>
+console.log([] == ![]);   // true
+console.log([] == false); // true
+console.log({} == !{});   // false
+</pre>
+<code>![]</code> → <code>false</code> ([] is truthy). <code>[] == false</code> → both coerce to 0 → <b>true</b>.<br>
+<code>!{}</code> → <code>false</code>. <code>{} == false</code> → {} coerces to NaN → <b>false</b>.<br>
+This is why you should <b>always use ===</b>!</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Priority Cheatsheet -->
+    <h2 class="section-title">📋 Interview Priority Cheatsheet</h2>
+
+    <div class="card qa-card searchable">
+        <div class="card-header collapsed" onclick="toggle(this)">🔑 Most Asked Topics — Priority List</div>
+        <div class="card-body hidden">
+            <div class="table-wrapper">
+                <table>
+                    <tr><th>Priority</th><th>Topic</th><th>Questions</th></tr>
+                    <tr><td>🔴 Must Know</td><td>Closures</td><td>Q5, Q35</td></tr>
+                    <tr><td>🔴 Must Know</td><td>this keyword</td><td>Q6, Q9</td></tr>
+                    <tr><td>🔴 Must Know</td><td>Event Loop / Async</td><td>Q21, Q32</td></tr>
+                    <tr><td>🔴 Must Know</td><td>Promises &amp; async/await</td><td>Q22, Q23, Q24</td></tr>
+                    <tr><td>🔴 Must Know</td><td>var/let/const &amp; Hoisting</td><td>Q3, Q4</td></tr>
+                    <tr><td>🔴 Must Know</td><td>== vs === &amp; Coercion</td><td>Q2, Q14</td></tr>
+                    <tr><td>🔴 Must Know</td><td>map/filter/reduce</td><td>Q13, Q43</td></tr>
+                    <tr><td>🟡 Important</td><td>Prototypes &amp; Classes</td><td>Q25</td></tr>
+                    <tr><td>🟡 Important</td><td>Event Delegation/Bubbling</td><td>Q16, Q17</td></tr>
+                    <tr><td>🟡 Important</td><td>Debounce &amp; Throttle</td><td>Q26, Q41, Q42</td></tr>
+                    <tr><td>🟡 Important</td><td>Shallow vs Deep Copy</td><td>Q15, Q52</td></tr>
+                    <tr><td>🟡 Important</td><td>Spread/Rest &amp; Destructuring</td><td>Q11, Q12</td></tr>
+                    <tr><td>🟡 Important</td><td>Arrow Functions</td><td>Q8</td></tr>
+                    <tr><td>🟡 Important</td><td>localStorage/sessionStorage</td><td>Q31</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Currying &amp; Composition</td><td>Q27, Q51</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Polyfills (bind, map, Promise.all)</td><td>Q40, Q43, Q44</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Memoization</td><td>Q28</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Generators &amp; Proxy</td><td>Concepts Tab</td></tr>
+                    <tr><td>🟢 Good to Know</td><td>Garbage Collection</td><td>Q38</td></tr>
+                </table>
+            </div>
+            <div class="tip">💡 <b>Interview tip:</b> For any question, always try to give a <b>definition → example → use case</b>. Mention edge cases and common pitfalls. If asked to code, talk through your approach first.</div>
+        </div>
+    </div>
+
+</div><!-- end Q&A tab -->
+
+
+<p style="text-align:center; color:#484f58; margin-top:30px; font-size:0.8rem;">— End of JavaScript Interview Notes — Good luck! 🚀 —</p>
+
+
+<script>
+    // Tab Switching
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+        document.getElementById('tab-' + tabName).classList.add('active');
+
+        const btnMap = {
+            'basics': '.tab-btn:not(.adv-btn):not(.dom-btn):not(.async-btn):not(.qa-btn)',
+            'advanced': '.adv-btn',
+            'dom': '.dom-btn',
+            'async': '.async-btn',
+            'qa': '.qa-btn'
+        };
+        const btn = document.querySelector(btnMap[tabName]);
+        if (btn) btn.classList.add('active');
+    }
+
+    // Card Toggle
+    function toggle(header) {
+        const body = header.nextElementSibling;
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+    }
+
+    // Search
+    function searchCards() {
+        const query = document.getElementById('searchBox').value.toLowerCase();
+        document.querySelectorAll('.searchable').forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(query) ? '' : 'none';
+        });
+
+        if (query.length > 0) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('active'));
+        } else {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-basics').classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.tab-btn:not(.adv-btn):not(.dom-btn):not(.async-btn):not(.qa-btn)').classList.add('active');
+        }
+    }
+
+    // Progress Bar
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        document.getElementById('progressBar').style.width = progress + '%';
+    });
+</script>
+
+</body>
+</html>

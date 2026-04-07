@@ -66,6 +66,21 @@
             color: white; padding: 20px 25px; cursor: pointer;
             display: flex; justify-content: space-between; align-items: center; user-select: none;
         }
+        .section-header.green-header {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+        }
+        .section-header.orange-header {
+            background: linear-gradient(135deg, #e65100 0%, #bf360c 100%);
+        }
+        .section-header.purple-header {
+            background: linear-gradient(135deg, #6a1b9a 0%, #4a148c 100%);
+        }
+        .section-header.red-header {
+            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+        }
+        .section-header.teal-header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+        }
         .section-header h2 { font-size: 1.4em; display: flex; align-items: center; gap: 10px; }
         .section-header .toggle { font-size: 1.5em; transition: transform 0.3s; }
         .section-header.active .toggle { transform: rotate(180deg); }
@@ -86,6 +101,22 @@
         .interview-box::before { content: '🎯 Interview Question'; display: block; font-weight: bold; color: #e65100; margin-bottom: 8px; font-size: 0.95em; }
         .interview-box .q { font-weight: bold; color: var(--dark); margin-bottom: 5px; }
         .interview-box .a { color: #1b5e20; padding-left: 15px; border-left: 3px solid var(--secondary); }
+        .hr-box {
+            background: linear-gradient(135deg, #e8eaf6 0%, #e3f2fd 100%);
+            border: 2px solid #5c6bc0; padding: 18px 22px;
+            border-radius: var(--radius-sm); margin: 18px 0;
+        }
+        .hr-box::before { content: '🧑‍💼 HR Question'; display: block; font-weight: bold; color: #283593; margin-bottom: 8px; font-size: 0.95em; }
+        .hr-box .q { font-weight: bold; color: var(--dark); margin-bottom: 5px; }
+        .hr-box .a { color: #1a237e; padding-left: 15px; border-left: 3px solid #5c6bc0; }
+        .scenario-box {
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            border: 2px solid #e91e63; padding: 18px 22px;
+            border-radius: var(--radius-sm); margin: 18px 0;
+        }
+        .scenario-box::before { content: '🎯 Scenario Question'; display: block; font-weight: bold; color: #880e4f; margin-bottom: 8px; font-size: 0.95em; }
+        .scenario-box .q { font-weight: bold; color: var(--dark); margin-bottom: 5px; }
+        .scenario-box .a { color: #1b5e20; padding-left: 15px; border-left: 3px solid var(--secondary); font-weight: 600; }
         .styled-table { width: 100%; border-collapse: collapse; margin: 15px 0; border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
         .styled-table thead { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; }
         .styled-table th, .styled-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e0e0e0; }
@@ -104,6 +135,7 @@
         .tag-green { background: #e8f5e9; color: #2e7d32; }
         .tag-orange { background: #fff3e0; color: #e65100; }
         .tag-red { background: #fce4ec; color: #c62828; }
+        .tag-purple { background: #f3e5f5; color: #6a1b9a; }
         .revision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
         .revision-card { background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: var(--radius-sm); padding: 18px; border: 1px solid #e0e0e0; }
         .revision-card h4 { color: var(--primary-dark); margin: 0 0 8px; }
@@ -129,6 +161,24 @@
         .progress-section { background: white; border-radius: var(--radius); padding: 20px 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
         .progress-bar-bg { background: var(--light-gray); border-radius: 10px; height: 20px; overflow: hidden; margin-top: 10px; }
         .progress-bar-fill { background: linear-gradient(90deg, var(--secondary), #66bb6a); height: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75em; font-weight: bold; }
+        .question-counter {
+            display: inline-block; background: var(--primary); color: white;
+            width: 32px; height: 32px; border-radius: 50%; text-align: center;
+            line-height: 32px; font-size: 0.85em; font-weight: bold; margin-right: 8px;
+            flex-shrink: 0;
+        }
+        .question-counter.hr-counter { background: #5c6bc0; }
+        .question-counter.scenario-counter { background: #e91e63; }
+        .category-divider {
+            background: linear-gradient(135deg, var(--primary-light) 0%, #f3e5f5 100%);
+            border-radius: var(--radius-sm); padding: 15px 20px; margin: 25px 0 15px;
+            border-left: 5px solid var(--primary); display: flex; align-items: center; gap: 10px;
+        }
+        .category-divider h3 { margin: 0; border: none; padding: 0; }
+        .category-divider .cat-count {
+            background: var(--primary); color: white; padding: 3px 12px;
+            border-radius: 15px; font-size: 0.8em; font-weight: bold;
+        }
         @media print {
             body { background: white; }
             .hero { padding: 20px; }
@@ -155,7 +205,7 @@
 <div class="container">
 
     <div class="progress-section">
-        <strong>📊 CSA Syllabus Coverage: 100% Complete</strong>
+        <strong>📊 CSA Syllabus Coverage: 100% Complete | 63 Interview Questions Included</strong>
         <div class="progress-bar-bg">
             <div class="progress-bar-fill" style="width:100%;">100%</div>
         </div>
@@ -185,6 +235,7 @@
             <a href="#s13"><span class="toc-num">13</span> Interview Questions & Answers</a>
             <a href="#s14"><span class="toc-num">14</span> Scenario-Based Questions</a>
             <a href="#s15"><span class="toc-num">15</span> Quick Revision Cheat Sheet</a>
+            <a href="#s16"><span class="toc-num" style="background:#e91e63;">16</span> 🚀 63 Filtered CSA Interview Q&A</a>
         </div>
     </div>
 
@@ -950,6 +1001,439 @@
                     <li><strong>Revise strongly:</strong> UI Policy, ACL, Service Catalog, Tables & Relationships, Users/Roles</li>
                     <li>Practice speaking answers out loud before interview</li>
                     <li>For scenarios: identify the <strong>tool</strong> first (UI Policy / ACL / Notification / Import Set)</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============ SECTION 16 - NEW 63 FILTERED QUESTIONS ============ -->
+    <div class="section-card" id="s16">
+        <div class="section-header orange-header" onclick="toggleSection(this)">
+            <h2>🚀 16. Filtered CSA Interview Questions + Answers (63 Questions)</h2>
+            <span class="toggle">▼</span>
+        </div>
+        <div class="section-body">
+
+            <div class="danger-box">
+                <strong>⚡ This section contains 63 carefully filtered questions covering HR, Technical, and Scenario-based questions. Perfect for last-minute revision before your TCS Prime NQT interview!</strong>
+            </div>
+
+            <!-- ===== HR QUESTIONS ===== -->
+            <div class="category-divider" style="border-left-color: #5c6bc0;">
+                <h3 style="color: #283593;">🧑‍💼 BASIC HR QUESTIONS</h3>
+                <span class="cat-count" style="background: #5c6bc0;">Q1 – Q5</span>
+            </div>
+
+            <div class="hr-box">
+                <div class="q"><span class="question-counter hr-counter">1</span> Tell me about yourself</div>
+                <div class="a">I am a B.Tech CSE final-year student. I have completed ServiceNow CSA and CAD certifications. I have hands-on experience working on my developer instance where I created incidents, UI policies, ACLs, and service catalog items. I am interested in working as a ServiceNow administrator or developer.</div>
+            </div>
+
+            <div class="hr-box">
+                <div class="q"><span class="question-counter hr-counter">2</span> Why did you choose ServiceNow?</div>
+                <div class="a">ServiceNow is a leading cloud platform used by many companies for IT service management. It has strong career opportunities and allows automation of business processes.</div>
+            </div>
+
+            <div class="hr-box">
+                <div class="q"><span class="question-counter hr-counter">3</span> Why should we hire you?</div>
+                <div class="a">I have both certification and hands-on practice. I understand core concepts like tables, ACLs, and service catalog, and I am eager to learn and contribute.</div>
+            </div>
+
+            <div class="hr-box">
+                <div class="q"><span class="question-counter hr-counter">4</span> Strengths and weaknesses?</div>
+                <div class="a"><strong>Strength:</strong> Quick learner, problem-solving.<br><strong>Weakness:</strong> Sometimes spend more time on perfection.</div>
+            </div>
+
+            <div class="hr-box">
+                <div class="q"><span class="question-counter hr-counter">5</span> Career goals?</div>
+                <div class="a">To become a skilled ServiceNow professional and grow into advanced roles.</div>
+            </div>
+
+            <!-- ===== SERVICENOW BASICS ===== -->
+            <div class="category-divider">
+                <h3>🌐 SERVICENOW BASICS</h3>
+                <span class="cat-count">Q6 – Q10</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">6</span> What is ServiceNow?</div>
+                <div class="a">ServiceNow is a cloud-based platform used for ITSM to manage services, workflows, and automation.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">7</span> What is ITSM?</div>
+                <div class="a">ITSM is managing IT services like incidents, problems, and changes.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">8</span> What is CMDB?</div>
+                <div class="a">CMDB stores configuration items and their relationships.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">9</span> What is an Instance?</div>
+                <div class="a">A ServiceNow instance is an environment with its own database and configurations.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">10</span> What is Service Portal?</div>
+                <div class="a">It is a user interface where users can raise requests and access services.</div>
+            </div>
+
+            <!-- ===== TABLES & DATABASE ===== -->
+            <div class="category-divider" style="border-left-color: #2e7d32;">
+                <h3 style="color: #1b5e20;">🗂️ TABLES & DATABASE</h3>
+                <span class="cat-count" style="background: #2e7d32;">Q11 – Q18</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">11</span> What is a table?</div>
+                <div class="a">A table stores data in rows and columns.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">12</span> Difference between row and column?</div>
+                <div class="a"><strong>Row</strong> = record, <strong>Column</strong> = field</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">13</span> Types of tables?</div>
+                <div class="a">Base table, Extended table, Custom table</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">14</span> What is Dictionary?</div>
+                <div class="a">It defines field properties like type, length, and behavior.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">15</span> What are field types?</div>
+                <div class="a">String, Integer, Reference, Choice, Date/Time</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">16</span> What is table extension?</div>
+                <div class="a">One table inherits fields from another (e.g., Incident extends Task).</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">17</span> What is sys_id?</div>
+                <div class="a">A unique 32-character ID for each record.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">18</span> What is reference field?</div>
+                <div class="a">It links one table to another.</div>
+            </div>
+
+            <!-- ===== USERS, GROUPS, ROLES ===== -->
+            <div class="category-divider" style="border-left-color: #6a1b9a;">
+                <h3 style="color: #4a148c;">👥 USERS, GROUPS, ROLES</h3>
+                <span class="cat-count" style="background: #6a1b9a;">Q19 – Q23</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">19</span> What is a user?</div>
+                <div class="a">A person who logs into ServiceNow.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">20</span> What is a group?</div>
+                <div class="a">A collection of users.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">21</span> What is a role?</div>
+                <div class="a">A role defines permissions.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">22</span> Difference: user vs group vs role?</div>
+                <div class="a"><strong>User</strong> → individual<br><strong>Group</strong> → collection<br><strong>Role</strong> → access control</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">23</span> What is admin role?</div>
+                <div class="a">It provides full access to the system.</div>
+            </div>
+
+            <!-- ===== SECURITY ===== -->
+            <div class="category-divider" style="border-left-color: #c62828;">
+                <h3 style="color: #b71c1c;">🔐 SECURITY (VERY IMPORTANT)</h3>
+                <span class="cat-count" style="background: #c62828;">Q24 – Q30</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">24</span> What is ACL?</div>
+                <div class="a">ACL controls access to records and fields.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">25</span> Why use ACL?</div>
+                <div class="a">To restrict unauthorized access.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">26</span> Types of ACL?</div>
+                <div class="a">Read, Write, Create, Delete</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">27</span> Table vs Field ACL?</div>
+                <div class="a"><strong>Table ACL</strong> → entire table<br><strong>Field ACL</strong> → specific field</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">28</span> Role-based access control?</div>
+                <div class="a">Access is given based on assigned roles.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">29</span> What is security_admin?</div>
+                <div class="a">Role required to create/modify ACLs.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">30</span> What is elevated role?</div>
+                <div class="a">Temporary privilege for sensitive operations.</div>
+            </div>
+
+            <!-- ===== UI & POLICIES ===== -->
+            <div class="category-divider" style="border-left-color: #e65100;">
+                <h3 style="color: #bf360c;">🎛️ UI & POLICIES</h3>
+                <span class="cat-count" style="background: #e65100;">Q31 – Q33</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">31</span> What is UI Policy?</div>
+                <div class="a">Used to control field behavior dynamically without coding.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">32</span> What is Data Policy?</div>
+                <div class="a">Enforces data rules on both UI and server side.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">33</span> UI Policy vs Data Policy?</div>
+                <div class="a"><strong>UI Policy</strong> → UI only<br><strong>Data Policy</strong> → UI + backend</div>
+            </div>
+
+            <!-- ===== SERVICE CATALOG ===== -->
+            <div class="category-divider" style="border-left-color: #00695c;">
+                <h3 style="color: #004d40;">🛒 SERVICE CATALOG</h3>
+                <span class="cat-count" style="background: #00695c;">Q34 – Q37</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">34</span> What is Service Catalog?</div>
+                <div class="a">Used to create request forms.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">35</span> What is Catalog Item?</div>
+                <div class="a">A request form for users.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">36</span> What is Record Producer?</div>
+                <div class="a">Creates records in a table using a form.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">37</span> What are Variables?</div>
+                <div class="a">Input fields in catalog items.</div>
+            </div>
+
+            <!-- ===== NOTIFICATIONS ===== -->
+            <div class="category-divider" style="border-left-color: #1565c0;">
+                <h3 style="color: #0d47a1;">📩 NOTIFICATIONS</h3>
+                <span class="cat-count" style="background: #1565c0;">Q38 – Q40</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">38</span> What is Notification?</div>
+                <div class="a">Sends automated emails based on triggers.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">39</span> When are notifications triggered?</div>
+                <div class="a">On record insert/update or events.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">40</span> What is Event?</div>
+                <div class="a">A trigger that initiates notifications.</div>
+            </div>
+
+            <!-- ===== IMPORT SET ===== -->
+            <div class="category-divider" style="border-left-color: #2e7d32;">
+                <h3 style="color: #1b5e20;">📥 IMPORT SET</h3>
+                <span class="cat-count" style="background: #2e7d32;">Q41 – Q44</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">41</span> What is Import Set?</div>
+                <div class="a">Used to load external data.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">42</span> What is Transform Map?</div>
+                <div class="a">Maps import data to target table.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">43</span> Steps to import Excel?</div>
+                <div class="a">Load file → Create import set → Transform → Map fields</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">44</span> What is Coalesce?</div>
+                <div class="a">Used to update existing records instead of creating new ones.</div>
+            </div>
+
+            <!-- ===== REPORTS ===== -->
+            <div class="category-divider" style="border-left-color: #6a1b9a;">
+                <h3 style="color: #4a148c;">📊 REPORTS</h3>
+                <span class="cat-count" style="background: #6a1b9a;">Q45 – Q48</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">45</span> What is Report?</div>
+                <div class="a">Used to visualize data.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">46</span> Types of Reports?</div>
+                <div class="a">Bar, Pie, List</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">47</span> What is Dashboard?</div>
+                <div class="a">Collection of reports.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">48</span> Report vs Dashboard?</div>
+                <div class="a"><strong>Report</strong> → single visualization<br><strong>Dashboard</strong> → multiple reports</div>
+            </div>
+
+            <!-- ===== INCIDENT MANAGEMENT ===== -->
+            <div class="category-divider" style="border-left-color: #c62828;">
+                <h3 style="color: #b71c1c;">🛠️ INCIDENT MANAGEMENT</h3>
+                <span class="cat-count" style="background: #c62828;">Q49 – Q52</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">49</span> What is Incident?</div>
+                <div class="a">An unplanned interruption in service.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">50</span> What is Problem?</div>
+                <div class="a">Root cause of incidents.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">51</span> Incident vs Problem?</div>
+                <div class="a"><strong>Incident</strong> → fix quickly<br><strong>Problem</strong> → find cause</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">52</span> Incident lifecycle?</div>
+                <div class="a">
+                    <div class="flow" style="margin:5px 0;">
+                        <span class="flow-item">New</span><span class="flow-arrow">→</span>
+                        <span class="flow-item">In Progress</span><span class="flow-arrow">→</span>
+                        <span class="flow-item">Resolved</span><span class="flow-arrow">→</span>
+                        <span class="flow-item">Closed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== UPDATE SETS ===== -->
+            <div class="category-divider" style="border-left-color: #e65100;">
+                <h3 style="color: #bf360c;">🔄 UPDATE SETS</h3>
+                <span class="cat-count" style="background: #e65100;">Q53 – Q56</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">53</span> What is Update Set?</div>
+                <div class="a">Used to move configurations between instances.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">54</span> Why use Update Set?</div>
+                <div class="a">To migrate changes.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">55</span> What is Preview?</div>
+                <div class="a">Check conflicts before applying.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">56</span> What is Commit?</div>
+                <div class="a">Apply changes to target instance.</div>
+            </div>
+
+            <!-- ===== FLOW / WORKFLOW ===== -->
+            <div class="category-divider" style="border-left-color: #00695c;">
+                <h3 style="color: #004d40;">🔄 FLOW / WORKFLOW (CSA LEVEL)</h3>
+                <span class="cat-count" style="background: #00695c;">Q57 – Q58</span>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">57</span> What is Workflow?</div>
+                <div class="a">Automation of processes.</div>
+            </div>
+
+            <div class="interview-box">
+                <div class="q"><span class="question-counter">58</span> What is Flow Designer?</div>
+                <div class="a">Low-code automation tool.</div>
+            </div>
+
+            <!-- ===== SCENARIO QUESTIONS ===== -->
+            <div class="category-divider" style="border-left-color: #e91e63;">
+                <h3 style="color: #880e4f;">🎯 SCENARIO QUESTIONS (VERY IMPORTANT)</h3>
+                <span class="cat-count" style="background: #e91e63;">Q59 – Q63</span>
+            </div>
+
+            <div class="scenario-box">
+                <div class="q"><span class="question-counter scenario-counter">59</span> Make field mandatory based on condition</div>
+                <div class="a">✅ Use <strong>UI Policy</strong></div>
+            </div>
+
+            <div class="scenario-box">
+                <div class="q"><span class="question-counter scenario-counter">60</span> Restrict access to a field</div>
+                <div class="a">✅ Use <strong>ACL</strong></div>
+            </div>
+
+            <div class="scenario-box">
+                <div class="q"><span class="question-counter scenario-counter">61</span> Send email on incident creation</div>
+                <div class="a">✅ Use <strong>Notification</strong></div>
+            </div>
+
+            <div class="scenario-box">
+                <div class="q"><span class="question-counter scenario-counter">62</span> Import large data</div>
+                <div class="a">✅ Use <strong>Import Set</strong></div>
+            </div>
+
+            <div class="scenario-box">
+                <div class="q"><span class="question-counter scenario-counter">63</span> Stop record from saving</div>
+                <div class="a">✅ Use <strong>Business Rule</strong> (basic concept)</div>
+            </div>
+
+            <hr>
+
+            <div class="success-box">
+                <strong>🎉 Congratulations!</strong> You have covered all 63 filtered CSA interview questions. Revise this section 2-3 times before your interview. Focus especially on:
+                <ul>
+                    <li>🔐 Security (ACL) — Q24-Q30</li>
+                    <li>🗂️ Tables & Database — Q11-Q18</li>
+                    <li>🎯 Scenario Questions — Q59-Q63</li>
+                    <li>🧑‍💼 HR Questions — Q1-Q5 (practice speaking out loud!)</li>
                 </ul>
             </div>
 
