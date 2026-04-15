@@ -86,7 +86,6 @@
             border: 1px solid rgba(76, 175, 80, 0.3);
         }
 
-        /* Navigation / Quick Jump */
         .quick-nav {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
@@ -124,7 +123,6 @@
             transform: translateY(-2px);
         }
 
-        /* Section Styles */
         .section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
@@ -181,8 +179,6 @@
 
         .question-list li .freq {
             display: inline-block;
-            background: rgba(255, 82, 82, 0.2);
-            color: #ff5252;
             font-size: 0.75em;
             padding: 2px 8px;
             border-radius: 10px;
@@ -193,6 +189,12 @@
         .question-list li .freq.high {
             background: rgba(255, 82, 82, 0.25);
             color: #ff5252;
+        }
+
+        .question-list li .freq.most {
+            background: rgba(255, 0, 68, 0.3);
+            color: #ff1744;
+            border: 1px solid rgba(255, 0, 68, 0.3);
         }
 
         .question-list li .freq.medium {
@@ -212,7 +214,6 @@
             margin-bottom: 5px;
         }
 
-        /* Document Checklist */
         .checklist {
             list-style: none;
             padding: 0;
@@ -234,7 +235,6 @@
             font-size: 1.2em;
         }
 
-        /* Tips Section */
         .tip-card {
             background: rgba(255, 193, 7, 0.08);
             border: 1px solid rgba(255, 193, 7, 0.2);
@@ -248,12 +248,20 @@
             margin-bottom: 8px;
         }
 
-        .tip-card p {
+        .tip-card p, .tip-card ul {
             color: #ccc;
             line-height: 1.6;
         }
 
-        /* Code Blocks */
+        .tip-card ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .tip-card ul li {
+            margin-bottom: 4px;
+        }
+
         .code-tag {
             background: rgba(0, 210, 255, 0.1);
             color: #00d2ff;
@@ -263,7 +271,6 @@
             font-size: 0.9em;
         }
 
-        /* Stats bar */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -291,30 +298,6 @@
             margin-top: 5px;
         }
 
-        /* Collapsible */
-        .collapsible {
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .collapsible::after {
-            content: ' ▼';
-            font-size: 0.7em;
-        }
-
-        .collapsible.active::after {
-            content: ' ▲';
-        }
-
-        .collapsible-content {
-            display: none;
-        }
-
-        .collapsible-content.show {
-            display: block;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8em;
@@ -329,7 +312,6 @@
             }
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -357,8 +339,8 @@
 
     <!-- HEADER -->
     <header>
-        <h1>🎯 TCS Interview Questions - Complete Guide</h1>
-        <p>Prime | Digital | Ninja — All Questions from 3rd April 2025 Interviews</p>
+        <h1>🎯 TCS Interview Questions — Complete Guide</h1>
+        <p>Prime | Digital | Ninja — All Questions from 1st – 7th April 2025 Interviews</p>
         <div class="badge-container">
             <span class="badge badge-prime">PRIME</span>
             <span class="badge badge-digital">DIGITAL</span>
@@ -377,12 +359,12 @@
             <div class="label">min Total Duration</div>
         </div>
         <div class="stat-card">
-            <div class="number">12+</div>
-            <div class="label">Coding Topics</div>
+            <div class="number">20+</div>
+            <div class="label">Topic Categories</div>
         </div>
         <div class="stat-card">
-            <div class="number">8+</div>
-            <div class="label">Topic Categories</div>
+            <div class="number">250+</div>
+            <div class="label">Unique Questions</div>
         </div>
     </div>
 
@@ -396,351 +378,681 @@
             <a href="#sql-dbms">SQL & DBMS</a>
             <a href="#python">Python</a>
             <a href="#java">Java</a>
+            <a href="#dsa">DSA</a>
             <a href="#web-dev">Web Development</a>
-            <a href="#cn">Computer Networks</a>
+            <a href="#cn">Networks & Cybersecurity</a>
+            <a href="#c-lang">C Language</a>
             <a href="#ai-ml">AI / ML / DL</a>
-            <a href="#cloud">Cloud (AWS)</a>
-            <a href="#dsa">DSA Concepts</a>
+            <a href="#cloud">Cloud & DevOps</a>
+            <a href="#os">Operating Systems</a>
+            <a href="#se-tools">SE & Tools</a>
             <a href="#project">Project Questions</a>
             <a href="#mr">MR / Logical</a>
             <a href="#hr">HR Round</a>
+            <a href="#experienced">Experienced Candidates</a>
             <a href="#docs">Documents Checklist</a>
             <a href="#tips">Tips & Advice</a>
         </div>
     </div>
 
-    <!-- ======================== -->
-    <!-- TR & MR ROUND QUESTIONS -->
-    <!-- ======================== -->
-
-    <!-- SELF INTRO -->
+    <!-- ========================================== -->
+    <!-- SECTION: SELF INTRO -->
+    <!-- ========================================== -->
     <div class="section" id="self-intro">
         <h2><span class="icon">👤</span> Self Introduction & Resume</h2>
         <ul class="question-list">
-            <li>Introduce yourself / Tell me about yourself <span class="freq high">Asked Every Panel</span></li>
-            <li>Walk me through your resume</li>
-            <li>What is your comfortable / preferred programming language? <span class="freq high">Very Frequent</span></li>
+            <li>Introduce yourself / Tell me about yourself <span class="freq most">Most Asked</span></li>
+            <li>Walk me through your resume <span class="freq high">Very Frequent</span></li>
+            <li>What is your comfortable / preferred programming language? <span class="freq most">Most Asked</span></li>
             <li>Why are you comfortable with only one programming language?</li>
             <li>Do you know C language? Do you know Java / Python?</li>
-            <li>Questions based on certifications mentioned in resume</li>
+            <li>Questions based on certifications mentioned in resume <span class="freq high">Very Frequent</span></li>
+            <li>Is there anything about you that your resume does not highlight? <span class="freq medium">Asked — Prime</span></li>
+            <li>Tell me about your college — name, speciality, and location <span class="freq medium">Asked</span></li>
+            <li>What are your strengths? <span class="freq high">Frequent</span></li>
+            <li>What skills do you know? <span class="freq medium">Asked</span></li>
+            <li>What is your favourite subject? <span class="freq medium">Asked</span></li>
+            <li>Your academic percentages (10th, 12th, B.Tech) <span class="freq medium">Asked in MR</span></li>
         </ul>
     </div>
 
-    <!-- CODING QUESTIONS -->
+    <!-- ========================================== -->
+    <!-- SECTION: CODING -->
+    <!-- ========================================== -->
     <div class="section" id="coding">
         <h2><span class="icon">💻</span> Coding Questions (Write Code)</h2>
 
         <h3>🔢 Number-Based Programs</h3>
         <ul class="question-list">
-            <li>Fibonacci series <span class="freq high">Very Frequent</span></li>
-            <li>Factorial of a number <span class="freq high">Very Frequent</span></li>
-            <li>Check if a number is Prime <span class="freq high">Very Frequent</span></li>
-            <li>Reverse of a number</li>
-            <li>Palindrome check (number)</li>
-            <li>Armstrong number</li>
-            <li>Strong number</li>
-            <li>Write a program for recursion (e.g., calculate batsman strike rate and bowler's net run rate)</li>
+            <li>Fibonacci series (using loop and recursion) <span class="freq most">Most Asked</span></li>
+            <li>Factorial of a number <span class="freq most">Most Asked</span></li>
+            <li>Check if a number is Prime <span class="freq most">Most Asked</span></li>
+            <li>Reverse of a number <span class="freq high">Very Frequent</span></li>
+            <li>Palindrome check (number) <span class="freq high">Very Frequent</span></li>
+            <li>Armstrong number <span class="freq high">Frequent</span></li>
+            <li>Strong number <span class="freq medium">Asked</span></li>
+            <li>Sum of first N numbers <span class="freq high">Frequent</span></li>
+            <li>Sum of elements in a list/array <span class="freq medium">Asked</span></li>
+            <li>Swap two numbers without using a third variable <span class="freq high">Frequent</span></li>
+            <li>Find the 2nd largest element in an array <span class="freq high">Frequent</span></li>
+            <li>Count frequency of elements in an array <span class="freq high">Frequent</span></li>
+            <li>Write a program using recursion (e.g., batsman strike rate, bowler net run rate)</li>
         </ul>
 
         <h3>🔤 String-Based Programs</h3>
         <ul class="question-list">
-            <li>Reverse a string <span class="freq high">Very Frequent</span></li>
-            <li>Palindrome check (string)</li>
-            <li>Count each character in a string — e.g., <span class="code-tag">"aaabbaccc"</span> → a:4, b:2, c:3 <span class="freq high">Very Frequent</span></li>
-            <li>Delete / remove duplicates in a string</li>
-            <li>Reverse the words inside a sentence — e.g., <span class="code-tag">"my name is kovidh"</span> → <span class="code-tag">"ym eman si hdivok"</span></li>
+            <li>Reverse a string <span class="freq most">Most Asked</span></li>
+            <li>Palindrome check (string) <span class="freq high">Very Frequent</span></li>
+            <li>Count each character in a string — e.g., <span class="code-tag">"aaabbaccc"</span> → a:4, b:2, c:3 <span class="freq most">Most Asked</span></li>
+            <li>Delete / remove duplicates in a string or list <span class="freq most">Most Asked</span></li>
+            <li>Reverse the words inside a sentence — e.g., <span class="code-tag">"my name is kovidh"</span> → <span class="code-tag">"ym eman si hdivok"</span> <span class="freq high">Frequent</span></li>
+            <li>Write code: given a list of names, if name > 5 characters break; otherwise print <span class="freq medium">Asked</span></li>
+        </ul>
+
+        <h3>🔃 Sorting & Searching</h3>
+        <ul class="question-list">
+            <li>Bubble sort program <span class="freq high">Frequent</span></li>
+            <li>How to optimize Bubble sort <span class="freq high">Frequent</span></li>
+            <li>Sorting techniques (general) and their complexities <span class="freq medium">Asked</span></li>
+            <li>Searching techniques (Linear Search, Binary Search) <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>📐 Pattern & Matrix Programs</h3>
         <ul class="question-list">
-            <li>Triangular star/number pattern</li>
+            <li>Pyramid / triangular star or number pattern <span class="freq high">Frequent</span></li>
             <li>Matrix multiplication</li>
+        </ul>
+
+        <h3>🐍 Python-Specific Coding</h3>
+        <ul class="question-list">
+            <li>Write a Lambda function code <span class="freq high">Frequent</span></li>
+            <li>Exception handling — write code using try-catch <span class="freq most">Most Asked</span></li>
+            <li>Write any code in Python (interviewer's choice) <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>📊 Complexity Analysis</h3>
         <ul class="question-list">
-            <li>Explain space complexity and time complexity of your code (e.g., character count program) <span class="freq medium">Asked</span></li>
+            <li>Explain space complexity and time complexity of your code <span class="freq high">Frequent</span></li>
+            <li>Iterate through your code step by step and explain <span class="freq medium">Asked</span></li>
         </ul>
     </div>
 
-    <!-- OOPs CONCEPTS -->
+    <!-- ========================================== -->
+    <!-- SECTION: OOPS -->
+    <!-- ========================================== -->
     <div class="section" id="oops">
         <h2><span class="icon">🧱</span> OOPs Concepts</h2>
         <ul class="question-list">
-            <li>What is Inheritance? <span class="freq high">Very Frequent</span></li>
-            <li>What is Encapsulation? <span class="freq high">Very Frequent</span></li>
-            <li>What is Polymorphism? <span class="freq high">Very Frequent</span></li>
-            <li>What is Abstraction?</li>
-            <li>Difference between Method Overloading and Method Overriding <span class="freq high">Very Frequent</span></li>
-            <li>Write code demonstrating Method Overriding</li>
-            <li>Procedural Programming vs OOPs — differences <span class="freq medium">Asked</span></li>
-            <li>Explain polymorphism with a real-world example</li>
-            <li>Explain encapsulation with a real-world example</li>
-            <li>Difference between <span class="code-tag">.equals()</span> and <span class="code-tag">==</span></li>
+            <li>Explain all 4 pillars of OOPs <span class="freq most">Most Asked</span></li>
+            <li>What is Inheritance? <span class="freq most">Most Asked</span></li>
+            <li>What is Encapsulation? <span class="freq most">Most Asked</span></li>
+            <li>What is Polymorphism? <span class="freq most">Most Asked</span></li>
+            <li>What is Abstraction? <span class="freq high">Very Frequent</span></li>
+            <li>Difference between Method Overloading and Method Overriding <span class="freq most">Most Asked</span></li>
+            <li>Write code demonstrating Method Overloading <span class="freq medium">Asked</span></li>
+            <li>Write code demonstrating Method Overriding <span class="freq medium">Asked</span></li>
+            <li>Procedural Programming vs OOPs — differences <span class="freq high">Frequent</span></li>
+            <li>Explain polymorphism with a real-world example <span class="freq high">Frequent</span></li>
+            <li>Explain encapsulation with a real-world example <span class="freq medium">Asked</span></li>
+            <li>Difference between <span class="code-tag">.equals()</span> and <span class="code-tag">==</span> <span class="freq high">Frequent</span></li>
+            <li>Difference between <span class="code-tag">==</span> and <span class="code-tag">is</span> (Python) <span class="freq high">Frequent</span></li>
         </ul>
     </div>
 
-    <!-- SQL & DBMS -->
+    <!-- ========================================== -->
+    <!-- SECTION: SQL & DBMS -->
+    <!-- ========================================== -->
     <div class="section" id="sql-dbms">
         <h2><span class="icon">🗄️</span> SQL & DBMS</h2>
+
+        <h3>📘 DBMS Fundamentals</h3>
         <ul class="question-list">
-            <li>What is DBMS?</li>
-            <li>What is SQL? Do you know SQL?</li>
-            <li>Write a SQL query using aggregate functions (SUM, COUNT, AVG, etc.) <span class="freq high">Frequent</span></li>
-            <li>What is GROUP BY clause? Write a query using GROUP BY</li>
-            <li>What are Constraints in DBMS? (NOT NULL, UNIQUE, PRIMARY KEY, etc.)</li>
-            <li>How to find the last inserted row in SQL?</li>
-            <li>How to add a column to an existing table? (<span class="code-tag">ALTER TABLE</span>)</li>
-            <li>Difference between MongoDB and MySQL</li>
-            <li>Write a code/query for MongoDB</li>
+            <li>What is DBMS? <span class="freq high">Frequent</span></li>
+            <li>What is SQL? Do you know SQL? <span class="freq high">Frequent</span></li>
+            <li>What are Constraints in DBMS? (NOT NULL, UNIQUE, PRIMARY KEY, etc.) <span class="freq medium">Asked</span></li>
+            <li>Structured vs Unstructured data <span class="freq medium">Asked</span></li>
+        </ul>
+
+        <h3>📝 SQL Queries</h3>
+        <ul class="question-list">
+            <li>Write a SQL query using aggregate functions (SUM, COUNT, AVG, etc.) <span class="freq most">Most Asked</span></li>
+            <li>What is GROUP BY clause? Write a query using GROUP BY <span class="freq high">Frequent</span></li>
+            <li>SQL query to fetch the first N records (e.g., <span class="code-tag">SELECT TOP 10</span> or <span class="code-tag">LIMIT 10</span>) <span class="freq high">Frequent</span></li>
+            <li>Query for maximum salary <span class="freq most">Most Asked</span></li>
+            <li>Query for second maximum salary <span class="freq most">Most Asked</span></li>
+            <li>Query for top N students / top N salaries <span class="freq high">Frequent</span></li>
+            <li>Department-wise highest salary query <span class="freq medium">Asked</span></li>
+            <li>SQL UPDATE query — write and explain <span class="freq high">Frequent</span></li>
+            <li>CREATE TABLE syntax <span class="freq medium">Asked</span></li>
+            <li>How to find the last inserted row in SQL? <span class="freq medium">Asked</span></li>
+            <li>How to add a column to an existing table? (<span class="code-tag">ALTER TABLE</span>) <span class="freq medium">Asked</span></li>
+        </ul>
+
+        <h3>🔗 Joins & Set Operations</h3>
+        <ul class="question-list">
+            <li>SQL Joins — INNER JOIN, LEFT JOIN and their differences <span class="freq most">Most Asked</span></li>
+            <li>UNION vs JOIN <span class="freq high">Frequent</span></li>
+        </ul>
+
+        <h3>⚖️ Comparisons & Advanced</h3>
+        <ul class="question-list">
+            <li>TRUNCATE vs DROP vs DELETE <span class="freq high">Very Frequent</span></li>
+            <li>Indexing in SQL <span class="freq medium">Asked</span></li>
+            <li>OFFSET in SQL <span class="freq medium">Asked</span></li>
+            <li>Difference between MongoDB and MySQL <span class="freq high">Very Frequent</span></li>
+            <li>Write a code/query for MongoDB <span class="freq medium">Asked</span></li>
+            <li>Redis basics <span class="freq medium">Asked</span></li>
+            <li>Vector databases <span class="freq medium">Asked — Experienced</span></li>
         </ul>
     </div>
 
-    <!-- PYTHON -->
+    <!-- ========================================== -->
+    <!-- SECTION: PYTHON -->
+    <!-- ========================================== -->
     <div class="section" id="python">
         <h2><span class="icon">🐍</span> Python</h2>
         <ul class="question-list">
-            <li>Basics to intermediate Python concepts</li>
-            <li>Difference between List, Tuple, and Set <span class="freq medium">Asked</span></li>
-            <li>Write examples of List, Tuple, Set</li>
-            <li>Operations on List</li>
-            <li>Libraries you know in Python (NumPy, Pandas, etc.)</li>
+            <li>Data types in Python <span class="freq high">Frequent</span></li>
+            <li>Difference between List, Tuple, and Set <span class="freq most">Most Asked</span></li>
+            <li>Tuple vs Dictionary <span class="freq high">Frequent</span></li>
+            <li>What is a Dictionary? <span class="freq high">Frequent</span></li>
+            <li>Write examples of List, Tuple, Set, Dictionary</li>
+            <li>Operations on List <span class="freq medium">Asked</span></li>
+            <li>Mutable vs Immutable in Python <span class="freq high">Very Frequent</span></li>
+            <li>Lambda functions — explain and write code <span class="freq high">Very Frequent</span></li>
+            <li>Exception handling in Python — write code using <span class="code-tag">try-except</span> <span class="freq high">Very Frequent</span></li>
+            <li>Memory storage / management in Python <span class="freq high">Frequent</span></li>
+            <li>Difference between <span class="code-tag">==</span> and <span class="code-tag">is</span> in Python <span class="freq high">Frequent</span></li>
+            <li>Python generators and flags <span class="freq medium">Asked</span></li>
+            <li>What is Multiprocessing? <span class="freq high">Frequent</span></li>
+            <li>What is Multithreading? <span class="freq high">Frequent</span></li>
+            <li>Multiprocessing vs Multithreading <span class="freq most">Most Asked</span></li>
+            <li>What is a Garbage Collector? <span class="freq high">Frequent</span></li>
+            <li>Libraries you know (NumPy, Pandas, etc.) <span class="freq high">Frequent</span></li>
+            <li>Difference between Python and Java <span class="freq high">Frequent</span></li>
             <li>Have you done any Python projects?</li>
             <li>What is Streamlit? Why did you use Streamlit in your project?</li>
             <li>How did you use Python in data analytics project?</li>
         </ul>
     </div>
 
-    <!-- JAVA -->
+    <!-- ========================================== -->
+    <!-- SECTION: JAVA -->
+    <!-- ========================================== -->
     <div class="section" id="java">
         <h2><span class="icon">☕</span> Java Specific</h2>
         <ul class="question-list">
-            <li>Java Streams</li>
-            <li>Exception Handling in Java</li>
-            <li>Diamond Problem in Java</li>
-            <li>Difference between <span class="code-tag">final</span> and <span class="code-tag">static</span></li>
-            <li>Difference between <span class="code-tag">final</span> and <span class="code-tag">const</span></li>
-            <li>Declaration of Array and ArrayList</li>
-            <li>Difference between Array and ArrayList</li>
-            <li>What is JDBC? Explain the steps</li>
+            <li>Try-catch in Java — explain and write code <span class="freq high">Frequent</span></li>
+            <li>Exception Handling in Java <span class="freq high">Frequent</span></li>
+            <li>Difference between JVM, JRE, and JDK <span class="freq medium">Asked</span></li>
+            <li>Java Streams <span class="freq medium">Asked</span></li>
+            <li>Diamond Problem in Java <span class="freq medium">Asked</span></li>
+            <li>Difference between <span class="code-tag">final</span> and <span class="code-tag">static</span> <span class="freq high">Frequent</span></li>
+            <li>Difference between <span class="code-tag">final</span> and <span class="code-tag">const</span> <span class="freq medium">Asked</span></li>
+            <li>Declaration of Array and ArrayList <span class="freq medium">Asked</span></li>
+            <li>Difference between Array and ArrayList <span class="freq high">Frequent</span></li>
+            <li>How to add elements in ArrayList <span class="freq medium">Asked</span></li>
+            <li>What is a HashMap? Explain with example <span class="freq high">Frequent</span></li>
+            <li>What is JDBC? Explain the steps <span class="freq medium">Asked</span></li>
+            <li>Difference between JDBC and ODBC <span class="freq medium">Asked — Prime</span></li>
+            <li>What are Threads? Definition <span class="freq medium">Asked — Prime</span></li>
+            <li>What is Synchronization? How to call a method from another method without reference <span class="freq medium">Asked — Prime</span></li>
         </ul>
     </div>
 
-    <!-- DSA -->
+    <!-- ========================================== -->
+    <!-- SECTION: DSA -->
+    <!-- ========================================== -->
     <div class="section" id="dsa">
         <h2><span class="icon">🔗</span> Data Structures & Algorithms</h2>
         <ul class="question-list">
-            <li>What is a Stack? (LIFO with real-world example)</li>
-            <li>What is a Queue? (FIFO with real-world example)</li>
-            <li>What is a Linked List?</li>
-            <li>Types of Linked List (Singly, Doubly, Circular)</li>
-            <li>Write code for a Linked List</li>
+            <li>What is a Stack? (LIFO with real-world example) <span class="freq most">Most Asked</span></li>
+            <li>What is a Queue? (FIFO with real-world example) <span class="freq most">Most Asked</span></li>
+            <li>Stack vs Queue with real-time examples <span class="freq high">Frequent</span></li>
+            <li            <li>What is a Linked List? <span class="freq most">Most Asked</span></li>
+            <li>Types of Linked List (Singly, Doubly, Circular) <span class="freq high">Frequent</span></li>
+            <li>Write code for a Linked List <span class="freq medium">Asked</span></li>
             <li>Write code to Reverse a Linked List <span class="freq medium">Asked</span></li>
+            <li>Explain Linked List and HashMap <span class="freq high">Frequent</span></li>
+            <li>If records are deleted frequently, which data structure would you use and why? <span class="freq medium">Asked</span></li>
+            <li>Height of a Binary Tree — code and explanation <span class="freq medium">Asked — Prime</span></li>
+            <li>Explain data structures you know (general) <span class="freq high">Frequent</span></li>
         </ul>
     </div>
 
-    <!-- WEB DEVELOPMENT -->
+    <!-- ========================================== -->
+    <!-- SECTION: WEB DEVELOPMENT -->
+    <!-- ========================================== -->
     <div class="section" id="web-dev">
         <h2><span class="icon">🌐</span> Web Development</h2>
+
+        <h3>🏗️ HTML & CSS</h3>
         <ul class="question-list">
-            <li>Questions on web development (general)</li>
-            <li>What is a REST API?</li>
-            <li>What is Postman?</li>
-            <li>How did you make the MERN stack project responsive?</li>
-            <li>Write HTML and CSS code such that your name appears sliding on a web page</li>
-            <li>Types of tags in HTML</li>
+            <li>Types of tags in HTML <span class="freq medium">Asked</span></li>
+            <li>What is the latest version of HTML? <span class="freq medium">Asked</span></li>
+            <li>How to add an image in HTML? <span class="freq medium">Asked</span></li>
+            <li>Write HTML and CSS code such that your name appears sliding on a web page <span class="freq medium">Asked</span></li>
+            <li>Write code to create a basic web page with a form <span class="freq high">Frequent</span></li>
+        </ul>
+
+        <h3>⚛️ Frontend & Backend</h3>
+        <ul class="question-list">
+            <li>Difference between Frontend and Backend <span class="freq high">Frequent</span></li>
+            <li>What role do you prefer — frontend or backend? <span class="freq medium">Asked</span></li>
+            <li>Explain what is Full Stack development <span class="freq high">Frequent</span></li>
+            <li>Why Full Stack over AI? <span class="freq medium">Asked</span></li>
+            <li>Explain State in React.js <span class="freq high">Frequent</span></li>
+            <li>React-related questions (general) <span class="freq medium">Asked</span></li>
+            <li>5 points about Express.js <span class="freq medium">Asked</span></li>
+            <li>How did you integrate backend and database in your project? <span class="freq high">Frequent</span></li>
+        </ul>
+
+        <h3>🔌 APIs & Architecture</h3>
+        <ul class="question-list">
+            <li>What is a REST API? <span class="freq most">Most Asked</span></li>
+            <li>What are APIs? <span class="freq high">Frequent</span></li>
+            <li>What is Postman? <span class="freq medium">Asked</span></li>
+            <li>Microservices architecture <span class="freq medium">Asked</span></li>
+            <li>Project architecture — frontend, backend, database <span class="freq high">Frequent</span></li>
+            <li>How did you make your MERN stack project responsive? <span class="freq medium">Asked</span></li>
         </ul>
     </div>
 
-    <!-- COMPUTER NETWORKS -->
+    <!-- ========================================== -->
+    <!-- SECTION: COMPUTER NETWORKS & CYBERSECURITY -->
+    <!-- ========================================== -->
     <div class="section" id="cn">
-        <h2><span class="icon">🌍</span> Computer Networks</h2>
+        <h2><span class="icon">🌍</span> Computer Networks & Cybersecurity</h2>
+
+        <h3>🌐 Networking Fundamentals</h3>
         <ul class="question-list">
-            <li>OSI Model — explain all 7 layers <span class="freq medium">Asked (if CN in resume)</span></li>
-            <li>Difference between HTTP and HTTPS</li>
-            <li>Difference between TCP and UDP</li>
-            <li>Explain one encryption algorithm</li>
-            <li>What is an IP Address?</li>
-            <li>What is a Socket?</li>
-            <li>What is Routing?</li>
+            <li>OSI Model — explain all 7 layers <span class="freq high">Frequent</span></li>
+            <li>Difference between HTTP and HTTPS <span class="freq high">Frequent</span></li>
+            <li>Difference between TCP and UDP <span class="freq high">Frequent</span></li>
+            <li>What is an IP Address? <span class="freq medium">Asked</span></li>
+            <li>What is a Socket? <span class="freq medium">Asked</span></li>
+            <li>What is Routing? <span class="freq medium">Asked</span></li>
+            <li>Email protocol / procedure flow <span class="freq medium">Asked</span></li>
+        </ul>
+
+        <h3>🔐 Security & Encryption</h3>
+        <ul class="question-list">
+            <li>Explain one encryption algorithm <span class="freq medium">Asked</span></li>
+            <li>Encryption methods (general) <span class="freq medium">Asked</span></li>
+            <li>What is an Active Attack? <span class="freq medium">Asked</span></li>
+            <li>What is a Passive Attack? <span class="freq medium">Asked</span></li>
+            <li>Types of attacks <span class="freq medium">Asked</span></li>
+            <li>What is Cybersecurity? Components of Cybersecurity <span class="freq medium">Asked</span></li>
+            <li>SSL and TLS — what they stand for and their usage <span class="freq medium">Asked — Prime</span></li>
         </ul>
     </div>
 
-    <!-- C LANGUAGE -->
+    <!-- ========================================== -->
+    <!-- SECTION: C LANGUAGE -->
+    <!-- ========================================== -->
     <div class="section" id="c-lang">
         <h2><span class="icon">⚙️</span> C Language</h2>
         <ul class="question-list">
             <li>Different types of libraries in C (<span class="code-tag">stdio.h</span>, <span class="code-tag">conio.h</span>, etc.)</li>
             <li>Difference between <span class="code-tag">stdio.h</span> and <span class="code-tag">conio.h</span></li>
+            <li>Difference between Compiler and Interpreter <span class="freq medium">Asked</span></li>
         </ul>
     </div>
 
-    <!-- AI / ML / DL -->
+    <!-- ========================================== -->
+    <!-- SECTION: AI / ML / DL -->
+    <!-- ========================================== -->
     <div class="section" id="ai-ml">
         <h2><span class="icon">🤖</span> AI / ML / Deep Learning <span class="badge badge-digital" style="font-size:0.5em; vertical-align: middle;">If specialization in AI/ML</span></h2>
 
         <h3>Artificial Intelligence</h3>
         <ul class="question-list">
-            <li>What is AI?</li>
-            <li>What are agents in AI?</li>
-            <li>Difference between agents in AI and Agentic AI</li>
-            <li>How is AI different from ML?</li>
-            <li>Explain AI/ML in simple terms</li>
-            <li>AI replacing jobs — do you agree? Justify</li>
+            <li>What is AI? <span class="freq most">Most Asked</span></li>
+            <li>What are agents in AI? <span class="freq medium">Asked</span></li>
+            <li>Difference between agents in AI and Agentic AI <span class="freq medium">Asked</span></li>
+            <li>How is AI different from ML? <span class="freq high">Frequent</span></li>
+            <li>Explain AI/ML in simple terms <span class="freq medium">Asked</span></li>
+            <li>AI replacing jobs — do you agree? Justify <span class="freq medium">Asked</span></li>
+            <li>Opinion on AI vs manual work <span class="freq medium">Asked</span></li>
+            <li>We cannot depend on AI — it can give wrong answers. How can you trust it? <span class="freq medium">Asked</span></li>
+            <li>What is Generative AI? <span class="freq high">Very Frequent</span></li>
         </ul>
 
         <h3>Machine Learning</h3>
         <ul class="question-list">
-            <li>What is Machine Learning?</li>
-            <li>Types of Machine Learning (Supervised, Unsupervised, Semi-Supervised, Reinforcement)</li>
-            <li>Key differences among ML types</li>
-            <li>Explain Supervised Learning with real-world examples</li>
-            <li>Explain Unsupervised Learning with real-world examples</li>
-            <li>Explain Semi-Supervised Learning</li>
-            <li>Explain Reinforcement Learning with examples</li>
-            <li>Different types of Supervised algorithms (Linear Regression, Logistic Regression, SVM, etc.)</li>
-            <li>Different types of Unsupervised algorithms (K-Means, DBSCAN, etc.)</li>
-            <li>What is Bag of Words?</li>
-            <li>What is Random Forest?</li>
-            <li>What is Gradient Boosting?</li>
-            <li>What is Bias-Variance tradeoff?</li>
-            <li>What is Overfitting? What is Underfitting?</li>
-            <li>Techniques to avoid Overfitting</li>
-            <li>L1 Regularization (Lasso), L2 Regularization (Ridge), and Elastic Net Regression</li>
-            <li>What are Loss Functions?</li>
+            <li>What is Machine Learning? <span class="freq most">Most Asked</span></li>
+            <li>Types of Machine Learning (Supervised, Unsupervised, Semi-Supervised, Reinforcement) <span class="freq most">Most Asked</span></li>
+            <li>Key differences among ML types <span class="freq high">Frequent</span></li>
+            <li>Explain Supervised Learning with real-world examples <span class="freq high">Frequent</span></li>
+            <li>Explain Unsupervised Learning with real-world examples <span class="freq high">Frequent</span></li>
+            <li>Explain Semi-Supervised Learning <span class="freq medium">Asked</span></li>
+            <li>Explain Reinforcement Learning with examples <span class="freq medium">Asked</span></li>
+            <li>Different types of Supervised algorithms (Linear Regression, Logistic Regression, SVM, etc.) <span class="freq high">Frequent</span></li>
+            <li>Different types of Unsupervised algorithms (K-Means, DBSCAN, etc.) <span class="freq medium">Asked</span></li>
+            <li>Linear vs Logistic Regression <span class="freq high">Frequent</span></li>
+            <li>What is Bag of Words? <span class="freq medium">Asked</span></li>
+            <li>What is Random Forest? <span class="freq medium">Asked</span></li>
+            <li>What is Gradient Boosting? <span class="freq medium">Asked</span></li>
+            <li>What is Bias-Variance tradeoff? <span class="freq high">Frequent</span></li>
+            <li>What is Overfitting? What is Underfitting? <span class="freq most">Most Asked</span></li>
+            <li>Techniques to avoid Overfitting <span class="freq high">Frequent</span></li>
+            <li>L1 Regularization (Lasso), L2 Regularization (Ridge), and Elastic Net Regression <span class="freq medium">Asked</span></li>
+            <li>What are Loss Functions? <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>Deep Learning</h3>
         <ul class="question-list">
-            <li>What is a Perceptron?</li>
-            <li>What is Deep Learning?</li>
-            <li>Basic Neural Network architecture</li>
-            <li>Activation Functions — how are they helpful?</li>
-            <li>Optimizers in Deep Learning</li>
-            <li>What is CNN (Convolutional Neural Network)?</li>
-            <li>What is RNN (Recurrent Neural Network)?</li>
-            <li>Difference between Recursive and Recurrent Neural Networks</li>
-            <li>Optimization techniques</li>
+            <li>What is a Perceptron? <span class="freq high">Frequent</span></li>
+            <li>What is Deep Learning? <span class="freq most">Most Asked</span></li>
+            <li>Basic Neural Network architecture (input layer, hidden layer, output layer) <span class="freq high">Frequent</span></li>
+            <li>Neural network formula <span class="freq medium">Asked — Prime</span></li>
+            <li>Activation Functions — how are they helpful? <span class="freq high">Frequent</span></li>
+            <li>Types of Activation Functions <span class="freq medium">Asked — Prime</span></li>
+            <li>Backpropagation formula <span class="freq medium">Asked — Prime</span></li>
+            <li>Optimizers in Deep Learning <span class="freq medium">Asked</span></li>
+            <li>What is CNN (Convolutional Neural Network)? <span class="freq most">Most Asked</span></li>
+            <li>What is RNN (Recurrent Neural Network)? <span class="freq most">Most Asked</span></li>
+            <li>Difference between Recursive and Recurrent Neural Networks <span class="freq medium">Asked</span></li>
+            <li>Optimization techniques <span class="freq medium">Asked</span></li>
         </ul>
 
-        <h3>Advanced / NLP / LLM</h3>
+        <h3>NLP (Natural Language Processing)</h3>
         <ul class="question-list">
-            <li>What are Transformers? Explain the architecture</li>
-            <li>What is an LLM (Large Language Model)?</li>
-            <li>What is Attention mechanism?</li>
-            <li>What is RAG (Retrieval-Augmented Generation)?</li>
+            <li>What is NLP? Definition <span class="freq high">Frequent — Prime</span></li>
+            <li>NLP Pipeline — explain the steps <span class="freq high">Frequent — Prime</span></li>
+            <li>What are Stopwords? What do you import for stopwords? <span class="freq medium">Asked — Prime</span></li>
+            <li>For Stemming, what would you import? <span class="freq medium">Asked — Prime</span></li>
+            <li>For Tokenization, what would you import? <span class="freq medium">Asked — Prime</span></li>
+            <li>Parsing questions <span class="freq medium">Asked — Prime</span></li>
+        </ul>
+
+        <h3>Advanced / LLM / Transformers</h3>
+        <ul class="question-list">
+            <li>What are Transformers? Explain the architecture <span class="freq high">Frequent</span></li>
+            <li>What is an LLM (Large Language Model)? <span class="freq most">Most Asked</span></li>
+            <li>What is Attention mechanism? <span class="freq medium">Asked</span></li>
+            <li>What is RAG (Retrieval-Augmented Generation)? Definition and usage <span class="freq most">Most Asked</span></li>
+            <li>Generative AI basics <span class="freq high">Very Frequent</span></li>
+        </ul>
+
+        <h3>📊 Data Science / Statistics</h3>
+        <ul class="question-list">
+            <li>Mean, Median, Mode <span class="freq medium">Asked</span></li>
+            <li>Standard Deviation <span class="freq medium">Asked</span></li>
+            <li>Tools like Hadoop and SQL for data <span class="freq medium">Asked</span></li>
+            <li>Tableau-related questions <span class="freq medium">Asked if in resume</span></li>
+            <li>Why did you choose Data Science? <span class="freq medium">Asked</span></li>
         </ul>
     </div>
 
-    <!-- CLOUD -->
+    <!-- ========================================== -->
+    <!-- SECTION: CLOUD & DEVOPS -->
+    <!-- ========================================== -->
     <div class="section" id="cloud">
-        <h2><span class="icon">☁️</span> Cloud (AWS & General)</h2>
+        <h2><span class="icon">☁️</span> Cloud Computing & DevOps</h2>
+
+        <h3>☁️ Cloud Fundamentals</h3>
         <ul class="question-list">
-            <li>What is EC2?</li>
-            <li>What is S3? How to connect to S3?</li>
-            <li>What is IAM?</li>
-            <li>List of cloud platforms available (AWS, Azure, GCP, etc.)</li>
-            <li>If you mentioned cloud tech in resume, prepare basics thoroughly</li>
+            <li>What is Cloud Computing? Definition <span class="freq most">Most Asked</span></li>
+            <li>Service models — IaaS, PaaS, SaaS <span class="freq high">Frequent — Prime</span></li>
+            <li>Deployment models (Public, Private, Hybrid) <span class="freq high">Frequent — Prime</span></li>
+            <li>List of cloud platforms available (AWS, Azure, GCP, etc.) <span class="freq high">Frequent</span></li>
+        </ul>
+
+        <h3>🔶 AWS Specific</h3>
+        <ul class="question-list">
+            <li>What is EC2? <span class="freq high">Frequent</span></li>
+            <li>What is S3? How to connect to S3? <span class="freq high">Frequent</span></li>
+            <li>What is IAM? <span class="freq high">Frequent</span></li>
+            <li>How does AWS internally work? <span class="freq medium">Asked — Prime</span></li>
+            <li>How does Microsoft Azure internally work? <span class="freq medium">Asked — Prime</span></li>
+            <li>AWS Certification — why haven't you done it? <span class="freq high">Frequent</span></li>
+            <li>Have you done any AWS certification? <span class="freq high">Frequent</span></li>
+        </ul>
+
+        <h3>🔧 DevOps</h3>
+        <ul class="question-list">
+            <li>Anything about DevOps? Basics of DevOps <span class="freq medium">Asked</span></li>
+            <li>CI/CD basics <span class="freq medium">Asked</span></li>
+        </ul>
+
+        <h3>☁️ Tips</h3>
+        <ul class="question-list">
+            <li>If you mentioned cloud tech in resume, prepare basics thoroughly <span class="freq high">Important</span></li>
+            <li>Be ready to justify if you haven't done certifications <span class="freq high">Important</span></li>
         </ul>
     </div>
 
-    <!-- PROJECT QUESTIONS -->
+    <!-- ========================================== -->
+    <!-- SECTION: OPERATING SYSTEMS (NEW) -->
+    <!-- ========================================== -->
+    <div class="section" id="os">
+        <h2><span class="icon">🖥️</span> Operating Systems</h2>
+        <ul class="question-list">
+            <li>What is an Operating System? <span class="freq medium">Asked</span></li>
+            <li>Which operating systems have you worked on? (Linux, Ubuntu, Windows) <span class="freq high">Frequent</span></li>
+            <li>Types of OS <span class="freq medium">Asked</span></li>
+            <li>Memory management concepts <span class="freq medium">Asked</span></li>
+            <li>What is Garbage Collection? <span class="freq high">Frequent</span></li>
+        </ul>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION: SOFTWARE ENGINEERING & TOOLS (NEW) -->
+    <!-- ========================================== -->
+    <div class="section" id="se-tools">
+        <h2><span class="icon">🛠️</span> Software Engineering & Tools</h2>
+        <ul class="question-list">
+            <li>Git vs GitHub <span class="freq most">Most Asked</span></li>
+            <li>Version control usage <span class="freq high">Frequent</span></li>
+            <li>How did you resolve conflicts in code / version control (Git)? <span class="freq high">Frequent</span></li>
+            <li>CI/CD basics <span class="freq medium">Asked</span></li>
+            <li>Project architecture explanation <span class="freq high">Frequent</span></li>
+            <li>Microservices architecture <span class="freq medium">Asked</span></li>
+            <li>Rate limiting <span class="freq medium">Asked — Experienced</span></li>
+        </ul>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION: ECE / DOMAIN SPECIFIC (NEW) -->
+    <!-- ========================================== -->
+    <div class="section" id="ece">
+        <h2><span class="icon">⚡</span> ECE / Domain-Specific Questions <span class="badge badge-digital" style="font-size:0.5em; vertical-align: middle;">If ECE branch</span></h2>
+        <ul class="question-list">
+            <li>Difference between Transformer and Stabilizer <span class="freq medium">Asked — ECE</span></li>
+            <li>What is AC and DC current? <span class="freq medium">Asked — ECE</span></li>
+            <li>Difference between AC and DC current <span class="freq medium">Asked — ECE</span></li>
+            <li>What is AC DC motor? <span class="freq medium">Asked — ECE</span></li>
+            <li>What is an Induction Motor? <span class="freq medium">Asked — ECE</span></li>
+            <li>Difference between NPN and PNP transistor. Real-life applications <span class="freq medium">Asked — ECE</span></li>
+            <li>How to make a layman understand current and voltage? <span class="freq medium">Asked — ECE</span></li>
+            <li>What current is used to charge your phone? <span class="freq medium">Asked — ECE</span></li>
+            <li>What is a Voltage Regulator? <span class="freq medium">Asked — ECE</span></li>
+            <li>Do you prefer ECE or Computer subjects? <span class="freq medium">Asked — ECE</span></li>
+        </ul>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION: PROJECT QUESTIONS -->
+    <!-- ========================================== -->
     <div class="section" id="project">
         <h2><span class="icon">📁</span> Project-Related Questions</h2>
         <ul class="question-list">
-            <li>Explain your projects — main idea, problem statement, and solution provided <span class="freq high">Every Panel</span></li>
-            <li>What tools/technologies are used in your project?</li>
-            <li>Workflow of your most recent project</li>
-            <li>What models did you use? Why those models?</li>
-            <li>In-depth questions on internship (if mentioned in resume)</li>
-            <li>Challenges faced during the project <span class="freq medium">Important</span></li>
-            <li>How did you resolve conflicts (in code / version control like Git)?</li>
+            <li>Explain your projects — main idea, problem statement, and solution <span class="freq most">Most Asked — Every Panel</span></li>
+            <li>What is unique about your project? <span class="freq high">Frequent</span></li>
+            <li>What tools/technologies are used in your project? Why those technologies? <span class="freq most">Most Asked</span></li>
+            <li>Workflow of your most recent project <span class="freq high">Frequent</span></li>
+            <li>Project architecture — frontend, backend, database <span class="freq high">Frequent</span></li>
+            <li>What models did you use? Why those models? <span class="freq high">Frequent</span></li>
+            <li>What libraries did you use and how did you implement them? <span class="freq high">Frequent</span></li>
+            <li>Your role in the project <span class="freq high">Frequent</span></li>
+            <li>In-depth questions on internship (if mentioned in resume) <span class="freq high">Frequent</span></li>
+            <li>Challenges faced during the project and how you solved them <span class="freq most">Most Asked</span></li>
+            <li>How did you resolve conflicts in code / version control (Git)? <span class="freq medium">Asked</span></li>
+            <li>Deep technical cross-questioning on project <span class="freq high">Frequent</span></li>
+            <li>Opened GitHub and observed project (happened in Prime) <span class="freq medium">Asked — Prime</span></li>
+            <li>Project explanation with live coding <span class="freq medium">Asked</span></li>
+            <li>Explain NQT coding questions and logic you solved <span class="freq medium">Asked</span></li>
+            <li>Questions about questions solved in TCS NQT exam <span class="freq medium">Asked</span></li>
         </ul>
     </div>
 
-    <!-- MR / LOGICAL -->
+    <!-- ========================================== -->
+    <!-- SECTION: MR / LOGICAL -->
+    <!-- ========================================== -->
     <div class="section" id="mr">
         <h2><span class="icon">🧠</span> MR Round — Managerial & Logical Questions</h2>
 
-        <h3>Logical / Aptitude Puzzles</h3>
+        <h3>🧩 Logical / Aptitude Puzzles</h3>
         <ul class="question-list">
-            <li>Lotus pond puzzle: "In a pond, I pick one lotus, and for each lotus it doubles. In 30 days it covers half the pond. In how many days will it cover the entire pond?" <em>(Answer: 31 days)</em></li>
-            <li>Today is Thursday. What is the day after 45 days?</li>
+            <li>Lotus pond puzzle: "In a pond, I pick one lotus, and for each lotus it doubles. In 30 days it covers half the pond. In how many days will it cover the entire pond?" <em>(Answer: 31 days)</em> <span class="freq high">Frequent</span></li>
+            <li>Today is Thursday. What is the day after 45 days? <span class="freq medium">Asked</span></li>
+            <li>Estimation question: How many employees does TCS have? <span class="freq medium">Asked</span></li>
+            <li>Analytical reasoning questions <span class="freq medium">Asked</span></li>
         </ul>
 
-        <h3>Situational / Behavioral (MR)</h3>
+        <h3>👔 Situational / Behavioral (MR)</h3>
         <ul class="question-list">
-            <li>If your teammate in office does not agree with your ideas, what will you do?</li>
-            <li>You and another member have conflicting approaches — how do you resolve it?</li>
-            <li>If two projects are assigned to you simultaneously, how will you manage?</li>
-            <li>If you have 2 tasks with the same deadline, how will you complete them?</li>
-            <li>If your team members can't work due to some reasons and you're the only one left, what will you do?</li>
-            <li>Will you be able to handle multitasking?</li>
-            <li>If assigned to a project using technologies you don't know, what will you do?</li>
+            <li>If your teammate in office does not agree with your ideas, what will you do? <span class="freq most">Most Asked</span></li>
+            <li>You and another member have conflicting approaches — how do you resolve it? <span class="freq most">Most Asked</span></li>
+            <li>If two projects are assigned to you simultaneously, how will you manage? <span class="freq most">Most Asked</span></li>
+            <li>If you have 2 tasks with the same deadline, how will you complete them? <span class="freq high">Frequent</span></li>
+            <li>If your team members can't work due to some reasons and you're the only one left, what will you do? <span class="freq medium">Asked</span></li>
+            <li>Will you be able to handle multitasking? <span class="freq high">Frequent</span></li>
+            <li>If assigned to a project using technologies you don't know, what will you do? <span class="freq high">Frequent</span></li>
+            <li>How will you handle a situation if your manager criticizes you saying you are not working properly, even though you are? <span class="freq high">Frequent</span></li>
+            <li>How do you handle criticism? <span class="freq high">Frequent</span></li>
+            <li>How will you handle stress and pressure? <span class="freq high">Frequent</span></li>
+            <li>On a scale of 100, how much would you rate yourself on handling pressure? <span class="freq medium">Asked</span></li>
+            <li>What if I say no week offs — you work every day. Will you leave the company? <span class="freq medium">Asked</span></li>
+            <li>If I give you a new technology to learn in 1 week, what will you do? <span class="freq high">Frequent</span></li>
+            <li>In recent times, what mistake have you made and how did you overcome it? <span class="freq medium">Asked</span></li>
+            <li>What will you do if we offer you Ninja role? <span class="freq high">Frequent</span></li>
+            <li>Who is the CEO of TCS? <span class="freq high">Frequent</span></li>
+            <li>What do you know about TCS Digital? <span class="freq high">Frequent</span></li>
+            <li>What are you expecting from TCS? <span class="freq medium">Asked</span></li>
+            <li>What are the growth opportunities for a fresher in TCS? <span class="freq medium">Asked</span></li>
+            <li>What digital technologies are currently in trend? <span class="freq medium">Asked</span></li>
         </ul>
     </div>
 
-    <!-- ======================== -->
-    <!-- HR ROUND QUESTIONS       -->
-    <!-- ======================== -->
-
+    <!-- ========================================== -->
+    <!-- SECTION: HR ROUND -->
+    <!-- ========================================== -->
     <div class="section" id="hr">
         <h2><span class="icon">🤝</span> HR Round Questions</h2>
 
         <h3>General / Personal</h3>
         <ul class="question-list">
-            <li>Self Introduction <span class="freq high">Every Panel</span></li>
-            <li>Tell me about your family <span class="freq high">Frequent</span></li>
-            <li>Tell me about your hobbies</li>
-            <li>Any work experience?</li>
-            <li>Have you done any internships?</li>
-            <li>What is your favourite subject?</li>
+            <li>Self Introduction <span class="freq most">Most Asked — Every Panel</span></li>
+            <li>Tell me about your family / family background <span class="freq most">Most Asked</span></li>
+            <li>Tell me about your hobbies <span class="freq most">Most Asked</span></li>
+            <li>Any work experience? <span class="freq high">Frequent</span></li>
+            <li>Have you done any internships? Are you currently doing an internship or job? <span class="freq high">Frequent</span></li>
+            <li>What is your favourite subject? <span class="freq medium">Asked</span></li>
+            <li>Do you have any current backlogs? <span class="freq most">Most Asked</span></li>
+            <li>Did you clear all subjects in the first attempt? <span class="freq high">Frequent</span></li>
+            <li>Any career gap? Do you have any breaks in studies? <span class="freq high">Frequent</span></li>
+            <li>Languages you know <span class="freq medium">Asked</span></li>
+            <li>Education background / journey <span class="freq high">Frequent</span></li>
+            <li>Activities beyond academics <span class="freq medium">Asked</span></li>
+            <li>Talk about a recent movie <span class="freq medium">Asked</span></li>
+            <li>Time spent with family <span class="freq medium">Asked</span></li>
+            <li>What do you do in your free time? <span class="freq high">Frequent</span></li>
+            <li>Apart from resume, tell me about yourself <span class="freq medium">Asked</span></li>
+            <li>Apart from academics, what have you learnt on your own through online resources? <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>TCS Specific</h3>
         <ul class="question-list">
-            <li>Why TCS? <span class="freq high">Every Panel</span></li>
-            <li>What do you know about TCS?</li>
-            <li>What do you expect from TCS?</li>
-            <li>Which role do you prefer? (Prime / Digital / Ninja)</li>
-            <li>If we select you for Ninja role instead, is that okay?</li>
-            <li>What if you get another job with more pay? Will you leave TCS?</li>
-            <li>Are you okay with a 1-year service bond?</li>
+            <li>Why TCS? <span class="freq most">Most Asked — Every Panel</span></li>
+            <li>What do you know about TCS? <span class="freq most">Most Asked</span></li>
+            <li>What do you expect from TCS? <span class="freq high">Frequent</span></li>
+            <li>Which role do you prefer? (Prime / Digital / Ninja) <span class="freq high">Frequent</span></li>
+            <li>If we select you for Ninja role instead, is that okay? <span class="freq high">Frequent</span></li>
+            <li>What if you get another job with more pay? Will you leave TCS? <span class="freq most">Most Asked</span></li>
+            <li>Are you okay with a 1-year service bond / agreement? Probation period? <span class="freq most">Most Asked</span></li>
+            <li>Do you have any current offers from other companies? <span class="freq high">Frequent</span></li>
+            <li>Previous interview experiences <span class="freq medium">Asked</span></li>
+            <li>Flexibility to work on different technologies <span class="freq high">Frequent</span></li>
+            <li>What technology are you interested to work with in this role? <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>Relocation & Shifts</h3>
         <ul class="question-list">
-            <li>Are you willing to relocate? <span class="freq high">Every Panel</span></li>
-            <li>What are your preferred locations? (Select top 3) <span class="freq high">Every Panel</span></li>
-            <li>Are you flexible with rotational / night shifts? <span class="freq high">Every Panel</span></li>
+            <li>Are you willing to relocate? <span class="freq most">Most Asked — Every Panel</span></li>
+            <li>What are your preferred locations? (Select top 3) <span class="freq most">Most Asked — Every Panel</span></li>
+            <li>Are you flexible with rotational / night shifts? <span class="freq most">Most Asked — Every Panel</span></li>
+            <li>Any location constraints? <span class="freq high">Frequent</span></li>
+            <li>Why not in North India? (if applicable) <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>Situational / Behavioral (HR)</h3>
         <ul class="question-list">
-            <li>If you are in a conference hall, how will you handle it?</li>
-            <li>Tell me one challenge you faced and how you overcame it</li>
-            <li>"Be in a situation" type questions</li>
-            <li>As a woman associate, based on trends some discontinue after marriage — why should I hire you? <em>(gender-biased but reported being asked)</em></li>
+            <li>If you are in a conference hall, how will you handle it? <span class="freq medium">Asked</span></li>
+            <li>Tell me one challenge you faced and how you overcame it <span class="freq most">Most Asked</span></li>
+            <li>Tell me about your biggest obstacle in life and how you overcame it <span class="freq high">Frequent</span></li>
+            <li>What is your bad time and how did you handle it? <span class="freq medium">Asked</span></li>
+            <li>A childhood challenge you faced <span class="freq medium">Asked</span></li>
+            <li>"Be in a situation" type questions <span class="freq medium">Asked</span></li>
+            <li>If your colleague didn't follow the professional dress code policy, how will you approach her/him? <span class="freq high">Very Frequent</span></li>
+            <li>If conflicts occur in your team, how will you manage? <span class="freq most">Most Asked</span></li>
+            <li>If your manager gives you multiple works at a time, how will you manage? <span class="freq high">Frequent</span></li>
+            <li>How do you manage time? <span class="freq high">Frequent</span></li>
+            <li>How do you handle criticism? <span class="freq high">Frequent</span></li>
+            <li>How will you face challenges? <span class="freq high">Frequent</span></li>
+            <li>If I give you a new technology, how will you learn it? <span class="freq high">Frequent</span></li>
+            <li>How do you feel if you are selected? <span class="freq medium">Asked</span></li>
+            <li>How do you feel if you are rejected? <span class="freq medium">Asked</span></li>
+            <li>As a woman associate, based on trends some discontinue after marriage — why should I hire you? <em>(gender-biased but reported being asked)</em> <span class="freq medium">Reported</span></li>
+            <li>Work preference: WFO or WFH? <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>Strengths & Career</h3>
         <ul class="question-list">
-            <li>Why should we hire you? <span class="freq high">Frequent</span></li>
-            <li>What are your strengths and weaknesses? <span class="freq high">Frequent</span></li>
-            <li>How do you describe yourself in one word?</li>
-            <li>How would your friends describe you in one word?</li>
-            <li>Where do you see yourself in the next 4-5 years?</li>
-            <li>Which profession would you choose if not software?</li>
+            <li>Why should we hire you? <span class="freq most">Most Asked</span></li>
+            <li>What are your strengths and weaknesses? <span class="freq most">Most Asked</span></li>
+            <li>How do you describe yourself in one word? <span class="freq high">Frequent</span></li>
+            <li>Describe yourself in 2 words / in a jist <span class="freq high">Frequent</span></li>
+            <li>How would your friends describe you in one word? <span class="freq medium">Asked</span></li>
+            <li>Where do you see yourself in the next 4-5 years? <span class="freq most">Most Asked</span></li>
+            <li>Which profession would you choose if not software? <span class="freq high">Frequent</span></li>
+            <li>Talk about what you would do other than this <span class="freq medium">Asked</span></li>
+            <li>What is your biggest motivation to work? <span class="freq medium">Asked</span></li>
+            <li>Who motivates you more in your family? Who is your role model? <span class="freq medium">Asked</span></li>
+            <li>One proud moment in your life <span class="freq medium">Asked</span></li>
         </ul>
 
         <h3>Closing</h3>
         <ul class="question-list">
-            <li>Do you have any questions for us?</li>
-            <li>Document verification <span class="freq high">Every Panel</span></li>
+            <li>Do you have any questions for us? <span class="freq most">Most Asked — Every Panel</span></li>
+            <li>Document verification <span class="freq most">Most Asked — Every Panel</span></li>
         </ul>
     </div>
 
-    <!-- DOCUMENTS CHECKLIST -->
+    <!-- ========================================== -->
+    <!-- SECTION: EXPERIENCED CANDIDATES (NEW) -->
+    <!-- ========================================== -->
+    <div class="section" id="experienced">
+        <h2><span class="icon">💼</span> For Experienced Candidates</h2>
+        <ul class="question-list">
+            <li>Discuss your previous work and responsibilities <span class="freq most">Most Asked</span></li>
+            <li>What is Rate Limiting? <span class="freq medium">Asked</span></li>
+            <li>What is Indexing in databases? <span class="freq medium">Asked</span></li>
+            <li>OFFSET in SQL <span class="freq medium">Asked</span></li>
+            <li>What are Vector Databases? <span class="freq medium">Asked</span></li>
+            <li>RAG (Retrieval-Augmented Generation) <span class="freq medium">Asked</span></li>
+            <li>System design basics — APIs, databases, scaling <span class="freq medium">Asked</span></li>
+            <li>PF (Provident Fund) details <span class="freq medium">Asked</span></li>
+            <li>Justify your switch — why leave your current company? <span class="freq high">Frequent</span></li>
+            <li>Will you leave TCS for a better offer? <span class="freq high">Frequent</span></li>
+            <li>Scenario-based and real-world questions <span class="freq high">Frequent</span></li>
+        </ul>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION: DOCUMENTS CHECKLIST -->
+    <!-- ========================================== -->
     <div class="section" id="docs">
         <h2><span class="icon">📋</span> Documents Checklist</h2>
         <ul class="checklist">
@@ -756,28 +1068,91 @@
         </ul>
     </div>
 
-    <!-- TIPS -->
+    <!-- ========================================== -->
+    <!-- SECTION: TIPS & ADVICE (EXPANDED) -->
+    <!-- ========================================== -->
     <div class="section" id="tips">
         <h2><span class="icon">💡</span> Tips & Advice from Candidates</h2>
 
         <div class="tip-card">
-            <h4>✅ Be Confident</h4>
-            <p>Even if you don't know something, be confident and answer in a general way without fear. Be honest — interviewers appreciate honesty over bluffing.</p>
+            <h4>✅ General Preparation</h4>
+            <ul>
+                <li>Prepare a strong and structured self introduction (1–2 minutes)</li>
+                <li>Be thorough with every keyword mentioned in your resume</li>
+                <li>Focus on understanding concepts rather than memorizing answers</li>
+                <li>Practice explaining answers clearly and confidently</li>
+                <li>Revise basics from all core subjects before the interview</li>
+            </ul>
         </div>
 
         <div class="tip-card">
-            <h4>✅ Project Explanation</h4>
-            <p>Project explanation should be good but be specific and to the point. Don't go out of the topic. Mention problem statement → approach → tools used → outcome.</p>
+            <h4>✅ Be Confident & Honest</h4>
+            <p>Even if you don't know something, be confident and answer in a general way without fear. Be honest — interviewers appreciate honesty over bluffing. If you don't know, handle it smartly instead of guessing blindly.</p>
         </div>
 
         <div class="tip-card">
-            <h4>✅ Be Technical</h4>
-            <p>Be a more technical person. If you mention any technology/certification on your resume, prepare in-depth questions on it. They WILL ask.</p>
+            <h4>✅ Project Preparation</h4>
+            <ul>
+                <li>Prepare end-to-end explanation of your project</li>
+                <li>Be ready for deep technical cross-questions from your project</li>
+                <li>Know why you chose specific technologies</li>
+                <li>Prepare real-time use cases and problem statements</li>
+                <li>Be ready to explain code, architecture, and workflow</li>
+                <li>Mention: problem statement → approach → tools used → outcome</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h4>✅ Programming & DSA</h4>
+            <ul>
+                <li>Practice basic coding problems daily</li>
+                <li>Focus on arrays, strings, recursion, and patterns</li>
+                <li>Learn optimization techniques (time and space complexity)</li>
+                <li>Be able to explain your code step by step</li>
+                <li>Revise OOP concepts with real-time examples</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h4>✅ SQL & DBMS</h4>
+            <ul>
+                <li>Practice writing queries without syntax errors</li>
+                <li>Focus on joins, GROUP BY, aggregate functions</li>
+                <li>Learn queries like max salary, second max, top N records</li>
+                <li>Understand differences: TRUNCATE vs DELETE vs DROP</li>
+                <li>Practice real-time database scenarios</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h4>✅ AI/ML & Advanced Technologies</h4>
+            <ul>
+                <li>Prepare basic definitions and differences clearly</li>
+                <li>Understand concepts like overfitting, bias-variance tradeoff</li>
+                <li>Learn use cases of ML models</li>
+                <li>Be ready to explain models used in your project</li>
+                <li>Have basic knowledge of trending topics (LLM, RAG, Generative AI)</li>
+            </ul>
         </div>
 
         <div class="tip-card">
             <h4>✅ Cloud Technologies</h4>
-            <p>If you've added any cloud tech to your resume, go through the basics thoroughly (EC2, S3, IAM, etc.).</p>
+            <ul>
+                <li>Learn basics of cloud computing and service models (IaaS, PaaS, SaaS)</li>
+                <li>Understand AWS core services (EC2, S3, IAM)</li>
+                <li>Be ready to justify if you haven't done certifications</li>
+                <li>Know real-time use cases of cloud services</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h4>✅ Web Development</h4>
+            <ul>
+                <li>Revise HTML, CSS, and basic JavaScript</li>
+                <li>Understand frontend vs backend clearly</li>
+                <li>Learn API integration basics</li>
+                <li>Be ready to explain your full stack project flow</li>
+            </ul>
         </div>
 
         <div class="tip-card">
@@ -796,29 +1171,52 @@
         </div>
 
         <div class="tip-card">
+            <h4>✅ Behavioral & HR Round</h4>
+            <ul>
+                <li>Prepare answers for common HR questions</li>
+                <li>Be honest and natural in your responses</li>
+                <li>Maintain a positive attitude even in tricky questions</li>
+                <li>Show flexibility for relocation and shifts</li>
+                <li>Handle situational questions with logical thinking</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h4>✅ For Experienced Candidates</h4>
+            <ul>
+                <li>Be clear about your previous work and responsibilities</li>
+                <li>Prepare system design basics (APIs, databases, scaling)</li>
+                <li>Be ready for scenario-based and real-world questions</li>
+                <li>Justify your switch clearly</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
             <h4>✅ Duration</h4>
-            <p>TR+MR round is typically 20-25 minutes. HR round is typically 15-20 minutes. Be concise and clear.</p>
+            <p>TR+MR round is typically 20–35 minutes. HR round is typically 15–25 minutes. Be concise and clear.</p>
+        </div>
+
+        <div class="tip-card">
+            <h4>✅ Final Tips</h4>
+            <ul>
+                <li>Stay calm and confident during the interview</li>
+                <li>Maintain good communication and eye contact</li>
+                <li>Listen carefully before answering</li>
+                <li>Interviews can vary panel to panel — be adaptable</li>
+                <li>If you don't know an answer, handle it smartly instead of guessing blindly</li>
+            </ul>
         </div>
     </div>
 
     <!-- FOOTER -->
     <footer>
-        <p>📌 Compiled from multiple TCS interview experiences — 3rd April 2025</p>
+        <p>📌 Compiled from 30+ TCS interview experiences — 1st to 7th April 2025</p>
         <p style="margin-top: 5px;">All the best for your interview! 🚀</p>
     </footer>
 
 </div>
 
 <script>
-    // Collapsible functionality
-    document.querySelectorAll('.collapsible').forEach(function(el) {
-        el.addEventListener('click', function() {
-            this.classList.toggle('active');
-            var content = this.nextElementSibling;
-            content.classList.toggle('show');
-        });
-    });
-
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {

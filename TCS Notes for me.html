@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCS Prime Interview Answers — Maganti Praveen Sai</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap');
+
+  :root {
+    --bg: #0b0f1a;
+    --bg2: #111827;
+    --card: #161d2e;
+    --border: #1e2d45;
+    --accent: #38bdf8;
+    --accent2: #f59e0b;
+    --green: #34d399;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --code-bg: #0f172a;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* STICKY NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(11,15,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  }
+  nav span { color: var(--accent); font-weight: 700; margin-right: 8px; font-size: 13px; }
+  nav a {
+    text-decoration: none; color: var(--muted);
+    font-size: 12px; padding: 4px 10px;
+    border: 1px solid var(--border); border-radius: 20px;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 30px 20px 60px; }
+
+  /* HERO */
+  .hero {
+    text-align: center; padding: 50px 20px 40px;
+    background: linear-gradient(135deg, #0b0f1a 0%, #0d1b2e 50%, #0b0f1a 100%);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute;
+    top: -100px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(56,189,248,0.08) 0%, transparent 70%);
+  }
+  .hero h1 {
+    font-size: 2rem; font-weight: 700;
+    background: linear-gradient(90deg, #38bdf8, #a78bfa, #34d399);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .hero p { color: var(--muted); font-size: 0.95rem; }
+  .badges { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+  .badge {
+    padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  }
+  .badge-blue { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); }
+  .badge-yellow { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+  .badge-green { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+
+  /* SECTIONS */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 28px;
+    scroll-margin-top: 70px;
+  }
+  .section-title {
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .section-title .icon { font-size: 1.3rem; }
+
+  /* Q&A CARDS */
+  .qa {
+    margin-bottom: 20px;
+    border-left: 3px solid var(--border);
+    padding-left: 16px;
+    transition: border-color 0.2s;
+  }
+  .qa:hover { border-left-color: var(--accent); }
+  .question {
+    font-weight: 600; color: var(--accent2);
+    font-size: 0.93rem; margin-bottom: 8px;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .question::before { content: 'Q'; font-family: 'JetBrains Mono', monospace; font-size: 11px; background: rgba(245,158,11,0.2); color: var(--accent2); padding: 1px 6px; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+  .answer { color: var(--text); font-size: 0.92rem; }
+  .answer p { margin-bottom: 6px; }
+
+  /* HOT BADGE */
+  .hot { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+  .hot-most { background: rgba(248,113,113,0.2); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+  .hot-freq { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+
+  /* CODE BLOCKS */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: #93c5fd;
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--code-bg);
+    color: #93c5fd;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+
+  /* HIGHLIGHT BOXES */
+  .tip {
+    background: rgba(52,211,153,0.06);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    color: #a7f3d0;
+  }
+  .tip::before { content: '💡 TIP: '; font-weight: 700; color: var(--green); }
+
+  .warn {
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 0.88rem;
+    color: #fde68a;
+  }
+  .warn::before { content: '⚠️ NOTE: '; font-weight: 700; color: var(--accent2); }
+
+  /* SUBSECTION HEADERS */
+  h3 {
+    color: #a78bfa;
+    font-size: 0.95rem;
+    margin: 22px 0 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  h3::before { content: ''; display: block; width: 4px; height: 16px; background: #a78bfa; border-radius: 2px; }
+
+  /* TABLE */
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.88rem; margin: 12px 0;
+  }
+  th {
+    background: rgba(56,189,248,0.1);
+    color: var(--accent);
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(30,45,69,0.6);
+    color: var(--muted);
+  }
+  tr:hover td { background: rgba(255,255,255,0.02); color: var(--text); }
+
+  /* LISTS */
+  ul.ans-list { padding-left: 20px; margin: 8px 0; }
+  ul.ans-list li { margin-bottom: 5px; color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 30px;
+    color: var(--muted); font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  footer span { color: var(--accent); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span>📘 TCS Prime Notes</span>
+  <a href="#self-intro">Self Intro</a>
+  <a href="#coding">Coding</a>
+  <a href="#oops">OOPs</a>
+  <a href="#sql">SQL/DBMS</a>
+  <a href="#python">Python</a>
+  <a href="#dsa">DSA</a>
+  <a href="#webdev">Web Dev</a>
+  <a href="#networks">Networks</a>
+  <a href="#aiml">AI/ML</a>
+  <a href="#cloud">Cloud</a>
+  <a href="#os">OS</a>
+  <a href="#git">Git/SE</a>
+  <a href="#project">Projects</a>
+  <a href="#mr">MR Round</a>
+  <a href="#hr">HR Round</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>🎯 TCS Prime Interview — Complete Answer Guide</h1>
+  <p>Personalized for <strong>Maganti Praveen Sai</strong> · B.Tech CSE 2026 · Ramachandra College of Engineering</p>
+  <div class="badges">
+    <span class="badge badge-blue">PRIME</span>
+    <span class="badge badge-yellow">Fresher</span>
+    <span class="badge badge-green">MERN Stack</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============================== -->
+<!-- SECTION 1: SELF INTRODUCTION   -->
+<!-- ============================== -->
+<div class="section" id="self-intro">
+  <div class="section-title"><span class="icon">👤</span> Self Introduction & HR Personal Questions</div>
+
+  <div class="qa">
+    <div class="question">Tell me about yourself / Introduce yourself <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>Good morning sir/ma'am. My name is Maganti Praveen Sai. I am currently pursuing my B.Tech final year in Computer Science and Engineering at Ramachandra College of Engineering, Eluru, under JNTUK, with a current CGPA of 8.04.</p>
+      <p>I am passionate about backend development and full-stack web technologies. My primary tech stack includes Node.js, Express.js, MongoDB, and React — commonly known as the MERN stack. I have also worked with Python and have done an AI/ML internship where I worked on sentiment analysis.</p>
+      <p>I have built two major projects: <strong>TrackMate</strong>, a real-time transport tracking system using React, Node.js, MongoDB, and Socket.IO; and <strong>RIMS (Research Information Management System)</strong>, a web application for managing faculty research profiles — which is live on our college server.</p>
+      <p>I completed two internships — one in Web Development at SmartInternz (APSDC) and one in AI/ML at EduSkills. I also hold a ServiceNow Certified System Administrator (CSA) certification.</p>
+      <p>My strengths are adaptability, quick learning, and problem-solving. I am currently expanding my skills in data analytics. I am eager to start my career at TCS, contribute to real-world projects, and grow as a software professional. Thank you.</p>
+    </div>
+  </div>
+
+  <div class="tip">Keep your intro between 1.5 to 2 minutes. Speak slowly and clearly. End by saying "Thank you" — it signals you're done.</div>
+
+  <div class="qa">
+    <div class="question">What is your favourite subject?</div>
+    <div class="answer">
+      <p>My favourite subject is <strong>Computer Networks</strong>. I find it fascinating how data travels across the globe in milliseconds using protocols like TCP/IP. The OSI model, routing, and concepts like HTTP/HTTPS, DNS, and sockets make the internet understandable at a deep level. It also connects directly to my project work — for example, in TrackMate, I used Socket.IO which is built on WebSocket protocol, a concept from networking.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What are your strengths and weaknesses? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p><strong>Strengths:</strong> I am adaptable and a quick learner. When I join a new project or technology, I pick it up fast. For example, I learned Socket.IO specifically for TrackMate and implemented real-time location tracking successfully. I am also a team player and have consistently worked in collaborative teams of 3–4 people.</p>
+      <p><strong>Weakness:</strong> I sometimes feel nervous while speaking in large public gatherings or conferences. However, I am actively working on this — I practise by participating in group discussions, hackathons, and presentations. I have noticed a visible improvement in my confidence over time.</p>
+    </div>
+  </div>
+  <div class="tip">Never say "I have no weaknesses." Always present a weakness that you are actively improving — it shows self-awareness and growth mindset.</div>
+
+  <div class="qa">
+    <div class="question">What is your comfortable / preferred programming language? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>My most comfortable language is <strong>JavaScript</strong> (specifically Node.js on the backend). I have used it extensively in both my projects for building REST APIs, handling JWT authentication, and managing Socket.IO connections. I am also comfortable with <strong>Python</strong>, which I used in my AI/ML internship for data preprocessing and sentiment analysis using Logistic Regression.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Is there anything about you that your resume does not highlight? <span class="hot hot-freq">PRIME ASKED</span></div>
+    <div class="answer">
+      <p>Yes. Beyond what's on my resume, I have a strong curiosity-driven learning habit. Whenever I come across a new technology — even in social media or memes — I explore it immediately to understand how it works. For example, recently I explored Flow AI and some new productivity tools on my own. I am always exploring settings, documentation, and tutorials not because someone asked me to, but because I genuinely want to understand how things work. I believe this curiosity will make me a fast learner at TCS.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Tell me about your family background</div>
+    <div class="answer">
+      <p>I come from a family of six. My father is a farmer and my mother is a homemaker. I have a younger sister who is currently pursuing B.Tech first year in the AI/ML department at Ramachandra College of Engineering — the same college as me. My family has always encouraged my education, and their support has been a major motivation for me to work hard and achieve good academic results.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What are your hobbies?</div>
+    <div class="answer">
+      <p>My hobbies include exploring new technologies and tools, playing video games, and participating in hackathons. I enjoy browsing through tech communities, trying out new AI tools, and understanding how digital products work at a technical level. I have also participated in 2–3 hackathons including Buildfolio, which helped me improve my teamwork and rapid-prototyping skills.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Academic percentages / education background</div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li>SSC (10th) — Sri Chaitanya Techno School, Nuzvid — <strong>96.7%</strong></li>
+        <li>Intermediate (12th) — Sri Chaitanya Junior College, Eluru — <strong>83.2%</strong></li>
+        <li>B.Tech CSE — Ramachandra College of Engineering, Eluru (JNTUK) — <strong>CGPA 8.04</strong> (ongoing, 2022–2026)</li>
+      </ul>
+      <p>No backlogs. Cleared all subjects in the first attempt. No career gaps or breaks in study.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 2: CODING              -->
+<!-- ============================== -->
+<div class="section" id="coding">
+  <div class="section-title"><span class="icon">💻</span> Coding Questions (Python — Your Primary Language)</div>
+  <div class="warn">TCS interviewers ask you to write code on paper or on a laptop. Practice writing clean code WITHOUT IDE help. Always explain time complexity after writing.</div>
+
+  <h3>Number Programs</h3>
+
+  <div class="qa">
+    <div class="question">Fibonacci series <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre># Using loop
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        print(a, end=" ")
+        a, b = b, a + b
+
+fibonacci(10)   # Output: 0 1 1 2 3 5 8 13 21 34
+
+# Using recursion
+def fib_recursive(n):
+    if n <= 1:
+        return n
+    return fib_recursive(n-1) + fib_recursive(n-2)
+
+print(fib_recursive(7))  # Output: 13</pre>
+      <p><strong>Time Complexity:</strong> Loop → O(n) | Recursive → O(2^n)</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Factorial of a number <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre>def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n-1)
+
+print(factorial(5))  # Output: 120</pre>
+      <p><strong>Time Complexity:</strong> O(n)</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Check if a number is Prime <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre>def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+print(is_prime(17))  # True
+print(is_prime(10))  # False</pre>
+      <p><strong>Time Complexity:</strong> O(√n)</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Reverse a number / Palindrome check <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+<pre>def reverse_number(n):
+    return int(str(n)[::-1])
+
+def is_palindrome(n):
+    return n == int(str(n)[::-1])
+
+print(reverse_number(12345))   # 54321
+print(is_palindrome(121))       # True</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Swap two numbers without third variable <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+<pre># Method 1: Python tuple swap (best)
+a, b = 5, 10
+a, b = b, a
+print(a, b)  # 10 5
+
+# Method 2: Arithmetic
+a = a + b   # a = 15
+b = a - b   # b = 5
+a = a - b   # a = 10</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Find 2nd largest element in an array <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+<pre>def second_largest(arr):
+    unique = list(set(arr))
+    unique.sort()
+    return unique[-2]
+
+arr = [10, 20, 4, 45, 99]
+print(second_largest(arr))  # 45</pre>
+    </div>
+  </div>
+
+  <h3>String Programs</h3>
+
+  <div class="qa">
+    <div class="question">Reverse a string <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre>s = "praveen"
+print(s[::-1])   # neevarp
+
+# Using loop
+def reverse_str(s):
+    result = ""
+    for ch in s:
+        result = ch + result
+    return result</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Count each character in a string <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre>s = "aaabbaccc"
+freq = {}
+for ch in s:
+    freq[ch] = freq.get(ch, 0) + 1
+print(freq)  # {'a': 4, 'b': 2, 'c': 3}
+
+# Pythonic way
+from collections import Counter
+print(Counter(s))</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Remove duplicates from a list / string <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre># From list
+lst = [1, 2, 2, 3, 4, 3]
+no_dup = list(set(lst))
+print(no_dup)  # [1, 2, 3, 4]
+
+# From string (preserve order)
+s = "programming"
+seen = set()
+result = ""
+for ch in s:
+    if ch not in seen:
+        result += ch
+        seen.add(ch)
+print(result)  # progamin</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Bubble Sort <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+<pre>def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False   # optimization flag
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swapped = True
+        if not swapped:   # already sorted, break early
+            break
+    return arr
+
+print(bubble_sort([64, 34, 25, 12, 22]))</pre>
+      <p><strong>Time Complexity:</strong> Worst/Average O(n²), Best O(n) with optimization flag</p>
+    </div>
+  </div>
+
+  <h3>Python-Specific Coding</h3>
+
+  <div class="qa">
+    <div class="question">Lambda function — write code <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+<pre># Lambda is an anonymous (nameless) one-line function
+square = lambda x: x * x
+print(square(5))   # 25
+
+# With filter
+nums = [1, 2, 3, 4, 5, 6]
+evens = list(filter(lambda x: x % 2 == 0, nums))
+print(evens)   # [2, 4, 6]
+
+# With map
+doubled = list(map(lambda x: x * 2, nums))
+print(doubled)  # [2, 4, 6, 8, 10, 12]</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Exception handling — try-except <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre>try:
+    num = int(input("Enter a number: "))
+    result = 100 / num
+    print("Result:", result)
+except ValueError:
+    print("Invalid input! Please enter a number.")
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+except Exception as e:
+    print("Unexpected error:", e)
+else:
+    print("Code ran without errors.")
+finally:
+    print("This always runs.")</pre>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 3: OOPs                -->
+<!-- ============================== -->
+<div class="section" id="oops">
+  <div class="section-title"><span class="icon">🧱</span> OOPs Concepts</div>
+
+  <div class="qa">
+    <div class="question">Explain all 4 pillars of OOPs <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>The four pillars of Object-Oriented Programming are:</p>
+      <ul class="ans-list">
+        <li><strong>Encapsulation:</strong> Binding data and methods together into a single unit (class) and restricting direct access to internal details. Example: A capsule medicine hides its internal ingredients — you just take it. In code, private variables with getter/setter methods.</li>
+        <li><strong>Abstraction:</strong> Hiding implementation complexity and showing only the essential features. Example: When you drive a car, you only use the steering wheel and pedals — you don't need to know the internal engine mechanics.</li>
+        <li><strong>Inheritance:</strong> One class (child) acquires properties and methods of another class (parent). Example: A Dog and Cat both inherit from an Animal class. Promotes code reusability.</li>
+        <li><strong>Polymorphism:</strong> Same method/function behaving differently based on context. Example: A payment method works differently for credit card, UPI, or cash — same action, different implementation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Method Overloading vs Method Overriding <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Feature</th><th>Method Overloading</th><th>Method Overriding</th></tr>
+        <tr><td>Definition</td><td>Same method name, different parameters</td><td>Child class redefines parent's method</td></tr>
+        <tr><td>Type</td><td>Compile-time polymorphism</td><td>Runtime polymorphism</td></tr>
+        <tr><td>Class</td><td>Same class</td><td>Parent and child class</td></tr>
+        <tr><td>Python</td><td>Not natively supported (use *args)</td><td>Fully supported</td></tr>
+      </table>
+<pre># Overriding example in Python
+class Animal:
+    def speak(self):
+        print("Animal speaks")
+
+class Dog(Animal):
+    def speak(self):        # overrides parent method
+        print("Dog barks")
+
+d = Dog()
+d.speak()   # Dog barks</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Difference between == and is in Python <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><code>==</code> checks <strong>value equality</strong> — are the values the same?</li>
+        <li><code>is</code> checks <strong>identity</strong> — are they the same object in memory?</li>
+      </ul>
+<pre>a = [1, 2, 3]
+b = [1, 2, 3]
+print(a == b)   # True  (values are same)
+print(a is b)   # False (different objects in memory)
+
+c = a
+print(a is c)   # True  (same object)</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Procedural vs OOP <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Procedural</th><th>Object-Oriented</th></tr>
+        <tr><td>Code is a sequence of instructions</td><td>Code is organized into objects/classes</td></tr>
+        <tr><td>Data and functions are separate</td><td>Data and functions are bundled together</td></tr>
+        <tr><td>Less reusable</td><td>High reusability via inheritance</td></tr>
+        <tr><td>C language example</td><td>Python, Java, JavaScript (classes)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 4: SQL & DBMS          -->
+<!-- ============================== -->
+<div class="section" id="sql">
+  <div class="section-title"><span class="icon">🗄️</span> SQL & DBMS</div>
+
+  <div class="qa">
+    <div class="question">What is DBMS?</div>
+    <div class="answer">
+      <p>DBMS (Database Management System) is software that stores, manages, and retrieves data in an organized way. It acts as an interface between the user/application and the database. Examples: MySQL, MongoDB, Oracle, SQLite. It ensures data security, integrity, and consistency.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">TRUNCATE vs DELETE vs DROP <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Command</th><th>What it does</th><th>Rollback?</th><th>Where clause?</th></tr>
+        <tr><td>DELETE</td><td>Removes specific rows</td><td>Yes (DML)</td><td>Yes</td></tr>
+        <tr><td>TRUNCATE</td><td>Removes all rows, keeps structure</td><td>No (DDL)</td><td>No</td></tr>
+        <tr><td>DROP</td><td>Removes entire table including structure</td><td>No (DDL)</td><td>No</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">SQL Joins — INNER JOIN vs LEFT JOIN <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><strong>INNER JOIN:</strong> Returns only the rows where there is a match in BOTH tables.</li>
+        <li><strong>LEFT JOIN:</strong> Returns ALL rows from the left table, and matching rows from the right. If no match, NULLs are returned for right side.</li>
+        <li><strong>RIGHT JOIN:</strong> Opposite of LEFT JOIN.</li>
+        <li><strong>FULL JOIN:</strong> Returns all rows from both tables with NULLs where no match.</li>
+      </ul>
+<pre>-- INNER JOIN
+SELECT e.name, d.dept_name
+FROM Employee e
+INNER JOIN Department d ON e.dept_id = d.id;
+
+-- LEFT JOIN
+SELECT e.name, d.dept_name
+FROM Employee e
+LEFT JOIN Department d ON e.dept_id = d.id;</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Query for maximum salary / 2nd maximum salary <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+<pre>-- Max salary
+SELECT MAX(salary) FROM Employee;
+
+-- 2nd Max salary
+SELECT MAX(salary) FROM Employee
+WHERE salary < (SELECT MAX(salary) FROM Employee);
+
+-- Using LIMIT (MySQL)
+SELECT DISTINCT salary FROM Employee
+ORDER BY salary DESC LIMIT 1 OFFSET 1;
+
+-- Top N salaries (e.g., top 3)
+SELECT DISTINCT salary FROM Employee
+ORDER BY salary DESC LIMIT 3;</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">GROUP BY — what is it and write a query <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p>GROUP BY groups rows with the same values in a column and lets you apply aggregate functions (SUM, COUNT, AVG, MAX, MIN) on each group.</p>
+<pre>-- Department-wise count of employees
+SELECT dept_id, COUNT(*) AS total_employees
+FROM Employee
+GROUP BY dept_id;
+
+-- Department-wise highest salary
+SELECT dept_id, MAX(salary) AS max_salary
+FROM Employee
+GROUP BY dept_id;
+
+-- HAVING filters groups (like WHERE but for groups)
+SELECT dept_id, COUNT(*) AS total
+FROM Employee
+GROUP BY dept_id
+HAVING COUNT(*) > 5;</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Difference between MongoDB and MySQL <span class="hot hot-freq">VERY FREQUENT</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>MySQL</th><th>MongoDB</th></tr>
+        <tr><td>Relational (SQL)</td><td>Non-relational (NoSQL)</td></tr>
+        <tr><td>Stores data in tables with rows/columns</td><td>Stores data as JSON-like documents</td></tr>
+        <tr><td>Fixed schema (predefined structure)</td><td>Flexible schema (dynamic)</td></tr>
+        <tr><td>Best for structured data</td><td>Best for unstructured / hierarchical data</td></tr>
+        <tr><td>ACID compliant</td><td>Eventual consistency (newer versions support ACID)</td></tr>
+      </table>
+      <p><strong>In my projects:</strong> I used MongoDB in TrackMate because the data (user profiles, live location) is document-based and flexible. MySQL is used when data relationships are important and structured, like banking systems.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">UNION vs JOIN <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><strong>UNION:</strong> Combines rows from two queries vertically (stacks results). Columns must be same.</li>
+        <li><strong>JOIN:</strong> Combines columns from two tables horizontally based on a condition.</li>
+      </ul>
+<pre>-- UNION (stacks results)
+SELECT name FROM Teachers
+UNION
+SELECT name FROM Students;
+
+-- JOIN (combines columns)
+SELECT s.name, c.course_name
+FROM Student s JOIN Course c ON s.course_id = c.id;</pre>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 5: PYTHON              -->
+<!-- ============================== -->
+<div class="section" id="python">
+  <div class="section-title"><span class="icon">🐍</span> Python Concepts</div>
+
+  <div class="qa">
+    <div class="question">Difference between List, Tuple, and Set <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Feature</th><th>List</th><th>Tuple</th><th>Set</th></tr>
+        <tr><td>Syntax</td><td>[1, 2, 3]</td><td>(1, 2, 3)</td><td>{1, 2, 3}</td></tr>
+        <tr><td>Mutable?</td><td>Yes</td><td>No (immutable)</td><td>Yes (elements can be added/removed)</td></tr>
+        <tr><td>Ordered?</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Duplicates?</td><td>Allowed</td><td>Allowed</td><td>Not allowed</td></tr>
+        <tr><td>Use case</td><td>General purpose, editable</td><td>Fixed data like coordinates</td><td>Unique values, fast membership check</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Mutable vs Immutable in Python <span class="hot hot-freq">VERY FREQUENT</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><strong>Mutable:</strong> Object can be changed after creation. Examples: list, dict, set.</li>
+        <li><strong>Immutable:</strong> Object cannot be changed after creation. Examples: int, float, str, tuple.</li>
+      </ul>
+<pre>lst = [1, 2, 3]
+lst[0] = 99       # Works — list is mutable
+
+tup = (1, 2, 3)
+# tup[0] = 99    # Error — tuple is immutable
+
+s = "hello"
+# s[0] = 'H'     # Error — string is immutable</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Multiprocessing vs Multithreading <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Feature</th><th>Multithreading</th><th>Multiprocessing</th></tr>
+        <tr><td>Runs</td><td>Multiple threads in same process</td><td>Multiple processes, each with own memory</td></tr>
+        <tr><td>Memory</td><td>Shared memory</td><td>Separate memory</td></tr>
+        <tr><td>Best for</td><td>I/O-bound tasks (file, network)</td><td>CPU-bound tasks (heavy computation)</td></tr>
+        <tr><td>GIL</td><td>Affected by GIL in Python</td><td>Not affected — bypasses GIL</td></tr>
+      </table>
+      <p><em>GIL (Global Interpreter Lock)</em> — Python allows only one thread to execute at a time, so multithreading doesn't give true parallelism for CPU-intensive tasks.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is a Garbage Collector in Python? <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p>A Garbage Collector automatically frees memory by deleting objects that are no longer referenced in the program. Python uses <strong>reference counting</strong> as its main memory management technique — when an object's reference count drops to zero, it is deleted. The <code>gc</code> module handles cyclic references that reference counting can't handle. This means the developer doesn't have to manually manage memory like in C/C++.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 6: DSA                 -->
+<!-- ============================== -->
+<div class="section" id="dsa">
+  <div class="section-title"><span class="icon">🔗</span> Data Structures & Algorithms</div>
+
+  <div class="qa">
+    <div class="question">What is a Stack? (LIFO) <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>A Stack is a linear data structure that follows the <strong>LIFO</strong> (Last In, First Out) principle — the last element inserted is the first to be removed.</p>
+      <p><strong>Real-world example:</strong> A stack of plates — you put a plate on top and remove from top. Also: the browser's Back button works as a stack.</p>
+      <p><strong>Operations:</strong> push (insert), pop (remove), peek (view top)</p>
+<pre>stack = []
+stack.append(10)   # push
+stack.append(20)
+stack.append(30)
+print(stack.pop())  # 30 — LIFO</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is a Queue? (FIFO) <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>A Queue follows <strong>FIFO</strong> (First In, First Out) — the first element inserted is the first to be removed.</p>
+      <p><strong>Real-world example:</strong> A ticket counter queue — the person who joins first gets served first. Also: CPU task scheduling.</p>
+<pre>from collections import deque
+queue = deque()
+queue.append(10)   # enqueue
+queue.append(20)
+queue.append(30)
+print(queue.popleft())  # 10 — FIFO</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is a Linked List? Types? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>A Linked List is a linear data structure where each element (node) stores data and a pointer to the next node. Unlike arrays, nodes are not stored in contiguous memory.</p>
+      <p><strong>Types:</strong></p>
+      <ul class="ans-list">
+        <li><strong>Singly Linked List:</strong> Each node points to the next node only. Traversal is one-direction.</li>
+        <li><strong>Doubly Linked List:</strong> Each node has pointer to both next and previous node. Can be traversed in both directions.</li>
+        <li><strong>Circular Linked List:</strong> Last node points back to the first node.</li>
+      </ul>
+      <p><strong>Advantage over array:</strong> Dynamic size, efficient insertion/deletion at beginning. Disadvantage: No random access, extra memory for pointers.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">If records are deleted frequently, which data structure would you use and why?</div>
+    <div class="answer">
+      <p><strong>Linked List</strong> — because deletion in a linked list is O(1) if you have the node reference (just update pointers), whereas in an array, deletion requires shifting all subsequent elements which is O(n). For a doubly linked list, even traversal for finding the node and deletion is efficient.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 7: WEB DEVELOPMENT     -->
+<!-- ============================== -->
+<div class="section" id="webdev">
+  <div class="section-title"><span class="icon">🌐</span> Web Development (MERN Stack — Your Strength)</div>
+  <div class="tip">Since your projects are MERN stack, expect deep questions here. Know every technology you used in TrackMate and RIMS thoroughly.</div>
+
+  <div class="qa">
+    <div class="question">What is a REST API? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>REST (Representational State Transfer) is an architectural style for building web services. A REST API allows client-server communication using standard HTTP methods:</p>
+      <ul class="ans-list">
+        <li><strong>GET</strong> — Retrieve data</li>
+        <li><strong>POST</strong> — Create new data</li>
+        <li><strong>PUT/PATCH</strong> — Update data</li>
+        <li><strong>DELETE</strong> — Delete data</li>
+      </ul>
+      <p>REST is stateless — every request from client must contain all information needed. I built REST APIs in both TrackMate and RIMS using Node.js and Express.js for operations like user login, fetching locations, and managing research records.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Difference between Frontend and Backend <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Frontend</th><th>Backend</th></tr>
+        <tr><td>What the user sees (UI)</td><td>Server-side logic, database interaction</td></tr>
+        <tr><td>HTML, CSS, JavaScript, React</td><td>Node.js, Express.js, Python, Java</td></tr>
+        <tr><td>Runs in browser</td><td>Runs on server</td></tr>
+        <tr><td>Handles user interactions</td><td>Handles data processing and storage</td></tr>
+      </table>
+      <p>In my projects, I primarily worked as a <strong>backend developer</strong> — I designed the schemas, built Express.js REST APIs, implemented JWT authentication, and integrated Socket.IO for real-time communication.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is JWT? How did you use it in your project?</div>
+    <div class="answer">
+      <p>JWT (JSON Web Token) is a compact, URL-safe token used for authentication. It has three parts: <strong>Header</strong> (algorithm), <strong>Payload</strong> (user data), and <strong>Signature</strong> (verification).</p>
+      <p>In my TrackMate and RIMS projects, I used JWT for <strong>role-based authentication</strong>. When a user logs in, the server generates a JWT and sends it to the client. For every subsequent request, the client sends this token in the Authorization header. The server verifies the token and checks the user's role (admin, driver, student) before allowing access to protected routes.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is Socket.IO? Why did you use it? (Your Project — TrackMate)</div>
+    <div class="answer">
+      <p>Socket.IO is a JavaScript library that enables <strong>real-time, bidirectional communication</strong> between a client and server using WebSocket protocol (with HTTP long-polling as fallback).</p>
+      <p>I used Socket.IO in TrackMate because regular REST APIs use a request-response model — the client has to keep asking the server for updates (polling). For live location tracking, this is inefficient. With Socket.IO, the driver's device continuously emits location coordinates to the server, which broadcasts them instantly to the student's screen without any manual refresh. This gives a true real-time experience.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Explain State in React.js <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p>State in React is an object that holds dynamic data for a component. When the state changes, React automatically re-renders the component to reflect the new data. State is managed using the <code>useState</code> hook in functional components.</p>
+<pre>import { useState } from 'react';
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;Count: {count}&lt;/p&gt;
+            &lt;button onClick={() => setCount(count + 1)}&gt;
+                Increment
+            &lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</pre>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is Microservices architecture?</div>
+    <div class="answer">
+      <p>Microservices is an architectural style where an application is broken into small, independent services, each responsible for a specific functionality. Each service can be developed, deployed, and scaled independently.</p>
+      <p>For example, an e-commerce app may have separate services for: user authentication, product catalog, payment processing, and order management. They communicate via APIs. Contrast with <strong>Monolithic architecture</strong> where everything is in one codebase.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 8: COMPUTER NETWORKS   -->
+<!-- ============================== -->
+<div class="section" id="networks">
+  <div class="section-title"><span class="icon">🌍</span> Computer Networks & Cybersecurity (Your Favourite Subject!)</div>
+
+  <div class="qa">
+    <div class="question">OSI Model — all 7 layers <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p>OSI (Open Systems Interconnection) model describes how data travels across a network in 7 layers:</p>
+      <table>
+        <tr><th>#</th><th>Layer</th><th>Function</th><th>Example</th></tr>
+        <tr><td>7</td><td>Application</td><td>User interface, HTTP/FTP/SMTP</td><td>Browser, Email client</td></tr>
+        <tr><td>6</td><td>Presentation</td><td>Encryption, compression, format</td><td>SSL/TLS, JPEG</td></tr>
+        <tr><td>5</td><td>Session</td><td>Manages sessions/connections</td><td>NetBIOS, RPC</td></tr>
+        <tr><td>4</td><td>Transport</td><td>End-to-end delivery, error control</td><td>TCP, UDP</td></tr>
+        <tr><td>3</td><td>Network</td><td>Routing, logical addressing</td><td>IP, Routers</td></tr>
+        <tr><td>2</td><td>Data Link</td><td>Node-to-node delivery, MAC address</td><td>Ethernet, Switches</td></tr>
+        <tr><td>1</td><td>Physical</td><td>Actual bit transmission (hardware)</td><td>Cables, Hubs, NIC</td></tr>
+      </table>
+      <p><strong>Memory trick:</strong> "All People Seem To Need Data Processing" (top to bottom)</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">HTTP vs HTTPS <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><strong>HTTP</strong> (HyperText Transfer Protocol): Data is sent in plain text — not secure. Port 80.</li>
+        <li><strong>HTTPS</strong> (HTTP Secure): Data is encrypted using <strong>SSL/TLS</strong> — secure. Port 443.</li>
+      </ul>
+      <p>HTTPS is mandatory for login pages, payment systems, etc. In my projects, I implemented JWT and password hashing for security, and they would be deployed over HTTPS in production.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">TCP vs UDP <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>TCP</th><th>UDP</th></tr>
+        <tr><td>Connection-oriented</td><td>Connectionless</td></tr>
+        <tr><td>Reliable — guarantees delivery</td><td>Unreliable — no guarantee</td></tr>
+        <tr><td>Slower (acknowledgements)</td><td>Faster (no acknowledgements)</td></tr>
+        <tr><td>Used in: HTTP, email, file transfer</td><td>Used in: video streaming, gaming, DNS, VoIP</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is SSL and TLS? <span class="hot hot-freq">PRIME ASKED</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><strong>SSL</strong> (Secure Sockets Layer) — older protocol for encrypting data between client and server. Now deprecated.</li>
+        <li><strong>TLS</strong> (Transport Layer Security) — updated, more secure version of SSL. Used in HTTPS today.</li>
+      </ul>
+      <p>Both work by establishing an encrypted connection using public-key cryptography. When you visit a website with HTTPS, TLS is what keeps your data secure.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 9: AI / ML             -->
+<!-- ============================== -->
+<div class="section" id="aiml">
+  <div class="section-title"><span class="icon">🤖</span> AI / ML (Relevant to Your Internship)</div>
+
+  <div class="qa">
+    <div class="question">What is Machine Learning? Types? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>Machine Learning is a subset of AI where systems learn from data and improve their performance without being explicitly programmed for each task.</p>
+      <p><strong>Types:</strong></p>
+      <ul class="ans-list">
+        <li><strong>Supervised Learning:</strong> Model learns from labelled data. Input and output are both provided. Example: Predicting house price, email spam detection, my sentiment analysis project (Logistic Regression on Amazon reviews).</li>
+        <li><strong>Unsupervised Learning:</strong> Model finds patterns in unlabelled data. Example: Customer segmentation using K-Means clustering.</li>
+        <li><strong>Semi-Supervised Learning:</strong> Mix of labelled and unlabelled data.</li>
+        <li><strong>Reinforcement Learning:</strong> Agent learns by trial and error through rewards and penalties. Example: Chess AI, self-driving cars, video game bots.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is Overfitting? What is Underfitting? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><strong>Overfitting:</strong> Model learns training data TOO well, including noise and outliers. It performs great on training data but poorly on new/unseen data. Like memorizing answers instead of understanding concepts.</li>
+        <li><strong>Underfitting:</strong> Model is too simple to learn the patterns. Performs poorly on both training and test data.</li>
+      </ul>
+      <p><strong>Solutions for Overfitting:</strong> More training data, dropout, regularization (L1/L2), cross-validation, early stopping.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is Generative AI? <span class="hot hot-freq">VERY FREQUENT</span></div>
+    <div class="answer">
+      <p>Generative AI refers to AI models that can generate new content — text, images, code, audio — based on patterns learned from training data. Examples include ChatGPT (text), DALL-E (images), GitHub Copilot (code). These are powered by Large Language Models (LLMs) which are trained on massive datasets. Unlike traditional ML that predicts from existing categories, Generative AI creates new, original content.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is an LLM? What is RAG? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p><strong>LLM (Large Language Model):</strong> A deep learning model trained on massive text data to understand and generate human language. Examples: GPT-4, Claude, Gemini. They use Transformer architecture.</p>
+      <p><strong>RAG (Retrieval-Augmented Generation):</strong> A technique that combines a retrieval system (fetching relevant documents from a knowledge base) with a generative model (LLM). Instead of relying only on the model's training data, RAG fetches up-to-date, specific documents and feeds them to the LLM as context before generating an answer. This makes responses more accurate and factual.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">How did you use ML/Python in your internship?</div>
+    <div class="answer">
+      <p>During my AI/ML internship at EduSkills, I worked on Amazon customer reviews dataset. I performed <strong>data preprocessing</strong> which included cleaning the data, removing null values, handling text data, and feature extraction. Then I applied <strong>sentiment analysis</strong> using <strong>Logistic Regression</strong> — a supervised classification algorithm — to classify reviews as positive or negative. This was a real-world application of Natural Language Processing (NLP) and supervised ML.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 10: CLOUD COMPUTING    -->
+<!-- ============================== -->
+<div class="section" id="cloud">
+  <div class="section-title"><span class="icon">☁️</span> Cloud Computing</div>
+
+  <div class="qa">
+    <div class="question">What is Cloud Computing? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>Cloud computing is the delivery of computing services — servers, storage, databases, networking, software — over the internet ("the cloud") on a pay-as-you-go basis. Instead of owning physical hardware, you rent from a cloud provider like AWS, Azure, or GCP.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">IaaS, PaaS, SaaS — Service Models <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Model</th><th>What you manage</th><th>Example</th></tr>
+        <tr><td>IaaS (Infrastructure as a Service)</td><td>OS, Apps — provider gives hardware</td><td>AWS EC2, Azure VMs</td></tr>
+        <tr><td>PaaS (Platform as a Service)</td><td>Only your App — provider manages OS + hardware</td><td>Heroku, AWS Elastic Beanstalk</td></tr>
+        <tr><td>SaaS (Software as a Service)</td><td>Nothing — use software over internet</td><td>Gmail, Salesforce, Office 365</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is AWS EC2? S3? IAM? <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <ul class="ans-list">
+        <li><strong>EC2 (Elastic Compute Cloud):</strong> Virtual servers in the cloud. You can run applications on these rented virtual machines.</li>
+        <li><strong>S3 (Simple Storage Service):</strong> Object storage service for storing files, images, backups, static websites. Highly scalable and durable.</li>
+        <li><strong>IAM (Identity and Access Management):</strong> Service to manage who can access AWS resources. You create users, groups, roles, and set permissions using policies.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="warn">You don't have an AWS certification. If asked "why haven't you done AWS certification?", say: "I am currently focused on completing my B.Tech and building real projects. I plan to pursue AWS certification after joining TCS, where I can also apply it practically."</div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 11: OPERATING SYSTEMS  -->
+<!-- ============================== -->
+<div class="section" id="os">
+  <div class="section-title"><span class="icon">🖥️</span> Operating Systems</div>
+
+  <div class="qa">
+    <div class="question">What is an Operating System?</div>
+    <div class="answer">
+      <p>An Operating System (OS) is system software that manages computer hardware and software resources and provides services for application programs. It acts as an intermediary between users and hardware. Examples: Windows, Linux, macOS, Ubuntu. Core functions: process management, memory management, file system management, device management, and security.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is Garbage Collection?</div>
+    <div class="answer">
+      <p>Garbage Collection is an automatic memory management process that identifies and frees memory occupied by objects that are no longer reachable/used by the program. Python uses reference counting + a cyclic garbage collector. This prevents memory leaks and eliminates the need for manual memory deallocation (unlike C where you use <code>free()</code>).</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 12: GIT & SE TOOLS     -->
+<!-- ============================== -->
+<div class="section" id="git">
+  <div class="section-title"><span class="icon">🛠️</span> Software Engineering & Tools</div>
+
+  <div class="qa">
+    <div class="question">Git vs GitHub <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <table>
+        <tr><th>Git</th><th>GitHub</th></tr>
+        <tr><td>Version control software (local tool)</td><td>Cloud-based hosting service for Git repositories</td></tr>
+        <tr><td>Tracks changes in your code</td><td>Stores code online, enables collaboration</td></tr>
+        <tr><td>Works offline</td><td>Requires internet</td></tr>
+        <tr><td>Commands: git commit, git branch, git merge</td><td>Features: pull requests, issues, forking</td></tr>
+      </table>
+      <p>I use Git and GitHub actively for both TrackMate and RIMS projects — my repositories are public on github.com/Maganti-Praveen.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">How did you resolve conflicts in Git (version control)?</div>
+    <div class="answer">
+      <p>When two team members edit the same file in different branches and try to merge, Git shows a conflict. I resolve it by:</p>
+      <ul class="ans-list">
+        <li>Running <code>git status</code> to identify conflicting files</li>
+        <li>Opening the file — Git marks conflicts with <code>&lt;&lt;&lt;&lt;</code>, <code>====</code>, <code>&gt;&gt;&gt;&gt;</code> markers</li>
+        <li>Manually reviewing both versions and keeping the correct code</li>
+        <li>Running <code>git add &lt;file&gt;</code> and then <code>git commit</code> to complete the merge</li>
+      </ul>
+      <p>In my team projects (TrackMate had 4 members), we used feature branches and pull requests to minimize conflicts.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What is ServiceNow? (Your Certification)</div>
+    <div class="answer">
+      <p>ServiceNow is a cloud-based IT Service Management (ITSM) platform used by enterprises to manage IT operations, workflows, and services. It automates manual tasks and provides a central hub for IT incidents, change requests, and problem management. I hold the <strong>ServiceNow Certified System Administrator (CSA)</strong> certification, which covers platform navigation, user administration, configuring workflows, and managing data in the Now Platform.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 13: PROJECT QUESTIONS  -->
+<!-- ============================== -->
+<div class="section" id="project">
+  <div class="section-title"><span class="icon">📁</span> Project Questions — TrackMate & RIMS</div>
+  <div class="warn">These are the most important questions. The interviewer WILL ask about your projects in detail. Know every line, every technology choice, and every challenge you faced.</div>
+
+  <div class="qa">
+    <div class="question">Explain TrackMate — problem, solution, tech, your role <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p><strong>Problem Statement:</strong> College students had no way to track their college bus in real-time, leading to missed buses, confusion, and wasted time waiting at bus stops.</p>
+      <p><strong>Solution:</strong> TrackMate is a real-time transport tracking system where drivers share their live location, and students can view it on a map in real-time.</p>
+      <p><strong>Technologies Used:</strong> React (frontend), Node.js + Express.js (backend), MongoDB (database), Socket.IO (real-time communication), JWT (authentication), bcrypt (password hashing).</p>
+      <p><strong>My Role — Backend Developer:</strong> I designed the database schemas in MongoDB, built all REST API endpoints using Express.js, implemented role-based authentication using JWT (admin/driver/student roles), integrated Socket.IO for live location broadcasting, and handled password security with bcrypt hashing.</p>
+      <p><strong>Key Feature:</strong> Role-based access — Admin manages everything, Driver shares live location, Students view the live map. Team of 4 members.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Explain RIMS — problem, solution, tech, your role</div>
+    <div class="answer">
+      <p><strong>Problem Statement:</strong> Faculty research records were maintained manually in files and spreadsheets, making it hard to track, search, and update research publications, projects, and profiles.</p>
+      <p><strong>Solution:</strong> RIMS (Research Information Management System) is a web-based system where faculty can create and manage their research profile — publications, projects, patents, and achievements.</p>
+      <p><strong>Technologies:</strong> Node.js, Express.js, MongoDB, HTML/CSS/JavaScript, JWT, Multer (file uploads), PDF export functionality.</p>
+      <p><strong>My Role:</strong> I worked on the complete application along with a team of 3 (including my mentor). I built the backend APIs, authentication system, and integrated file upload using Multer. I also implemented the <strong>PDF export feature</strong> so faculty can download their profile as a PDF document.</p>
+      <p><strong>Achievement:</strong> This project is <strong>deployed on our college server</strong> and is actively used.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Challenges faced during the project <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>One major challenge in TrackMate was implementing real-time location updates efficiently. Initially, we tried a polling approach (frontend repeatedly asking backend for location), but it caused server overload and delays. I researched and found that Socket.IO's event-driven WebSocket model was the right solution. Setting it up and handling connection/disconnection events was initially complex, but after studying the documentation and testing with multiple simultaneous connections, I got it working smoothly.</p>
+      <p>In RIMS, the PDF export feature was challenging because generating structured PDF documents from dynamic data required careful formatting. I used a Node.js PDF library and had to handle different data scenarios (some faculty having many publications, some having few) without breaking the layout.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Why did you choose MongoDB over MySQL for TrackMate?</div>
+    <div class="answer">
+      <p>TrackMate stores user profiles, live location data, and route information. This data is document-oriented and varies in structure — for example, each user's profile may have different fields. MongoDB's flexible schema makes it easy to add or change fields without migration scripts. Also, real-time location data is continuously written and read at high frequency — MongoDB handles high write throughput well. If the data had heavy relational structures (like bank transactions), I would have chosen MySQL instead.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 14: MR ROUND           -->
+<!-- ============================== -->
+<div class="section" id="mr">
+  <div class="section-title"><span class="icon">🧠</span> MR Round — Managerial & Logical Questions</div>
+
+  <div class="qa">
+    <div class="question">If your teammate does not agree with your ideas, what will you do? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>First, I would listen to my teammate's perspective completely and understand their reasoning. Then I would clearly explain my approach with logical justification — perhaps drawing a diagram or writing pseudocode to make it concrete. If both approaches seem valid, I would suggest a small proof-of-concept or prototype to test which one works better. If still undecided, I would escalate to the team lead or project mentor for a final decision. The goal is always the project's success, not winning an argument.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">If two projects are assigned simultaneously with the same deadline, how will you manage? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>I would first speak to my manager to clarify priorities — which project has higher business impact or dependency. Then I would break both projects into smaller tasks and estimate the time needed. If manageable alone, I would create a time-boxed schedule dedicating specific hours to each project. If the workload is too high for one person, I would communicate this early to my manager and request support or a deadline extension rather than silently failing. Transparency and early communication are key.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">If assigned a project with technologies you don't know, what will you do? <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p>I would be honest with my manager about my current knowledge level and ask for learning resources or documentation. Then I would dedicate focused time daily to learn the technology — through official docs, tutorials, and small practice projects. I would seek guidance from senior team members and leverage online platforms. This is actually not new to me — I learned Socket.IO from scratch specifically for TrackMate and successfully implemented it. I am confident in my ability to learn new technologies quickly when needed.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Lotus Pond Puzzle: In 30 days it covers half the pond. How many days to cover the full pond? <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p><strong>Answer: 31 days.</strong></p>
+      <p>Since the lotus doubles every day — if it covers HALF the pond on Day 30, it will double on Day 31 to cover the FULL pond. The key insight is that doubling from half = full.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Who is the CEO of TCS? <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p><strong>K. Krithivasan</strong> is the current CEO and Managing Director of TCS (Tata Consultancy Services), effective from June 2023.</p>
+      <p>TCS is a part of the Tata Group, one of India's largest conglomerates. TCS is headquartered in Mumbai and is one of the world's largest IT services companies with over 600,000 employees globally.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What do you know about TCS Digital?</div>
+    <div class="answer">
+      <p>TCS Digital is a role within TCS for candidates with strong technical and analytical skills, focusing on digital transformation technologies such as cloud, AI/ML, DevOps, data analytics, cybersecurity, and full-stack development. Digital role engineers work on cutting-edge technology projects for TCS's global clients. The package for TCS Digital is higher than TCS Ninja (approx. ₹7 LPA vs ₹3.36 LPA for Ninja at entry level). I applied for the Prime role which has a similar or higher package.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SECTION 15: HR ROUND           -->
+<!-- ============================== -->
+<div class="section" id="hr">
+  <div class="section-title"><span class="icon">🤝</span> HR Round — Complete Answers</div>
+
+  <div class="qa">
+    <div class="question">Why TCS? <span class="hot hot-most">MOST ASKED — EVERY PANEL</span></div>
+    <div class="answer">
+      <p>TCS is one of the world's largest IT services companies with a strong reputation for innovation, learning culture, and global exposure. For a fresher like me, TCS offers structured training programs like Initial Learning Program (ILP), exposure to diverse technologies and domains, and the opportunity to work with Fortune 500 clients globally. TCS also values long-term employee growth — many of India's top engineering leaders have built their careers here. I believe TCS is the best place for me to learn, grow, and contribute meaningfully from the very start of my career.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Are you willing to relocate? Preferred locations? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>Yes, I am fully willing to relocate. My preferred locations are Hyderabad, Bengaluru, and Chennai — but I am flexible and open to any location TCS assigns. I understand that relocation is part of a professional IT career and I am prepared for it.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Are you flexible with rotational/night shifts? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>Yes, I am comfortable with rotational shifts including night shifts. TCS serves global clients across different time zones, so flexibility in shift timings is expected and I am fully prepared for it.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Are you okay with the 1-year service bond / probation? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>Yes, absolutely. I understand TCS invests significantly in training and developing freshers. A service bond reflects a mutual commitment — TCS commits to training and developing me, and I commit to contributing my best. I have no concerns about this and I plan to build a long-term career at TCS.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What if you get another job with more pay? Will you leave TCS? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>For me, joining TCS is not just about the salary — it is about building the right foundation for my career. TCS provides world-class training, global exposure, and work on real enterprise-scale projects that I cannot get anywhere else as a fresher. I believe the skills and experience I gain at TCS will make me valuable long-term. I am committed to TCS for the long run, and I would not make a hasty decision based purely on a salary number.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Why should we hire you? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>You should hire me because I bring a combination of solid technical skills, real project experience, and a strong learning mindset. I have built two full-stack applications using the MERN stack that solve real-world problems — one of which is deployed on our college server. I have hands-on experience with backend development, REST APIs, real-time systems, and authentication systems. Beyond technical skills, I am adaptable, a quick learner, and I work well in teams. I genuinely enjoy solving problems and building things. I am ready to contribute from day one and grow with TCS.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Where do you see yourself in 4-5 years? <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>In 4–5 years, I see myself as a skilled backend or full-stack developer who has worked on multiple enterprise-scale projects at TCS. I aim to earn relevant cloud and technology certifications (like AWS), deepen my expertise in data engineering or AI/ML, and take on technical leadership responsibilities within my team. I want to grow from a programmer to someone who designs systems and mentors junior team members.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">What will you do if TCS offers you the Ninja role instead of Prime? <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p>I would still accept it happily. Getting into TCS itself is a great opportunity. I believe if I perform well and upskill continuously, I can transition to better roles within TCS. Many great engineers started at the Ninja level and grew to senior positions. I will give 100% in whatever role TCS assigns me.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">How do you handle criticism? <span class="hot hot-freq">FREQUENT</span></div>
+    <div class="answer">
+      <p>I take criticism positively and see it as an opportunity to improve. When someone criticizes my work, I first listen carefully to understand exactly what went wrong. Then I analyze whether the feedback is valid — if it is, I act on it immediately. If I disagree, I respectfully discuss my perspective with supporting reasoning. I believe constructive criticism from experienced colleagues is one of the fastest ways to grow. During my project work, whenever my mentor pointed out issues in my code or design, I took it seriously and improved.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Tell me one challenge you faced and how you overcame it <span class="hot hot-most">MOST ASKED</span></div>
+    <div class="answer">
+      <p>During TrackMate, implementing real-time location tracking was a significant challenge. Our initial approach of repeated HTTP polling caused high server load and noticeable delays in location updates. I spent time researching WebSocket-based solutions and discovered Socket.IO. Learning a completely new technology while managing the rest of the project was stressful, but I broke it into small steps — first understanding Socket.IO basics, then building a small test, then integrating it into the main project. Eventually, the real-time tracking worked seamlessly. This experience taught me that breaking a big problem into small steps and being persistent makes any challenge solvable.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="question">Do you have any questions for us? <span class="hot hot-most">MOST ASKED — END OF EVERY INTERVIEW</span></div>
+    <div class="answer">
+      <p>Yes, I have a few questions:</p>
+      <ul class="ans-list">
+        <li>"What does the onboarding and initial training (ILP) process look like for freshers joining TCS Prime?"</li>
+        <li>"What kinds of projects or domains are typically assigned to TCS Prime freshers in the first year?"</li>
+        <li>"What opportunities are there for internal role switches or upskilling within TCS?"</li>
+      </ul>
+      <p><em>(Ask 1–2 genuine questions — it shows interest and enthusiasm. Never say "No, I have no questions.")</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>📘 Prepared exclusively for <span>Maganti Praveen Sai</span> — TCS Prime Interview 2026</p>
+  <p style="margin-top: 6px;">All the best, Praveen! You've got this. 🚀</p>
+</footer>
+
+</div>
+</body>
+</html>
